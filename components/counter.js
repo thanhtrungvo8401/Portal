@@ -1,3 +1,4 @@
+import { Button } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import {
   incrementCount,
@@ -14,9 +15,27 @@ const Counter = () => {
       <h1>
         Count: <span>{count}</span>
       </h1>
-      <button onClick={() => dispatch(incrementCount())}>+1</button>
-      <button onClick={() => dispatch(decrementCount())}>-1</button>
-      <button onClick={() => dispatch(resetCount())}>Reset</button>
+      <Button
+        color="primary"
+        onClick={() => dispatch(incrementCount())}
+        variant={"outlined"}
+      >
+        + 1
+      </Button>
+      <Button
+        color="inherit"
+        onClick={() => dispatch(decrementCount())}
+        variant={"outlined"}
+      >
+        -1
+      </Button>
+      <Button
+        color="secondary"
+        onClick={() => dispatch(resetCount())}
+        variant={"outlined"}
+      >
+        Reset
+      </Button>
     </div>
   );
 };
