@@ -14,40 +14,40 @@ import { AccountCircle } from "@material-ui/icons";
 import {
   useStyles,
   HideOnScroll,
-  renderMenuF,
+  renderProfileMenuF,
   renderMobileMenuF,
 } from "./NavbarHelper";
 function Navbar(props) {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorProfileEl, setAnchorProfileEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
-  const isMenuOpen = Boolean(anchorEl);
+  const isProfileMenuOpen = Boolean(anchorProfileEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+    setAnchorProfileEl(event.currentTarget);
   };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
+  const handleProfileMenuClose = () => {
+    setAnchorProfileEl(null);
     handleMobileMenuClose();
   };
 
   const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
+    // setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const menuId = "primary-search-account-menu";
-  const renderMenu = renderMenuF({
-    anchorEl,
-    isMenuOpen,
-    handleMenuClose,
-    menuId,
+  const profileId = "primary-search-account-menu";
+  const profileMenuPopup = renderProfileMenuF({
+    anchorProfileEl,
+    isProfileMenuOpen,
+    handleProfileMenuClose,
+    profileId,
   });
 
   const mobileMenuId = "primary-search-account-menu-mobile";
@@ -74,10 +74,9 @@ function Navbar(props) {
             </IconButton>
 
             <Typography className={classes.title} variant="h6" noWrap>
-              Material-UI
+              Neko-KUN
             </Typography>
 
-            <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <IconButton aria-label="show 4 new mails" color="inherit">
                 <Badge badgeContent={4} color="secondary">
@@ -92,16 +91,6 @@ function Navbar(props) {
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
-              <IconButton
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
             </div>
             <div className={classes.sectionMobile}>
               <IconButton
@@ -114,11 +103,24 @@ function Navbar(props) {
                 <MoreIcon />
               </IconButton>
             </div>
+            <div className={classes.grow} />
+            <div>
+              <IconButton
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={profileId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            </div>
           </Toolbar>
         </AppBar>
       </HideOnScroll>
       {renderMobileMenu}
-      {renderMenu}
+      {profileMenuPopup}
     </React.Fragment>
   );
 }

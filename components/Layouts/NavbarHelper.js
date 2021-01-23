@@ -27,43 +27,6 @@ export const useStyles = makeStyles((theme) => {
         display: "block",
       },
     },
-    search: {
-      position: "relative",
-      borderRadius: theme.shape.borderRadius,
-      backgroundColor: fade(theme.palette.common.white, 0.15),
-      "&:hover": {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
-      },
-      marginRight: theme.spacing(2),
-      marginLeft: 0,
-      width: "100%",
-      [theme.breakpoints.up("sm")]: {
-        marginLeft: theme.spacing(3),
-        width: "auto",
-      },
-    },
-    searchIcon: {
-      padding: theme.spacing(0, 2),
-      height: "100%",
-      position: "absolute",
-      pointerEvents: "none",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    inputRoot: {
-      color: "inherit",
-    },
-    inputInput: {
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-      transition: theme.transitions.create("width"),
-      width: "100%",
-      [theme.breakpoints.up("md")]: {
-        width: "20ch",
-      },
-    },
     sectionDesktop: {
       display: "none",
       [theme.breakpoints.up("md")]: {
@@ -92,19 +55,19 @@ HideOnScroll.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
-export const renderMenuF = (props) => {
+export const renderProfileMenuF = (props) => {
   return (
     <Menu
-      anchorEl={props.anchorEl}
+      anchorEl={props.anchorProfileEl}
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={props.menuId}
+      id={props.profileId}
       keepMounted
       transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={props.isMenuOpen}
-      onClose={props.handleMenuClose}
+      open={props.isProfileMenuOpen}
+      onClose={props.handleProfileMenuClose}
     >
-      <MenuItem onClick={props.handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={props.handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={props.handleProfileMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={props.handleProfileMenuClose}>My account</MenuItem>
     </Menu>
   );
 };
