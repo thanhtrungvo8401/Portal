@@ -18,21 +18,21 @@ const Counter = () => {
       <Button
         color="primary"
         onClick={() => dispatch(incrementCount())}
-        variant={"outlined"}
+        variant={"contained"}
       >
         + 1
       </Button>
       <Button
         color="inherit"
         onClick={() => dispatch(decrementCount())}
-        variant={"outlined"}
+        variant={"contained"}
       >
         -1
       </Button>
       <Button
         color="secondary"
         onClick={() => dispatch(resetCount())}
-        variant={"outlined"}
+        variant={"contained"}
       >
         Reset
       </Button>
