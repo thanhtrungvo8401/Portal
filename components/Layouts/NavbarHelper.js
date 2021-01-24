@@ -1,17 +1,16 @@
 import {
   Badge,
+  Box,
   IconButton,
   Menu,
   MenuItem,
   Slide,
+  Typography,
   useScrollTrigger,
 } from "@material-ui/core";
-import MailIcon from "@material-ui/icons/Mail";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import { AccountCircle } from "@material-ui/icons";
 
 export const useStyles = makeStyles((theme) => {
   return {
@@ -38,16 +37,16 @@ export const useStyles = makeStyles((theme) => {
       },
     },
     mobileMenu: {
+      backgroundColor: theme.palette.primary.main,
       "& .MuiPaper-root.MuiMenu-paper.MuiPopover-paper.MuiPaper-rounded": {
         width: "100%",
         height: "100%",
-        top: 0,
-        left: 0,
         maxHeight: "calc(100% - 32px)",
       },
-      "& .MuiList-root.MuiMenu-list.MuiList-padding": {
+      "& ul.MuiList-root.MuiMenu-list.MuiList-padding": {
         position: "relative",
         height: "100%",
+        backgroundColor: theme.palette.primary.main,
       },
       "& .MuiButtonBase-root.MuiListItem-root.MuiMenuItem-root.close-btn.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button": {
         justifyContent: "center",
@@ -106,35 +105,23 @@ export const renderMobileMenuF = (props) => {
       onClose={props.handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
+        <Typography variant="h6" color="secondary">
+          Fusi-kun
+        </Typography>
       </MenuItem>
       <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
+        <Typography variant="h6" color="secondary">
+          Top Student
+        </Typography>
       </MenuItem>
       <MenuItem>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
+        <Typography variant="h6" color="secondary">
+          News
+        </Typography>
       </MenuItem>
       <MenuItem className="close-btn">
         <IconButton onClick={props.handleMobileMenuClose}>
-          <HighlightOffIcon color={"error"} fontSize="large" />
+          <HighlightOffIcon color={"secondary"} fontSize="large" />
         </IconButton>
       </MenuItem>
     </Menu>

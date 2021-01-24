@@ -7,7 +7,6 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import MailIcon from "@material-ui/icons/Mail";
-import MoreIcon from "@material-ui/icons/MoreVert";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { useState } from "react";
 import { AccountCircle } from "@material-ui/icons";
@@ -59,7 +58,7 @@ function Navbar(props) {
   return (
     <React.Fragment>
       <HideOnScroll {...props}>
-        <AppBar>
+        <AppBar color="primary">
           <Toolbar>
             <Typography className={classes.title} variant="h6" noWrap>
               Neko-KUN

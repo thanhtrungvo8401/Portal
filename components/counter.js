@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import {
   incrementCount,
@@ -12,9 +12,9 @@ const Counter = () => {
 
   return (
     <div>
-      <h1>
+      <Typography variant="h6" color="error">
         Count: <span>{count}</span>
-      </h1>
+      </Typography>
       <Button
         color="primary"
         onClick={() => dispatch(incrementCount())}
