@@ -28,21 +28,18 @@ function Navbar(props) {
   const handleProfileMenuOpen = (event) => {
     setAnchorProfileEl(event.currentTarget);
   };
+  const handleProfileMenuClose = () => {
+    setAnchorProfileEl(null);
+  };
 
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
 
-  const handleProfileMenuClose = () => {
-    setAnchorProfileEl(null);
-    handleMobileMenuClose();
-  };
-
-  const handleMobileMenuOpen = (event) => {
-    // setMobileMoreAnchorEl(event.currentTarget);
-  };
-
-  const profileId = "primary-search-account-menu";
+  const profileId = "profile-menu-popup";
   const profileMenuPopup = renderProfileMenuF({
     anchorProfileEl,
     isProfileMenuOpen,
@@ -53,10 +50,10 @@ function Navbar(props) {
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = renderMobileMenuF({
     mobileMoreAnchorEl,
-    mobileMenuId,
     isMobileMenuOpen,
-    handleMobileMenuOpen,
     handleMobileMenuClose,
+    mobileMenuId,
+    className: classes.mobileMenu,
   });
 
   return (
@@ -64,20 +61,21 @@ function Navbar(props) {
       <HideOnScroll {...props}>
         <AppBar>
           <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color={"inherit"}
-              variant="h6"
-            >
-              <MenuIcon />
-            </IconButton>
-
             <Typography className={classes.title} variant="h6" noWrap>
               Neko-KUN
             </Typography>
 
             <div className={classes.sectionDesktop}>
+              <IconButton aria-label="show 4 new mails" color="inherit">
+                <Badge badgeContent={4} color="secondary">
+                  <MailIcon />
+                </Badge>
+              </IconButton>
+              <IconButton aria-label="show 4 new mails" color="inherit">
+                <Badge badgeContent={4} color="secondary">
+                  <MailIcon />
+                </Badge>
+              </IconButton>
               <IconButton aria-label="show 4 new mails" color="inherit">
                 <Badge badgeContent={4} color="secondary">
                   <MailIcon />
@@ -100,7 +98,7 @@ function Navbar(props) {
                 onClick={handleMobileMenuOpen}
                 color="inherit"
               >
-                <MoreIcon />
+                <MenuIcon />
               </IconButton>
             </div>
             <div className={classes.grow} />

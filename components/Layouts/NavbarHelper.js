@@ -8,8 +8,8 @@ import {
 } from "@material-ui/core";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-
-import { makeStyles, fade } from "@material-ui/core/styles";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import { AccountCircle } from "@material-ui/icons";
 
@@ -18,11 +18,9 @@ export const useStyles = makeStyles((theme) => {
     grow: {
       flexGrow: 1,
     },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
     title: {
       display: "none",
+      marginRight: theme.spacing(4),
       [theme.breakpoints.up("sm")]: {
         display: "block",
       },
@@ -37,6 +35,26 @@ export const useStyles = makeStyles((theme) => {
       display: "flex",
       [theme.breakpoints.up("md")]: {
         display: "none",
+      },
+    },
+    mobileMenu: {
+      "& .MuiPaper-root.MuiMenu-paper.MuiPopover-paper.MuiPaper-rounded": {
+        width: "100%",
+        height: "100%",
+        top: 0,
+        left: 0,
+        maxHeight: "calc(100% - 32px)",
+      },
+      "& .MuiList-root.MuiMenu-list.MuiList-padding": {
+        position: "relative",
+        height: "100%",
+      },
+      "& .MuiButtonBase-root.MuiListItem-root.MuiMenuItem-root.close-btn.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button": {
+        justifyContent: "center",
+        position: "absolute",
+        width: "100%",
+        left: 0,
+        bottom: theme.spacing(4),
       },
     },
   };
@@ -75,11 +93,15 @@ export const renderProfileMenuF = (props) => {
 export const renderMobileMenuF = (props) => {
   return (
     <Menu
+      className={props.className}
       anchorEl={props.mobileMoreAnchorEl}
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={props.mobileMenuId}
       keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
       open={props.isMobileMenuOpen}
       onClose={props.handleMobileMenuClose}
     >
@@ -99,7 +121,7 @@ export const renderMobileMenuF = (props) => {
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
-      <MenuItem onClick={props.handleProfileMenuOpen}>
+      <MenuItem>
         <IconButton
           aria-label="account of current user"
           aria-controls="primary-search-account-menu"
@@ -109,6 +131,11 @@ export const renderMobileMenuF = (props) => {
           <AccountCircle />
         </IconButton>
         <p>Profile</p>
+      </MenuItem>
+      <MenuItem className="close-btn">
+        <IconButton onClick={props.handleMobileMenuClose}>
+          <HighlightOffIcon color={"error"} fontSize="large" />
+        </IconButton>
       </MenuItem>
     </Menu>
   );
