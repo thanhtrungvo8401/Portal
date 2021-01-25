@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { constantApp } from "../utils/Constant";
 import { actionResetHistory } from "../redux/actions/historyActions";
+import { actionSetLoading } from "../redux/actions/loadingActions";
 function History(props) {
   const url = useSelector((state) => state.history);
   const router = useRouter();
@@ -12,10 +13,11 @@ function History(props) {
     if (element && router.pathname !== url) {
       element.classList.add(["animation-out"]);
       element.classList.remove(["animation-in"]);
+      setTimeout(() => {
+        dispatch(actionSetLoading());
+        router.push(url);
+      }, constantApp.animationTime * 1000);
     }
-    setTimeout(() => {
-      router.push(url);
-    }, constantApp.animationTime * 1000);
   };
   useEffect(() => {
     if (url) {
