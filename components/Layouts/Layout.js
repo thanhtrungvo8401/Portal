@@ -15,7 +15,7 @@ export const withLayout = (Component, propsPages) => {
         <Navbar />
         <Toolbar />
         <History />
-        <Container>
+        <Container id="animation-navigate" className="animation-in">
           <Box my={2}>
             <Component />
           </Box>
