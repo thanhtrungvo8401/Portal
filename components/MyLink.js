@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { navigate } from "../utils/Helper";
 
 export default function MyLink(props) {
-  const { className, variant, url, children } = props;
+  const { className, variant, url, children, color } = props;
   const navigateToUrl = () => {
     navigate(url);
   };
@@ -13,6 +13,7 @@ export default function MyLink(props) {
       className={className}
       variant={variant}
       noWrap
+      color={color}
     >
       {children}
     </Typography>

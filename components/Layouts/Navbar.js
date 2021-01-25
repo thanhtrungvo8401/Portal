@@ -48,6 +48,7 @@ function Navbar(props) {
     handleMobileMenuClose,
     mobileMenuId,
     className: classes.mobileMenu,
+    classes: classes,
   });
 
   return (
@@ -72,14 +73,14 @@ function Navbar(props) {
                 className={classes.navItem}
                 url="/top-student"
               >
-                Top Student
+                News
               </MyLink>
               <MyLink
                 variant="h6"
                 className={classes.navItem}
                 url="/top-student"
               >
-                Top Student
+                About Neko
               </MyLink>
             </div>
             <div className={classes.sectionMobile}>

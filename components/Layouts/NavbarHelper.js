@@ -1,6 +1,4 @@
 import {
-  Badge,
-  Box,
   IconButton,
   Menu,
   MenuItem,
@@ -11,6 +9,7 @@ import {
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
+import MyLink from "../MyLink";
 
 export const useStyles = makeStyles((theme) => {
   return {
@@ -61,6 +60,9 @@ export const useStyles = makeStyles((theme) => {
         bottom: theme.spacing(4),
       },
     },
+    myLink: {
+      width: "100%",
+    },
   };
 });
 
@@ -95,6 +97,7 @@ export const renderProfileMenuF = (props) => {
 };
 
 export const renderMobileMenuF = (props) => {
+  const { classes } = props;
   return (
     <Menu
       className={props.className}
@@ -109,20 +112,45 @@ export const renderMobileMenuF = (props) => {
       open={props.isMobileMenuOpen}
       onClose={props.handleMobileMenuClose}
     >
-      <MenuItem>
-        <Typography variant="h6" color="secondary">
-          Fusi-kun
-        </Typography>
+      <MenuItem onClick={props.handleMobileMenuClose}>
+        <MyLink
+          variant="h6"
+          url="/"
+          color="secondary"
+          className={classes.myLink}
+        >
+          Neko-kun
+        </MyLink>
       </MenuItem>
-      <MenuItem>
-        <Typography variant="h6" color="secondary">
+      <MenuItem onClick={props.handleMobileMenuClose}>
+        <MyLink
+          variant="h6"
+          url="/top-student"
+          color="secondary"
+          className={classes.myLink}
+        >
           Top Student
-        </Typography>
+        </MyLink>
       </MenuItem>
-      <MenuItem>
-        <Typography variant="h6" color="secondary">
+      <MenuItem onClick={props.handleMobileMenuClose}>
+        <MyLink
+          variant="h6"
+          url="/top-student"
+          color="secondary"
+          className={classes.myLink}
+        >
           News
-        </Typography>
+        </MyLink>
+      </MenuItem>
+      <MenuItem onClick={props.handleMobileMenuClose}>
+        <MyLink
+          variant="h6"
+          url="/top-student"
+          color="secondary"
+          className={classes.myLink}
+        >
+          About Neko
+        </MyLink>
       </MenuItem>
       <MenuItem className="close-btn">
         <IconButton onClick={props.handleMobileMenuClose}>
