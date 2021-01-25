@@ -1,14 +1,8 @@
-import {
-  AppBar,
-  Badge,
-  IconButton,
-  Toolbar,
-  Typography,
-} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import MailIcon from "@material-ui/icons/Mail";
-import NotificationsIcon from "@material-ui/icons/Notifications";
+import Link from "next/link";
 import { useState } from "react";
+
+import { AppBar, IconButton, Toolbar } from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
 import { AccountCircle } from "@material-ui/icons";
 import {
   useStyles,
@@ -16,6 +10,7 @@ import {
   renderProfileMenuF,
   renderMobileMenuF,
 } from "./NavbarHelper";
+import MyLink from "../MyLink";
 function Navbar(props) {
   const classes = useStyles();
   const [anchorProfileEl, setAnchorProfileEl] = useState(null);
@@ -60,34 +55,32 @@ function Navbar(props) {
       <HideOnScroll {...props}>
         <AppBar color="primary">
           <Toolbar>
-            <Typography className={classes.title} variant="h6" noWrap>
-              Neko-KUN
-            </Typography>
+            <MyLink variant="h6" url="/" className={classes.title}>
+              Neko-kun
+            </MyLink>
 
             <div className={classes.sectionDesktop}>
-              <IconButton aria-label="show 4 new mails" color="inherit">
-                <Badge badgeContent={4} color="secondary">
-                  <MailIcon />
-                </Badge>
-              </IconButton>
-              <IconButton aria-label="show 4 new mails" color="inherit">
-                <Badge badgeContent={4} color="secondary">
-                  <MailIcon />
-                </Badge>
-              </IconButton>
-              <IconButton aria-label="show 4 new mails" color="inherit">
-                <Badge badgeContent={4} color="secondary">
-                  <MailIcon />
-                </Badge>
-              </IconButton>
-              <IconButton
-                aria-label="show 17 new notifications"
-                color="inherit"
+              <MyLink
+                variant="h6"
+                className={classes.navItem}
+                url="/top-student"
               >
-                <Badge badgeContent={17} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
+                Top Student
+              </MyLink>
+              <MyLink
+                variant="h6"
+                className={classes.navItem}
+                url="/top-student"
+              >
+                Top Student
+              </MyLink>
+              <MyLink
+                variant="h6"
+                className={classes.navItem}
+                url="/top-student"
+              >
+                Top Student
+              </MyLink>
             </div>
             <div className={classes.sectionMobile}>
               <IconButton

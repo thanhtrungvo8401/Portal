@@ -19,10 +19,15 @@ export const useStyles = makeStyles((theme) => {
     },
     title: {
       display: "none",
+      cursor: "pointer",
       marginRight: theme.spacing(4),
       [theme.breakpoints.up("sm")]: {
         display: "block",
       },
+    },
+    navItem: {
+      cursor: "pointer",
+      marginRight: theme.spacing(2),
     },
     sectionDesktop: {
       display: "none",
