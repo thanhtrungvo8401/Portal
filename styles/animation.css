@@ -1,6 +1,3 @@
-#animation-navigate {
-  opacity: 0;
-}
 #animation-navigate.animation-in {
   animation: animation-in 0.5s ease-in-out;
   opacity: 1;
@@ -8,6 +5,7 @@
 
 #animation-navigate.animation-out {
   animation: animation-out 0.5s ease-in;
+  opacity: 0;
 }
 
 @keyframes animation-in {
