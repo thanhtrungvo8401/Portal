@@ -1,12 +1,11 @@
 import { Typography } from "@material-ui/core";
 import PropTypes from "prop-types";
-import { useRouter } from "next/router";
+import { navigate } from "../utils/Helper";
 
 export default function MyLink(props) {
   const { className, variant, url, children } = props;
-  const router = useRouter();
   const navigateToUrl = () => {
-    router.push(url);
+    navigate(url);
   };
   return (
     <Typography

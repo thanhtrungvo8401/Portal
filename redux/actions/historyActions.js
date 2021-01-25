@@ -1,4 +1,4 @@
-import { SET_HISTORY } from "../types";
+import { SET_HISTORY, RESET_HISTORY } from "../types";
 
 export const actionSetHistory = (url) => {
   return {
