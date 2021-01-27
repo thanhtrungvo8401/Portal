@@ -63,6 +63,9 @@ export const useStyles = makeStyles((theme) => {
     myLink: {
       width: "100%",
     },
+    roomEnter: {
+      marginRight: theme.spacing(2),
+    },
   };
 });
 

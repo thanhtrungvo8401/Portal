@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
-import { AppBar, IconButton, Toolbar } from "@material-ui/core";
+import { AppBar, Button, IconButton, Toolbar } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { AccountCircle } from "@material-ui/icons";
 import {
@@ -95,6 +95,13 @@ function Navbar(props) {
               </IconButton>
             </div>
             <div className={classes.grow} />
+            <div className={classes.roomEnter}>
+              <MyLink variant="h6" url="/study-room">
+                <Button color="secondary" variant="outlined">
+                  STUDY NOW
+                </Button>
+              </MyLink>
+            </div>
             <div>
               <IconButton
                 edge="end"
