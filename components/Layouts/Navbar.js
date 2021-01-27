@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useState } from "react";
 
 import { AppBar, Button, IconButton, Toolbar } from "@material-ui/core";
@@ -11,6 +10,7 @@ import {
   renderMobileMenuF,
 } from "./NavbarHelper";
 import MyLink from "../MyLink";
+import styles from "./styles.module.css";
 function Navbar(props) {
   const classes = useStyles();
   const [anchorProfileEl, setAnchorProfileEl] = useState(null);
@@ -97,7 +97,11 @@ function Navbar(props) {
             <div className={classes.grow} />
             <div className={classes.roomEnter}>
               <MyLink variant="h6" url="/study-room">
-                <Button color="secondary" variant="outlined">
+                <Button
+                  color="secondary"
+                  variant="outlined"
+                  className={styles.flashEffect}
+                >
                   STUDY NOW
                 </Button>
               </MyLink>

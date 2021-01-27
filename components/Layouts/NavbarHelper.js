@@ -65,6 +65,9 @@ export const useStyles = makeStyles((theme) => {
     },
     roomEnter: {
       marginRight: theme.spacing(2),
+      "& .MuiTypography-root.MuiTypography-h6.MuiTypography-noWrap": {
+        overflow: "visible",
+      },
     },
   };
 });
