@@ -1,7 +1,7 @@
 import { withLayout } from "../../components/Layouts/Layout";
-
+import StudyRoomLayout from "./Layout";
 function StudyRoom(props) {
-  return <div>STUDY ROOM</div>;
+  return <StudyRoomLayout />;
 }
 
 export default withLayout(StudyRoom, { title: "Study Room" });
