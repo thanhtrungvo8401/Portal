@@ -4,6 +4,8 @@ import { constantApp } from "../utils/Constant";
 import { makeStyles } from "@material-ui/core/styles";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { formatDate } from "../utils/DateHelper";
+import { appUrl } from "../utils/URL";
+import { navigate } from "../utils/Helper";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -40,9 +42,16 @@ const useStyles = makeStyles((theme) => {
 function SetVoca(props) {
   const classes = useStyles();
   const { name, number, time } = props;
-
+  // UI INTERACT:
+  const handleGoToSetVocas = (setVoca) => {
+    navigate(appUrl.setVocaDetail("1234"));
+  };
   return (
-    <Card variant="outlined" className={classes.setItem}>
+    <Card
+      variant="outlined"
+      className={classes.setItem}
+      onClick={handleGoToSetVocas}
+    >
       <CardContent>
         <Typography
           className={classes.setName}
