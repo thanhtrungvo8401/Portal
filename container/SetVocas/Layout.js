@@ -4,6 +4,8 @@ function Layout(props) {
   return (
     <div>
       <Voca />
+      <Voca />
+      <Voca />
     </div>
   );
 }

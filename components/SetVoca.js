@@ -17,9 +17,12 @@ const useStyles = makeStyles((theme) => {
         padding: "8px 16px",
         cursor: "pointer",
         alignItems: "center",
-        transition: `${constantApp.animationTime}s`,
+        backgroundColor: theme.palette.primary.light,
+        transition: theme.transitions.create("all", {
+          duration: theme.transitions.duration.short,
+        }),
         "&:hover": {
-          backgroundColor: theme.palette.info.main,
+          backgroundColor: theme.palette.primary.dark,
         },
       },
     },
