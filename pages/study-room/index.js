@@ -1,5 +1,5 @@
 import { withLayout } from "../../components/Layouts/Layout";
-import StudyRoomLayout from "./Layout";
+import StudyRoomLayout from "../../container/StudyRoom/Layout";
 function StudyRoom(props) {
   return <StudyRoomLayout />;
 }
