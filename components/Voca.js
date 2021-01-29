@@ -13,7 +13,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 const useStyles = makeStyles((theme) => {
   return {
     voca: {
-      maxWidth: "500px",
+      width: "100%",
       marginBottom: theme.spacing(2),
       backgroundColor: theme.palette.info.main,
       "& .MuiCardContent-root": {
@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => {
       },
       "& .MuiCardActions-root.MuiCardActions-spacing": {
         position: "relative",
+      },
+      [theme.breakpoints.up("md")]: {
+        width: `calc(50% - ${theme.spacing(2)}px)`,
       },
     },
     oneField: {
