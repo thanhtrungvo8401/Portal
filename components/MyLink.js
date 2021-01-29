@@ -13,7 +13,7 @@ export default function MyLink(props) {
       className={className}
       variant={variant}
       noWrap
-      color={color}
+      color={color || "secondary"}
     >
       {children}
     </Typography>

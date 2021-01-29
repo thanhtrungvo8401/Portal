@@ -1,5 +1,11 @@
+import Voca from "../../components/Voca";
+
 function Layout(props) {
-  return <div>SET VOCAS</div>;
+  return (
+    <div>
+      <Voca />
+    </div>
+  );
 }
 
 export default Layout;

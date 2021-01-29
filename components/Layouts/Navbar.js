@@ -89,7 +89,7 @@ function Navbar(props) {
                 aria-controls={mobileMenuId}
                 aria-haspopup="true"
                 onClick={handleMobileMenuOpen}
-                color="inherit"
+                color="secondary"
               >
                 <MenuIcon />
               </IconButton>
@@ -113,7 +113,7 @@ function Navbar(props) {
                 aria-controls={profileId}
                 aria-haspopup="true"
                 onClick={handleProfileMenuOpen}
-                color="inherit"
+                color="secondary"
               >
                 <AccountCircle />
               </IconButton>
