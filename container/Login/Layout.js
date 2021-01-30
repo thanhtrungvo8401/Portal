@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  link: {
+    color: theme.palette.primary.dark,
+  },
 }));
 function LoginLayout(props) {
   const { openLogin } = props;
@@ -81,12 +84,22 @@ function LoginLayout(props) {
 
         <Grid container>
           <Grid item xs>
-            <MyLink variant="caption" url="#" color="primary">
+            <MyLink
+              variant="caption"
+              url="#"
+              color="primary"
+              className={classes.link}
+            >
               Forgot password?
             </MyLink>
           </Grid>
           <Grid item xs>
-            <MyLink variant="caption" url="#" color="primary">
+            <MyLink
+              variant="caption"
+              url="#"
+              color="primary"
+              className={classes.link}
+            >
               Don't have an account? Sign Up
             </MyLink>
           </Grid>

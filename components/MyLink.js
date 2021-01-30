@@ -6,6 +6,13 @@ const useStyles = makeStyles((theme) => {
   return {
     link: {
       cursor: "pointer",
+      "&:hover": {
+        transition: theme.transitions.create("all", {
+          duration: theme.transitions.duration.short,
+        }),
+        textDecorationLine: "underline",
+        textDecorationStyle: "double",
+      },
     },
   };
 });
