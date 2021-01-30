@@ -130,7 +130,7 @@ function Navbar(props) {
                 </IconButton>
               )}
               {!_isLogined && (
-                <MyLink variant="h6" className={classes.navItem} url="/login">
+                <MyLink variant="h6" className={classes.navItem}>
                   Login
                 </MyLink>
               )}

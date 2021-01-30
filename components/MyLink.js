@@ -5,7 +5,9 @@ import { navigate } from "../utils/Helper";
 export default function MyLink(props) {
   const { className, variant, url, children, color } = props;
   const navigateToUrl = () => {
-    navigate(url);
+    if (Boolean(url)) {
+      navigate(url);
+    }
   };
   return (
     <Typography
@@ -24,5 +26,5 @@ MyLink.propTypes = {
   children: PropTypes.any.isRequired,
   variant: PropTypes.string.isRequired,
   className: PropTypes.any,
-  url: PropTypes.string.isRequired,
+  url: PropTypes.string,
 };
