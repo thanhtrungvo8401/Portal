@@ -6,7 +6,6 @@ import {
   Container,
   IconButton,
   Toolbar,
-  Typography,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { AccountCircle } from "@material-ui/icons";
@@ -19,6 +18,7 @@ import {
 import MyLink from "../MyLink";
 import styles from "./styles.module.css";
 import { isLogined } from "../../utils/Helper";
+import Login from "../../container/Login";
 function Navbar(props) {
   const classes = useStyles();
   const [anchorProfileEl, setAnchorProfileEl] = useState(null);
@@ -140,6 +140,7 @@ function Navbar(props) {
       </HideOnScroll>
       {renderMobileMenu}
       {profileMenuPopup}
+      <Login />
     </React.Fragment>
   );
 }

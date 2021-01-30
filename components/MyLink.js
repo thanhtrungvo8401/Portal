@@ -1,9 +1,18 @@
-import { Typography } from "@material-ui/core";
+import { makeStyles, Typography } from "@material-ui/core";
 import PropTypes from "prop-types";
 import { navigate } from "../utils/Helper";
 
+const useStyles = makeStyles((theme) => {
+  return {
+    link: {
+      cursor: "pointer",
+    },
+  };
+});
+
 export default function MyLink(props) {
   const { className, variant, url, children, color } = props;
+  const classes = useStyles();
   const navigateToUrl = () => {
     if (Boolean(url)) {
       navigate(url);
@@ -12,7 +21,7 @@ export default function MyLink(props) {
   return (
     <Typography
       onClick={navigateToUrl}
-      className={className}
+      className={`${className} ${classes.link}`}
       variant={variant}
       noWrap
       color={color || "secondary"}
