@@ -6,6 +6,7 @@ import {
   Container,
   IconButton,
   Toolbar,
+  Typography,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { AccountCircle } from "@material-ui/icons";
@@ -17,6 +18,7 @@ import {
 } from "./NavbarHelper";
 import MyLink from "../MyLink";
 import styles from "./styles.module.css";
+import { isLogined } from "../../utils/Helper";
 function Navbar(props) {
   const classes = useStyles();
   const [anchorProfileEl, setAnchorProfileEl] = useState(null);
@@ -24,6 +26,8 @@ function Navbar(props) {
 
   const isProfileMenuOpen = Boolean(anchorProfileEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const _isLogined = isLogined();
 
   const handleProfileMenuOpen = (event) => {
     setAnchorProfileEl(event.currentTarget);
@@ -113,7 +117,7 @@ function Navbar(props) {
                   </Button>
                 </MyLink>
               </div>
-              <div>
+              {_isLogined && (
                 <IconButton
                   edge="end"
                   aria-label="account of current user"
@@ -124,7 +128,12 @@ function Navbar(props) {
                 >
                   <AccountCircle />
                 </IconButton>
-              </div>
+              )}
+              {!_isLogined && (
+                <MyLink variant="h6" className={classes.navItem} url="/login">
+                  Login
+                </MyLink>
+              )}
             </Toolbar>
           </Container>
         </AppBar>

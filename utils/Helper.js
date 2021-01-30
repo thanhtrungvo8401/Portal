@@ -1,5 +1,7 @@
 import { actionSetHistory } from "../redux/actions/historyActions";
 import { initializeStore } from "../redux/store";
+import { constAuth } from "./Constant";
+import { getCookie } from "./Cookies";
 
 export const navigate = (url) => {
   const store = initializeStore();
@@ -29,3 +31,10 @@ export const handleErrorAPI = (err, isToast = false) => {
     details: object.data ? object.data.details || "" : "",
   };
 };
+
+export const isLogined = () => {
+  const jwt = !isServer && getCookie(constAuth.JWT);
+  return Boolean(jwt);
+};
+
+export const isServer = typeof window === "undefined";
