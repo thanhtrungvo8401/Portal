@@ -1,6 +1,8 @@
 import {
+  Avatar,
   Button,
   Checkbox,
+  Container,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -8,19 +10,27 @@ import {
   Grid,
   makeStyles,
   TextField,
+  Typography,
 } from "@material-ui/core";
+import VpnKeyOutlinedIcon from "@material-ui/icons/VpnKeyOutlined";
 import MyLink from "../../components/MyLink";
 const useStyles = makeStyles((theme) => ({
   dialog: {
+    "& .MuiDialogContent-root": {
+      display: "flex",
+      justifyContent: "center",
+      flexWrap: "wrap",
+      "& .MuiTypography-root": {
+        width: "100%",
+        textAlign: "center",
+      },
+    },
     "& .MuiPaper-root.MuiDialog-paper.MuiDialog-paperScrollPaper": {
       backgroundColor: theme.palette.info.light,
     },
   },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+  container: {
+    padding: 0,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -32,6 +42,10 @@ const useStyles = makeStyles((theme) => ({
   link: {
     color: theme.palette.primary.dark,
   },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
 }));
 function LoginLayout(props) {
   const { showLogin } = props;
@@ -42,69 +56,76 @@ function LoginLayout(props) {
       onClose={props.handleCloseLogin}
       className={classes.dialog}
     >
-      <DialogTitle>Login</DialogTitle>
-      <DialogContent>
-        <form className={classes.form}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign In
-          </Button>
-        </form>
+      <Container className={classes.container} component="main" maxWidth="xs">
+        <DialogContent>
+          <Avatar className={classes.avatar}>
+            <VpnKeyOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form className={classes.form}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign In
+            </Button>
+          </form>
 
-        <Grid container>
-          <Grid item xs>
-            <MyLink
-              variant="caption"
-              url="#"
-              color="primary"
-              className={classes.link}
-            >
-              Forgot password?
-            </MyLink>
+          <Grid container>
+            <Grid item xs>
+              <MyLink
+                variant="caption"
+                url="#"
+                color="primary"
+                className={classes.link}
+              >
+                Forgot password?
+              </MyLink>
+            </Grid>
+            <Grid item xs>
+              <MyLink
+                variant="caption"
+                url="/sign-up"
+                color="primary"
+                className={classes.link}
+              >
+                Don't have an account? Sign Up
+              </MyLink>
+            </Grid>
           </Grid>
-          <Grid item xs>
-            <MyLink
-              variant="caption"
-              url="/sign-up"
-              color="primary"
-              className={classes.link}
-            >
-              Don't have an account? Sign Up
-            </MyLink>
-          </Grid>
-        </Grid>
-      </DialogContent>
+        </DialogContent>
+      </Container>
     </Dialog>
   );
 }
