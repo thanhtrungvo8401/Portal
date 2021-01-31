@@ -96,7 +96,7 @@ function LoginLayout(props) {
           <Grid item xs>
             <MyLink
               variant="caption"
-              url="#"
+              url="/sign-up"
               color="primary"
               className={classes.link}
             >
