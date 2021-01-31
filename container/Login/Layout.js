@@ -34,11 +34,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function LoginLayout(props) {
-  const { openLogin } = props;
+  const { showLogin } = props;
   const classes = useStyles();
   return (
     <Dialog
-      open={openLogin}
+      open={showLogin}
       onClose={props.handleCloseLogin}
       className={classes.dialog}
     >

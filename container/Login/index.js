@@ -1,18 +1,18 @@
-import { useState } from "react";
+import { useSelector } from "react-redux";
+import { closeLoginForm } from "../../utils/Helper";
 import LoginLayout from "./Layout";
 
 function Login(props) {
-  const [openLogin, setOpenLogin] = useState(true);
+  const showLogin = useSelector(
+    (state) => state.login && state.login.showLogin
+  );
 
   // UI INTERACT:
-  const handleOpenLogin = () => {
-    setOpenLogin(true);
-  };
   const handleCloseLogin = () => {
-    setOpenLogin(false);
+    closeLoginForm();
   };
   return (
-    <LoginLayout handleCloseLogin={handleCloseLogin} openLogin={openLogin} />
+    <LoginLayout handleCloseLogin={handleCloseLogin} showLogin={showLogin} />
   );
 }
 

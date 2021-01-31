@@ -17,7 +17,7 @@ import {
 } from "./NavbarHelper";
 import MyLink from "../MyLink";
 import styles from "./styles.module.css";
-import { isLogined } from "../../utils/Helper";
+import { isLogined, showLoginForm } from "../../utils/Helper";
 import Login from "../../container/Login";
 function Navbar(props) {
   const classes = useStyles();
@@ -130,9 +130,11 @@ function Navbar(props) {
                 </IconButton>
               )}
               {!_isLogined && (
-                <MyLink variant="h6" className={classes.navItem}>
-                  Login
-                </MyLink>
+                <div onClick={() => showLoginForm()}>
+                  <MyLink variant="h6" className={classes.navItem}>
+                    Login
+                  </MyLink>
+                </div>
               )}
             </Toolbar>
           </Container>

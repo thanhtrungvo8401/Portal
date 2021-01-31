@@ -1,11 +1,30 @@
 import { actionSetHistory } from "../redux/actions/historyActions";
+import {
+  actionCloseLogin,
+  actionShowLogin,
+} from "../redux/actions/loginActions";
 import { initializeStore } from "../redux/store";
 import { constAuth } from "./Constant";
 import { getCookie } from "./Cookies";
 
+const store = initializeStore();
+
 export const navigate = (url) => {
-  const store = initializeStore();
-  store.dispatch(actionSetHistory(url));
+  if (!isServer) {
+    store.dispatch(actionSetHistory(url));
+  }
+};
+
+export const showLoginForm = () => {
+  if (!isServer) {
+    store.dispatch(actionShowLogin());
+  }
+};
+
+export const closeLoginForm = () => {
+  if (!isServer) {
+    store.dispatch(actionCloseLogin());
+  }
 };
 
 export const handleErrorAPI = (err, isToast = false) => {
