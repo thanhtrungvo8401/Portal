@@ -1,8 +1,4 @@
 // REDUX ACTION TYPES
-export const TICK = "TICK";
-export const INCREMENT = "INCREMENT";
-export const DECREMENT = "DECREMENT";
-export const RESET = "RESET";
 
 export const SET_HISTORY = "SET_HISTORY";
 export const RESET_HISTORY = "RESET_HISTORY";
@@ -12,3 +8,6 @@ export const CLOSE_COMPONENT_LOADING = "CLOSE_COMPONENT_LOADING";
 
 export const SHOW_LOGIN_FORM = "SHOW_LOGIN_FORM";
 export const CLOSE_LOGIN_FORM = "CLOSE_LOGIN_FORM";
+
+export const SET_USER = "SET_USER";
+export const RESET_USER = "RESET_USER";
