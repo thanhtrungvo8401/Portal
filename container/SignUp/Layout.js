@@ -1,12 +1,6 @@
-import {
-  Avatar,
-  Button,
-  Container,
-  makeStyles,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import GroupAddOutlinedIcon from '@material-ui/icons/GroupAddOutlined';
+import { Avatar, Container, makeStyles, Typography } from "@material-ui/core";
+import GroupAddOutlinedIcon from "@material-ui/icons/GroupAddOutlined";
+import InputGroup from "../../components/InputGroup";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -18,17 +12,28 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
 }));
+
+const inputFields = ["email", "name", "password", "confirmPassword"];
+const inputTypes = {
+  email: "input",
+  name: "input",
+  password: "input",
+  confirmPassword: "input",
+};
+const inputLabels = {
+  email: "Email Address",
+  name: "Your name",
+  password: "Password",
+  confirmPassword: "Confirm Password",
+};
+const inputRequired = ["email", "password", "confirmPassword"];
+const submitTitle = "Sign Up";
 
 function SignUpLayout(props) {
   const classes = useStyles();
+  const { user } = props;
+
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
@@ -38,56 +43,16 @@ function SignUpLayout(props) {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            id="name"
-            label="Name"
-            name="name"
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="confirmPassword"
-            label="Confirm Password"
-            type="password"
-            id="confirmPassword"
-          />
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign Up
-          </Button>
-        </form>
+        <InputGroup
+          inputFields={inputFields}
+          inputTypes={inputTypes}
+          inputLabels={inputLabels}
+          inputRequired={inputRequired}
+          submitTitle={submitTitle}
+          object={user}
+          handleOnChange={props.handleOnChange}
+          handleOnSubmit={props.handleOnSubmit}
+        />
       </div>
     </Container>
   );
