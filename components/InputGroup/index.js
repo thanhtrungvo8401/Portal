@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { codeToMessagesObject } from "../../utils/CodeToMessages";
+import { codeToMessages, constCODE } from "../../utils/CodeToMessages";
 
 import { Button, makeStyles, TextField } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
@@ -51,6 +51,7 @@ function InputGroup(props) {
           Boolean(INTERACT[key]) &&
           inputRequired.includes(key);
         const isPassword = key.toLowerCase().includes("password");
+        const ERR_MSG_CODE = Boolean(INTERACT[key]) && ERROR[key];
         switch (inputTypes[key]) {
           case "input":
             return (
@@ -69,8 +70,11 @@ function InputGroup(props) {
                 />
                 {isShowRequiredMsg && (
                   <Alert severity="error">
-                    {codeToMessagesObject["NOT_NULL"]}
+                    {codeToMessages(constCODE.NOT_NULL)}
                   </Alert>
+                )}
+                {Boolean(ERR_MSG_CODE) && (
+                  <Alert severity="error">{codeToMessages(ERR_MSG_CODE)}</Alert>
                 )}
               </React.Fragment>
             );

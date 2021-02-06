@@ -32,7 +32,7 @@ const submitTitle = "Sign Up";
 
 function SignUpLayout(props) {
   const classes = useStyles();
-  const { user } = props;
+  const { user, ERROR } = props;
 
   return (
     <Container component="main" maxWidth="xs">
@@ -44,6 +44,7 @@ function SignUpLayout(props) {
           Sign up
         </Typography>
         <InputGroup
+          ERROR={ERROR}
           inputFields={inputFields}
           inputTypes={inputTypes}
           inputLabels={inputLabels}
