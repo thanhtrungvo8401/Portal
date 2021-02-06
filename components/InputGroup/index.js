@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import { codeToMessagesObject } from "../../utils/CodeToMessages";
 
 import { Button, makeStyles, TextField } from "@material-ui/core";
@@ -25,10 +26,11 @@ function InputGroup(props) {
     inputRequired,
     object,
     submitTitle,
+    ERROR,
   } = props;
   const { handleOnChange, handleOnSubmit } = props;
   const [INTERACT, setINTERACT] = useState({});
-  const isValidForm = validForm(object, inputRequired);
+  const isValidForm = validForm(object, inputRequired, ERROR);
 
   // UI INTERACT:
   const handleOnChangeF = (e) => {
@@ -92,9 +94,23 @@ function InputGroup(props) {
   );
 }
 
+InputGroup.propTypes = {
+  object: PropTypes.object.isRequired,
+  inputFields: PropTypes.array.isRequired,
+  inputTypes: PropTypes.object.isRequired,
+  inputLabels: PropTypes.object.isRequired,
+  inputRequired: PropTypes.array.isRequired,
+  submitTitle: PropTypes.string,
+  handleOnChange: PropTypes.func.isRequired,
+  ERROR: PropTypes.object,
+};
+
 export default InputGroup;
 
-export const validForm = (object = {}, inputRequired = []) => {
+export const validForm = (object = {}, inputRequired = [], ERROR = {}) => {
+  if (Object.keys(ERROR).length) {
+    return false;
+  }
   for (const key of inputRequired) {
     if (!Boolean(object[key])) {
       return false;
