@@ -4,28 +4,26 @@ import {
   actionShowLogin,
 } from "../redux/actions/loginActions";
 import { toast } from "../components/Toast";
-import { initializeStore } from "../redux/store";
+import { storeClient } from "../redux/store";
 import { codeToMessages } from "./CodeToMessages";
 import { constAuth } from "./Constant";
 import { getCookie } from "./Cookies";
 
-const store = initializeStore();
-
 export const navigate = (url) => {
   if (!isServer) {
-    store.dispatch(actionSetHistory(url));
+    storeClient.dispatch(actionSetHistory(url));
   }
 };
 
 export const showLoginForm = () => {
   if (!isServer) {
-    store.dispatch(actionShowLogin());
+    storeClient.dispatch(actionShowLogin());
   }
 };
 
 export const closeLoginForm = () => {
   if (!isServer) {
-    store.dispatch(actionCloseLogin());
+    storeClient.dispatch(actionCloseLogin());
   }
 };
 

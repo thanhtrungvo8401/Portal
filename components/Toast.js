@@ -38,15 +38,15 @@ export const toast = {
       actionOpenToast({ content: content, type: "success" })
     );
   },
-  error: () => {
+  error: (content) => {
     storeClient.dispatch(actionOpenToast({ content: content, type: "error" }));
   },
-  warning: () => {
+  warning: (content) => {
     storeClient.dispatch(
       actionOpenToast({ content: content, type: "warning" })
     );
   },
-  info: () => {
+  info: (content) => {
     storeClient.dispatch(actionOpenToast({ content: content, type: "info" }));
   },
 };

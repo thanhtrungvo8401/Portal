@@ -3,6 +3,7 @@ import {
   actionCloseLoading,
   actionSetLoading,
 } from "../redux/actions/loadingActions";
+import { storeClient } from "../redux/store";
 import { constAuth, constEnv } from "../utils/Constant";
 import { getCookie, removeCookie } from "../utils/Cookies";
 import { handleErrorAPI, navigate } from "../utils/Helper";
@@ -13,8 +14,6 @@ const configure = {
   reponseType: "json",
 };
 
-const store = initializeStore();
-
 export const API = axios.create(configure);
 
 API.interceptors.request.use((req) => {
@@ -22,18 +21,18 @@ API.interceptors.request.use((req) => {
   if (jwt) {
     req.headers[constAuth.AUTHORIZATION] = `${constAuth.BEARER} ${jwt}`;
   }
-  store.dispatch(actionSetLoading());
+  storeClient.dispatch(actionSetLoading());
   // Important: request interceptors **must** return the request.
   return req;
 });
 
 API.interceptors.response.use(
   (res) => {
-    store.dispatch(actionCloseLoading());
+    storeClient.dispatch(actionCloseLoading());
     return res;
   },
   (err) => {
-    store.dispatch(actionCloseLoading());
+    storeClient.dispatch(actionCloseLoading());
     const status = handleErrorAPI(err).status;
     if (status === 401) {
       removeCookie(constAuth.JWT);

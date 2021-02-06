@@ -7,6 +7,7 @@ import {
   actionResetError,
 } from "../../redux/actions/errorActions";
 import { constCODE } from "../../utils/CodeToMessages";
+import { serviceSignUp } from "../../service/authenticate";
 
 function SignUp(props) {
   const user = useSelector((state) => state.user);
@@ -28,6 +29,11 @@ function SignUp(props) {
   };
   const handleOnSubmit = (e) => {
     e.preventDefault();
+    const newUser = {
+      email: user["email"],
+      password: user["password"],
+    };
+    dispatch(serviceSignUp(newUser));
   };
   return (
     <SignUpLayout
