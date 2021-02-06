@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { errorReducer } from "./errorReducer";
 import { historyReducer } from "./historyReducer";
 import { loadingReducer } from "./loadingReducer";
 import { loginReducer } from "./loginReducer";
@@ -11,6 +12,7 @@ const reducers = {
   login: loginReducer,
   user: userReducer,
   toast: toastReducer,
+  error: errorReducer,
 };
 
 export default combineReducers(reducers);

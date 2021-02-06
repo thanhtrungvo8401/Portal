@@ -14,3 +14,6 @@ export const RESET_USER = "RESET_USER";
 
 export const SET_OPEN_TOAST = "SET_OPEN_TOAST";
 export const SET_CLOSE_TOAST = "SET_CLOSE_TOAST";
+
+export const SET_ERROR = "SET_ERROR";
+export const RESET_ERROR = "RESET_ERROR";
