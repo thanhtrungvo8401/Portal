@@ -28,6 +28,7 @@ function InputGroup(props) {
   } = props;
   const { handleOnChange, handleOnSubmit } = props;
   const [INTERACT, setINTERACT] = useState({});
+  const isValidForm = validForm(object, inputRequired);
 
   // UI INTERACT:
   const handleOnChangeF = (e) => {
@@ -80,6 +81,7 @@ function InputGroup(props) {
           variant="contained"
           color="primary"
           className={classes.submit}
+          disabled={!isValidForm}
         >
           {submitTitle}
         </Button>
@@ -89,3 +91,12 @@ function InputGroup(props) {
 }
 
 export default InputGroup;
+
+export const validForm = (object = {}, inputRequired = []) => {
+  for (const key of inputRequired) {
+    if (!Boolean(object[key])) {
+      return false;
+    }
+  }
+  return true;
+};
