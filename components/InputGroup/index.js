@@ -48,6 +48,7 @@ function InputGroup(props) {
           Boolean(!object[key]) &&
           Boolean(INTERACT[key]) &&
           inputRequired.includes(key);
+        const isPassword = key.toLowerCase().includes("password");
         switch (inputTypes[key]) {
           case "input":
             return (
@@ -62,6 +63,7 @@ function InputGroup(props) {
                   onChange={handleOnChangeF}
                   label={inputLabels[key]}
                   required={inputRequired.includes(key)}
+                  type={isPassword ? "password" : "text"}
                 />
                 {isShowRequiredMsg && (
                   <Alert severity="error">
