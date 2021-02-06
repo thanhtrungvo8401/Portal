@@ -1,4 +1,8 @@
+import { useState } from "react";
+import { codeToMessagesObject } from "../../utils/CodeToMessages";
+
 import { Button, makeStyles, TextField } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -23,25 +27,47 @@ function InputGroup(props) {
     submitTitle,
   } = props;
   const { handleOnChange, handleOnSubmit } = props;
+  const [INTERACT, setINTERACT] = useState({});
+
+  // UI INTERACT:
+  const handleOnChangeF = (e) => {
+    const target = e.target;
+    setINTERACT({
+      ...INTERACT,
+      [target.name]: true,
+    });
+    handleOnChange(e);
+  };
+
   return (
     <form className={classes.form} onSubmit={handleOnSubmit}>
       {inputFields.map((key) => {
         const value = object[key] || "";
+        const isShowRequiredMsg =
+          Boolean(!object[key]) &&
+          Boolean(INTERACT[key]) &&
+          inputRequired.includes(key);
         switch (inputTypes[key]) {
           case "input":
             return (
-              <TextField
-                key={key}
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                id={key}
-                name={key}
-                value={value}
-                onChange={handleOnChange}
-                label={inputLabels[key]}
-                required={inputRequired.includes(key)}
-              />
+              <React.Fragment key={key}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  id={key}
+                  name={key}
+                  value={value}
+                  onChange={handleOnChangeF}
+                  label={inputLabels[key]}
+                  required={inputRequired.includes(key)}
+                />
+                {isShowRequiredMsg && (
+                  <Alert severity="error">
+                    {codeToMessagesObject["NOT_NULL"]}
+                  </Alert>
+                )}
+              </React.Fragment>
             );
           case "dropdown":
             break;
