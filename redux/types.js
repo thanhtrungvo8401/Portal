@@ -11,3 +11,6 @@ export const CLOSE_LOGIN_FORM = "CLOSE_LOGIN_FORM";
 
 export const SET_USER = "SET_USER";
 export const RESET_USER = "RESET_USER";
+
+export const SET_OPEN_TOAST = "SET_OPEN_TOAST";
+export const SET_CLOSE_TOAST = "SET_CLOSE_TOAST";

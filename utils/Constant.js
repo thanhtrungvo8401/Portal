@@ -14,3 +14,8 @@ export const constAuth = {
   AUTHORIZATION: "Authorization",
   BEARER: "Bearer",
 };
+
+export const constPages = {
+  signUp: "sign-up",
+  studyRoom: "study-room",
+};

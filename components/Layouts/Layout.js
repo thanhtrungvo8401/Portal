@@ -6,6 +6,7 @@ import { actionCloseLoading } from "../../redux/actions/loadingActions";
 import History from "../History";
 import LoadingComponent from "../LoadingComponent";
 import Navbar from "./Navbar";
+import ToastComponent from "../Toast";
 export const withLayout = (Component, propsPages) => {
   return () => {
     const dispatch = useDispatch();
@@ -24,6 +25,7 @@ export const withLayout = (Component, propsPages) => {
         <Toolbar />
         <History />
         <LoadingComponent />
+        <ToastComponent />
         <Container id="animation-navigate" className="animation-in">
           <Box my={2}>
             <Component />

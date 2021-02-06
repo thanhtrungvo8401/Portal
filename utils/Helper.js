@@ -3,7 +3,9 @@ import {
   actionCloseLogin,
   actionShowLogin,
 } from "../redux/actions/loginActions";
+import { toast } from "../components/Toast";
 import { initializeStore } from "../redux/store";
+import { codeToMessages } from "./CodeToMessages";
 import { constAuth } from "./Constant";
 import { getCookie } from "./Cookies";
 
@@ -31,13 +33,13 @@ export const handleErrorAPI = (err, isToast = false) => {
   const object = err.response || {};
   const errorCodes = object.data ? object.data.errorCodes || [] : [];
   if (isToast) {
-    // let toastError = "";
+    let toastError = "";
     errorCodes.forEach((ob) => {
       if (ob.field === "announceField") {
-        // toastError = getMessageFromCode(ob.code);
+        toastError = codeToMessages(ob.code);
       }
     });
-    // toast.error(toastError || constMessages.DEFAULT_ERR_MESSAGE);
+    toast.error(toastError);
   }
   const errorCodesObject = {};
   errorCodes.forEach((ob) => {
