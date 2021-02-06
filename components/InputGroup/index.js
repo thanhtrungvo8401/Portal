@@ -74,7 +74,9 @@ function InputGroup(props) {
                   </Alert>
                 )}
                 {Boolean(ERR_MSG_CODE) && (
-                  <Alert severity="error">{codeToMessages(ERR_MSG_CODE)}</Alert>
+                  <Alert severity="error">
+                    {codeToMessages(ERR_MSG_CODE, "usedForField")}
+                  </Alert>
                 )}
               </React.Fragment>
             );
