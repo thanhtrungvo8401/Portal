@@ -21,8 +21,11 @@ export default function ToastComponent(props) {
       open={toastOb.open}
       autoHideDuration={5000}
       onClose={handleOnClose}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
     >
-      <Alert severity={toastOb.type}>{toastOb.content}</Alert>
+      <Alert severity={toastOb.type} onClose={handleOnClose}>
+        {toastOb.content}
+      </Alert>
     </Snackbar>
   );
 }

@@ -14,16 +14,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const inputFields = ["email", "name", "password", "confirmPassword"];
+const inputFields = ["email", "password", "confirmPassword"];
 const inputTypes = {
   email: "input",
-  name: "input",
   password: "input",
   confirmPassword: "input",
 };
 const inputLabels = {
   email: "Email Address",
-  name: "Your name",
   password: "Password",
   confirmPassword: "Confirm Password",
 };
