@@ -19,7 +19,9 @@ import MyLink from "../MyLink";
 import styles from "./styles.module.css";
 import { isLogined, showLoginForm } from "../../utils/Helper";
 import Login from "../../container/Login";
+import { constEnv } from "../../utils/Constant";
 function Navbar(props) {
+  console.log(constEnv.API_URL);
   const classes = useStyles();
   const [anchorProfileEl, setAnchorProfileEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);

@@ -4,8 +4,8 @@ export const constantApp = {
 };
 
 export const constEnv = {
-  API_URL: process.env.API_URL,
-  APP_URL: process.env.APP_URL,
+  API_URL: process.env.NEXT_PUBLIC_API_URL,
+  APP_URL: process.env.NEXT_PUBLIC_APP_URL,
 };
 
 export const constAuth = {
