@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import "../styles/animation.css";
-import "../styles/common.css";
+import "../styles/animation.scss";
+import "../styles/common.scss";
 import { Provider } from "react-redux";
 import { useStore } from "../redux/store";
 import Head from "next/head";

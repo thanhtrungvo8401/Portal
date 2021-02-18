@@ -40,3 +40,5 @@ export function useStore(initialState) {
   const store = useMemo(() => initializeStore(initialState), [initialState]);
   return store;
 }
+
+export const storeClient = initializeStore();

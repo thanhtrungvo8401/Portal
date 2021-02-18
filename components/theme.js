@@ -10,7 +10,7 @@ const theme = createMuiTheme({
       main: yellow[700],
     },
     error: {
-      main: red[400],
+      main: red.A400,
     },
     info: {
       main: yellow[200],

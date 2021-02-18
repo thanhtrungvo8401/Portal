@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { withLayout } from "../../components/Layouts/Layout";
+import { withPrivateLayout } from "../../components/Layouts/PrivateLayout";
 import Layout from "../../container/SetVocas/Layout";
 
 function SetVocas(props) {
@@ -9,4 +9,4 @@ function SetVocas(props) {
   return <Layout />;
 }
 
-export default withLayout(SetVocas, { title: "Vocabularies list!" });
+export default withPrivateLayout(SetVocas, { title: "Vocabularies list!" });

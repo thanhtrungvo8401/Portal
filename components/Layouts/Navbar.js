@@ -17,6 +17,8 @@ import {
 } from "./NavbarHelper";
 import MyLink from "../MyLink";
 import styles from "./styles.module.css";
+import { isLogined, showLoginForm } from "../../utils/Helper";
+import Login from "../../container/Login";
 function Navbar(props) {
   const classes = useStyles();
   const [anchorProfileEl, setAnchorProfileEl] = useState(null);
@@ -24,6 +26,8 @@ function Navbar(props) {
 
   const isProfileMenuOpen = Boolean(anchorProfileEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const _isLogined = isLogined();
 
   const handleProfileMenuOpen = (event) => {
     setAnchorProfileEl(event.currentTarget);
@@ -113,7 +117,7 @@ function Navbar(props) {
                   </Button>
                 </MyLink>
               </div>
-              <div>
+              {_isLogined && (
                 <IconButton
                   edge="end"
                   aria-label="account of current user"
@@ -124,13 +128,21 @@ function Navbar(props) {
                 >
                   <AccountCircle />
                 </IconButton>
-              </div>
+              )}
+              {!_isLogined && (
+                <div onClick={() => showLoginForm()}>
+                  <MyLink variant="h6" className={classes.navItem}>
+                    Login
+                  </MyLink>
+                </div>
+              )}
             </Toolbar>
           </Container>
         </AppBar>
       </HideOnScroll>
       {renderMobileMenu}
       {profileMenuPopup}
+      <Login />
     </React.Fragment>
   );
 }

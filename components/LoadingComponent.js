@@ -19,7 +19,7 @@ const useStyle = makeStyles((theme) => {
       height: "100%",
       top: 0,
       left: 0,
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.info.main,
       opacity: 0.8,
       zIndex: 0,
     },
