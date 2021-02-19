@@ -1,7 +1,8 @@
-import { CLOSE_LOGIN_FORM, SHOW_LOGIN_FORM } from "../types";
+import { CLOSE_LOGIN_FORM, SET_IS_LOGINED, SHOW_LOGIN_FORM } from "../types";
 
 const initialState = {
   showLogin: false,
+  isLogined: false,
 };
 
 export const loginReducer = (state = { ...initialState }, action) => {
@@ -18,6 +19,11 @@ export const loginReducer = (state = { ...initialState }, action) => {
         showLogin: false,
       };
       return state;
+    case SET_IS_LOGINED:
+      state = {
+        ...state,
+        isLogined: action.payload,
+      };
     default:
       return state;
   }

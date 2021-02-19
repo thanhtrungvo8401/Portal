@@ -5,14 +5,10 @@ import {
   makeStyles,
   Typography,
 } from "@material-ui/core";
-import { useEffect } from "react";
-import { isLogined, showLoginForm } from "../../utils/Helper";
+import { showLoginForm } from "../../utils/Helper";
 import { withLayout } from "./Layout";
 export const withPrivateLayout = (Component, propsPages) => {
-  const _isLogined = isLogined();
-  return _isLogined
-    ? withLayout(Component, propsPages)
-    : withLayout(NotLoginComponent, propsPages);
+  return withLayout(Component, propsPages, "private");
 };
 
 const useStyles = makeStyles((theme) => {
@@ -25,12 +21,8 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-function NotLoginComponent(props) {
+export function NotLoginComponent(props) {
   const classes = useStyles();
-  // LIFE CYCLE HOOK:
-  useEffect(() => {
-    showLoginForm();
-  }, []);
   return (
     <Container>
       <Typography variant="h4" color="error">

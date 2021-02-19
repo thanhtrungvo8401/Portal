@@ -9,7 +9,7 @@ export const constEnv = {
 };
 
 export const constAuth = {
-  JWT: "JWT",
+  JWT: "JWT_Meomeo-kun",
   REDIRECT_FROM: "redirectFrom",
   AUTHORIZATION: "Authorization",
   BEARER: "Bearer",

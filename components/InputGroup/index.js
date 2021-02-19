@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { codeToMessages, constCODE } from "../../utils/CodeToMessages";
 
 import { Button, makeStyles, TextField } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
+import { useDispatch } from "react-redux";
+import { actionResetError } from "../../redux/actions/errorActions";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -14,11 +16,15 @@ const useStyles = makeStyles((theme) => {
     submit: {
       margin: theme.spacing(3, 0, 2),
     },
+    hidden: {
+      display: "none",
+    },
   };
 });
 
 function InputGroup(props) {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const {
     inputFields,
     inputTypes,
@@ -41,6 +47,12 @@ function InputGroup(props) {
     });
     handleOnChange(e);
   };
+
+  // Life Cycle Hook:
+  useEffect(() => {
+    // reset Error when new InputGroup is Loaded! => Change page!
+    dispatch(actionResetError());
+  }, []);
 
   return (
     <form className={classes.form} onSubmit={handleOnSubmit}>
@@ -84,18 +96,19 @@ function InputGroup(props) {
             break;
         }
       })}
-      {Boolean(submitTitle) && (
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-          disabled={!isValidForm}
-        >
-          {submitTitle}
-        </Button>
-      )}
+
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        color="primary"
+        className={`${classes.submit} ${
+          !Boolean(submitTitle) ? classes.hidden : ""
+        }`}
+        disabled={!isValidForm}
+      >
+        {submitTitle}
+      </Button>
     </form>
   );
 }
