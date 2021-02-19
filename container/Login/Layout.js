@@ -15,11 +15,11 @@ import InputGroup, { validForm } from "../../components/InputGroup";
 import MyLink from "../../components/MyLink";
 const useStyles = makeStyles((theme) => ({
   dialog: {
+    zIndex: "500!important",
     "& .MuiDialogContent-root": {
       display: "flex",
       justifyContent: "center",
       flexWrap: "wrap",
-      zIndex: "500",
       "& .MuiTypography-root": {
         width: "100%",
         textAlign: "center",
