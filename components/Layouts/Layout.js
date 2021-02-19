@@ -9,7 +9,10 @@ import Navbar from "./Navbar";
 import ToastComponent from "../Toast";
 import { NotLoginComponent } from "./PrivateLayout";
 import { isLogined } from "../../utils/Helper";
-import { actionSetIsLogined, actionShowLogin } from "../../redux/actions/loginActions";
+import {
+  actionSetIsLogined,
+  actionShowLogin,
+} from "../../redux/actions/loginActions";
 export const withLayout = (Component, propsPages, isPrivatePage) => {
   return () => {
     const dispatch = useDispatch();
@@ -22,7 +25,7 @@ export const withLayout = (Component, propsPages, isPrivatePage) => {
       if (_isLogined !== isLogined()) {
         dispatch(actionSetIsLogined(isLogined()));
       }
-      if (!isLogined()) {
+      if (isPrivatePage && !isLogined()) {
         dispatch(actionShowLogin());
       }
     }, []);
