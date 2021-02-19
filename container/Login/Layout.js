@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-start",
     width: "100%",
     "& span.MuiTypography-root.MuiFormControlLabel-label.MuiTypography-body1": {
-      textAlign: "left!important"
+      textAlign: "left!important",
     },
   },
   submit: {
@@ -85,6 +85,7 @@ function LoginLayout(props) {
             inputRequired={inputRequired}
             object={user}
             handleOnChange={props.handleOnChange}
+            handleOnSubmit={props.handleOnSubmit}
           />
           <FormControlLabel
             className={classes.rememberMe}
@@ -96,6 +97,7 @@ function LoginLayout(props) {
             type="btn"
             variant="contained"
             color="primary"
+            onClick={props.handleOnSubmit}
           >
             Log In
           </Button>

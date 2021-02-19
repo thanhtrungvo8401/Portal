@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) => {
     submit: {
       margin: theme.spacing(3, 0, 2),
     },
+    hidden: {
+      display: "none",
+    },
   };
 });
 
@@ -84,18 +87,19 @@ function InputGroup(props) {
             break;
         }
       })}
-      {Boolean(submitTitle) && (
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-          disabled={!isValidForm}
-        >
-          {submitTitle}
-        </Button>
-      )}
+
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        color="primary"
+        className={`${classes.submit} ${
+          !Boolean(submitTitle) ? classes.hidden : ""
+        }`}
+        disabled={!isValidForm}
+      >
+        {submitTitle}
+      </Button>
     </form>
   );
 }
