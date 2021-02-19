@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import VpnKeyOutlinedIcon from "@material-ui/icons/VpnKeyOutlined";
-import InputGroup from "../../components/InputGroup";
+import InputGroup, { validForm } from "../../components/InputGroup";
 import MyLink from "../../components/MyLink";
 const useStyles = makeStyles((theme) => ({
   dialog: {
@@ -64,6 +64,7 @@ const inputRequired = ["email", "password"];
 function LoginLayout(props) {
   const { showLogin, user, ERROR } = props;
   const classes = useStyles();
+  const isValidSubmit = validForm(user, inputRequired, ERROR);
   return (
     <Dialog
       open={showLogin}
@@ -99,6 +100,7 @@ function LoginLayout(props) {
             variant="contained"
             color="primary"
             onClick={props.handleOnSubmit}
+            disabled={!isValidSubmit}
           >
             Log In
           </Button>

@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { actionResetError } from "../../redux/actions/errorActions";
 import { actionSetUser } from "../../redux/actions/userActions";
 import { serviceLogin } from "../../service/authenticate";
 import { closeLoginForm } from "../../utils/Helper";
@@ -20,6 +21,7 @@ function Login(props) {
     const { name, value } = target;
     const newUser = { ...user, [name]: value };
     dispatch(actionSetUser(newUser));
+    dispatch(actionResetError());
   };
   const handleOnSubmit = (e) => {
     e.preventDefault();
@@ -34,9 +36,9 @@ function Login(props) {
       user={user}
       ERROR={ERROR}
       handleOnChange={handleOnChange}
-      handleCloseLogin={handleCloseLogin}
       handleOnSubmit={handleOnSubmit}
       showLogin={showLogin}
+      handleCloseLogin={handleCloseLogin}
     />
   );
 }
