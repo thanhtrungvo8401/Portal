@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
       display: "flex",
       justifyContent: "center",
       flexWrap: "wrap",
+      zIndex: "500",
       "& .MuiTypography-root": {
         width: "100%",
         textAlign: "center",
