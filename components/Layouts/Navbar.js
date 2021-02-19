@@ -17,8 +17,9 @@ import {
 } from "./NavbarHelper";
 import MyLink from "../MyLink";
 import styles from "./styles.module.css";
-import { isLogined, showLoginForm } from "../../utils/Helper";
+import { showLoginForm } from "../../utils/Helper";
 import Login from "../../container/Login";
+import { useSelector } from "react-redux";
 function Navbar(props) {
   const classes = useStyles();
   const [anchorProfileEl, setAnchorProfileEl] = useState(null);
@@ -27,7 +28,9 @@ function Navbar(props) {
   const isProfileMenuOpen = Boolean(anchorProfileEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const _isLogined = isLogined();
+  const _isLogined = useSelector(
+    (state) => state.login && state.login.isLogined
+  );
 
   const handleProfileMenuOpen = (event) => {
     setAnchorProfileEl(event.currentTarget);

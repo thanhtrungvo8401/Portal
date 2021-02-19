@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { codeToMessages, constCODE } from "../../utils/CodeToMessages";
 
 import { Button, makeStyles, TextField } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
+import { useDispatch } from "react-redux";
+import { actionResetError } from "../../redux/actions/errorActions";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -22,6 +24,7 @@ const useStyles = makeStyles((theme) => {
 
 function InputGroup(props) {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const {
     inputFields,
     inputTypes,
@@ -44,6 +47,12 @@ function InputGroup(props) {
     });
     handleOnChange(e);
   };
+
+  // Life Cycle Hook:
+  useEffect(() => {
+    // reset Error when new InputGroup is Loaded! => Change page!
+    dispatch(actionResetError());
+  }, []);
 
   return (
     <form className={classes.form} onSubmit={handleOnSubmit}>
