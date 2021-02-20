@@ -56,4 +56,10 @@ export const isLogined = () => {
   return Boolean(jwt);
 };
 
+export const removeGmailTag = (email = "") => {
+  if (!email) return "NULL";
+  const index = email.indexOf("@");
+  return email.slice(0, index);
+};
+
 export const isServer = typeof window === "undefined";

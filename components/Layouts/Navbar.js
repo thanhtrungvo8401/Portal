@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import jwt_decode from "jwt-decode";
 import {
   AppBar,
   Button,
@@ -17,41 +17,55 @@ import {
 } from "./NavbarHelper";
 import MyLink from "../MyLink";
 import styles from "./styles.module.css";
-import { showLoginForm } from "../../utils/Helper";
+import { isServer, showLoginForm } from "../../utils/Helper";
 import Login from "../../container/Login";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getCookie } from "../../utils/Cookies";
+import { constAuth } from "../../utils/Constant";
+import { actionSetUser } from "../../redux/actions/userActions";
 function Navbar(props) {
+  // VARIABLES:
   const classes = useStyles();
   const [anchorProfileEl, setAnchorProfileEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   const isProfileMenuOpen = Boolean(anchorProfileEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const _isLogined = useSelector(
     (state) => state.login && state.login.isLogined
   );
-
+  // UI INTERACT
   const handleProfileMenuOpen = (event) => {
     setAnchorProfileEl(event.currentTarget);
   };
   const handleProfileMenuClose = () => {
     setAnchorProfileEl(null);
   };
-
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
-
+  // HELPERS:
+  const handleExtractUserData = () => {
+    if (!isServer && _isLogined) {
+      const jwt = getCookie(constAuth.JWT);
+      const decode = jwt_decode(jwt);
+      const email = decode && decode.sub;
+      const newUser = { ...user, email: email };
+      dispatch(actionSetUser(newUser));
+    }
+  };
   const profileId = "profile-menu-popup";
   const profileMenuPopup = renderProfileMenuF({
     anchorProfileEl,
     isProfileMenuOpen,
     handleProfileMenuClose,
     profileId,
+    user,
   });
 
   const mobileMenuId = "primary-search-account-menu-mobile";
@@ -63,7 +77,10 @@ function Navbar(props) {
     className: classes.mobileMenu,
     classes: classes,
   });
-
+  // LIFE CYCLE HOOK:
+  useEffect(() => {
+    handleExtractUserData();
+  }, [_isLogined]);
   return (
     <React.Fragment>
       <HideOnScroll {...props}>

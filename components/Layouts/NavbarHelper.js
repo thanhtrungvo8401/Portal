@@ -3,13 +3,13 @@ import {
   Menu,
   MenuItem,
   Slide,
-  Typography,
   useScrollTrigger,
 } from "@material-ui/core";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import MyLink from "../MyLink";
+import { removeGmailTag } from "../../utils/Helper";
 
 export const useStyles = makeStyles((theme) => {
   return {
@@ -96,8 +96,11 @@ export const renderProfileMenuF = (props) => {
       open={props.isProfileMenuOpen}
       onClose={props.handleProfileMenuClose}
     >
-      <MenuItem onClick={props.handleProfileMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={props.handleProfileMenuClose}>My account</MenuItem>
+      <MenuItem onClick={props.handleProfileMenuClose}>
+        {removeGmailTag(props.user && props.user.email)}
+      </MenuItem>
+      <MenuItem onClick={props.handleProfileMenuClose}>My profile</MenuItem>
+      <MenuItem onClick={props.handleProfileMenuClose}>Logout</MenuItem>
     </Menu>
   );
 };
