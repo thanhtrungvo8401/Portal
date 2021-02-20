@@ -11,11 +11,14 @@ import {
   Typography,
 } from "@material-ui/core";
 import VpnKeyOutlinedIcon from "@material-ui/icons/VpnKeyOutlined";
+import { useSelector } from "react-redux";
 import InputGroup, { validForm } from "../../components/InputGroup";
 import MyLink from "../../components/MyLink";
 const useStyles = makeStyles((theme) => ({
-  dialog: {
+  zindex500: {
     zIndex: "500!important",
+  },
+  dialog: {
     "& .MuiDialogContent-root": {
       display: "flex",
       justifyContent: "center",
@@ -62,14 +65,15 @@ const inputLabels = {
 };
 const inputRequired = ["email", "password"];
 function LoginLayout(props) {
+  const isLoading = useSelector((state) => state.isLoading);
   const { showLogin, user, ERROR } = props;
   const classes = useStyles();
   const isValidSubmit = validForm(user, inputRequired, ERROR);
   return (
     <Dialog
       open={showLogin}
-      onClose={props.handleCloseLogin}
-      className={classes.dialog}
+      // onClose={props.handleCloseLogin}
+      className={`${classes.dialog} ${isLoading ? classes.zindex500 : ""}`}
     >
       <Container className={classes.container} component="main" maxWidth="xs">
         <DialogContent>
