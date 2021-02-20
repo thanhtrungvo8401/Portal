@@ -3,13 +3,13 @@ import {
   Menu,
   MenuItem,
   Slide,
-  Typography,
   useScrollTrigger,
 } from "@material-ui/core";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import MyLink from "../MyLink";
+import { removeGmailTag } from "../../utils/Helper";
 
 export const useStyles = makeStyles((theme) => {
   return {
@@ -69,6 +69,18 @@ export const useStyles = makeStyles((theme) => {
         overflow: "visible",
       },
     },
+    responsiveUserInfo: {
+      [theme.breakpoints.up("md")]: {
+        display: "none",
+      },
+    },
+    responsiveUserInfoDesktop: {
+      marginRight: theme.spacing(1),
+      [theme.breakpoints.down("sm")]: {
+        display: "none",
+        marginRight: 0,
+      },
+    },
   };
 });
 
@@ -85,7 +97,8 @@ HideOnScroll.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
-export const renderProfileMenuF = (props) => {
+export const ProfileMenuPopup = (props) => {
+  const classes = useStyles();
   return (
     <Menu
       anchorEl={props.anchorProfileEl}
@@ -96,14 +109,20 @@ export const renderProfileMenuF = (props) => {
       open={props.isProfileMenuOpen}
       onClose={props.handleProfileMenuClose}
     >
-      <MenuItem onClick={props.handleProfileMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={props.handleProfileMenuClose}>My account</MenuItem>
+      <MenuItem
+        className={classes.responsiveUserInfo}
+        onClick={props.handleProfileMenuClose}
+      >
+        {removeGmailTag(props.user && props.user.email)}
+      </MenuItem>
+      <MenuItem onClick={props.handleProfileMenuClose}>My profile</MenuItem>
+      <MenuItem onClick={props.handleLogout}>Logout</MenuItem>
     </Menu>
   );
 };
 
-export const renderMobileMenuF = (props) => {
-  const { classes } = props;
+export const MobileMenuPopup = (props) => {
+  const classes = useStyles();
   return (
     <Menu
       className={props.className}

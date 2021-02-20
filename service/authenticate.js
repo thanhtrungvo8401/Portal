@@ -9,7 +9,8 @@ import {
   actionCloseLogin,
   actionSetIsLogined,
 } from "../redux/actions/loginActions";
-import { setCookie } from "../utils/Cookies";
+import { removeCookie, setCookie } from "../utils/Cookies";
+import { appUrl } from "../utils/URL";
 
 export const serviceSignUp = (user) => {
   return (dispatch) => {
@@ -42,6 +43,20 @@ export const serviceLogin = (user) => {
   };
 };
 
-export const serviceLogout = (user) => {
-  return (dispatch) => {};
+export const serviceLogout = (actionAfterLogout) => {
+  return (dispatch) => {
+    API.post(enpoint_auth.logout)
+      .then((res) => {
+        if (typeof actionAfterLogout === "function") {
+          actionAfterLogout();
+        }
+        dispatch(actionSetIsLogined(false));
+        removeCookie(constAuth.JWT);
+        navigate(appUrl.dashboard());
+      })
+      .catch((err) => {
+        const object = handleErrorAPI(err, "toast");
+        dispatch(actionSetError(object.errorCodesObject));
+      });
+  };
 };

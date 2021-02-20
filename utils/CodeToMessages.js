@@ -21,6 +21,7 @@ const codeToMessagesObject = {
     "You don't have permisstion to execute this actions!Please contact to admin for more infomation",
   NOT_DELETE_YOURSELF: "You are deleting yourself, It's prohibited",
   NOT_BELOW_8_LETTER: "Valid data must have length greater than 8!",
+  INVALID_TOKEN: "You must login to access this resources!",
 };
 
 export const constCODE = {
