@@ -121,8 +121,8 @@ export const ProfileMenuPopup = (props) => {
   );
 };
 
-export const renderMobileMenuF = (props) => {
-  const { classes } = props;
+export const MobileMenuPopup = (props) => {
+  const classes = useStyles();
   return (
     <Menu
       className={props.className}

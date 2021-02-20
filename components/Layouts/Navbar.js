@@ -13,7 +13,7 @@ import { AccountCircle } from "@material-ui/icons";
 import {
   useStyles,
   HideOnScroll,
-  renderMobileMenuF,
+  MobileMenuPopup,
   ProfileMenuPopup,
 } from "./NavbarHelper";
 import MyLink from "../MyLink";
@@ -63,14 +63,6 @@ function Navbar(props) {
   const profileId = "profile-menu-popup";
 
   const mobileMenuId = "primary-search-account-menu-mobile";
-  const renderMobileMenu = renderMobileMenuF({
-    mobileMoreAnchorEl,
-    isMobileMenuOpen,
-    handleMobileMenuClose,
-    mobileMenuId,
-    className: classes.mobileMenu,
-    classes: classes,
-  });
   // LIFE CYCLE HOOK:
   useEffect(() => {
     handleExtractUserData();
@@ -160,7 +152,6 @@ function Navbar(props) {
           </Container>
         </AppBar>
       </HideOnScroll>
-      {renderMobileMenu}
       <ProfileMenuPopup
         anchorProfileEl={anchorProfileEl}
         isProfileMenuOpen={isProfileMenuOpen}
@@ -168,7 +159,13 @@ function Navbar(props) {
         profileId={profileId}
         user={user}
       />
-
+      <MobileMenuPopup
+        mobileMoreAnchorEl={mobileMoreAnchorEl}
+        isMobileMenuOpen={isMobileMenuOpen}
+        handleMobileMenuClose={handleMobileMenuClose}
+        mobileMenuId={mobileMenuId}
+        className={classes.mobileMenu}
+      />
       <Login />
     </React.Fragment>
   );
