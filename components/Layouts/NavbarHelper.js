@@ -116,7 +116,7 @@ export const ProfileMenuPopup = (props) => {
         {removeGmailTag(props.user && props.user.email)}
       </MenuItem>
       <MenuItem onClick={props.handleProfileMenuClose}>My profile</MenuItem>
-      <MenuItem onClick={props.handleProfileMenuClose}>Logout</MenuItem>
+      <MenuItem onClick={props.handleLogout}>Logout</MenuItem>
     </Menu>
   );
 };

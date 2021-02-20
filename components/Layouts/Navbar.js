@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCookie } from "../../utils/Cookies";
 import { constAuth } from "../../utils/Constant";
 import { actionSetUser } from "../../redux/actions/userActions";
+import { serviceLogout } from "../../service/authenticate";
 function Navbar(props) {
   // VARIABLES:
   const classes = useStyles();
@@ -49,6 +50,9 @@ function Navbar(props) {
   };
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
+  };
+  const handleLogout = () => {
+    dispatch(serviceLogout(handleProfileMenuClose));
   };
   // HELPERS:
   const handleExtractUserData = () => {
@@ -156,6 +160,7 @@ function Navbar(props) {
         anchorProfileEl={anchorProfileEl}
         isProfileMenuOpen={isProfileMenuOpen}
         handleProfileMenuClose={handleProfileMenuClose}
+        handleLogout={handleLogout}
         profileId={profileId}
         user={user}
       />
