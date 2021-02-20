@@ -6,6 +6,7 @@ import {
   Container,
   IconButton,
   Toolbar,
+  Typography,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { AccountCircle } from "@material-ui/icons";
@@ -17,7 +18,7 @@ import {
 } from "./NavbarHelper";
 import MyLink from "../MyLink";
 import styles from "./styles.module.css";
-import { isServer, showLoginForm } from "../../utils/Helper";
+import { isServer, removeGmailTag, showLoginForm } from "../../utils/Helper";
 import Login from "../../container/Login";
 import { useDispatch, useSelector } from "react-redux";
 import { getCookie } from "../../utils/Cookies";
@@ -66,6 +67,7 @@ function Navbar(props) {
     handleProfileMenuClose,
     profileId,
     user,
+    classes: classes,
   });
 
   const mobileMenuId = "primary-search-account-menu-mobile";
@@ -146,6 +148,12 @@ function Navbar(props) {
                   onClick={handleProfileMenuOpen}
                   color="secondary"
                 >
+                  <Typography
+                    className={classes.responsiveUserInfoDesktop}
+                    variant="caption"
+                  >
+                    {removeGmailTag(user && user.email)}
+                  </Typography>
                   <AccountCircle />
                 </IconButton>
               )}

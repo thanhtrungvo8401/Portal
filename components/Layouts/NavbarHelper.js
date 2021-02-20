@@ -69,6 +69,18 @@ export const useStyles = makeStyles((theme) => {
         overflow: "visible",
       },
     },
+    responsiveUserInfo: {
+      [theme.breakpoints.up("md")]: {
+        display: "none",
+      },
+    },
+    responsiveUserInfoDesktop: {
+      marginRight: theme.spacing(1),
+      [theme.breakpoints.down("sm")]: {
+        display: "none",
+        marginRight: 0,
+      },
+    },
   };
 });
 
@@ -86,6 +98,7 @@ HideOnScroll.propTypes = {
 };
 
 export const renderProfileMenuF = (props) => {
+  const classes = props.classes || {};
   return (
     <Menu
       anchorEl={props.anchorProfileEl}
@@ -96,7 +109,10 @@ export const renderProfileMenuF = (props) => {
       open={props.isProfileMenuOpen}
       onClose={props.handleProfileMenuClose}
     >
-      <MenuItem onClick={props.handleProfileMenuClose}>
+      <MenuItem
+        className={classes.responsiveUserInfo}
+        onClick={props.handleProfileMenuClose}
+      >
         {removeGmailTag(props.user && props.user.email)}
       </MenuItem>
       <MenuItem onClick={props.handleProfileMenuClose}>My profile</MenuItem>
