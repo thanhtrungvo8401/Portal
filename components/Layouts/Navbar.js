@@ -13,8 +13,8 @@ import { AccountCircle } from "@material-ui/icons";
 import {
   useStyles,
   HideOnScroll,
-  renderProfileMenuF,
   renderMobileMenuF,
+  ProfileMenuPopup,
 } from "./NavbarHelper";
 import MyLink from "../MyLink";
 import styles from "./styles.module.css";
@@ -61,14 +61,6 @@ function Navbar(props) {
     }
   };
   const profileId = "profile-menu-popup";
-  const profileMenuPopup = renderProfileMenuF({
-    anchorProfileEl,
-    isProfileMenuOpen,
-    handleProfileMenuClose,
-    profileId,
-    user,
-    classes: classes,
-  });
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = renderMobileMenuF({
@@ -169,7 +161,14 @@ function Navbar(props) {
         </AppBar>
       </HideOnScroll>
       {renderMobileMenu}
-      {profileMenuPopup}
+      <ProfileMenuPopup
+        anchorProfileEl={anchorProfileEl}
+        isProfileMenuOpen={isProfileMenuOpen}
+        handleProfileMenuClose={handleProfileMenuClose}
+        profileId={profileId}
+        user={user}
+      />
+
       <Login />
     </React.Fragment>
   );

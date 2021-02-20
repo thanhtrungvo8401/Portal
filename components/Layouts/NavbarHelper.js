@@ -97,8 +97,8 @@ HideOnScroll.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
-export const renderProfileMenuF = (props) => {
-  const classes = props.classes || {};
+export const ProfileMenuPopup = (props) => {
+  const classes = useStyles();
   return (
     <Menu
       anchorEl={props.anchorProfileEl}
