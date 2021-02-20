@@ -7,10 +7,12 @@ import {
   DialogContent,
   FormControlLabel,
   Grid,
+  IconButton,
   makeStyles,
   Typography,
 } from "@material-ui/core";
 import VpnKeyOutlinedIcon from "@material-ui/icons/VpnKeyOutlined";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { useSelector } from "react-redux";
 import InputGroup, { validForm } from "../../components/InputGroup";
 import MyLink from "../../components/MyLink";
@@ -31,6 +33,12 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiPaper-root.MuiDialog-paper.MuiDialog-paperScrollPaper": {
       backgroundColor: theme.palette.info.light,
     },
+  },
+  closeBtn: {
+    position: "absolute",
+    width: "auto",
+    right: 0,
+    top: 0,
   },
   container: {
     padding: 0,
@@ -75,6 +83,9 @@ function LoginLayout(props) {
       // onClose={props.handleCloseLogin}
       className={`${classes.dialog} ${isLoading ? classes.zindex500 : ""}`}
     >
+      <IconButton className={classes.closeBtn} onClick={props.handleCloseLogin}>
+        <HighlightOffIcon color="error" fontSize="large" />
+      </IconButton>
       <Container className={classes.container} component="main" maxWidth="xs">
         <DialogContent>
           <Avatar className={classes.avatar}>
