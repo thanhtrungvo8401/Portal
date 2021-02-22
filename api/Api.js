@@ -36,7 +36,7 @@ API.interceptors.response.use(
     const status = handleErrorAPI(err).status;
     if (status === 401) {
       removeCookie(constAuth.JWT);
-      navigate(appUrl.setVocaList());
+      navigate(appUrl.studyRoom());
     }
     throw err;
   }

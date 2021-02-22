@@ -1,5 +1,5 @@
 import { API } from "../api/Api";
-import { constAuth, constPages } from "../utils/Constant";
+import { constAuth } from "../utils/Constant";
 import { handleErrorAPI, navigate } from "../utils/Helper";
 import { enpoint_auth } from "./ApiUrl";
 import { actionSetError } from "../redux/actions/errorActions";
@@ -17,7 +17,7 @@ export const serviceSignUp = (user) => {
     API.post(enpoint_auth.sign_up, user)
       .then((res) => {
         toast.success(constCODE.SIGN_UP_SUCCESS);
-        navigate(constPages.studyRoom);
+        navigate(appUrl.studyRoom());
       })
       .catch((err) => {
         const object = handleErrorAPI(err, "toast");
