@@ -4,6 +4,7 @@ import { red } from "@material-ui/core/colors";
 const useStyles = makeStyles((theme) => ({
   paragraphTitle: {
     marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(2)
   },
   typo: {
     display: "inline-block",
