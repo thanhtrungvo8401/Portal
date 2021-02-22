@@ -5,5 +5,6 @@ export const enpoint_auth = {
 };
 
 export const enpoint_setVoca = {
-  setVocas: () => "/set-vocas",
+  createSetVocas: () => "/set-vocas",
+  getSetVocasByAuthId: (authId) => `/users/${authId}/set-vocas`,
 };
