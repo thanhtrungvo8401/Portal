@@ -3,7 +3,7 @@ import ParagraphTitle from "../../components/ParagraphTitle";
 import SetVoca from "../../components/SetVoca";
 import ActionGroup from "../../components/ActionGroup";
 import { useState } from "react";
-import InputGroup from "../../components/InputGroup";
+import InputGroup, { validForm } from "../../components/InputGroup";
 
 const inputFields = ["name"];
 const inputTypes = {
@@ -24,6 +24,8 @@ const useStyles = makeStyles((theme) => {
 function StudyRoomLayout(props) {
   const classes = useStyles();
   const [isShowCreateForm, setCreateForm] = useState(false);
+  const isValidSubmit = validForm(props.setVoca, inputRequired, props.ERROR);
+
   // UI INTERACT:
   const handleShowCreate = () => {
     setCreateForm(true);
@@ -69,6 +71,7 @@ function StudyRoomLayout(props) {
             color="primary"
             variant="contained"
             onClick={props.handleOnSubmit}
+            disabled={!isValidSubmit}
           >
             Save
           </Button>
