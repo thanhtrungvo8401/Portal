@@ -18,3 +18,6 @@ export const SET_CLOSE_TOAST = "SET_CLOSE_TOAST";
 
 export const SET_ERROR = "SET_ERROR";
 export const RESET_ERROR = "RESET_ERROR";
+
+export const SET_GROUP_VOCAS_LIST = "SET_GROUP_VOCAS_LIST";
+export const RESET_GROUP_VOCAS_LIST = "RESET_GROUP_VOCAS_LIST";
