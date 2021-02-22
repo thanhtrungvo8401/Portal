@@ -5,7 +5,10 @@ const useStyles = makeStyles((theme) => {
     actionGroup: {
       display: "flex",
       justifyContent: "flex-end",
-      marginTop: theme.spacing(2)
+      marginTop: theme.spacing(2),
+      "& button.MuiButtonBase-root": {
+        marginLeft: theme.spacing(2)
+      }
     },
   };
 });
