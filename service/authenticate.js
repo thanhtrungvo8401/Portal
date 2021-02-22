@@ -1,7 +1,7 @@
 import { API } from "../api/Api";
 import { constAuth } from "../utils/Constant";
 import { handleErrorAPI, navigate } from "../utils/Helper";
-import { enpoint_auth } from "./ApiUrl";
+import { enpoint_auth } from "../utils/API_URL";
 import { actionSetError } from "../redux/actions/errorActions";
 import { toast } from "../components/Toast";
 import { constCODE } from "../utils/CodeToMessages";
@@ -14,7 +14,7 @@ import { appUrl } from "../utils/APP_URL";
 
 export const serviceSignUp = (user) => {
   return (dispatch) => {
-    API.post(enpoint_auth.sign_up, user)
+    API.post(enpoint_auth.sign_up(), user)
       .then((res) => {
         toast.success(constCODE.SIGN_UP_SUCCESS);
         navigate(appUrl.studyRoom());
@@ -28,7 +28,7 @@ export const serviceSignUp = (user) => {
 
 export const serviceLogin = (user) => {
   return (dispatch) => {
-    API.post(enpoint_auth.login, user)
+    API.post(enpoint_auth.login(), user)
       .then((res) => {
         const data = res.data;
         const jwt = data.token;
@@ -45,7 +45,7 @@ export const serviceLogin = (user) => {
 
 export const serviceLogout = (actionAfterLogout) => {
   return (dispatch) => {
-    API.post(enpoint_auth.logout)
+    API.post(enpoint_auth.logout())
       .then((res) => {
         if (typeof actionAfterLogout === "function") {
           actionAfterLogout();
