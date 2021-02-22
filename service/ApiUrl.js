@@ -3,3 +3,8 @@ export const enpoint_auth = {
   login: "/authenticate/login",
   logout: "/authenticate/logout",
 };
+
+export const enpoint_setVoca = {
+  createSetVoca: "/set-vocas",
+  
+};

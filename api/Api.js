@@ -7,7 +7,7 @@ import { storeClient } from "../redux/store";
 import { constAuth, constEnv } from "../utils/Constant";
 import { getCookie, removeCookie } from "../utils/Cookies";
 import { handleErrorAPI, navigate } from "../utils/Helper";
-import { appUrl } from "../utils/URL";
+import { appUrl } from "../utils/APP_URL";
 
 const configure = {
   baseURL: constEnv.API_URL,

@@ -10,7 +10,7 @@ import {
   actionSetIsLogined,
 } from "../redux/actions/loginActions";
 import { removeCookie, setCookie } from "../utils/Cookies";
-import { appUrl } from "../utils/URL";
+import { appUrl } from "../utils/APP_URL";
 
 export const serviceSignUp = (user) => {
   return (dispatch) => {

@@ -4,7 +4,7 @@ import { constantApp } from "../utils/Constant";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Card, CardContent, Typography } from "@material-ui/core";
 import { formatDate } from "../utils/DateHelper";
-import { appUrl } from "../utils/URL";
+import { appUrl } from "../utils/APP_URL";
 import { navigate } from "../utils/Helper";
 
 const useStyles = makeStyles((theme) => {
