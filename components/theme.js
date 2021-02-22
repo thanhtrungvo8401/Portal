@@ -9,13 +9,13 @@ const theme = createMuiTheme({
     secondary: {
       main: grey[200],
     },
+    text: {
+      primary: grey[800],
+      secondary: grey[600],
+    },
     // info: {
     //   main: grey[100],
     // },
-    text: {
-      primary: grey[900],
-      secondary: grey[700]
-    },
     error: {
       main: red.A400,
     },
