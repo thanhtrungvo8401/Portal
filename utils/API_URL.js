@@ -8,3 +8,7 @@ export const enpoint_setVoca = {
   createSetVocas: () => "/set-vocas",
   getSetVocasByAuthId: (authId) => `/users/${authId}/set-vocas`,
 };
+
+export const enpoint_user = {
+  getProfile: () => "/my-profile",
+};
