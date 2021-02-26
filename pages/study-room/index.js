@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { withPrivateLayout } from "../../components/Layouts/PrivateLayout";
 import StudyRoomLayout from "../../container/StudyRoom/Layout";
 import { actionResetError } from "../../redux/actions/errorActions";
+import { serviceGetSetVocas } from "../../service/SetVoca";
 function StudyRoom(props) {
   // Variables:
   const [setVoca, setSetVoca] = useState({});
   const ERROR = useSelector((state) => state.error);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   // UI INTERACT:
   const handleOnChange = (e) => {
@@ -21,6 +23,17 @@ function StudyRoom(props) {
     // dispatch service:
     console.log(setVoca);
   };
+  // FUNCTION DEFINED:
+  const handleFetAllSetVoca = () => {
+    dispatch(serviceGetSetVocas(user.id));
+  };
+  // LIFE CYCLE HOOK:
+  // fetch all set-vocas:
+  useEffect(() => {
+    if (user.id) {
+      handleFetAllSetVoca();
+    }
+  }, [user.id]);
   return (
     <StudyRoomLayout
       handleOnChange={handleOnChange}
