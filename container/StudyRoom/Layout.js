@@ -5,14 +5,14 @@ import ActionGroup from "../../components/ActionGroup";
 import { useState } from "react";
 import InputGroup, { validForm } from "../../components/InputGroup";
 
-const inputFields = ["name"];
+const inputFields = ["setName"];
 const inputTypes = {
-  name: "input",
+  setName: "input",
 };
 const inputLabels = {
-  name: "Lesson XX: X X X X",
+  setName: "Lesson XX: X X X X",
 };
-const inputRequired = ["name"];
+const inputRequired = ["setName"];
 const useStyles = makeStyles((theme) => {
   return {
     setVocaForm: {

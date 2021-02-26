@@ -3,7 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { withPrivateLayout } from "../../components/Layouts/PrivateLayout";
 import StudyRoomLayout from "../../container/StudyRoom/Layout";
 import { actionResetError } from "../../redux/actions/errorActions";
-import { serviceGetSetVocas } from "../../service/SetVoca";
+import {
+  serviceCreateSetVoca,
+  serviceGetSetVocas,
+} from "../../service/SetVoca";
 function StudyRoom(props) {
   // Variables:
   const [setVoca, setSetVoca] = useState({});
@@ -18,10 +21,13 @@ function StudyRoom(props) {
     dispatch(actionResetError());
   };
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmitCreateVoca = (e) => {
     e.preventDefault();
-    // dispatch service:
-    console.log(setVoca);
+    const setVocaObject = {
+      ...setVoca,
+      authorId: user.id,
+    };
+    dispatch(serviceCreateSetVoca(setVocaObject));
   };
   // FUNCTION DEFINED:
   const handleFetAllSetVoca = () => {
@@ -37,7 +43,7 @@ function StudyRoom(props) {
   return (
     <StudyRoomLayout
       handleOnChange={handleOnChange}
-      handleOnSubmit={handleOnSubmit}
+      handleOnSubmit={handleOnSubmitCreateVoca}
       ERROR={ERROR}
       setVoca={setVoca}
     />
