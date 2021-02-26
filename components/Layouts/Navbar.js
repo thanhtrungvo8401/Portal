@@ -18,12 +18,9 @@ import {
 } from "./NavbarHelper";
 import MyLink from "../MyLink";
 import styles from "./styles.module.css";
-import { isServer, removeGmailTag, showLoginForm } from "../../utils/Helper";
+import { removeGmailTag, showLoginForm } from "../../utils/Helper";
 import Login from "../../container/Login";
 import { useDispatch, useSelector } from "react-redux";
-import { getCookie } from "../../utils/Cookies";
-import { constAuth } from "../../utils/Constant";
-import { actionSetUser } from "../../redux/actions/userActions";
 import { serviceLogout } from "../../service/authenticate";
 function Navbar(props) {
   // VARIABLES:
@@ -54,23 +51,9 @@ function Navbar(props) {
   const handleLogout = () => {
     dispatch(serviceLogout(handleProfileMenuClose));
   };
-  // HELPERS:
-  const handleExtractUserData = () => {
-    if (!isServer && _isLogined) {
-      const jwt = getCookie(constAuth.JWT);
-      const decode = jwt_decode(jwt);
-      const email = decode && decode.sub;
-      const newUser = { ...user, email: email };
-      dispatch(actionSetUser(newUser));
-    }
-  };
   const profileId = "profile-menu-popup";
 
   const mobileMenuId = "primary-search-account-menu-mobile";
-  // LIFE CYCLE HOOK:
-  useEffect(() => {
-    handleExtractUserData();
-  }, [_isLogined]);
   return (
     <React.Fragment>
       <HideOnScroll {...props}>
