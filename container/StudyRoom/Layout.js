@@ -49,7 +49,7 @@ function StudyRoomLayout(props) {
           <SetVoca key={index} name={el.setName} number={el.totalVocas} time={Date.now()} />
         );
       })}
-      {!isShowCreateForm && (
+      {!isShowCreateForm && !listSetVocas.length && (
         <Typography variant="body1">
           There are no vocabularies group in your room, Click into the following
           (+) Icon to create a new one!

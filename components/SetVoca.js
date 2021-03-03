@@ -2,7 +2,7 @@ import PropType from "prop-types";
 import { constantApp } from "../utils/Constant";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, Card, CardContent, Typography } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import { formatDate } from "../utils/DateHelper";
 import { appUrl } from "../utils/APP_URL";
 import { navigate } from "../utils/Helper";
@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => {
         display: "flex",
         flexWrap: "wrap",
       },
+      marginBottom: theme.spacing(1),
     },
     setName: {
       display: "block",
