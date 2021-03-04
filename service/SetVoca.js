@@ -4,6 +4,7 @@ import {
   actionAddGroupVocasItem,
   actionRemoveGroupVocasItem,
   actionSetGroupVocasList,
+  actionSetvocaObject,
 } from "../redux/actions/setVocasActions";
 import { enpoint_setVoca } from "../utils/API_URL";
 import { handleErrorAPI } from "../utils/Helper";
@@ -41,9 +42,10 @@ export const serviceGetSetVocaDetail = (id) => {
     API.get(enpoint_setVoca.getSetVocaDetailById(id))
       .then((res) => {
         const setVoca = res.data;
-        console.log(setVoca);
+        dispatch(actionSetvocaObject(setVoca));
       })
       .catch((err) => {
+        // handle if 404 not found error is gotten.
         const object = handleErrorAPI(err);
         dispatch(actionSetError(object.errorCodesObject));
       });

@@ -3,6 +3,7 @@ import {
   REMOVE_GROUP_VOCAS_ITEM,
   RESET_GROUP_VOCAS_LIST,
   SET_GROUP_VOCAS_LIST,
+  SET_VOCA_OBJECT,
 } from "../types";
 const initState = {
   list: [],
@@ -35,6 +36,11 @@ export const setVocasReducer = (state = { ...initState }, action) => {
       return { ...state, list };
     case RESET_GROUP_VOCAS_LIST:
       return { ...state, list: [] };
+    case SET_VOCA_OBJECT:
+      return {
+        ...state,
+        setVoca: { ...action.payload },
+      };
     default:
       return state;
   }
