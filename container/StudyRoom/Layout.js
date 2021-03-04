@@ -25,7 +25,7 @@ function StudyRoomLayout(props) {
   const classes = useStyles();
   const [isShowCreateForm, setCreateForm] = useState(false);
   const isValidSubmit = validForm(props.setVoca, inputRequired, props.ERROR);
-  const { listSetVocas } = props;
+  const { listSetVocas, handleOnRemoveItem, handleOnEditItem } = props;
 
   // UI INTERACT:
   const handleShowCreate = () => {
@@ -38,6 +38,7 @@ function StudyRoomLayout(props) {
     <div className="stydy-room-layout">
       <ParagraphTitle>An example vocabularies group</ParagraphTitle>
       <SetVoca
+        isExample={true}
         name="Lesson 20: gohan wo tapemasuta"
         number={7}
         time={Date.now()}
@@ -46,7 +47,15 @@ function StudyRoomLayout(props) {
       <ParagraphTitle>Your vocabularies groups</ParagraphTitle>
       {listSetVocas.map((el, index) => {
         return (
-          <SetVoca key={index} name={el.setName} number={el.totalVocas} time={Date.now()} />
+          <SetVoca
+            key={index}
+            name={el.setName}
+            number={el.totalVocas}
+            time={el.createdDate}
+            item={el}
+            handleOnRemoveItem={handleOnRemoveItem}
+            handleOnEditItem={handleOnEditItem}
+          />
         );
       })}
       {!isShowCreateForm && !listSetVocas.length && (
