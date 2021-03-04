@@ -57,8 +57,8 @@ function SetVoca(props) {
   const [openConfirm, setOpenConfirm] = useState(false);
   const { item, name, number, time, isExample } = props;
   // UI INTERACT:
-  const handleGoToSetVocas = (setVoca) => {
-    navigate(appUrl.setVocaDetail("1234"));
+  const handleGoToSetVocas = (item) => {
+    navigate(appUrl.setVocaDetail(item.id));
   };
   const handleOpenAction = (event) => {
     setAnchorEl(event.currentTarget);
@@ -91,7 +91,7 @@ function SetVoca(props) {
           variant="outlined"
           color="primary"
           className={classes.setItem}
-          onClick={handleGoToSetVocas}
+          onClick={() => handleGoToSetVocas(item)}
         >
           <Typography
             className={classes.setName}
