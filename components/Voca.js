@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => {
     voca: {
       width: "100%",
       marginBottom: theme.spacing(2),
-      backgroundColor: theme.palette.info.main,
+      // backgroundColor: theme.palette.info.main,
       "& .MuiCardContent-root": {
         display: "flex",
         justifyContent: "space-between",
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => {
       transform: "rotate(180deg)",
     },
     collapseItem: {
-      backgroundColor: theme.palette.info.dark,
+      backgroundColor: theme.palette.secondary.light,
     },
   };
 });
@@ -68,16 +68,18 @@ function Voca(props) {
           id="vocabulary"
           label="Vocabulary"
           type="text"
-          color="secondary"
+          color="primary"
           multiline={true}
+          required
         />
         <TextField
           className={classes.oneField}
           id="meaning"
           label="Meaning"
           type="text"
-          color="secondary"
+          color="primary"
           multiline={true}
+          required
         />
       </CardContent>
       <CardActions>
@@ -97,7 +99,7 @@ function Voca(props) {
             id="kanji"
             label="Kanji"
             type="text"
-            color="secondary"
+            color="primary"
             multiline={true}
           />
           <TextField
@@ -105,7 +107,7 @@ function Voca(props) {
             id="ex-sentence"
             label="Example Sentence"
             type="text"
-            color="secondary"
+            color="primary"
             multiline={true}
           />
         </CardContent>

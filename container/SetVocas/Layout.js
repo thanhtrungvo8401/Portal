@@ -1,4 +1,6 @@
 import { makeStyles } from "@material-ui/core";
+import React from "react";
+import ParagraphTitle from "../../components/ParagraphTitle";
 import Voca from "../../components/Voca";
 
 const useStyles = makeStyles((theme) => {
@@ -18,11 +20,16 @@ const useStyles = makeStyles((theme) => {
 function Layout(props) {
   const classes = useStyles();
   return (
-    <div className={classes.setVocas}>
+    <React.Fragment>
+      <ParagraphTitle>A vocabulary example</ParagraphTitle>
       <Voca />
-      <Voca />
-      <Voca />
-    </div>
+
+      <ParagraphTitle>Your vocabularies</ParagraphTitle>
+      <div className={classes.setVocas}>
+        <Voca />
+        <Voca />
+      </div>
+    </React.Fragment>
   );
 }
 
