@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { withPrivateLayout } from "../../components/Layouts/PrivateLayout";
 import StudyRoomLayout from "../../container/StudyRoom/Layout";
 import { actionResetError } from "../../redux/actions/errorActions";
+import { actionSetvocaObject } from "../../redux/actions/setVocasActions";
 import {
   serviceCreateSetVoca,
   serviceDeleteSetVocas,
@@ -10,7 +11,7 @@ import {
 } from "../../service/SetVoca";
 function StudyRoom(props) {
   // Variables:
-  const [setVoca, setSetVoca] = useState({});
+  const setVoca = useSelector((state) => state.setVocas.setVoca);
   const ERROR = useSelector((state) => state.error);
   const user = useSelector((state) => state.user);
   const listSetVocas = useSelector(
@@ -21,7 +22,7 @@ function StudyRoom(props) {
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     const newSetVoca = { ...setVoca, [name]: value };
-    setSetVoca(newSetVoca);
+    dispatch(actionSetvocaObject(newSetVoca));
     dispatch(actionResetError());
   };
 
@@ -43,7 +44,7 @@ function StudyRoom(props) {
   };
 
   const handleResetSetVoca = () => {
-    setSetVoca({});
+    dispatch(actionSetvocaObject({}));
   };
   // FUNCTION DEFINED:
   const handleFetAllSetVoca = () => {
