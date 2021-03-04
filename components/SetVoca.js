@@ -128,7 +128,11 @@ function SetVoca(props) {
         </MenuItem>
         <MenuItem key={"delete"} onClick={handleRemoveBtnClick}>
           <DeleteOutlinedIcon color="error" />
-          <Typography className={classes.marginLeft} variant="caption">
+          <Typography
+            className={classes.marginLeft}
+            variant="caption"
+            color="error"
+          >
             Remove
           </Typography>
         </MenuItem>
@@ -140,7 +144,7 @@ function SetVoca(props) {
       >
         <DialogTitle id="form-dialog-title">Confirm Delete</DialogTitle>
         <DialogContent>
-          <DialogContentText>
+          <DialogContentText color="error">
             If you remove this SetVoca, all the vocabularies of this Set will be
             deleted too.!!
           </DialogContentText>
@@ -149,7 +153,9 @@ function SetVoca(props) {
               Cancel
             </Button>
             <Button onClick={handleOnRemoveItemConfirm} color="primary">
-              Remove
+              <Typography color="error" variant="button">
+                Remove
+              </Typography>
             </Button>
           </DialogActions>
         </DialogContent>
