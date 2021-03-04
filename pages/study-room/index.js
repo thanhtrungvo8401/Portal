@@ -39,6 +39,10 @@ function StudyRoom(props) {
   const handleOnEditItem = (item) => {
     console.log(item);
   };
+
+  const handleResetSetVoca = () => {
+    setSetVoca({});
+  }
   // FUNCTION DEFINED:
   const handleFetAllSetVoca = () => {
     dispatch(serviceGetSetVocas(user.id));
@@ -59,6 +63,7 @@ function StudyRoom(props) {
       listSetVocas={listSetVocas}
       handleOnRemoveItem={handleOnRemoveItem}
       handleOnEditItem={handleOnEditItem}
+      handleResetSetVoca={handleResetSetVoca}
     />
   );
 }

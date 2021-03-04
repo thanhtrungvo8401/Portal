@@ -12,7 +12,7 @@ export const setVocasReducer = (state = [], action) => {
       return state;
     case ADD_GROUP_VOCAS_ITEM:
       state.push(action.payload);
-      return state;
+      return [...state];
     case REMOVE_GROUP_VOCAS_ITEM:
       const item = action.payload || {};
       let indexItem = null;

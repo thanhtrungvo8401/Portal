@@ -2,7 +2,7 @@ import { Button, makeStyles, Typography } from "@material-ui/core";
 import ParagraphTitle from "../../components/ParagraphTitle";
 import SetVoca from "../../components/SetVoca";
 import ActionGroup from "../../components/ActionGroup";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import InputGroup, { validForm } from "../../components/InputGroup";
 
 const inputFields = ["setName"];
@@ -26,7 +26,7 @@ function StudyRoomLayout(props) {
   const [isShowCreateForm, setCreateForm] = useState(false);
   const isValidSubmit = validForm(props.setVoca, inputRequired, props.ERROR);
   const { listSetVocas, handleOnRemoveItem, handleOnEditItem } = props;
-
+  const prevListLength = useRef(null);
   // UI INTERACT:
   const handleShowCreate = () => {
     setCreateForm(true);
@@ -34,6 +34,16 @@ function StudyRoomLayout(props) {
   const handleCloseCreate = () => {
     setCreateForm(false);
   };
+  useEffect(() => {
+    if (listSetVocas.length - prevListLength.current === 1) {
+      handleCloseCreate();
+      if (props.handleResetSetVoca) props.handleResetSetVoca();
+    }
+  }, [listSetVocas]);
+
+  useEffect(() => {
+    prevListLength.current = listSetVocas.length;
+  });
   return (
     <div className="stydy-room-layout">
       <ParagraphTitle>An example vocabularies group</ParagraphTitle>

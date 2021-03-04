@@ -22,6 +22,7 @@ const codeToMessagesObject = {
   NOT_DELETE_YOURSELF: "You are deleting yourself, It's prohibited",
   NOT_BELOW_8_LETTER: "Valid data must have length greater than 8!",
   INVALID_TOKEN: "You must login to access this resources!",
+  OVER_RANGE_EXCEPTION: "Your SetVocas-Num is reached the limit, please contact the admin, or remove to create a new one!!!"
 };
 
 export const constCODE = {
