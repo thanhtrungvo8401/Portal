@@ -36,6 +36,20 @@ export const serviceGetSetVocas = (authId) => {
   };
 };
 
+export const serviceGetSetVocaDetail = (id) => {
+  return (dispatch) => {
+    API.get(enpoint_setVoca.getSetVocaDetailById(id))
+      .then((res) => {
+        const setVoca = res.data;
+        console.log(setVoca);
+      })
+      .catch((err) => {
+        const object = handleErrorAPI(err);
+        dispatch(actionSetError(object.errorCodesObject));
+      });
+  };
+};
+
 export const serviceDeleteSetVocas = (id) => {
   return (dispatch) => {
     API.delete(enpoint_setVoca.deleteById(id))
