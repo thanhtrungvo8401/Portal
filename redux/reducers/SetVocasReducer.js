@@ -4,32 +4,37 @@ import {
   RESET_GROUP_VOCAS_LIST,
   SET_GROUP_VOCAS_LIST,
 } from "../types";
-
-export const setVocasReducer = (state = [], action) => {
+const initState = {
+  list: [],
+  setVoca: {},
+};
+export const setVocasReducer = (state = { ...initState }, action) => {
   switch (action.type) {
     case SET_GROUP_VOCAS_LIST:
-      state = [...action.payload];
+      let list;
+      state = { ...state, list: [...action.payload] };
       return state;
     case ADD_GROUP_VOCAS_ITEM:
-      state.push(action.payload);
-      return [...state];
+      list = [...state.list];
+      list.push(action.payload);
+      return { ...state, list };
     case REMOVE_GROUP_VOCAS_ITEM:
       const item = action.payload || {};
+      list = [...state.list];
       let indexItem = null;
-      for (let i = 0; i < state.length; i++) {
-        const el = state[i];
+      for (let i = 0; i < list.length; i++) {
+        const el = list[i];
         if (el.id === item.id) {
           indexItem = i;
           break;
         }
       }
       if (indexItem !== null) {
-        state.splice(indexItem, 1);
+        list.splice(indexItem, 1);
       }
-      return [...state];
+      return { ...state, list };
     case RESET_GROUP_VOCAS_LIST:
-      state = [];
-      return state;
+      return { ...state, list: [] };
     default:
       return state;
   }

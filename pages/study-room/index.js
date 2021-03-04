@@ -13,7 +13,9 @@ function StudyRoom(props) {
   const [setVoca, setSetVoca] = useState({});
   const ERROR = useSelector((state) => state.error);
   const user = useSelector((state) => state.user);
-  const listSetVocas = useSelector((state) => state.setVocas);
+  const listSetVocas = useSelector(
+    (state) => state.setVocas && state.setVocas.list
+  );
   const dispatch = useDispatch();
   // UI INTERACT:
   const handleOnChange = (e) => {
@@ -42,7 +44,7 @@ function StudyRoom(props) {
 
   const handleResetSetVoca = () => {
     setSetVoca({});
-  }
+  };
   // FUNCTION DEFINED:
   const handleFetAllSetVoca = () => {
     dispatch(serviceGetSetVocas(user.id));
