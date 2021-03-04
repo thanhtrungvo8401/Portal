@@ -2,6 +2,7 @@ import { API } from "../api/Api";
 import { actionSetError } from "../redux/actions/errorActions";
 import {
   actionAddGroupVocasItem,
+  actionRemoveGroupVocasItem,
   actionSetGroupVocasList,
 } from "../redux/actions/setVocasActions";
 import { enpoint_setVoca } from "../utils/API_URL";
@@ -27,6 +28,20 @@ export const serviceGetSetVocas = (authId) => {
       .then((res) => {
         const listSetVocas = res.data;
         dispatch(actionSetGroupVocasList(listSetVocas));
+      })
+      .catch((err) => {
+        const object = handleErrorAPI(err, "toast");
+        dispatch(actionSetError(object.errorCodesObject));
+      });
+  };
+};
+
+export const serviceDeleteSetVocas = (id) => {
+  return (dispatch) => {
+    API.delete(enpoint_setVoca.deleteById(id))
+      .then((res) => {
+        const deletedItem = res.data;
+        dispatch(actionRemoveGroupVocasItem(deletedItem));
       })
       .catch((err) => {
         const object = handleErrorAPI(err, "toast");

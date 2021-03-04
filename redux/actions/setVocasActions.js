@@ -1,5 +1,6 @@
 import {
   ADD_GROUP_VOCAS_ITEM,
+  REMOVE_GROUP_VOCAS_ITEM,
   RESET_GROUP_VOCAS_LIST,
   SET_GROUP_VOCAS_LIST,
 } from "../types";
@@ -14,6 +15,13 @@ export const actionSetGroupVocasList = (payload) => {
 export const actionAddGroupVocasItem = (payload) => {
   return {
     type: ADD_GROUP_VOCAS_ITEM,
+    payload,
+  };
+};
+
+export const actionRemoveGroupVocasItem = (payload) => {
+  return {
+    type: REMOVE_GROUP_VOCAS_ITEM,
     payload,
   };
 };

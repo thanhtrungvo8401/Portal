@@ -5,6 +5,7 @@ import StudyRoomLayout from "../../container/StudyRoom/Layout";
 import { actionResetError } from "../../redux/actions/errorActions";
 import {
   serviceCreateSetVoca,
+  serviceDeleteSetVocas,
   serviceGetSetVocas,
 } from "../../service/SetVoca";
 function StudyRoom(props) {
@@ -32,12 +33,12 @@ function StudyRoom(props) {
   };
 
   const handleOnRemoveItem = (item) => {
-    console.log(item);
-  }
+    dispatch(serviceDeleteSetVocas(item.id));
+  };
 
   const handleOnEditItem = (item) => {
     console.log(item);
-  }
+  };
   // FUNCTION DEFINED:
   const handleFetAllSetVoca = () => {
     dispatch(serviceGetSetVocas(user.id));
