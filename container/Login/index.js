@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { actionResetError } from "../../redux/actions/errorActions";
-import { actionSetUser } from "../../redux/actions/userActions";
+import { actionSetUserLogin } from "../../redux/actions/loginActions";
 import { serviceLogin } from "../../service/authenticate";
 import { closeLoginForm } from "../../utils/Helper";
 import LoginLayout from "./Layout";
@@ -9,7 +9,7 @@ function Login(props) {
   const showLogin = useSelector(
     (state) => state.login && state.login.showLogin
   );
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.login.userLogin);
   const ERROR = useSelector((state) => state.error);
   const dispatch = useDispatch();
   // UI INTERACT:
@@ -19,8 +19,8 @@ function Login(props) {
   const handleOnChange = (e) => {
     const target = e.target;
     const { name, value } = target;
-    const newUser = { ...user, [name]: value };
-    dispatch(actionSetUser(newUser));
+    const userLogin = { ...user, [name]: value };
+    dispatch(actionSetUserLogin(userLogin));
     dispatch(actionResetError());
   };
   const handleOnSubmit = (e) => {
