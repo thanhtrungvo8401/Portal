@@ -9,6 +9,8 @@ export const CLOSE_COMPONENT_LOADING = "CLOSE_COMPONENT_LOADING";
 export const SHOW_LOGIN_FORM = "SHOW_LOGIN_FORM";
 export const CLOSE_LOGIN_FORM = "CLOSE_LOGIN_FORM";
 export const SET_IS_LOGINED = "SET_IS_LOGINED";
+export const SET_USER_LOGIN = "SET_USER_LOGIN";
+export const SET_USER_SIGNUP = "SET_USER_SIGNUP";
 
 export const SET_USER = "SET_USER";
 export const RESET_USER = "RESET_USER";
