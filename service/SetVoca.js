@@ -7,7 +7,8 @@ import {
   actionSetvocaObject,
 } from "../redux/actions/setVocasActions";
 import { enpoint_setVoca } from "../utils/API_URL";
-import { handleErrorAPI } from "../utils/Helper";
+import { appUrl } from "../utils/APP_URL";
+import { handleErrorAPI, navigate } from "../utils/Helper";
 
 export const serviceCreateSetVoca = (setVoca) => {
   return (dispatch) => {
@@ -45,8 +46,11 @@ export const serviceGetSetVocaDetail = (id) => {
         dispatch(actionSetvocaObject(setVoca));
       })
       .catch((err) => {
-        // handle if 404 not found error is gotten.
-        const object = handleErrorAPI(err);
+        const object = handleErrorAPI(err, "toast");
+        const status = object.status;
+        if (status === 404) {
+          navigate(appUrl.studyRoom());
+        }
         dispatch(actionSetError(object.errorCodesObject));
       });
   };

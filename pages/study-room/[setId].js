@@ -15,8 +15,10 @@ function SetVocas(props) {
   };
   // Life cycle hook:
   useEffect(() => {
-    handleGetSetVocaDetail(setId);
-  }, []);
+    if (setId) {
+      handleGetSetVocaDetail(setId);
+    }
+  }, [setId]);
   return <Layout />;
 }
 
