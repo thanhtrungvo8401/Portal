@@ -11,6 +11,10 @@ export const enpoint_setVoca = {
   deleteById: (id) => `/set-vocas/${id}`,
 };
 
+export const enpoint_voca = {
+  fetVocas: (setId) => `/set-vocas/${setId}/vocas`,
+};
+
 export const enpoint_user = {
   getProfile: () => "/my-profile",
 };
