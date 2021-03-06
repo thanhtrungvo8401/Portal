@@ -1,5 +1,6 @@
-import { makeStyles } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 import React from "react";
+import ActionGroup from "../../components/ActionGroup";
 import ParagraphTitle from "../../components/ParagraphTitle";
 import Voca from "../../components/Voca";
 
@@ -19,7 +20,8 @@ const useStyles = makeStyles((theme) => {
 
 function Layout(props) {
   const classes = useStyles();
-  const { listVocas } = props;
+  const { listVocas, voca } = props;
+  console.log(voca);
   return (
     <React.Fragment>
       <ParagraphTitle>A vocabulary example</ParagraphTitle>
@@ -27,9 +29,20 @@ function Layout(props) {
 
       <ParagraphTitle>Your vocabularies</ParagraphTitle>
       <div className={classes.setVocas}>
-        <Voca />
-        <Voca />
+        {listVocas.map((el, index) => {
+          return <Voca key={index} />;
+        })}
       </div>
+      <ActionGroup>
+        <Button
+          color="primary"
+          variant="contained"
+          // onClick={props.handleOnSubmit}
+          // disabled={!isValidSubmit}
+        >
+          Create (+)
+        </Button>
+      </ActionGroup>
     </React.Fragment>
   );
 }

@@ -1,6 +1,7 @@
 import {
   ADD_VOCABULARY_INTO_LIST,
   REMOVE_VOCABULARY_FROM_LIST,
+  SET_SHOW_CREATE_VOCABULARY_FORM,
   SET_VOCABULARY_LIST,
   SET_VOCABULARY_OBJECT,
 } from "../types";
@@ -8,6 +9,7 @@ import {
 const initState = {
   list: [],
   voca: {},
+  showCreateForm: false,
 };
 
 export const vocaReducer = (state = { ...initState }, action) => {
@@ -49,6 +51,11 @@ export const vocaReducer = (state = { ...initState }, action) => {
       return {
         ...state,
         list,
+      };
+    case SET_SHOW_CREATE_VOCABULARY_FORM:
+      return {
+        ...state,
+        showCreateForm: action.payload,
       };
     default:
       return state;

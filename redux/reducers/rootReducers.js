@@ -16,7 +16,7 @@ const reducers = {
   toast: toastReducer,
   error: errorReducer,
   setVocas: setVocasReducer,
-  voca: vocaReducer
+  vocas: vocaReducer
 };
 
 export default combineReducers(reducers);
