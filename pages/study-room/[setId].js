@@ -13,6 +13,9 @@ function SetVocas(props) {
   const handleGetSetVocaDetail = (setId) => {
     dispatch(serviceGetSetVocaDetail(setId));
   };
+  const handleGetVocasBySetVocaid = (setId) => {
+    dispatch();
+  }
   // Life cycle hook:
   useEffect(() => {
     if (setId) {
