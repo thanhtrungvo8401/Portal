@@ -19,10 +19,11 @@ const useStyles = makeStyles((theme) => {
 
 function Layout(props) {
   const classes = useStyles();
+  const { listVocas } = props;
   return (
     <React.Fragment>
       <ParagraphTitle>A vocabulary example</ParagraphTitle>
-      <Voca />
+      <Voca isExample={true} />
 
       <ParagraphTitle>Your vocabularies</ParagraphTitle>
       <div className={classes.setVocas}>

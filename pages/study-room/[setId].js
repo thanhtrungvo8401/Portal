@@ -10,6 +10,7 @@ function SetVocas(props) {
   const router = useRouter();
   const { setId } = router.query;
   const dispatch = useDispatch();
+  const listVocas = useSelector((state) => state.voca.list);
   // Function Define:
   const handleGetSetVocaDetail = (setId) => {
     dispatch(serviceGetSetVocaDetail(setId));
@@ -24,7 +25,7 @@ function SetVocas(props) {
       handleFetchVocasBySetId(setId);
     }
   }, [setId]);
-  return <Layout />;
+  return <Layout listVocas={listVocas} />;
 }
 
 export default withPrivateLayout(SetVocas, { title: "Vocabularies list!" });
