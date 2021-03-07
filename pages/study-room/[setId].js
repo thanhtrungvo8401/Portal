@@ -14,6 +14,7 @@ function SetVocas(props) {
   const dispatch = useDispatch();
   const listVocas = useSelector((state) => state.vocas.list);
   const voca = useSelector((state) => state.vocas.voca);
+  const ERROR = useSelector(state => state.error);
   // UI interact:
   const handleOnChangeCreate = (e) => {
     const { name, value } = e.target;
@@ -46,6 +47,7 @@ function SetVocas(props) {
       handleOnSubmitCreate={handleOnSubmitCreate}
       listVocas={listVocas}
       voca={voca}
+      ERROR={ERROR}
     />
   );
 }

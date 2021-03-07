@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => {
 
 function Layout(props) {
   const classes = useStyles();
-  const { listVocas, voca } = props;
+  const { listVocas, voca, ERROR } = props;
   const isShowCreateForm = useSelector((state) => state.vocas.showCreateForm);
   const dispatch = useDispatch();
   console.log(voca, isShowCreateForm);
@@ -46,6 +46,7 @@ function Layout(props) {
             handleOnSubmit={props.handleOnSubmitCreate}
             voca={voca}
             isEditing={true}
+            ERROR={ERROR}
           />
         )}
       </div>

@@ -10,11 +10,14 @@ import {
   TextField,
   Tooltip,
 } from "@material-ui/core";
-import { useState } from "react";
+import React, { useState } from "react";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SaveOutlinedIcon from "@material-ui/icons/SaveOutlined";
 import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
 import { yellow } from "@material-ui/core/colors";
+import { validForm } from "./InputGroup";
+import { Alert } from "@material-ui/lab";
+import { codeToMessages, constCODE } from "../utils/CodeToMessages";
 // import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 const useStyles = makeStyles((theme) => {
   return {
@@ -92,12 +95,19 @@ function Voca(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
   const isExample = props.isExample;
-  const { isEditing, voca } = props;
+  const { isEditing, voca, ERROR } = props;
+  const [INTERACT, setINTERACT] = useState({});
+  const isValidForm = validForm(voca, inputRequired, ERROR);
   // UI INTERACT:
   const handleOnToggleExpaned = () => {
     setExpanded(!expanded);
   };
   const handleOnChange = (e) => {
+    const { target } = e;
+    setINTERACT({
+      ...INTERACT,
+      [target.name]: true,
+    });
     if (props.handleOnChange) {
       props.handleOnChange(e);
     }
@@ -109,23 +119,38 @@ function Voca(props) {
         variant="outlined"
       >
         <CardContent>
-          {inputRequired.map((el, index) => {
-            const value = voca[el] || "";
+          {inputRequired.map((key, index) => {
+            const value = voca[key] || "";
+            const isShowRequiredMsg =
+              Boolean(!voca[key]) &&
+              Boolean(INTERACT[key]) &&
+              inputRequired.includes(key);
+            const ERR_MSG_CODE = Boolean(INTERACT[key] && ERROR[key]);
             return (
-              <TextField
-                key={index}
-                className={classes.oneField}
-                id={el}
-                label={inputLabels[el]}
-                type="text"
-                color="primary"
-                multiline={true}
-                required
-                name={el}
-                value={value}
-                onChange={handleOnChange}
-                disabled={!isEditing}
-              />
+              <div key={key + index} className={classes.oneField}>
+                <TextField
+                  id={key}
+                  label={inputLabels[key]}
+                  type="text"
+                  color="primary"
+                  multiline={true}
+                  required
+                  name={key}
+                  value={value}
+                  onChange={handleOnChange}
+                  disabled={!isEditing}
+                />
+                {isShowRequiredMsg && (
+                  <Alert severity="error">
+                    {codeToMessages(constCODE.NOT_NULL)}
+                  </Alert>
+                )}
+                {Boolean(ERR_MSG_CODE) && (
+                  <Alert severity="error">
+                    {codeToMessages(ERR_MSG_CODE, "usedForField")}
+                  </Alert>
+                )}
+              </div>
             );
           })}
         </CardContent>
