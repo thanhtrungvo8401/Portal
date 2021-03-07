@@ -40,7 +40,14 @@ function SetVocas(props) {
       handleFetchVocasBySetId(setId);
     }
   }, [setId]);
-  return <Layout listVocas={listVocas} voca={voca} />;
+  return (
+    <Layout
+      handleOnChangeCreate={handleOnChangeCreate}
+      handleOnSubmitCreate={handleOnSubmitCreate}
+      listVocas={listVocas}
+      voca={voca}
+    />
+  );
 }
 
 export default withPrivateLayout(SetVocas, { title: "Vocabularies list!" });

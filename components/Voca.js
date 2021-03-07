@@ -14,6 +14,7 @@ import { useState } from "react";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SaveOutlinedIcon from "@material-ui/icons/SaveOutlined";
 import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
+import { yellow } from "@material-ui/core/colors";
 // import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 const useStyles = makeStyles((theme) => {
   return {
@@ -50,6 +51,10 @@ const useStyles = makeStyles((theme) => {
         position: "relative",
       },
     },
+    editingVoca: {
+      borderColor: yellow[900],
+      borderWidth: "2px",
+    },
     oneField: {
       width: `calc(50% - ${theme.spacing(1)}px)`,
     },
@@ -74,36 +79,55 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
+// const inputFields = ["voca", "meaning", "kanji", "sentence"];
+const inputLabels = {
+  voca: "Vocabulary",
+  meaning: "Meaning",
+  kanji: "Kanji",
+  sentence: "Example Sentence",
+};
+const inputRequired = ["voca", "meaning"];
+const inputNotRequired = ["kanji", "sentence"];
 function Voca(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
   const isExample = props.isExample;
+  const { isEditing, voca } = props;
   // UI INTERACT:
   const handleOnToggleExpaned = () => {
     setExpanded(!expanded);
   };
+  const handleOnChange = (e) => {
+    if (props.handleOnChange) {
+      props.handleOnChange(e);
+    }
+  };
   return (
     <div className={classes.vocaComponent}>
-      <Card className={classes.voca} variant="outlined">
+      <Card
+        className={`${classes.voca} ${isEditing ? classes.editingVoca : ""}`}
+        variant="outlined"
+      >
         <CardContent>
-          <TextField
-            className={classes.oneField}
-            id="vocabulary"
-            label="Vocabulary"
-            type="text"
-            color="primary"
-            multiline={true}
-            required
-          />
-          <TextField
-            className={classes.oneField}
-            id="meaning"
-            label="Meaning"
-            type="text"
-            color="primary"
-            multiline={true}
-            required
-          />
+          {inputRequired.map((el, index) => {
+            const value = voca[el] || "";
+            return (
+              <TextField
+                key={index}
+                className={classes.oneField}
+                id={el}
+                label={inputLabels[el]}
+                type="text"
+                color="primary"
+                multiline={true}
+                required
+                name={el}
+                value={value}
+                onChange={handleOnChange}
+                disabled={!isEditing}
+              />
+            );
+          })}
         </CardContent>
         <CardActions>
           <IconButton
@@ -112,27 +136,29 @@ function Voca(props) {
               expanded ? classes.expandOpen : classes.expand
             } `}
           >
-            <ExpandMoreIcon />
+            <ExpandMoreIcon color="primary" />
           </IconButton>
         </CardActions>
         <Collapse in={expanded} timeout="auto" className={classes.collapseItem}>
           <CardContent>
-            <TextField
-              className={classes.oneField}
-              id="kanji"
-              label="Kanji"
-              type="text"
-              color="primary"
-              multiline={true}
-            />
-            <TextField
-              className={classes.oneField}
-              id="ex-sentence"
-              label="Example Sentence"
-              type="text"
-              color="primary"
-              multiline={true}
-            />
+            {inputNotRequired.map((el, index) => {
+              const value = voca[el] || "";
+              return (
+                <TextField
+                  key={index}
+                  className={classes.oneField}
+                  id={el}
+                  label={inputLabels[el]}
+                  type="text"
+                  color="primary"
+                  multiline={true}
+                  name={el}
+                  value={value}
+                  onChange={handleOnChange}
+                  disabled={!isEditing}
+                />
+              );
+            })}
           </CardContent>
         </Collapse>
       </Card>
@@ -152,11 +178,6 @@ function Voca(props) {
               <CancelOutlinedIcon color="error" />
             </Button>
           </Tooltip>
-          {/* <Tooltip title="Edit" placement="left-start">
-          <Button variant="text">
-            <EditOutlinedIcon color="primary" />
-          </Button>
-        </Tooltip> */}
         </ButtonGroup>
       )}
     </div>

@@ -1,8 +1,10 @@
 import { Button, makeStyles } from "@material-ui/core";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ActionGroup from "../../components/ActionGroup";
 import ParagraphTitle from "../../components/ParagraphTitle";
 import Voca from "../../components/Voca";
+import { actionSetShowCreateVocaForm } from "../../redux/actions/vocaActions";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -21,27 +23,42 @@ const useStyles = makeStyles((theme) => {
 function Layout(props) {
   const classes = useStyles();
   const { listVocas, voca } = props;
-  console.log(voca);
+  const isShowCreateForm = useSelector((state) => state.vocas.showCreateForm);
+  const dispatch = useDispatch();
+  console.log(voca, isShowCreateForm);
+  // UI INTERACT:
+  const handleOnShowCreateForm = () => {
+    dispatch(actionSetShowCreateVocaForm(true));
+  };
   return (
     <React.Fragment>
       <ParagraphTitle>A vocabulary example</ParagraphTitle>
-      <Voca isExample={true} />
+      <Voca isExample={true} voca={{}} />
 
       <ParagraphTitle>Your vocabularies</ParagraphTitle>
       <div className={classes.setVocas}>
         {listVocas.map((el, index) => {
           return <Voca key={index} />;
         })}
+        {isShowCreateForm && (
+          <Voca
+            handleOnChange={props.handleOnChangeCreate}
+            handleOnSubmit={props.handleOnSubmitCreate}
+            voca={voca}
+            isEditing={true}
+          />
+        )}
       </div>
       <ActionGroup>
-        <Button
-          color="primary"
-          variant="contained"
-          // onClick={props.handleOnSubmit}
-          // disabled={!isValidSubmit}
-        >
-          Create (+)
-        </Button>
+        {!isShowCreateForm && (
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={handleOnShowCreateForm}
+          >
+            Create (+)
+          </Button>
+        )}
       </ActionGroup>
     </React.Fragment>
   );
