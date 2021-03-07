@@ -18,6 +18,8 @@ export default class MyDocument extends Document {
             rel="shortcut icon"
             href="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
           />
+          <script src="/js/wanakana.min.js"></script>
+          {/* https://wanakana.com/docs/global.html#toHiragana */}
         </Head>
         <body>
           <Main />
