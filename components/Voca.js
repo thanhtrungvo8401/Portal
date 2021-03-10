@@ -9,6 +9,7 @@ import {
   makeStyles,
   TextField,
   Tooltip,
+  Typography,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -63,8 +64,8 @@ const useStyles = makeStyles((theme) => {
     oneField: {
       width: `calc(50% - ${theme.spacing(1)}px)`,
       "& .MuiFormControl-root.MuiTextField-root": {
-        width: "100%"
-      }
+        width: "100%",
+      },
     },
     expandCommon: {
       position: "absolute",
@@ -84,6 +85,9 @@ const useStyles = makeStyles((theme) => {
     collapseItem: {
       backgroundColor: theme.palette.secondary.light,
     },
+    mt: {
+      marginTop: theme.spacing(1),
+    },
   };
 });
 
@@ -91,8 +95,8 @@ const useStyles = makeStyles((theme) => {
 const inputLabels = {
   voca: "Vocabulary",
   meaning: "Meaning",
-  note: "How to pronouce!",
-  sentence: "Example Sentence",
+  note: "(1) How to pronouce!",
+  sentence: "(2) Example Sentence",
 };
 const inputRequired = ["voca", "meaning"];
 const inputNotRequired = ["note", "sentence"];
@@ -122,7 +126,7 @@ function Voca(props) {
     if (props.handleOnSubmit) {
       props.handleOnSubmit();
     }
-  }
+  };
   const closeCreateForm = (e) => {
     if (props.closeCreateForm) {
       props.closeCreateForm();
@@ -206,6 +210,14 @@ function Voca(props) {
                 />
               );
             })}
+            <Typography className={classes.mt} variant="caption">
+              (1) You can empty the pronouce line if you are sure about the
+              pronunciation
+            </Typography>
+            <Typography variant="caption">
+              (2) I highly recommend that you should make sentences with
+              Vocabularies to remember it longer.!
+            </Typography>
           </CardContent>
         </Collapse>
       </Card>
@@ -215,13 +227,15 @@ function Voca(props) {
           size="small"
           aria-label="small button group"
         >
-          {isValidForm && <Tooltip title="Save" placement="left-start">
-            <Button variant="text" onClick={handleOnSubmit} >
-              <SaveOutlinedIcon color="primary" />
-            </Button>
-          </Tooltip>}
+          {isValidForm && (
+            <Tooltip title="Save" placement="left-start">
+              <Button variant="text" onClick={handleOnSubmit}>
+                <SaveOutlinedIcon color="primary" />
+              </Button>
+            </Tooltip>
+          )}
           <Tooltip title="Cancle" placement="left-start">
-            <Button variant="text" onClick={closeCreateForm} >
+            <Button variant="text" onClick={closeCreateForm}>
               <CancelOutlinedIcon color="error" />
             </Button>
           </Tooltip>
