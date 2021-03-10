@@ -2,6 +2,7 @@ import { API } from "../api/Api";
 import { actionSetError } from "../redux/actions/errorActions";
 import {
   actionAddVocabularyToList,
+  actionSetShowCreateVocaForm,
   actionSetVocabularyList,
 } from "../redux/actions/vocaActions";
 import { enpoint_voca } from "../utils/API_URL";
@@ -27,6 +28,7 @@ export const serviceCreateVoca = (voca) => {
       .then((res) => {
         const voca = res.data;
         dispatch(actionAddVocabularyToList(voca));
+        dispatch(actionSetShowCreateVocaForm(false));
       })
       .catch((err) => {
         const object = handleErrorAPI(err, "toast");
