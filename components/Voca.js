@@ -210,7 +210,8 @@ function Voca(props) {
                 />
               );
             })}
-            <Typography className={classes.mt} variant="caption">
+            {!isExample && <React.Fragment>
+              <Typography className={classes.mt} variant="caption">
               (1) You can empty the pronouce line if you are sure about the
               pronunciation
             </Typography>
@@ -218,6 +219,7 @@ function Voca(props) {
               (2) I highly recommend that you should make sentences with
               Vocabularies to remember it longer.!
             </Typography>
+              </React.Fragment>}
           </CardContent>
         </Collapse>
       </Card>
