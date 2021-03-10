@@ -21,7 +21,7 @@ import { Alert } from "@material-ui/lab";
 import { codeToMessages, constCODE } from "../utils/CodeToMessages";
 import { useDispatch } from "react-redux";
 import { actionSetVocabularyObject } from "../redux/actions/vocaActions";
-// import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
+import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 const useStyles = makeStyles((theme) => {
   return {
     vocaComponent: {
@@ -102,15 +102,20 @@ const inputRequired = ["voca", "meaning"];
 const inputNotRequired = ["note", "sentence"];
 function Voca(props) {
   const classes = useStyles();
-  const { isEditing, isCreate, isExample, voca, ERROR } = props;
+  const { isCreate, isExample, voca, ERROR } = props;
 
   const dispatch = useDispatch();
+  // Default editing and expand only for create-voca
   const [expanded, setExpanded] = useState(Boolean(isCreate));
+  const [isEditing, setIsEditing] = useState(Boolean(isCreate));
   const [INTERACT, setINTERACT] = useState({});
   const isValidForm = validForm(voca, inputRequired, ERROR);
   // UI INTERACT:
   const handleOnToggleExpaned = () => {
     setExpanded(!expanded);
+  };
+  const handleOnToggleEditing = () => {
+    setIsEditing(!isEditing);
   };
   const handleOnChange = (e) => {
     const { target } = e;
@@ -127,9 +132,12 @@ function Voca(props) {
       props.handleOnSubmit();
     }
   };
-  const closeCreateForm = (e) => {
+  const closeEditingForm = (e) => {
     if (props.closeCreateForm) {
       props.closeCreateForm();
+    }
+    if (isEditing) {
+      handleOnToggleEditing();
     }
   };
   // Life cycle-hook:
@@ -210,16 +218,18 @@ function Voca(props) {
                 />
               );
             })}
-            {!isExample && <React.Fragment>
-              <Typography className={classes.mt} variant="caption">
-              (1) You can empty the pronouce line if you are sure about the
-              pronunciation
-            </Typography>
-            <Typography variant="caption">
-              (2) I highly recommend that you should make sentences with
-              Vocabularies to remember it longer.!
-            </Typography>
-              </React.Fragment>}
+            {!isExample && (
+              <React.Fragment>
+                <Typography className={classes.mt} variant="caption">
+                  (1) You can empty the pronouce line if you are sure about the
+                  pronunciation
+                </Typography>
+                <Typography variant="caption">
+                  (2) I highly recommend that you should make sentences with
+                  Vocabularies to remember it longer.!
+                </Typography>
+              </React.Fragment>
+            )}
           </CardContent>
         </Collapse>
       </Card>
@@ -229,18 +239,27 @@ function Voca(props) {
           size="small"
           aria-label="small button group"
         >
-          {isValidForm && (
+          {isValidForm && isEditing && (
             <Tooltip title="Save" placement="left-start">
               <Button variant="text" onClick={handleOnSubmit}>
                 <SaveOutlinedIcon color="primary" />
               </Button>
             </Tooltip>
           )}
-          <Tooltip title="Cancle" placement="left-start">
-            <Button variant="text" onClick={closeCreateForm}>
-              <CancelOutlinedIcon color="error" />
-            </Button>
-          </Tooltip>
+          {isEditing && (
+            <Tooltip title="Cancle" placement="left-start">
+              <Button variant="text" onClick={closeEditingForm}>
+                <CancelOutlinedIcon color="error" />
+              </Button>
+            </Tooltip>
+          )}
+          {!isEditing && (
+            <Tooltip title="Edit" placement="left-start">
+              <Button variant="text" onClick={handleOnToggleEditing}>
+                <EditOutlinedIcon color="primary" />
+              </Button>
+            </Tooltip>
+          )}
         </ButtonGroup>
       )}
     </div>

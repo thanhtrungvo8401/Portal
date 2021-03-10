@@ -6,7 +6,7 @@ import Layout from "../../container/SetVocas/Layout";
 import { actionResetError } from "../../redux/actions/errorActions";
 import { actionSetVocabularyObject } from "../../redux/actions/vocaActions";
 import { serviceGetSetVocaDetail } from "../../service/SetVoca";
-import { serviceFetVocaBySetId } from "../../service/vocaService";
+import { serviceCreateVoca, serviceFetVocaBySetId } from "../../service/vocaService";
 
 function SetVocas(props) {
   const router = useRouter();
@@ -24,7 +24,8 @@ function SetVocas(props) {
   };
 
   const handleOnSubmitCreate = () => {
-    alert("SAVE")
+    const vocaObject = {...voca, setId};
+    dispatch(serviceCreateVoca(vocaObject));
   };
 
   // Function Define:

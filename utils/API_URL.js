@@ -13,6 +13,7 @@ export const enpoint_setVoca = {
 
 export const enpoint_voca = {
   fetVocas: (setId) => `/set-vocas/${setId}/vocas`,
+  create: () => `/vocas`
 };
 
 export const enpoint_user = {

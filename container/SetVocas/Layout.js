@@ -39,8 +39,8 @@ function Layout(props) {
 
       <ParagraphTitle>Your vocabularies</ParagraphTitle>
       <div className={classes.setVocas}>
-        {listVocas.map((el, index) => {
-          return <Voca key={index} />;
+        {listVocas.map((voca, index) => {
+          return <Voca key={index} voca={voca} />;
         })}
         {isShowCreateForm && (
           <Voca
@@ -48,7 +48,6 @@ function Layout(props) {
             handleOnSubmit={props.handleOnSubmitCreate}
             closeCreateForm={handleOnCloseShowCreateForm}
             voca={voca}
-            isEditing={true}
             ERROR={ERROR}
             isCreate={true}
           />
