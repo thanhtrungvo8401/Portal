@@ -25,11 +25,13 @@ function Layout(props) {
   const { listVocas, voca, ERROR } = props;
   const isShowCreateForm = useSelector((state) => state.vocas.showCreateForm);
   const dispatch = useDispatch();
-  console.log(voca, isShowCreateForm);
   // UI INTERACT:
   const handleOnShowCreateForm = () => {
     dispatch(actionSetShowCreateVocaForm(true));
   };
+  const handleOnCloseShowCreateForm = () => {
+    dispatch(actionSetShowCreateVocaForm(false));
+  }
   return (
     <React.Fragment>
       <ParagraphTitle>A vocabulary example</ParagraphTitle>
@@ -44,9 +46,11 @@ function Layout(props) {
           <Voca
             handleOnChange={props.handleOnChangeCreate}
             handleOnSubmit={props.handleOnSubmitCreate}
+            closeCreateForm={handleOnCloseShowCreateForm}
             voca={voca}
             isEditing={true}
             ERROR={ERROR}
+            isCreate={true}
           />
         )}
       </div>

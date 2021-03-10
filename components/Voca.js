@@ -10,7 +10,7 @@ import {
   TextField,
   Tooltip,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SaveOutlinedIcon from "@material-ui/icons/SaveOutlined";
 import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
@@ -18,6 +18,8 @@ import { yellow } from "@material-ui/core/colors";
 import { validForm } from "./InputGroup";
 import { Alert } from "@material-ui/lab";
 import { codeToMessages, constCODE } from "../utils/CodeToMessages";
+import { useDispatch } from "react-redux";
+import { actionSetVocabularyObject } from "../redux/actions/vocaActions";
 // import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 const useStyles = makeStyles((theme) => {
   return {
@@ -60,6 +62,9 @@ const useStyles = makeStyles((theme) => {
     },
     oneField: {
       width: `calc(50% - ${theme.spacing(1)}px)`,
+      "& .MuiFormControl-root.MuiTextField-root": {
+        width: "100%"
+      }
     },
     expandCommon: {
       position: "absolute",
@@ -86,16 +91,17 @@ const useStyles = makeStyles((theme) => {
 const inputLabels = {
   voca: "Vocabulary",
   meaning: "Meaning",
-  kanji: "Kanji",
+  note: "How to pronouce!",
   sentence: "Example Sentence",
 };
 const inputRequired = ["voca", "meaning"];
-const inputNotRequired = ["kanji", "sentence"];
+const inputNotRequired = ["note", "sentence"];
 function Voca(props) {
   const classes = useStyles();
-  const [expanded, setExpanded] = useState(false);
-  const isExample = props.isExample;
-  const { isEditing, voca, ERROR } = props;
+  const { isEditing, isCreate, isExample, voca, ERROR } = props;
+
+  const dispatch = useDispatch();
+  const [expanded, setExpanded] = useState(Boolean(isCreate));
   const [INTERACT, setINTERACT] = useState({});
   const isValidForm = validForm(voca, inputRequired, ERROR);
   // UI INTERACT:
@@ -112,6 +118,22 @@ function Voca(props) {
       props.handleOnChange(e);
     }
   };
+  const handleOnSubmit = () => {
+    if (props.handleOnSubmit) {
+      props.handleOnSubmit();
+    }
+  }
+  const closeCreateForm = (e) => {
+    if (props.closeCreateForm) {
+      props.closeCreateForm();
+    }
+  };
+  // Life cycle-hook:
+  useEffect(() => {
+    if (isCreate) {
+      dispatch(actionSetVocabularyObject({}));
+    }
+  }, []);
   return (
     <div className={classes.vocaComponent}>
       <Card
@@ -193,13 +215,13 @@ function Voca(props) {
           size="small"
           aria-label="small button group"
         >
-          <Tooltip title="Save" placement="left-start">
-            <Button variant="text">
+          {isValidForm && <Tooltip title="Save" placement="left-start">
+            <Button variant="text" onClick={handleOnSubmit} >
               <SaveOutlinedIcon color="primary" />
             </Button>
-          </Tooltip>
+          </Tooltip>}
           <Tooltip title="Cancle" placement="left-start">
-            <Button variant="text">
+            <Button variant="text" onClick={closeCreateForm} >
               <CancelOutlinedIcon color="error" />
             </Button>
           </Tooltip>

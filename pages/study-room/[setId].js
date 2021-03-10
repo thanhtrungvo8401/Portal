@@ -23,8 +23,8 @@ function SetVocas(props) {
     dispatch(actionResetError());
   };
 
-  const handleOnSubmitCreate = (e) => {
-    e.preventDefault();
+  const handleOnSubmitCreate = () => {
+    alert("SAVE")
   };
 
   // Function Define:
