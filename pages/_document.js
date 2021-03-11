@@ -6,7 +6,7 @@ import theme from "../components/theme";
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang="en">
+      <Html lang="en" style={{height: "100%"}}>
         <Head>
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
@@ -21,7 +21,7 @@ export default class MyDocument extends Document {
           <script src="/js/wanakana.min.js"></script>
           {/* https://wanakana.com/docs/global.html#toHiragana */}
         </Head>
-        <body>
+        <body style={{height: "100%", backgroundColor: "#fafafa"}}>
           <Main />
           <NextScript />
         </body>

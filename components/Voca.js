@@ -72,12 +72,17 @@ const useStyles = makeStyles((theme) => {
       top: "50%",
       left: "50%",
       transform: "translate(-50%, -50%)!important",
+      "& .MuiIconButton-label": {
+        transform: "rotate(180deg)"
+      },
     },
     expand: {
-      transform: "rotate(0deg)",
-      transition: theme.transitions.create("transform", {
-        duration: theme.transitions.duration.shortest,
-      }),
+      "& .MuiIconButton-label": {
+        transform: "rotate(0)",
+        transition: theme.transitions.create("transform", {
+          duration: theme.transitions.duration.shortest,
+        })
+      },
     },
     expandOpen: {
       transform: "rotate(180deg)",

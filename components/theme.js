@@ -4,21 +4,21 @@ import { createMuiTheme } from "@material-ui/core/styles";
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: grey[800],
+      main: grey[700],
     },
     secondary: {
-      main: grey[200],
+      main: grey[100],
     },
     text: {
-      primary: grey[800],
-      secondary: grey[600],
+      primary: grey[700],
+      secondary: grey[500],
     },
     // info: {
     //   main: grey[100],
     // },
     error: {
       main: red.A400,
-    },
+    }
   },
 });
 
