@@ -88,6 +88,11 @@ const useStyles = makeStyles((theme) => {
     mt: {
       marginTop: theme.spacing(1),
     },
+    readOnlyField: {
+      "& .MuiInputBase-root.MuiInput-root.MuiInput-underline.MuiInputBase-formControl.MuiInput-formControl.MuiInputBase-multiline.MuiInput-multiline": {
+        display: "none",
+      },
+    },
   };
 });
 
@@ -116,6 +121,9 @@ function Voca(props) {
   };
   const handleOnToggleEditing = () => {
     setIsEditing(!isEditing);
+    if (!expanded) {
+      setExpanded(true);
+    }
   };
   const handleOnChange = (e) => {
     const { target } = e;
@@ -139,6 +147,7 @@ function Voca(props) {
     if (isEditing) {
       handleOnToggleEditing();
     }
+    setExpanded(false);
   };
   // Life cycle-hook:
   useEffect(() => {
@@ -173,7 +182,13 @@ function Voca(props) {
                   value={value}
                   onChange={handleOnChange}
                   disabled={!isEditing}
+                  className={`${isEditing ? "" : classes.readOnlyField}`}
                 />
+                {!isEditing && (
+                  <Typography variant="body1" color="textPrimary">
+                    {value}
+                  </Typography>
+                )}
                 {isShowRequiredMsg && (
                   <Alert severity="error">
                     {codeToMessages(constCODE.NOT_NULL)}
@@ -200,22 +215,27 @@ function Voca(props) {
         </CardActions>
         <Collapse in={expanded} timeout="auto" className={classes.collapseItem}>
           <CardContent>
-            {inputNotRequired.map((el, index) => {
-              const value = voca[el] || "";
+            {inputNotRequired.map((key, index) => {
+              const value = isEditing
+                ? voca[key] || ""
+                : voca[key] || "No Data";
               return (
-                <TextField
-                  key={index}
-                  className={classes.oneField}
-                  id={el}
-                  label={inputLabels[el]}
-                  type="text"
-                  color="primary"
-                  multiline={true}
-                  name={el}
-                  value={value}
-                  onChange={handleOnChange}
-                  disabled={!isEditing}
-                />
+                <div key={key + index} className={classes.oneField}>
+                  <TextField
+                    className={classes.oneField}
+                    id={key}
+                    label={inputLabels[key]}
+                    type="text"
+                    color="primary"
+                    multiline={true}
+                    name={key}
+                    value={value}
+                    onChange={handleOnChange}
+                    disabled={!isEditing}
+                    className={`${isEditing ? "" : classes.readOnlyField}`}
+                  />
+                  {!isEditing && <Typography>{value}</Typography>}
+                </div>
               );
             })}
             {!isExample && (

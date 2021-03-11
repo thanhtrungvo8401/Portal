@@ -31,7 +31,7 @@ function Layout(props) {
   };
   const handleOnCloseShowCreateForm = () => {
     dispatch(actionSetShowCreateVocaForm(false));
-  }
+  };
   return (
     <React.Fragment>
       <ParagraphTitle>A vocabulary example</ParagraphTitle>
@@ -40,7 +40,15 @@ function Layout(props) {
       <ParagraphTitle>Your vocabularies</ParagraphTitle>
       <div className={classes.setVocas}>
         {listVocas.map((voca, index) => {
-          return <Voca key={index} voca={voca} />;
+          return (
+            <Voca
+              key={index}
+              voca={voca}
+              ERROR={ERROR}
+              // handleOnChange={props.handleOnChangeUpdate}
+              // handleOnSubmit={props.handleOnSubmitUpdate}
+            />
+          );
         })}
         {isShowCreateForm && (
           <Voca
