@@ -100,8 +100,8 @@ const useStyles = makeStyles((theme) => {
 const inputLabels = {
   voca: "Vocabulary",
   meaning: "Meaning",
-  note: "(1) How to pronouce!",
-  sentence: "(2) Example Sentence",
+  note: "(1) Pronouce!",
+  sentence: "(2) Sentences",
 };
 const inputRequired = ["voca", "meaning"];
 const inputNotRequired = ["note", "sentence"];
