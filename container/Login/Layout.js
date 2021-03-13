@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
       },
     },
     "& .MuiPaper-root.MuiDialog-paper.MuiDialog-paperScrollPaper": {
-      backgroundColor: "#FFFFFF",
+      backgroundColor: theme.palette.primary.main,
     },
   },
   closeBtn: {

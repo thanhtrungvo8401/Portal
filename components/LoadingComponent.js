@@ -19,7 +19,7 @@ const useStyle = makeStyles((theme) => {
       height: "100%",
       top: 0,
       left: 0,
-      backgroundColor: theme.palette.secondary.light,
+      backgroundColor: theme.palette.primary.main,
       opacity: 0.8,
       zIndex: 0,
     },
@@ -37,7 +37,7 @@ function LoadingComponent(props) {
   return (
     <div className={classes.loadingComponent}>
       <div className={classes.bgComponent}></div>
-      <CircularProgress thickness={4} />
+      <CircularProgress color="secondary" thickness={4} />
     </div>
   );
 }
