@@ -98,7 +98,6 @@ function StudyRoomLayout(props) {
       <ActionGroup>
         {isShowCreateForm && (
           <Button
-            color="action"
             variant="contained"
             onClick={handleCloseCreate}
           >
