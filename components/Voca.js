@@ -5,6 +5,10 @@ import {
   CardActions,
   CardContent,
   Collapse,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   IconButton,
   makeStyles,
   TextField,
@@ -21,6 +25,8 @@ import { codeToMessages, constCODE } from "../utils/CodeToMessages";
 import { useDispatch } from "react-redux";
 import { actionSetVocabularyObject } from "../redux/actions/vocaActions";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
+import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
+
 const useStyles = makeStyles((theme) => {
   return {
     vocaComponent: {
@@ -73,7 +79,7 @@ const useStyles = makeStyles((theme) => {
       left: "50%",
       transform: "translate(-50%, -50%)!important",
       "& .MuiIconButton-label": {
-        transform: "rotate(180deg)"
+        transform: "rotate(180deg)",
       },
     },
     expand: {
@@ -81,7 +87,7 @@ const useStyles = makeStyles((theme) => {
         transform: "rotate(0)",
         transition: theme.transitions.create("transform", {
           duration: theme.transitions.duration.shortest,
-        })
+        }),
       },
     },
     expandOpen: {
@@ -112,6 +118,7 @@ const inputRequired = ["voca", "meaning"];
 const inputNotRequired = ["note", "sentence"];
 function Voca(props) {
   const classes = useStyles();
+  const [openConfirm, setOpenConfirm] = useState(false);
   const { isCreate, isExample, voca, ERROR } = props;
 
   const dispatch = useDispatch();
@@ -154,6 +161,17 @@ function Voca(props) {
     }
     setExpanded(false);
   };
+  const handleOpenConfirmRemoveVoca = () => {
+    setOpenConfirm(true);
+  };
+  const handleCloseConfirmRemoveVoca = () => {
+    setOpenConfirm(false);
+  };
+  const handleRemoveVoca = () => {
+    alert("REMOVE VOCA");
+    handleCloseConfirmRemoveVoca();
+  };
+
   // Life cycle-hook:
   useEffect(() => {
     if (isCreate) {
@@ -285,8 +303,32 @@ function Voca(props) {
               </Button>
             </Tooltip>
           )}
+          {!isEditing && (
+            <Tooltip title="Delete" placement="left-start">
+              <Button variant="text" onClick={handleOpenConfirmRemoveVoca}>
+                <DeleteOutlinedIcon color="secondary" />
+              </Button>
+            </Tooltip>
+          )}
         </ButtonGroup>
       )}
+      {/* Confirm Action Popup */}
+      <Dialog
+        open={openConfirm}
+        aria-labelledby="form-dialog-title"
+        onClose={handleCloseConfirmRemoveVoca}
+      >
+        <DialogTitle id="form-dialog-title">Confirm Delete</DialogTitle>
+        <DialogContent>Are you sure want to remove this voca!</DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseConfirmRemoveVoca}>Cancel</Button>
+          <Button onClick={handleRemoveVoca}>
+            <Typography color="error" variant="button">
+              Remove
+            </Typography>
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
