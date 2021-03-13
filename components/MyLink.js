@@ -39,7 +39,6 @@ export default function MyLink(props) {
 
 MyLink.propTypes = {
   children: PropTypes.any.isRequired,
-  variant: PropTypes.string.isRequired,
   className: PropTypes.any,
   url: PropTypes.string,
 };
