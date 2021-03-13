@@ -96,17 +96,18 @@ function Navbar(props) {
 
               <div className={classes.grow} />
 
-              <div className={classes.roomEnter}>
-                <MyLink url={appUrl.studyRoom()}>
-                  <Button
-                    color="default"
-                    variant="outlined"
-                    className={styles.flashEffect}
-                  >
-                    STUDY NOW
-                  </Button>
-                </MyLink>
-              </div>
+              <Button
+                color="default"
+                variant="outlined"
+                className={styles.flashEffect}
+                size="medium"
+                onClick={() => {
+                  navigate(appUrl.studyRoom());
+                }}
+              >
+                STUDY NOW
+              </Button>
+
               {_isLogined && (
                 <IconButton
                   edge="end"

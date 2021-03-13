@@ -66,13 +66,7 @@ export const useStyles = makeStyles((theme) => {
       width: "100%",
     },
     avatarLink: {
-      justifyContent: "center"
-    },
-    roomEnter: {
-      marginRight: theme.spacing(2),
-      "& .MuiTypography-root.MuiTypography-h6.MuiTypography-noWrap": {
-        overflow: "visible",
-      },
+      justifyContent: "center",
     },
     responsiveUserInfo: {
       [theme.breakpoints.up("md")]: {
@@ -142,12 +136,13 @@ export const MobileMenuPopup = (props) => {
       open={props.isMobileMenuOpen}
       onClose={props.handleMobileMenuClose}
     >
-      <MenuItem 
-        className={classes.avatarLink} 
+      <MenuItem
+        className={classes.avatarLink}
         onClick={() => {
           navigate(appUrl.dashboard());
           props.handleMobileMenuClose();
-        }} >
+        }}
+      >
         <Avatar alt="avatar" src="/image/cat.png" />
       </MenuItem>
       <MenuItem onClick={props.handleMobileMenuClose}>
