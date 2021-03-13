@@ -48,7 +48,7 @@ export const serviceGetSetVocaDetail = (id) => {
       .catch((err) => {
         const object = handleErrorAPI(err, "toast");
         const status = object.status;
-        if (status === 404) {
+        if (status === 400) {
           navigate(appUrl.studyRoom());
         }
         dispatch(actionSetError(object.errorCodesObject));

@@ -6,7 +6,8 @@ import {
   actionSetVocabularyList,
 } from "../redux/actions/vocaActions";
 import { enpoint_voca } from "../utils/API_URL";
-import { handleErrorAPI } from "../utils/Helper";
+import { appUrl } from "../utils/APP_URL";
+import { handleErrorAPI, navigate } from "../utils/Helper";
 
 export const serviceFetVocaBySetId = (setId) => {
   return (dispatch) => {
@@ -17,6 +18,10 @@ export const serviceFetVocaBySetId = (setId) => {
       })
       .catch((err) => {
         const object = handleErrorAPI(err, "toast");
+        const status = object.status;
+        if (status === 400) {
+          navigate(appUrl.studyRoom());
+        }
         dispatch(actionSetError(object.errorCodesObject));
       });
   };

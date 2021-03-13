@@ -5,8 +5,10 @@ import { withPrivateLayout } from "../../components/Layouts/PrivateLayout";
 import Layout from "../../container/SetVocas/Layout";
 import { actionResetError } from "../../redux/actions/errorActions";
 import { actionSetVocabularyObject } from "../../redux/actions/vocaActions";
-import { serviceGetSetVocaDetail } from "../../service/SetVoca";
-import { serviceCreateVoca, serviceFetVocaBySetId } from "../../service/vocaService";
+import {
+  serviceCreateVoca,
+  serviceFetVocaBySetId,
+} from "../../service/vocaService";
 
 function SetVocas(props) {
   const router = useRouter();
@@ -14,7 +16,7 @@ function SetVocas(props) {
   const dispatch = useDispatch();
   const listVocas = useSelector((state) => state.vocas.list);
   const voca = useSelector((state) => state.vocas.voca);
-  const ERROR = useSelector(state => state.error);
+  const ERROR = useSelector((state) => state.error);
   // UI interact:
   const handleOnChangeCreate = (e) => {
     const { name, value } = e.target;
@@ -24,21 +26,16 @@ function SetVocas(props) {
   };
 
   const handleOnSubmitCreate = () => {
-    const vocaObject = {...voca, setId};
+    const vocaObject = { ...voca, setId };
     dispatch(serviceCreateVoca(vocaObject));
   };
 
-  // Function Define:
-  const handleGetSetVocaDetail = (setId) => {
-    dispatch(serviceGetSetVocaDetail(setId));
-  };
   const handleFetchVocasBySetId = (setId) => {
     dispatch(serviceFetVocaBySetId(setId));
   };
   // Life cycle hook:
   useEffect(() => {
     if (setId) {
-      handleGetSetVocaDetail(setId);
       handleFetchVocasBySetId(setId);
     }
   }, [setId]);
