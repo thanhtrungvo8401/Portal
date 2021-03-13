@@ -150,7 +150,7 @@ export const MobileMenuPopup = (props) => {
           url="/"
           className={`${classes.myLink} ${classes.customLink}`}
         >
-          <Avatar alt="avatar" src="/image/cat.png" />
+          {/* <Avatar alt="avatar" src="/image/cat.png" /> */}
           <span>Meomeo-kun</span>
         </MyLink>
       </MenuItem>

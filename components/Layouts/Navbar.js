@@ -18,10 +18,11 @@ import {
 } from "./NavbarHelper";
 import MyLink from "../MyLink";
 import styles from "./styles.module.css";
-import { removeGmailTag, showLoginForm } from "../../utils/Helper";
+import { navigate, removeGmailTag, showLoginForm } from "../../utils/Helper";
 import Login from "../../container/Login";
 import { useDispatch, useSelector } from "react-redux";
 import { serviceLogout } from "../../service/authenticate";
+import { appUrl } from "../../utils/APP_URL";
 function Navbar(props) {
   // VARIABLES:
   const classes = useStyles();
@@ -51,6 +52,9 @@ function Navbar(props) {
   const handleLogout = () => {
     dispatch(serviceLogout(handleProfileMenuClose));
   };
+  const handleGoToDashboard = (url) => {
+    navigate(url);
+  }
   const profileId = "profile-menu-popup";
 
   const mobileMenuId = "primary-search-account-menu-mobile";
@@ -60,30 +64,28 @@ function Navbar(props) {
         <AppBar color="primary">
           <Container>
             <Toolbar>
-              <MyLink url="/" className={classes.title}>
-                <Avatar alt="avatar" src="/image/cat.png" />
-              </MyLink>
+
+              <Avatar 
+              alt="avatar" 
+              src="/image/cat.png" 
+              className={classes.title} 
+              onClick={() => {
+                handleGoToDashboard(appUrl.dashboard())
+              }}
+              />
 
               <div className={classes.sectionDesktop}>
-                <MyLink
-                  className={classes.navItem}
-                  url="/top-student"
-                >
+                <MyLink className={classes.navItem} url="/top-student">
                   Top Student
                 </MyLink>
-                <MyLink
-                  className={classes.navItem}
-                  url="/top-student"
-                >
+                <MyLink className={classes.navItem} url="/top-student">
                   News
                 </MyLink>
-                <MyLink
-                  className={classes.navItem}
-                  url="/top-student"
-                >
+                <MyLink className={classes.navItem} url="/top-student">
                   About Neko
                 </MyLink>
               </div>
+
               <div className={classes.sectionMobile}>
                 <IconButton
                   aria-label="show more"
@@ -95,9 +97,11 @@ function Navbar(props) {
                   <MenuIcon />
                 </IconButton>
               </div>
+              
               <div className={classes.grow} />
+
               <div className={classes.roomEnter}>
-                <MyLink url="/study-room">
+                <MyLink url={appUrl.studyRoom()}>
                   <Button
                     color="default"
                     variant="outlined"
@@ -127,9 +131,7 @@ function Navbar(props) {
               )}
               {!_isLogined && (
                 <div onClick={() => showLoginForm()}>
-                  <MyLink className={classes.navItem}>
-                    Login
-                  </MyLink>
+                  <MyLink className={classes.navItem}>Login</MyLink>
                 </div>
               )}
             </Toolbar>
