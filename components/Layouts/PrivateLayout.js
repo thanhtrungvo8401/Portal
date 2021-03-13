@@ -33,7 +33,7 @@ export function NotLoginComponent(props) {
       </Typography>
       <Box className={classes.loginBtn}>
         <Button
-          color="secondary"
+          color="primary"
           size="large"
           variant="contained"
           onClick={() => showLoginForm()}

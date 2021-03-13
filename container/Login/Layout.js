@@ -80,11 +80,11 @@ function LoginLayout(props) {
       className={`${classes.dialog} ${isLoading ? classes.zindex500 : ""}`}
     >
       <IconButton className={classes.closeBtn} onClick={props.handleCloseLogin}>
-        <HighlightOffIcon color="action" fontSize="large" />
+        <HighlightOffIcon color="secondary" fontSize="large" />
       </IconButton>
       <Container className={classes.container} component="main" maxWidth="xs">
         <DialogContent>
-          <Avatar className={classes.avatar} >
+          <Avatar className={classes.avatar}>
             <VpnKeyOutlinedIcon color="primary" />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -109,7 +109,7 @@ function LoginLayout(props) {
             className={classes.submit}
             type="btn"
             variant="contained"
-            color="secondary"
+            color="primary"
             onClick={props.handleOnSubmit}
             disabled={!isValidSubmit}
           >
@@ -117,18 +117,12 @@ function LoginLayout(props) {
           </Button>
           <Grid container>
             <Grid item xs>
-              <MyLink
-                variant="caption"
-                url="#"
-              >
+              <MyLink variant="caption" url="#">
                 Forgot password?
               </MyLink>
             </Grid>
             <Grid item xs>
-              <MyLink
-                variant="caption"
-                url="/sign-up"
-              >
+              <MyLink variant="caption" url="/sign-up">
                 Don't have an account? Sign Up
               </MyLink>
             </Grid>

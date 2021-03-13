@@ -78,7 +78,7 @@ function Navbar(props) {
                   onClick={handleMobileMenuOpen}
                   color="default"
                 >
-                  <MenuIcon />
+                  <MenuIcon color="secondary" />
                 </IconButton>
               </div>
 
@@ -123,7 +123,7 @@ function Navbar(props) {
                   >
                     {removeGmailTag(user && user.email)}
                   </Typography>
-                  <AccountCircle />
+                  <AccountCircle color="secondary" />
                 </IconButton>
               )}
               {!_isLogined && (

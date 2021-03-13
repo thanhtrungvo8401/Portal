@@ -14,7 +14,7 @@ import {
   DialogActions,
   DialogContentText,
 } from "@material-ui/core";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import { formatDate } from "../utils/DateHelper";
@@ -86,10 +86,8 @@ function SetVoca(props) {
   };
   return (
     <React.Fragment>
-      <ButtonGroup className={classes.btnGroup}>
+      <ButtonGroup variant="text" className={classes.btnGroup}>
         <Button
-          variant="outlined"
-          color="primary"
           className={classes.setItem}
           onClick={() => handleGoToSetVocas(item)}
         >
@@ -100,16 +98,16 @@ function SetVoca(props) {
           >
             {name}
           </Typography>
-          <Typography color="textPrimary" variant="subtitle2">
+          <Typography color="textSecondary" variant="subtitle2">
             {`${number}/${constantApp.setVocaLimit}`}
           </Typography>
-          <Typography color="textPrimary" variant="caption">
+          <Typography color="textSecondary" variant="caption">
             {formatDate(time)}
           </Typography>
         </Button>
         {!isExample && (
-          <Button variant="outlined" size="small" onClick={handleOpenAction}>
-            <ArrowDropDownIcon />
+          <Button size="small" color="secondary" onClick={handleOpenAction}>
+            <PlaylistPlayIcon />
           </Button>
         )}
       </ButtonGroup>
@@ -122,7 +120,7 @@ function SetVoca(props) {
       >
         <MenuItem key={"edit"} onClick={() => handleEditBtnClick()}>
           <EditOutlinedIcon />
-          <Typography className={classes.marginLeft} variant="caption">
+          <Typography className={classes.marginLeft} variant="caption" color="secondary">
             Edit
           </Typography>
         </MenuItem>
@@ -149,10 +147,10 @@ function SetVoca(props) {
             deleted too.!!
           </DialogContentText>
           <DialogActions>
-            <Button onClick={handleOnCloseConfirm} color="primary">
+            <Button onClick={handleOnCloseConfirm} variant="contained">
               Cancel
             </Button>
-            <Button onClick={handleOnRemoveItemConfirm} color="primary">
+            <Button onClick={handleOnRemoveItemConfirm} variant="contained" color="primary">
               <Typography color="error" variant="button">
                 Remove
               </Typography>
