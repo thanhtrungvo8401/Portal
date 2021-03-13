@@ -147,12 +147,12 @@ function Voca(props) {
       props.handleOnChange(e);
     }
   };
-  const handleOnSubmit = () => {
+  const handleOnClickSaveBtn = () => {
     if (props.handleOnSubmit) {
       props.handleOnSubmit();
     }
   };
-  const closeEditingForm = (e) => {
+  const handleOnCloseEditingForm = (e) => {
     if (props.closeCreateForm) {
       props.closeCreateForm();
     }
@@ -284,14 +284,14 @@ function Voca(props) {
         >
           {isValidForm && isEditing && (
             <Tooltip title="Save" placement="left-start">
-              <Button variant="text" onClick={handleOnSubmit}>
+              <Button variant="text" onClick={handleOnClickSaveBtn}>
                 <SaveOutlinedIcon color="secondary" />
               </Button>
             </Tooltip>
           )}
           {isEditing && (
             <Tooltip title="Cancle" placement="left-start">
-              <Button variant="text" onClick={closeEditingForm}>
+              <Button variant="text" onClick={handleOnCloseEditingForm}>
                 <CancelOutlinedIcon color="error" />
               </Button>
             </Tooltip>
