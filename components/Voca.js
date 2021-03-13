@@ -22,8 +22,11 @@ import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
 import { validForm } from "./InputGroup";
 import { Alert } from "@material-ui/lab";
 import { codeToMessages, constCODE } from "../utils/CodeToMessages";
-import { useDispatch } from "react-redux";
-import { actionSetVocabularyObject } from "../redux/actions/vocaActions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  actionSetVocabularyEditing,
+  actionSetVocabularyObject,
+} from "../redux/actions/vocaActions";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 
@@ -125,8 +128,18 @@ function Voca(props) {
   // Default editing and expand only for create-voca
   const [expanded, setExpanded] = useState(Boolean(isCreate));
   const [isEditing, setIsEditing] = useState(Boolean(isCreate));
+  const vocaEditing = useSelector((state) => state.vocas).vocaEditing;
   const [INTERACT, setINTERACT] = useState({});
   const isValidForm = validForm(voca, inputRequired, ERROR);
+
+  // FOR UPDATE VOCA:
+  const handleSelectEditingVoca = () => {
+    dispatch(actionSetVocabularyEditing(voca));
+  };
+  const handleResetEditingVoca = () => {
+    dispatch(actionSetVocabularyEditing({}));
+  };
+
   // UI INTERACT:
   const handleOnToggleExpaned = () => {
     setExpanded(!expanded);
@@ -158,6 +171,7 @@ function Voca(props) {
     }
     if (isEditing) {
       handleOnToggleEditing();
+      handleResetEditingVoca();
     }
     setExpanded(false);
   };
@@ -174,6 +188,7 @@ function Voca(props) {
     handleCloseConfirmRemoveVoca();
   };
 
+  console.log(vocaEditing);
   // Life cycle-hook:
   useEffect(() => {
     // Reset value of "create voca" to {}
@@ -301,7 +316,13 @@ function Voca(props) {
           )}
           {!isEditing && (
             <Tooltip title="Edit" placement="left-start">
-              <Button variant="text" onClick={handleOnToggleEditing}>
+              <Button
+                variant="text"
+                onClick={() => {
+                  handleOnToggleEditing();
+                  handleSelectEditingVoca();
+                }}
+              >
                 <EditOutlinedIcon color="secondary" />
               </Button>
             </Tooltip>
