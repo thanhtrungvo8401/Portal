@@ -54,12 +54,8 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  link: {
-    color: theme.palette.primary.dark,
-  },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.primary.main,
   },
 }));
 const inputFields = ["email", "password"];
@@ -84,12 +80,12 @@ function LoginLayout(props) {
       className={`${classes.dialog} ${isLoading ? classes.zindex500 : ""}`}
     >
       <IconButton className={classes.closeBtn} onClick={props.handleCloseLogin}>
-        <HighlightOffIcon color="error" fontSize="large" />
+        <HighlightOffIcon color="action" fontSize="large" />
       </IconButton>
       <Container className={classes.container} component="main" maxWidth="xs">
         <DialogContent>
-          <Avatar className={classes.avatar}>
-            <VpnKeyOutlinedIcon />
+          <Avatar className={classes.avatar} >
+            <VpnKeyOutlinedIcon color="primary" />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
@@ -113,7 +109,7 @@ function LoginLayout(props) {
             className={classes.submit}
             type="btn"
             variant="contained"
-            color="primary"
+            color="secondary"
             onClick={props.handleOnSubmit}
             disabled={!isValidSubmit}
           >
@@ -124,8 +120,6 @@ function LoginLayout(props) {
               <MyLink
                 variant="caption"
                 url="#"
-                color="primary"
-                className={classes.link}
               >
                 Forgot password?
               </MyLink>
@@ -134,8 +128,6 @@ function LoginLayout(props) {
               <MyLink
                 variant="caption"
                 url="/sign-up"
-                color="primary"
-                className={classes.link}
               >
                 Don't have an account? Sign Up
               </MyLink>

@@ -102,7 +102,7 @@ function InputGroup(props) {
         type="submit"
         fullWidth
         variant="contained"
-        color="primary"
+        color="secondary"
         className={`${classes.submit} ${
           !Boolean(submitTitle) ? classes.hidden : ""
         }`}

@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.primary.main,
   },
 }));
 
@@ -36,7 +35,7 @@ function SignUpLayout(props) {
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <GroupAddOutlinedIcon />
+          <GroupAddOutlinedIcon color="primary" />
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign up
