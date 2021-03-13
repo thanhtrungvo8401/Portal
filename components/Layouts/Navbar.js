@@ -70,18 +70,6 @@ function Navbar(props) {
                 }}
               />
 
-              <div className={classes.sectionDesktop}>
-                <MyLink className={classes.navItem} url="/top-student">
-                  Top Student
-                </MyLink>
-                <MyLink className={classes.navItem} url="/top-student">
-                  News
-                </MyLink>
-                <MyLink className={classes.navItem} url="/top-student">
-                  About Neko
-                </MyLink>
-              </div>
-
               <div className={classes.sectionMobile}>
                 <IconButton
                   aria-label="show more"
@@ -92,6 +80,18 @@ function Navbar(props) {
                 >
                   <MenuIcon />
                 </IconButton>
+              </div>
+
+              <div className={classes.sectionDesktop}>
+                <MyLink className={classes.navItem} url="/top-student">
+                  Top Student
+                </MyLink>
+                <MyLink className={classes.navItem} url="/top-student">
+                  News
+                </MyLink>
+                <MyLink className={classes.navItem} url="/top-student">
+                  About Neko
+                </MyLink>
               </div>
 
               <div className={classes.grow} />

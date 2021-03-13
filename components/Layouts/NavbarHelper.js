@@ -38,6 +38,7 @@ export const useStyles = makeStyles((theme) => {
     },
     sectionMobile: {
       display: "flex",
+      marginLeft: "-12px",
       [theme.breakpoints.up("md")]: {
         display: "none",
       },
