@@ -1,25 +1,11 @@
 import { makeStyles, Typography } from "@material-ui/core";
-import { red } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   paragraphTitle: {
     marginBottom: theme.spacing(1),
     marginTop: theme.spacing(2)
   },
-  typo: {
-    display: "inline-block",
-    position: "relative",
-    "&:after": {
-      display: "block",
-      position: "absolute",
-      width: "100%",
-      height: "3px",
-      left: "0px",
-      bottom: "2px",
-      content: "''",
-      backgroundColor: theme.palette.primary.main,
-    },
-  },
+  typo: {},
 }));
 
 function ParagraphTitle(props) {
