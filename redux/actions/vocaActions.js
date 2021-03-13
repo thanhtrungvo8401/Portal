@@ -6,37 +6,37 @@ import {
   SET_VOCABULARY_OBJECT,
 } from "../types";
 
-export const actionSetVocabularyList = (payload) => {
+export const actionSetVocabularyList = (vocaList) => {
   return {
     type: SET_VOCABULARY_LIST,
-    payload,
+    payload: vocaList
   };
 };
 
-export const actionSetVocabularyObject = (payload) => {
+export const actionSetVocabularyObject = (voca) => {
   return {
     type: SET_VOCABULARY_OBJECT,
-    payload,
+    payload: voca
   };
 };
 
-export const actionAddVocabularyToList = (payload) => {
+export const actionAddVocabularyToList = (voca) => {
   return {
     type: ADD_VOCABULARY_INTO_LIST,
-    payload,
+    payload: voca
   };
 };
 
-export const actionRemoveVocabularyFromList = (payload) => {
+export const actionRemoveVocabularyFromList = (vocaId) => {
   return {
     type: REMOVE_VOCABULARY_FROM_LIST,
-    payload,
+    payload: vocaId
   };
 };
 
-export const actionSetShowCreateVocaForm = (payload) => {
+export const actionSetShowCreateVocaForm = (isShow) => {
   return {
     type: SET_SHOW_CREATE_VOCABULARY_FORM,
-    payload,
+    payload: isShow
   };
 };

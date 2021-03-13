@@ -168,12 +168,15 @@ function Voca(props) {
     setOpenConfirm(false);
   };
   const handleRemoveVoca = () => {
-    alert("REMOVE VOCA");
+    if (props.handleOnRemoveVocaById) {
+      props.handleOnRemoveVocaById(voca && voca.id);
+    }
     handleCloseConfirmRemoveVoca();
   };
 
   // Life cycle-hook:
   useEffect(() => {
+    // Reset value of "create voca" to {}
     if (isCreate) {
       dispatch(actionSetVocabularyObject({}));
     }

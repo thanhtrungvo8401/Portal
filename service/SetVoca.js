@@ -1,4 +1,5 @@
 import { API } from "../api/Api";
+import { toast } from "../components/Toast";
 import { actionSetError } from "../redux/actions/errorActions";
 import {
   actionAddGroupVocasItem,
@@ -8,6 +9,7 @@ import {
 } from "../redux/actions/setVocasActions";
 import { enpoint_setVoca } from "../utils/API_URL";
 import { appUrl } from "../utils/APP_URL";
+import { codeToMessages, constCODE } from "../utils/CodeToMessages";
 import { handleErrorAPI, navigate } from "../utils/Helper";
 
 export const serviceCreateSetVoca = (setVoca) => {
@@ -16,6 +18,7 @@ export const serviceCreateSetVoca = (setVoca) => {
       .then((res) => {
         const newSetVoca = res.data;
         dispatch(actionAddGroupVocasItem(newSetVoca));
+        toast.success(codeToMessages(constCODE.CREATE_SET_VOCAS_SUCCESS));
       })
       .catch((err) => {
         const object = handleErrorAPI(err, "toast");
@@ -62,6 +65,7 @@ export const serviceDeleteSetVocas = (id) => {
       .then((res) => {
         const deletedItem = res.data;
         dispatch(actionRemoveGroupVocasItem(deletedItem));
+        toast.success(codeToMessages(constCODE.DELETE_SET_VOCAS_SUCCESS));
       })
       .catch((err) => {
         const object = handleErrorAPI(err, "toast");

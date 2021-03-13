@@ -4,7 +4,7 @@ import { handleErrorAPI, navigate } from "../utils/Helper";
 import { enpoint_auth } from "../utils/API_URL";
 import { actionSetError } from "../redux/actions/errorActions";
 import { toast } from "../components/Toast";
-import { constCODE } from "../utils/CodeToMessages";
+import { codeToMessages, constCODE } from "../utils/CodeToMessages";
 import {
   actionCloseLogin,
   actionSetIsLogined,
@@ -18,7 +18,7 @@ export const serviceSignUp = (user) => {
   return (dispatch) => {
     API.post(enpoint_auth.sign_up(), user)
       .then((res) => {
-        toast.success(constCODE.SIGN_UP_SUCCESS);
+        toast.success(codeToMessages(constCODE.SIGN_UP_SUCCESS));
         navigate(appUrl.studyRoom());
       })
       .catch((err) => {

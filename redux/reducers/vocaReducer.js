@@ -37,15 +37,16 @@ export const vocaReducer = (state = { ...initState }, action) => {
       };
     case REMOVE_VOCABULARY_FROM_LIST:
       list = [...state.list];
-      voca = action.payload;
+      const vocaId = action.payload;
       let index = null;
       for (let i = 0; i < list.length; i++) {
         const item = list[i];
-        if (item.id === voca.id) {
-          index = id;
+        if (item.id === vocaId) {
+          index = i;
+          break;
         }
       }
-      if (id !== null) {
+      if (index !== null) {
         list.splice(index, 1);
       }
       return {

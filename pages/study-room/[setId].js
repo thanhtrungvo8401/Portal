@@ -7,6 +7,7 @@ import { actionResetError } from "../../redux/actions/errorActions";
 import { actionSetVocabularyObject } from "../../redux/actions/vocaActions";
 import {
   serviceCreateVoca,
+  serviceDeleteVocaById,
   serviceFetVocaBySetId,
 } from "../../service/vocaService";
 
@@ -17,21 +18,22 @@ function SetVocas(props) {
   const listVocas = useSelector((state) => state.vocas.list);
   const voca = useSelector((state) => state.vocas.voca);
   const ERROR = useSelector((state) => state.error);
-  // UI interact:
+
+  const handleFetchVocasBySetId = (setId) => {
+    dispatch(serviceFetVocaBySetId(setId));
+  };
   const handleOnChangeCreate = (e) => {
     const { name, value } = e.target;
     const newVoca = { ...voca, [name]: value };
     dispatch(actionSetVocabularyObject(newVoca));
     dispatch(actionResetError());
   };
-
   const handleOnSubmitCreate = () => {
     const vocaObject = { ...voca, setId };
     dispatch(serviceCreateVoca(vocaObject));
   };
-
-  const handleFetchVocasBySetId = (setId) => {
-    dispatch(serviceFetVocaBySetId(setId));
+  const handleOnRemoveVocaById = (id) => {
+    dispatch(serviceDeleteVocaById(id));
   };
   // Life cycle hook:
   useEffect(() => {
@@ -43,6 +45,7 @@ function SetVocas(props) {
     <Layout
       handleOnChangeCreate={handleOnChangeCreate}
       handleOnSubmitCreate={handleOnSubmitCreate}
+      handleOnRemoveVocaById={handleOnRemoveVocaById}
       listVocas={listVocas}
       voca={voca}
       ERROR={ERROR}

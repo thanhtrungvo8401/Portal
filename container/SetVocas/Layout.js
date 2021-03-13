@@ -40,7 +40,7 @@ function Layout(props) {
         <Voca isExample={true} voca={{}} />
       </ParagraphBody>
       <ParagraphTitle>Your vocabularies</ParagraphTitle>
-      {Boolean(listVocas.length) && (
+      {Boolean(listVocas.length || isShowCreateForm) && (
         <ParagraphBody>
           <div className={classes.setVocas}>
             {listVocas.map((voca, index) => {
@@ -49,6 +49,7 @@ function Layout(props) {
                   key={index}
                   voca={voca}
                   ERROR={ERROR}
+                  handleOnRemoveVocaById={props.handleOnRemoveVocaById}
                   // handleOnChange={props.handleOnChangeUpdate}
                   // handleOnSubmit={props.handleOnSubmitUpdate}
                 />
