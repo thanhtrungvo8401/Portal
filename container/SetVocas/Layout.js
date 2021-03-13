@@ -40,31 +40,33 @@ function Layout(props) {
         <Voca isExample={true} voca={{}} />
       </ParagraphBody>
       <ParagraphTitle>Your vocabularies</ParagraphTitle>
-      <ParagraphBody>
-        <div className={classes.setVocas}>
-          {listVocas.map((voca, index) => {
-            return (
+      {Boolean(listVocas.length) && (
+        <ParagraphBody>
+          <div className={classes.setVocas}>
+            {listVocas.map((voca, index) => {
+              return (
+                <Voca
+                  key={index}
+                  voca={voca}
+                  ERROR={ERROR}
+                  // handleOnChange={props.handleOnChangeUpdate}
+                  // handleOnSubmit={props.handleOnSubmitUpdate}
+                />
+              );
+            })}
+            {isShowCreateForm && (
               <Voca
-                key={index}
+                handleOnChange={props.handleOnChangeCreate}
+                handleOnSubmit={props.handleOnSubmitCreate}
+                closeCreateForm={handleOnCloseShowCreateForm}
                 voca={voca}
                 ERROR={ERROR}
-                // handleOnChange={props.handleOnChangeUpdate}
-                // handleOnSubmit={props.handleOnSubmitUpdate}
+                isCreate={true}
               />
-            );
-          })}
-          {isShowCreateForm && (
-            <Voca
-              handleOnChange={props.handleOnChangeCreate}
-              handleOnSubmit={props.handleOnSubmitCreate}
-              closeCreateForm={handleOnCloseShowCreateForm}
-              voca={voca}
-              ERROR={ERROR}
-              isCreate={true}
-            />
-          )}
-        </div>
-      </ParagraphBody>
+            )}
+          </div>
+        </ParagraphBody>
+      )}
       <ActionGroup>
         {!isShowCreateForm && (
           <Button
