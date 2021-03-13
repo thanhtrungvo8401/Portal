@@ -172,7 +172,7 @@ export const MobileMenuPopup = (props) => {
       </MenuItem>
       <MenuItem className="close-btn">
         <IconButton onClick={props.handleMobileMenuClose}>
-          <HighlightOffIcon color={"secondary"} fontSize="large" />
+          <HighlightOffIcon color="action" fontSize="large" />
         </IconButton>
       </MenuItem>
     </Menu>
