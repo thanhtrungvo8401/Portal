@@ -69,6 +69,7 @@ function InputGroup(props) {
             return (
               <React.Fragment key={key}>
                 <TextField
+                  color="secondary"
                   variant="outlined"
                   margin="normal"
                   fullWidth

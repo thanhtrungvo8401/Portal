@@ -180,7 +180,7 @@ function Voca(props) {
                   id={key}
                   label={inputLabels[key]}
                   type="text"
-                  color="primary"
+                  color="secondary"
                   multiline={true}
                   required
                   name={key}
@@ -231,7 +231,7 @@ function Voca(props) {
                     id={key}
                     label={inputLabels[key]}
                     type="text"
-                    color="primary"
+                    color="secondary"
                     multiline={true}
                     name={key}
                     value={value}
