@@ -21,7 +21,7 @@ export default class MyDocument extends Document {
           <script src="/js/wanakana.min.js"></script>
           {/* https://wanakana.com/docs/global.html#toHiragana */}
         </Head>
-        <body style={{height: "100%"}}>
+        <body id="next-body" style={{height: "100%"}}>
           <Main />
           <NextScript />
         </body>
