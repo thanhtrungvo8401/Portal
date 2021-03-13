@@ -90,7 +90,7 @@ function Navbar(props) {
                   aria-controls={mobileMenuId}
                   aria-haspopup="true"
                   onClick={handleMobileMenuOpen}
-                  color="secondary"
+                  color="default"
                 >
                   <MenuIcon />
                 </IconButton>
@@ -99,7 +99,7 @@ function Navbar(props) {
               <div className={classes.roomEnter}>
                 <MyLink url="/study-room">
                   <Button
-                    color="secondary"
+                    color="default"
                     variant="outlined"
                     className={styles.flashEffect}
                   >
@@ -114,7 +114,7 @@ function Navbar(props) {
                   aria-controls={profileId}
                   aria-haspopup="true"
                   onClick={handleProfileMenuOpen}
-                  color="secondary"
+                  color="default"
                 >
                   <Typography
                     className={classes.responsiveUserInfoDesktop}
