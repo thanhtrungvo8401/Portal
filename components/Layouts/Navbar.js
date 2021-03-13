@@ -52,9 +52,6 @@ function Navbar(props) {
   const handleLogout = () => {
     dispatch(serviceLogout(handleProfileMenuClose));
   };
-  const handleGoToDashboard = (url) => {
-    navigate(url);
-  }
   const profileId = "profile-menu-popup";
 
   const mobileMenuId = "primary-search-account-menu-mobile";
@@ -64,14 +61,13 @@ function Navbar(props) {
         <AppBar color="primary">
           <Container>
             <Toolbar>
-
-              <Avatar 
-              alt="avatar" 
-              src="/image/cat.png" 
-              className={classes.title} 
-              onClick={() => {
-                handleGoToDashboard(appUrl.dashboard())
-              }}
+              <Avatar
+                alt="avatar"
+                src="/image/cat.png"
+                className={classes.title}
+                onClick={() => {
+                  navigate(appUrl.dashboard());
+                }}
               />
 
               <div className={classes.sectionDesktop}>
@@ -97,7 +93,7 @@ function Navbar(props) {
                   <MenuIcon />
                 </IconButton>
               </div>
-              
+
               <div className={classes.grow} />
 
               <div className={classes.roomEnter}>

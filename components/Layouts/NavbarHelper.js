@@ -10,7 +10,8 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import MyLink from "../MyLink";
-import { removeGmailTag } from "../../utils/Helper";
+import { navigate, removeGmailTag } from "../../utils/Helper";
+import { appUrl } from "../../utils/APP_URL";
 
 export const useStyles = makeStyles((theme) => {
   return {
@@ -64,12 +65,8 @@ export const useStyles = makeStyles((theme) => {
     myLink: {
       width: "100%",
     },
-    customLink: {
-      display: "flex",
-      alignItems: "center",
-      "& span": {
-        marginLeft: theme.spacing(2)
-      }
+    avatarLink: {
+      justifyContent: "center"
     },
     roomEnter: {
       marginRight: theme.spacing(2),
@@ -145,36 +142,31 @@ export const MobileMenuPopup = (props) => {
       open={props.isMobileMenuOpen}
       onClose={props.handleMobileMenuClose}
     >
+      <MenuItem 
+        className={classes.avatarLink} 
+        onClick={() => {
+          navigate(appUrl.dashboard());
+          props.handleMobileMenuClose();
+        }} >
+        <Avatar alt="avatar" src="/image/cat.png" />
+      </MenuItem>
       <MenuItem onClick={props.handleMobileMenuClose}>
-        <MyLink
-          url="/"
-          className={`${classes.myLink} ${classes.customLink}`}
-        >
-          {/* <Avatar alt="avatar" src="/image/cat.png" /> */}
+        <MyLink url={appUrl.dashboard()} className={`${classes.myLink}`}>
           <span>Meomeo-kun</span>
         </MyLink>
       </MenuItem>
       <MenuItem onClick={props.handleMobileMenuClose}>
-        <MyLink
-          url="/top-student"
-          className={classes.myLink}
-        >
+        <MyLink url="/top-student" className={classes.myLink}>
           Top Student
         </MyLink>
       </MenuItem>
       <MenuItem onClick={props.handleMobileMenuClose}>
-        <MyLink
-          url="/top-student"
-          className={classes.myLink}
-        >
+        <MyLink url="/top-student" className={classes.myLink}>
           News
         </MyLink>
       </MenuItem>
       <MenuItem onClick={props.handleMobileMenuClose}>
-        <MyLink
-          url="/top-student"
-          className={classes.myLink}
-        >
+        <MyLink url="/top-student" className={classes.myLink}>
           About Neko
         </MyLink>
       </MenuItem>
