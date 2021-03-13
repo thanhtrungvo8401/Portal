@@ -15,7 +15,6 @@ import React, { useEffect, useState } from "react";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SaveOutlinedIcon from "@material-ui/icons/SaveOutlined";
 import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
-import { yellow } from "@material-ui/core/colors";
 import { validForm } from "./InputGroup";
 import { Alert } from "@material-ui/lab";
 import { codeToMessages, constCODE } from "../utils/CodeToMessages";
@@ -47,6 +46,7 @@ const useStyles = makeStyles((theme) => {
     },
     voca: {
       width: "100%",
+      backgroundColor: theme.palette.primary.main,
       "& .MuiCardContent-root": {
         display: "flex",
         justifyContent: "space-between",
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => {
       },
     },
     editingVoca: {
-      borderColor: yellow[900],
+      borderColor: theme.palette.secondary.main,
       borderWidth: "2px",
     },
     oneField: {
@@ -88,7 +88,7 @@ const useStyles = makeStyles((theme) => {
       transform: "rotate(180deg)",
     },
     collapseItem: {
-      backgroundColor: theme.palette.secondary.light,
+      backgroundColor: theme.palette.primary.dark,
     },
     mt: {
       marginTop: theme.spacing(1),
@@ -215,7 +215,7 @@ function Voca(props) {
               expanded ? classes.expandOpen : classes.expand
             } `}
           >
-            <ExpandMoreIcon color="primary" />
+            <ExpandMoreIcon color="secondary" />
           </IconButton>
         </CardActions>
         <Collapse in={expanded} timeout="auto" className={classes.collapseItem}>
@@ -267,7 +267,7 @@ function Voca(props) {
           {isValidForm && isEditing && (
             <Tooltip title="Save" placement="left-start">
               <Button variant="text" onClick={handleOnSubmit}>
-                <SaveOutlinedIcon color="primary" />
+                <SaveOutlinedIcon color="secondary" />
               </Button>
             </Tooltip>
           )}
@@ -281,7 +281,7 @@ function Voca(props) {
           {!isEditing && (
             <Tooltip title="Edit" placement="left-start">
               <Button variant="text" onClick={handleOnToggleEditing}>
-                <EditOutlinedIcon color="primary" />
+                <EditOutlinedIcon color="secondary" />
               </Button>
             </Tooltip>
           )}

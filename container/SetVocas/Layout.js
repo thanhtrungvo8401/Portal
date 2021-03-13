@@ -3,6 +3,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ActionGroup from "../../components/ActionGroup";
 import ParagraphTitle from "../../components/ParagraphTitle";
+import ParagraphBody from "../../components/ParagraphBody";
 import Voca from "../../components/Voca";
 import { actionSetShowCreateVocaForm } from "../../redux/actions/vocaActions";
 
@@ -35,32 +36,35 @@ function Layout(props) {
   return (
     <React.Fragment>
       <ParagraphTitle>A vocabulary example</ParagraphTitle>
-      <Voca isExample={true} voca={{}} />
-
+      <ParagraphBody>
+        <Voca isExample={true} voca={{}} />
+      </ParagraphBody>
       <ParagraphTitle>Your vocabularies</ParagraphTitle>
-      <div className={classes.setVocas}>
-        {listVocas.map((voca, index) => {
-          return (
+      <ParagraphBody>
+        <div className={classes.setVocas}>
+          {listVocas.map((voca, index) => {
+            return (
+              <Voca
+                key={index}
+                voca={voca}
+                ERROR={ERROR}
+                // handleOnChange={props.handleOnChangeUpdate}
+                // handleOnSubmit={props.handleOnSubmitUpdate}
+              />
+            );
+          })}
+          {isShowCreateForm && (
             <Voca
-              key={index}
+              handleOnChange={props.handleOnChangeCreate}
+              handleOnSubmit={props.handleOnSubmitCreate}
+              closeCreateForm={handleOnCloseShowCreateForm}
               voca={voca}
               ERROR={ERROR}
-              // handleOnChange={props.handleOnChangeUpdate}
-              // handleOnSubmit={props.handleOnSubmitUpdate}
+              isCreate={true}
             />
-          );
-        })}
-        {isShowCreateForm && (
-          <Voca
-            handleOnChange={props.handleOnChangeCreate}
-            handleOnSubmit={props.handleOnSubmitCreate}
-            closeCreateForm={handleOnCloseShowCreateForm}
-            voca={voca}
-            ERROR={ERROR}
-            isCreate={true}
-          />
-        )}
-      </div>
+          )}
+        </div>
+      </ParagraphBody>
       <ActionGroup>
         {!isShowCreateForm && (
           <Button
