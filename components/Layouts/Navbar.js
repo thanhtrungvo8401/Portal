@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import jwt_decode from "jwt-decode";
+import React, { useState } from "react";
 import {
   AppBar,
+  Avatar,
   Button,
   Container,
   IconButton,
@@ -60,27 +60,24 @@ function Navbar(props) {
         <AppBar color="primary">
           <Container>
             <Toolbar>
-              <MyLink variant="h6" url="/" className={classes.title}>
-                Neko-kun
+              <MyLink url="/" className={classes.title}>
+                <Avatar alt="avatar" src="/image/cat.png" />
               </MyLink>
 
               <div className={classes.sectionDesktop}>
                 <MyLink
-                  variant="h6"
                   className={classes.navItem}
                   url="/top-student"
                 >
                   Top Student
                 </MyLink>
                 <MyLink
-                  variant="h6"
                   className={classes.navItem}
                   url="/top-student"
                 >
                   News
                 </MyLink>
                 <MyLink
-                  variant="h6"
                   className={classes.navItem}
                   url="/top-student"
                 >
@@ -100,7 +97,7 @@ function Navbar(props) {
               </div>
               <div className={classes.grow} />
               <div className={classes.roomEnter}>
-                <MyLink variant="h6" url="/study-room">
+                <MyLink url="/study-room">
                   <Button
                     color="secondary"
                     variant="outlined"
@@ -130,7 +127,7 @@ function Navbar(props) {
               )}
               {!_isLogined && (
                 <div onClick={() => showLoginForm()}>
-                  <MyLink variant="h6" className={classes.navItem}>
+                  <MyLink className={classes.navItem}>
                     Login
                   </MyLink>
                 </div>

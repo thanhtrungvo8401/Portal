@@ -10,8 +10,7 @@ const useStyles = makeStyles((theme) => {
         transition: theme.transitions.create("all", {
           duration: theme.transitions.duration.short,
         }),
-        textDecorationLine: "underline",
-        textDecorationStyle: "double",
+        color: theme.palette.text.primary
       },
     },
   };
@@ -29,9 +28,9 @@ export default function MyLink(props) {
     <Typography
       onClick={navigateToUrl}
       className={`${className} ${classes.link}`}
-      variant={variant}
+      variant={variant || "body1"}
       noWrap
-      color={color || "secondary"}
+      color={color || "textSecondary"}
     >
       {children}
     </Typography>

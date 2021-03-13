@@ -1,4 +1,5 @@
 import {
+  Avatar,
   IconButton,
   Menu,
   MenuItem,
@@ -62,6 +63,13 @@ export const useStyles = makeStyles((theme) => {
     },
     myLink: {
       width: "100%",
+    },
+    customLink: {
+      display: "flex",
+      alignItems: "center",
+      "& span": {
+        marginLeft: theme.spacing(2)
+      }
     },
     roomEnter: {
       marginRight: theme.spacing(2),
@@ -139,19 +147,16 @@ export const MobileMenuPopup = (props) => {
     >
       <MenuItem onClick={props.handleMobileMenuClose}>
         <MyLink
-          variant="h6"
           url="/"
-          color="secondary"
-          className={classes.myLink}
+          className={`${classes.myLink} ${classes.customLink}`}
         >
-          Neko-kun
+          <Avatar alt="avatar" src="/image/cat.png" />
+          <span>Meomeo-kun</span>
         </MyLink>
       </MenuItem>
       <MenuItem onClick={props.handleMobileMenuClose}>
         <MyLink
-          variant="h6"
           url="/top-student"
-          color="secondary"
           className={classes.myLink}
         >
           Top Student
@@ -159,9 +164,7 @@ export const MobileMenuPopup = (props) => {
       </MenuItem>
       <MenuItem onClick={props.handleMobileMenuClose}>
         <MyLink
-          variant="h6"
           url="/top-student"
-          color="secondary"
           className={classes.myLink}
         >
           News
@@ -169,9 +172,7 @@ export const MobileMenuPopup = (props) => {
       </MenuItem>
       <MenuItem onClick={props.handleMobileMenuClose}>
         <MyLink
-          variant="h6"
           url="/top-student"
-          color="secondary"
           className={classes.myLink}
         >
           About Neko
