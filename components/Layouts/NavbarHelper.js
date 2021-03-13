@@ -63,6 +63,9 @@ export const useStyles = makeStyles((theme) => {
         bottom: theme.spacing(4),
       },
     },
+    loginBtn: {
+      marginLeft: theme.spacing(2)
+    },
     myLink: {
       width: "100%",
     },

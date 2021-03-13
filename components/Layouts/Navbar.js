@@ -127,7 +127,7 @@ function Navbar(props) {
                 </IconButton>
               )}
               {!_isLogined && (
-                <div onClick={() => showLoginForm()}>
+                <div onClick={() => showLoginForm()} className={classes.loginBtn} >
                   <MyLink className={classes.navItem}>Login</MyLink>
                 </div>
               )}
