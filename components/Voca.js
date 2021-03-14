@@ -15,7 +15,7 @@ import {
   Tooltip,
   Typography,
 } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SaveOutlinedIcon from "@material-ui/icons/SaveOutlined";
 import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
@@ -24,8 +24,10 @@ import { Alert } from "@material-ui/lab";
 import { codeToMessages, constCODE } from "../utils/CodeToMessages";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  actionResetVocaListEditing,
   actionSetVocabularyEditing,
   actionSetVocabularyObject,
+  actionSetVocaListEditingItem,
 } from "../redux/actions/vocaActions";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
@@ -122,12 +124,11 @@ const inputNotRequired = ["note", "sentence"];
 function Voca(props) {
   const classes = useStyles();
   const [openConfirm, setOpenConfirm] = useState(false);
-  const { isCreate, isExample, voca, ERROR } = props;
+  const { isEditing, isExample, voca, ERROR } = props;
 
   const dispatch = useDispatch();
   // Default editing and expand only for create-voca
-  const [expanded, setExpanded] = useState(Boolean(isCreate));
-  const [isEditing, setIsEditing] = useState(Boolean(isCreate));
+  const [expanded, setExpanded] = useState(isEditing);
   const vocaEditing = useSelector((state) => state.vocas).vocaEditing;
   const [INTERACT, setINTERACT] = useState({});
   const isValidForm = validForm(voca, inputRequired, ERROR);
@@ -141,14 +142,27 @@ function Voca(props) {
   };
 
   // UI INTERACT:
+  const handleOnClickSaveBtn = () => {
+    if (props.handleOnSubmit) {
+      props.handleOnSubmit();
+    }
+  };
+  const handleOnClickCancleBtn = (e) => {
+    // reset editing voca
+    handleResetEditingVoca();
+    // reset creating voca
+    dispatch(actionSetVocabularyObject({}));
+    // close all editing
+    dispatch(actionResetVocaListEditing());
+    setExpanded(false);
+  };
+  const handleOnClickEditBtn = () => {
+    handleSelectEditingVoca();
+    dispatch(actionSetVocaListEditingItem(voca.id));
+    setExpanded(true);
+  };
   const handleOnToggleExpaned = () => {
     setExpanded(!expanded);
-  };
-  const handleOnToggleEditing = () => {
-    setIsEditing(!isEditing);
-    if (!expanded) {
-      setExpanded(true);
-    }
   };
   const handleOnChange = (e) => {
     const { target } = e;
@@ -160,21 +174,7 @@ function Voca(props) {
       props.handleOnChange(e);
     }
   };
-  const handleOnClickSaveBtn = () => {
-    if (props.handleOnSubmit) {
-      props.handleOnSubmit();
-    }
-  };
-  const handleOnCloseEditingForm = (e) => {
-    if (props.closeCreateForm) {
-      props.closeCreateForm();
-    }
-    if (isEditing) {
-      handleOnToggleEditing();
-      handleResetEditingVoca();
-    }
-    setExpanded(false);
-  };
+  // FUNCTION DEFINE:
   const handleOpenConfirmRemoveVoca = () => {
     setOpenConfirm(true);
   };
@@ -188,14 +188,6 @@ function Voca(props) {
     handleCloseConfirmRemoveVoca();
   };
 
-  console.log(vocaEditing);
-  // Life cycle-hook:
-  useEffect(() => {
-    // Reset value of "create voca" to {}
-    if (isCreate) {
-      dispatch(actionSetVocabularyObject({}));
-    }
-  }, []);
   return (
     <div className={classes.vocaComponent}>
       <Card
@@ -309,20 +301,14 @@ function Voca(props) {
           )}
           {isEditing && (
             <Tooltip title="Cancle" placement="left-start">
-              <Button variant="text" onClick={handleOnCloseEditingForm}>
+              <Button variant="text" onClick={handleOnClickCancleBtn}>
                 <CancelOutlinedIcon color="error" />
               </Button>
             </Tooltip>
           )}
           {!isEditing && (
             <Tooltip title="Edit" placement="left-start">
-              <Button
-                variant="text"
-                onClick={() => {
-                  handleOnToggleEditing();
-                  handleSelectEditingVoca();
-                }}
-              >
+              <Button variant="text" onClick={handleOnClickEditBtn}>
                 <EditOutlinedIcon color="secondary" />
               </Button>
             </Tooltip>

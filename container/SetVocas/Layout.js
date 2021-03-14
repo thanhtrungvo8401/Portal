@@ -6,7 +6,6 @@ import ParagraphTitle from "../../components/ParagraphTitle";
 import ParagraphBody from "../../components/ParagraphBody";
 import Voca from "../../components/Voca";
 import {
-  actionResetVocaListEditing,
   actionSetShowCreateVocaForm,
 } from "../../redux/actions/vocaActions";
 
@@ -27,16 +26,12 @@ const useStyles = makeStyles((theme) => {
 function Layout(props) {
   const classes = useStyles();
   const { listVocas, voca, ERROR } = props;
-  const isShowCreateForm = useSelector((state) => state.vocas).listEditing[
-    listVocas.length
-  ];
+  const listEditing = useSelector((state) => state.vocas).listEditing;
+  const isShowCreateForm = listEditing[listVocas.length];
   const dispatch = useDispatch();
   // UI INTERACT:
   const handleOnShowCreateForm = () => {
     dispatch(actionSetShowCreateVocaForm());
-  };
-  const handleOnCloseShowCreateForm = () => {
-    dispatch(actionResetVocaListEditing());
   };
   return (
     <React.Fragment>
@@ -55,6 +50,7 @@ function Layout(props) {
                   voca={voca}
                   ERROR={ERROR}
                   handleOnRemoveVocaById={props.handleOnRemoveVocaById}
+                  isEditing={listEditing[index]}
                   // handleOnChange={props.handleOnChangeUpdate}
                   // handleOnSubmit={props.handleOnSubmitUpdate}
                 />
@@ -64,10 +60,9 @@ function Layout(props) {
               <Voca
                 handleOnChange={props.handleOnChangeCreate}
                 handleOnSubmit={props.handleOnSubmitCreate}
-                closeCreateForm={handleOnCloseShowCreateForm}
                 voca={voca}
                 ERROR={ERROR}
-                isCreate={true}
+                isEditing={true}
               />
             )}
           </div>
