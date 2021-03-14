@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { withPrivateLayout } from "../../components/Layouts/PrivateLayout";
 import Layout from "../../container/SetVocas/Layout";
 import { actionResetError } from "../../redux/actions/errorActions";
-import { actionSetVocabularyObject } from "../../redux/actions/vocaActions";
+import {
+  actionSetVocabularyEditing,
+  actionSetVocabularyObject,
+} from "../../redux/actions/vocaActions";
 import {
   serviceCreateVoca,
   serviceDeleteVocaById,
@@ -16,7 +19,8 @@ function SetVocas(props) {
   const { setId } = router.query;
   const dispatch = useDispatch();
   const listVocas = useSelector((state) => state.vocas.list);
-  const voca = useSelector((state) => state.vocas.voca);
+  const voca = useSelector((state) => state.vocas).voca;
+  const vocaEditing = useSelector((state) => state.vocas).vocaEditing;
   const ERROR = useSelector((state) => state.error);
 
   const handleFetchVocasBySetId = (setId) => {
@@ -28,9 +32,19 @@ function SetVocas(props) {
     dispatch(actionSetVocabularyObject(newVoca));
     dispatch(actionResetError());
   };
+  const handleOnChangeUpdate = (e) => {
+    const { name, value } = e.target;
+    const newVoca = { ...vocaEditing, [name]: value };
+    dispatch(actionSetVocabularyEditing(newVoca));
+    dispatch(actionResetError());
+  };
   const handleOnSubmitCreate = () => {
     const vocaObject = { ...voca, setId };
     dispatch(serviceCreateVoca(vocaObject));
+  };
+  const handleOnSubmitUpdate = () => {
+    const vocaObject = { ...vocaEditing };
+    console.log(vocaObject);
   };
   const handleOnRemoveVocaById = (id) => {
     dispatch(serviceDeleteVocaById(id));
@@ -44,7 +58,9 @@ function SetVocas(props) {
   return (
     <Layout
       handleOnChangeCreate={handleOnChangeCreate}
+      handleOnChangeUpdate={handleOnChangeUpdate}
       handleOnSubmitCreate={handleOnSubmitCreate}
+      handleOnSubmitUpdate={handleOnSubmitUpdate}
       handleOnRemoveVocaById={handleOnRemoveVocaById}
       listVocas={listVocas}
       voca={voca}

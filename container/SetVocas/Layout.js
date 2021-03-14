@@ -51,8 +51,8 @@ function Layout(props) {
                   ERROR={ERROR}
                   handleOnRemoveVocaById={props.handleOnRemoveVocaById}
                   isEditing={listEditing[index]}
-                  // handleOnChange={props.handleOnChangeUpdate}
-                  // handleOnSubmit={props.handleOnSubmitUpdate}
+                  handleOnChange={props.handleOnChangeUpdate}
+                  handleOnSubmit={props.handleOnSubmitUpdate}
                 />
               );
             })}

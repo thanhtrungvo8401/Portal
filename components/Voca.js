@@ -131,8 +131,9 @@ function Voca(props) {
   const [expanded, setExpanded] = useState(isEditing);
   const vocaEditing = useSelector((state) => state.vocas).vocaEditing;
   const [INTERACT, setINTERACT] = useState({});
-  const isValidForm = validForm(voca, inputRequired, ERROR);
 
+  const object = Boolean(vocaEditing.id) ? vocaEditing : voca;
+  const isValidForm = validForm(object, inputRequired, ERROR);
   // FOR UPDATE VOCA:
   const handleSelectEditingVoca = () => {
     dispatch(actionSetVocabularyEditing(voca));
@@ -196,9 +197,9 @@ function Voca(props) {
       >
         <CardContent>
           {inputRequired.map((key, index) => {
-            const value = voca[key] || "";
+            const value = object[key] || "";
             const isShowRequiredMsg =
-              Boolean(!voca[key]) &&
+              Boolean(!object[key]) &&
               Boolean(INTERACT[key]) &&
               inputRequired.includes(key);
             const ERR_MSG_CODE = Boolean(INTERACT[key] && ERROR[key]);
@@ -250,8 +251,8 @@ function Voca(props) {
           <CardContent>
             {inputNotRequired.map((key, index) => {
               const value = isEditing
-                ? voca[key] || ""
-                : voca[key] || "No Data";
+                ? object[key] || ""
+                : object[key] || "No Data";
               return (
                 <div key={key + index} className={classes.oneField}>
                   <TextField
