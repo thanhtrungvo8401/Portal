@@ -36,8 +36,8 @@ export const serviceCreateVoca = (voca) => {
     API.post(enpoint_voca.create(), voca)
       .then((res) => {
         const voca = res.data;
-        dispatch(actionAddVocabularyToList(voca));
         dispatch(actionResetVocaListEditing());
+        dispatch(actionAddVocabularyToList(voca));
         dispatch(actionSetVocabularyObject({}));
         toast.success(codeToMessages(constCODE.CREATE_VOCA_SUCCESS));
       })
