@@ -1,41 +1,37 @@
 import {
-  ADD_GROUP_VOCAS_ITEM,
-  REMOVE_GROUP_VOCAS_ITEM,
-  RESET_GROUP_VOCAS_LIST,
-  SET_GROUP_VOCAS_LIST,
-  SET_VOCA_OBJECT,
+  SET_VOCA,
 } from "../types";
 
 export const actionSetGroupVocasList = (payload) => {
   return {
-    type: SET_GROUP_VOCAS_LIST,
+    type: SET_VOCA.GET__SET_VOCAS_LIST,
     payload,
   };
 };
 
 export const actionAddGroupVocasItem = (payload) => {
   return {
-    type: ADD_GROUP_VOCAS_ITEM,
+    type: SET_VOCA.ADD__SET_VOCAS_TO_LIST,
     payload,
   };
 };
 
 export const actionRemoveGroupVocasItem = (payload) => {
   return {
-    type: REMOVE_GROUP_VOCAS_ITEM,
+    type: SET_VOCA.REMOVE__SET_VOCAS_FROM_LIST,
     payload,
   };
 };
 
 export const actionResetGroupVocasList = () => {
   return {
-    type: RESET_GROUP_VOCAS_LIST,
+    type: SET_VOCA.RESET__SET_VOCAS_LIST,
   };
 };
 
 export const actionSetvocaObject = (payload) => {
   return {
-    type: SET_VOCA_OBJECT,
+    type: SET_VOCA.SET__SET_VOCAS_OBJECT,
     payload: payload,
   };
 };

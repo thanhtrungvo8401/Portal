@@ -1,9 +1,5 @@
 import {
-  ADD_GROUP_VOCAS_ITEM,
-  REMOVE_GROUP_VOCAS_ITEM,
-  RESET_GROUP_VOCAS_LIST,
-  SET_GROUP_VOCAS_LIST,
-  SET_VOCA_OBJECT,
+  SET_VOCA,
 } from "../types";
 const initState = {
   list: [],
@@ -11,15 +7,15 @@ const initState = {
 };
 export const setVocasReducer = (state = { ...initState }, action) => {
   switch (action.type) {
-    case SET_GROUP_VOCAS_LIST:
+    case SET_VOCA.GET__SET_VOCAS_LIST:
       let list;
       state = { ...state, list: [...action.payload] };
       return state;
-    case ADD_GROUP_VOCAS_ITEM:
+    case SET_VOCA.ADD__SET_VOCAS_TO_LIST:
       list = [...state.list];
       list.push(action.payload);
       return { ...state, list };
-    case REMOVE_GROUP_VOCAS_ITEM:
+    case SET_VOCA.REMOVE__SET_VOCAS_FROM_LIST:
       const item = action.payload || {};
       list = [...state.list];
       let indexItem = null;
@@ -34,9 +30,9 @@ export const setVocasReducer = (state = { ...initState }, action) => {
         list.splice(indexItem, 1);
       }
       return { ...state, list };
-    case RESET_GROUP_VOCAS_LIST:
+    case SET_VOCA.RESET__SET_VOCAS_LIST:
       return { ...state, list: [] };
-    case SET_VOCA_OBJECT:
+    case SET_VOCA.SET__SET_VOCAS_OBJECT:
       return {
         ...state,
         setVoca: { ...action.payload },
