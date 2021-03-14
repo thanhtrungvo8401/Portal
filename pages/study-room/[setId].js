@@ -12,6 +12,7 @@ import {
   serviceCreateVoca,
   serviceDeleteVocaById,
   serviceFetVocaBySetId,
+  serviceUpdateVoca,
 } from "../../service/vocaService";
 
 function SetVocas(props) {
@@ -44,7 +45,7 @@ function SetVocas(props) {
   };
   const handleOnSubmitUpdate = () => {
     const vocaObject = { ...vocaEditing };
-    console.log(vocaObject);
+    dispatch(serviceUpdateVoca(vocaObject));
   };
   const handleOnRemoveVocaById = (id) => {
     dispatch(serviceDeleteVocaById(id));

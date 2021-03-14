@@ -14,6 +14,7 @@ export const enpoint_setVoca = {
 export const enpoint_voca = {
   fetVocas: (setId) => `/set-vocas/${setId}/vocas`,
   create: () => `/vocas`,
+  update: (id) => `/vocas/${id}`,
   delete: (id) => `/vocas/${id}`,
 };
 

@@ -1,6 +1,4 @@
-import {
-  VOCABULARY,
-} from "../types";
+import { VOCABULARY } from "../types";
 
 export const actionSetVocabularyList = (vocaList) => {
   return {
@@ -26,6 +24,13 @@ export const actionSetVocabularyEditing = (voca) => {
 export const actionAddVocabularyToList = (voca) => {
   return {
     type: VOCABULARY.ADD_VOCA_TO_LIST,
+    payload: voca,
+  };
+};
+
+export const actionUpdateVocaInList = (voca) => {
+  return {
+    type: VOCABULARY.UPDATE_VOCA_IN_LIST,
     payload: voca,
   };
 };

@@ -21,6 +21,19 @@ export const vocaReducer = (state = { ...initState }, { type, payload }) => {
         list: list,
         listEditing,
       };
+    case VOCABULARY.UPDATE_VOCA_IN_LIST:
+      list = [...state.list];
+      voca = payload;
+      for (let i = 0; i < list.length; i++) {
+        if (list[i].id === voca.id) {
+          list[i] = voca;
+          break;
+        }
+      }
+      return {
+        ...state,
+        list,
+      };
     case VOCABULARY.SET_VOCA_OBJECT:
       voca = { ...payload };
       return {

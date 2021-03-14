@@ -132,7 +132,7 @@ function Voca(props) {
   const vocaEditing = useSelector((state) => state.vocas).vocaEditing;
   const [INTERACT, setINTERACT] = useState({});
 
-  const object = Boolean(vocaEditing.id) ? vocaEditing : voca;
+  const object = Boolean(vocaEditing.id && isEditing) ? vocaEditing : voca;
   const isValidForm = validForm(object, inputRequired, ERROR);
   // FOR UPDATE VOCA:
   const handleSelectEditingVoca = () => {

@@ -5,8 +5,10 @@ import {
   actionAddVocabularyToList,
   actionRemoveVocabularyFromList,
   actionResetVocaListEditing,
+  actionSetVocabularyEditing,
   actionSetVocabularyList,
   actionSetVocabularyObject,
+  actionUpdateVocaInList,
 } from "../redux/actions/vocaActions";
 import { enpoint_voca } from "../utils/API_URL";
 import { appUrl } from "../utils/APP_URL";
@@ -40,6 +42,22 @@ export const serviceCreateVoca = (voca) => {
         dispatch(actionAddVocabularyToList(voca));
         dispatch(actionSetVocabularyObject({}));
         toast.success(codeToMessages(constCODE.CREATE_VOCA_SUCCESS));
+      })
+      .catch((err) => {
+        const object = handleErrorAPI(err, "toast");
+        dispatch(actionSetError(object.errorCodesObject));
+      });
+  };
+};
+
+export const serviceUpdateVoca = (voca) => {
+  return (dispatch) => {
+    API.put(enpoint_voca.update(voca.id), voca)
+      .then((res) => {
+        dispatch(actionResetVocaListEditing());
+        dispatch(actionUpdateVocaInList(voca));
+        dispatch(actionSetVocabularyEditing({}))
+        toast.success(codeToMessages(constCODE.UPDATE_VOCA_SUCCESS));
       })
       .catch((err) => {
         const object = handleErrorAPI(err, "toast");
