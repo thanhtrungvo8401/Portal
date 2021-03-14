@@ -1,13 +1,4 @@
-import {
-  ADD_VOCABULARY_INTO_LIST,
-  REMOVE_VOCABULARY_FROM_LIST,
-  SET_SHOW_CREATE_VOCABULARY_FORM,
-  SET_VOCABULARY_EDITING,
-  SET_VOCABULARY_LIST,
-  SET_VOCABULARY_LIST_EDITING_ITEM,
-  RESET_VOCABULARY_LIST_EDITING,
-  SET_VOCABULARY_OBJECT,
-} from "../types";
+import { VOCABULARY } from "../types";
 
 const initState = {
   list: [],
@@ -18,7 +9,7 @@ const initState = {
 
 export const vocaReducer = (state = { ...initState }, { type, payload }) => {
   switch (type) {
-    case SET_VOCABULARY_LIST:
+    case VOCABULARY.SET_LIST:
       let list;
       let listEditing;
       let voca;
@@ -30,19 +21,19 @@ export const vocaReducer = (state = { ...initState }, { type, payload }) => {
         list: list,
         listEditing,
       };
-    case SET_VOCABULARY_OBJECT:
+    case VOCABULARY.SET_VOCA_OBJECT:
       voca = { ...payload };
       return {
         ...state,
         voca: voca,
       };
-    case SET_VOCABULARY_EDITING:
+    case VOCABULARY.SET_VOCA_EDITING:
       voca = { ...payload };
       return {
         ...state,
         vocaEditing: voca,
       };
-    case ADD_VOCABULARY_INTO_LIST:
+    case VOCABULARY.ADD_VOCA_TO_LIST:
       list = [...state.list];
       list.push(payload);
       listEditing = list.map((el) => el.false);
@@ -50,7 +41,7 @@ export const vocaReducer = (state = { ...initState }, { type, payload }) => {
         ...state,
         list: list,
       };
-    case REMOVE_VOCABULARY_FROM_LIST:
+    case VOCABULARY.REMOVE_VOCA_FROM_LIST:
       list = [...state.list];
       listEditing = [...state.listEditing];
       vocaId = payload;
@@ -65,15 +56,16 @@ export const vocaReducer = (state = { ...initState }, { type, payload }) => {
       return {
         ...state,
         list,
+        listEditing,
       };
-    case SET_SHOW_CREATE_VOCABULARY_FORM:
+    case VOCABULARY.SET_SHOW_CREATE_VOCA_FORM:
       listEditing = [...state.list].map((el) => false);
       listEditing.push(true);
       return {
         ...state,
         listEditing,
       };
-    case SET_VOCABULARY_LIST_EDITING_ITEM:
+    case VOCABULARY.SET_VOCA_EDITING_FOR_LIST:
       list = state.list;
       listEditing = [...state.listEditing];
       vocaId = payload;
@@ -88,7 +80,7 @@ export const vocaReducer = (state = { ...initState }, { type, payload }) => {
         ...state,
         listEditing,
       };
-    case RESET_VOCABULARY_LIST_EDITING:
+    case VOCABULARY.RESET_LIST_EDITING:
       listEditing = state.list.map((el) => false);
       return {
         ...state,

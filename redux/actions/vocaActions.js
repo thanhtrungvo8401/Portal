@@ -1,64 +1,57 @@
 import {
-  ADD_VOCABULARY_INTO_LIST,
-  REMOVE_VOCABULARY_FROM_LIST,
-  SET_SHOW_CREATE_VOCABULARY_FORM,
-  SET_VOCABULARY_EDITING,
-  SET_VOCABULARY_LIST,
-  SET_VOCABULARY_LIST_EDITING_ITEM,
-  RESET_VOCABULARY_LIST_EDITING,
-  SET_VOCABULARY_OBJECT,
+  VOCABULARY,
 } from "../types";
 
 export const actionSetVocabularyList = (vocaList) => {
   return {
-    type: SET_VOCABULARY_LIST,
+    type: VOCABULARY.SET_LIST,
     payload: vocaList,
   };
 };
 
 export const actionSetVocabularyObject = (voca) => {
   return {
-    type: SET_VOCABULARY_OBJECT,
+    type: VOCABULARY.SET_VOCA_OBJECT,
     payload: voca,
   };
 };
 
 export const actionSetVocabularyEditing = (voca) => {
   return {
-    type: SET_VOCABULARY_EDITING,
+    type: VOCABULARY.SET_VOCA_EDITING,
     payload: voca,
   };
 };
 
 export const actionAddVocabularyToList = (voca) => {
   return {
-    type: ADD_VOCABULARY_INTO_LIST,
+    type: VOCABULARY.ADD_VOCA_TO_LIST,
     payload: voca,
   };
 };
 
 export const actionRemoveVocabularyFromList = (vocaId) => {
   return {
-    type: REMOVE_VOCABULARY_FROM_LIST,
+    type: VOCABULARY.REMOVE_VOCA_FROM_LIST,
     payload: vocaId,
   };
 };
 
 export const actionSetShowCreateVocaForm = () => {
   return {
-    type: SET_SHOW_CREATE_VOCABULARY_FORM,
+    type: VOCABULARY.SET_SHOW_CREATE_VOCA_FORM,
   };
 };
 
 export const actionSetVocaListEditingItem = (vocaId) => {
   return {
-    type: SET_VOCABULARY_LIST_EDITING_ITEM,
+    type: VOCABULARY.SET_VOCA_EDITING_FOR_LIST,
     payload: vocaId,
   };
 };
 
 export const actionResetVocaListEditing = () => {
   return {
-    type: RESET_VOCABULARY_LIST_EDITING,
+    type: VOCABULARY.RESET_LIST_EDITING,
   };
 };
