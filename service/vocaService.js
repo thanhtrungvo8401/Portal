@@ -50,13 +50,16 @@ export const serviceCreateVoca = (voca) => {
   };
 };
 
-export const serviceUpdateVoca = (voca) => {
+export const serviceUpdateVoca = (voca, actionCloseExpand) => {
   return (dispatch) => {
     API.put(enpoint_voca.update(voca.id), voca)
       .then((res) => {
         dispatch(actionResetVocaListEditing());
         dispatch(actionUpdateVocaInList(voca));
         dispatch(actionSetVocabularyEditing({}))
+        if (actionCloseExpand) {
+          action();
+        }
         toast.success(codeToMessages(constCODE.UPDATE_VOCA_SUCCESS));
       })
       .catch((err) => {
@@ -71,7 +74,7 @@ export const serviceDeleteVocaById = (id) => {
     API.delete(enpoint_voca.delete(id))
       .then((res) => {
         dispatch(actionRemoveVocabularyFromList(id));
-        toast.success(codeToMessages(constCODE.DELETE_SET_VOCAS_SUCCESS));
+        toast.success(codeToMessages(constCODE.DELETE_VOCA_SUCCESS));
       })
       .catch((err) => {
         const object = handleErrorAPI(err, "toast");

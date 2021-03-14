@@ -43,9 +43,9 @@ function SetVocas(props) {
     const vocaObject = { ...voca, setId };
     dispatch(serviceCreateVoca(vocaObject));
   };
-  const handleOnSubmitUpdate = () => {
+  const handleOnSubmitUpdate = (actionCloseExpand) => {
     const vocaObject = { ...vocaEditing };
-    dispatch(serviceUpdateVoca(vocaObject));
+    dispatch(serviceUpdateVoca(vocaObject, actionCloseExpand));
   };
   const handleOnRemoveVocaById = (id) => {
     dispatch(serviceDeleteVocaById(id));

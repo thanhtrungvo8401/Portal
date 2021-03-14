@@ -143,12 +143,28 @@ function Voca(props) {
   };
 
   // UI INTERACT:
-  const handleOnClickSaveBtn = () => {
-    if (props.handleOnSubmit) {
-      props.handleOnSubmit();
+  const handleOnToggleExpaned = () => {
+    setExpanded(!expanded);
+  };
+  const handleCloseExpaned = () => {
+    setExpanded(false);
+  }
+  const handleOnChange = (e) => {
+    const { target } = e;
+    setINTERACT({
+      ...INTERACT,
+      [target.name]: true,
+    });
+    if (props.handleOnChange) {
+      props.handleOnChange(e);
     }
   };
-  const handleOnClickCancleBtn = (e) => {
+  const handleOnClickSaveBtn = () => {
+    if (props.handleOnSubmit) {
+      props.handleOnSubmit(handleCloseExpaned);
+    }
+  };
+  const handleOnClickCancleBtn = () => {
     // reset editing voca
     handleResetEditingVoca();
     // reset creating voca
@@ -161,19 +177,6 @@ function Voca(props) {
     handleSelectEditingVoca();
     dispatch(actionSetVocaListEditingItem(voca.id));
     setExpanded(true);
-  };
-  const handleOnToggleExpaned = () => {
-    setExpanded(!expanded);
-  };
-  const handleOnChange = (e) => {
-    const { target } = e;
-    setINTERACT({
-      ...INTERACT,
-      [target.name]: true,
-    });
-    if (props.handleOnChange) {
-      props.handleOnChange(e);
-    }
   };
   // FUNCTION DEFINE:
   const handleOpenConfirmRemoveVoca = () => {
