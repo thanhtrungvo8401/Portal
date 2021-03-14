@@ -58,7 +58,7 @@ export const serviceUpdateVoca = (voca, actionCloseExpand) => {
         dispatch(actionUpdateVocaInList(voca));
         dispatch(actionSetVocabularyEditing({}))
         if (actionCloseExpand) {
-          action();
+          actionCloseExpand();
         }
         toast.success(codeToMessages(constCODE.UPDATE_VOCA_SUCCESS));
       })
