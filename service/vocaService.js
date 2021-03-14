@@ -4,7 +4,7 @@ import { actionSetError } from "../redux/actions/errorActions";
 import {
   actionAddVocabularyToList,
   actionRemoveVocabularyFromList,
-  actionSetShowCreateVocaForm,
+  actionResetVocaListEditing,
   actionSetVocabularyList,
 } from "../redux/actions/vocaActions";
 import { enpoint_voca } from "../utils/API_URL";
@@ -36,7 +36,7 @@ export const serviceCreateVoca = (voca) => {
       .then((res) => {
         const voca = res.data;
         dispatch(actionAddVocabularyToList(voca));
-        dispatch(actionSetShowCreateVocaForm(false));
+        dispatch(actionResetVocaListEditing());
         toast.success(codeToMessages(constCODE.CREATE_VOCA_SUCCESS));
       })
       .catch((err) => {

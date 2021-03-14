@@ -4,6 +4,8 @@ import {
   SET_SHOW_CREATE_VOCABULARY_FORM,
   SET_VOCABULARY_EDITING,
   SET_VOCABULARY_LIST,
+  SET_VOCABULARY_LIST_EDITING_ITEM,
+  RESET_VOCABULARY_LIST_EDITING,
   SET_VOCABULARY_OBJECT,
 } from "../types";
 
@@ -42,9 +44,21 @@ export const actionRemoveVocabularyFromList = (vocaId) => {
   };
 };
 
-export const actionSetShowCreateVocaForm = (isShow) => {
+export const actionSetShowCreateVocaForm = () => {
   return {
     type: SET_SHOW_CREATE_VOCABULARY_FORM,
-    payload: isShow,
+  };
+};
+
+export const actionSetVocaListEditingItem = (vocaId) => {
+  return {
+    type: SET_VOCABULARY_LIST_EDITING_ITEM,
+    payload: vocaId,
+  };
+};
+
+export const actionResetVocaListEditing = () => {
+  return {
+    type: RESET_VOCABULARY_LIST_EDITING,
   };
 };

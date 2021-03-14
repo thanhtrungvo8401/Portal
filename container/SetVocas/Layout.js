@@ -5,7 +5,10 @@ import ActionGroup from "../../components/ActionGroup";
 import ParagraphTitle from "../../components/ParagraphTitle";
 import ParagraphBody from "../../components/ParagraphBody";
 import Voca from "../../components/Voca";
-import { actionSetShowCreateVocaForm } from "../../redux/actions/vocaActions";
+import {
+  actionResetVocaListEditing,
+  actionSetShowCreateVocaForm,
+} from "../../redux/actions/vocaActions";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -24,14 +27,16 @@ const useStyles = makeStyles((theme) => {
 function Layout(props) {
   const classes = useStyles();
   const { listVocas, voca, ERROR } = props;
-  const isShowCreateForm = useSelector((state) => state.vocas.showCreateForm);
+  const isShowCreateForm = useSelector((state) => state.vocas).listEditing[
+    listVocas.length
+  ];
   const dispatch = useDispatch();
   // UI INTERACT:
   const handleOnShowCreateForm = () => {
-    dispatch(actionSetShowCreateVocaForm(true));
+    dispatch(actionSetShowCreateVocaForm());
   };
   const handleOnCloseShowCreateForm = () => {
-    dispatch(actionSetShowCreateVocaForm(false));
+    dispatch(actionResetVocaListEditing());
   };
   return (
     <React.Fragment>
