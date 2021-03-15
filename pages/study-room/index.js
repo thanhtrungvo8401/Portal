@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { withPrivateLayout } from "../../components/Layouts/PrivateLayout";
 import StudyRoomLayout from "../../container/StudyRoom/Layout";
 import { actionResetError } from "../../redux/actions/errorActions";
-import { actionSetvocaObject } from "../../redux/actions/setVocasActions";
+import { actionSetValueForlistEditing, actionSetvocaObject } from "../../redux/actions/setVocasActions";
 import {
   serviceCreateSetVoca,
   serviceDeleteSetVocas,
@@ -39,8 +39,8 @@ function StudyRoom(props) {
     dispatch(serviceDeleteSetVocas(item.id));
   };
 
-  const handleOnEditItem = (item) => {
-    console.log(item);
+  const handleOnAllowEditSetVoca = (setVoca) => {
+    dispatch(actionSetValueForlistEditing(setVoca));
   };
 
   const handleResetSetVoca = () => {
@@ -65,7 +65,7 @@ function StudyRoom(props) {
       setVoca={setVoca}
       listSetVocas={listSetVocas}
       handleOnRemoveItem={handleOnRemoveItem}
-      handleOnEditItem={handleOnEditItem}
+      handleOnAllowEditSetVoca={handleOnAllowEditSetVoca}
       handleResetSetVoca={handleResetSetVoca}
     />
   );

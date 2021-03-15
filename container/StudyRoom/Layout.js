@@ -26,7 +26,7 @@ function StudyRoomLayout(props) {
   const classes = useStyles();
   const [isShowCreateForm, setCreateForm] = useState(false);
   const isValidSubmit = validForm(props.setVoca, inputRequired, props.ERROR);
-  const { listSetVocas, handleOnRemoveItem, handleOnEditItem } = props;
+  const { listSetVocas, handleOnRemoveItem, handleOnAllowEditSetVoca } = props;
   const prevListLength = useRef(null);
   // UI INTERACT:
   const handleShowCreate = () => {
@@ -68,7 +68,7 @@ function StudyRoomLayout(props) {
               time={el.createdDate}
               item={el}
               handleOnRemoveItem={handleOnRemoveItem}
-              handleOnEditItem={handleOnEditItem}
+              handleOnAllowEditSetVoca={handleOnAllowEditSetVoca}
             />
           );
         })}

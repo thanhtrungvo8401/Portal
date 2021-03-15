@@ -67,7 +67,7 @@ function SetVoca(props) {
     setAnchorEl(null);
   };
   const handleEditBtnClick = () => {
-    props.handleOnEditItem(item);
+    props.handleOnAllowEditSetVoca(item);
     handleCloseAction();
   };
   const handleRemoveBtnClick = () => {

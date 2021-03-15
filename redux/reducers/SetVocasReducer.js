@@ -40,6 +40,32 @@ export const setVocasReducer = (
         ...state,
         setVoca: { ...payload },
       };
+    case SET_VOCA.SET__SET_VOCAS_EDITING_FOR_LIST:
+      list = state.list;
+      listEditing = [...state.listEditing];
+      list.forEach((el, index) => {
+        if (el.id === payload.id) {
+          listEditing[index] = true;
+        } else {
+          listEditing[index] = false;
+        }
+      });
+      return {
+        ...state,
+        list,
+        listEditing,
+      };
+    case SET_VOCA.RESET__SET_VOCAS_LIST_EDITING:
+      listEditing = state.list.map((el) => false);
+      return {
+        ...state,
+        listEditing,
+      };
+    case SET_VOCA.SET__SET_VOCAS_EDITING:
+      return {
+        ...state,
+        setVocaEditing: payload,
+      };
     default:
       return state;
   }

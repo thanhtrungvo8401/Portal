@@ -1,6 +1,4 @@
-import {
-  SET_VOCA,
-} from "../types";
+import { SET_VOCA } from "../types";
 
 export const actionSetGroupVocasList = (payload) => {
   return {
@@ -33,5 +31,25 @@ export const actionSetvocaObject = (payload) => {
   return {
     type: SET_VOCA.SET__SET_VOCAS_OBJECT,
     payload: payload,
+  };
+};
+
+export const actionSetValueForlistEditing = (setVoca) => {
+  return {
+    type: SET_VOCA.SET__SET_VOCAS_EDITING_FOR_LIST,
+    payload: setVoca,
+  };
+};
+
+export const actionResetListEding = () => {
+  return {
+    type: SET_VOCA.RESET__SET_VOCAS_LIST_EDITING,
+  };
+};
+
+export const actionSetValueForSetVocaEditing = (setVoca) => {
+  return {
+    type: SET_VOCA.SET__SET_VOCAS_EDITING,
+    payload: setVoca,
   };
 };
