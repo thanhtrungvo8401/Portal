@@ -13,14 +13,19 @@ import {
   DialogContent,
   DialogActions,
   DialogContentText,
+  Tooltip,
 } from "@material-ui/core";
-import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
+import PlaylistPlayIcon from "@material-ui/icons/PlaylistPlay";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
+import SaveOutlinedIcon from "@material-ui/icons/SaveOutlined";
+import CancelOutlinedIcon from "@material-ui/icons/CancelOutlined";
 import { formatDate } from "../utils/DateHelper";
 import { appUrl } from "../utils/APP_URL";
 import { navigate } from "../utils/Helper";
 import React, { useState } from "react";
+import InputGroup from "./InputGroup";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -49,13 +54,46 @@ const useStyles = makeStyles((theme) => {
     marginLeft: {
       marginLeft: theme.spacing(1),
     },
+    editingGroup: {
+      display: "block",
+      alignItems: "center",
+      textAlign: "center",
+      "& form": {
+        marginTop: "0px",
+      },
+      [theme.breakpoints.up("sm")]: {
+        display: "flex",
+        textAlign: "center",
+      },
+    },
+    btnGroupEditing: {
+      // marginLeft: theme.spacing(1)
+    },
   };
 });
+const inputFields = ["setName"];
+const inputTypes = {
+  setName: "input",
+};
+const inputLabels = {
+  setName: "Lesson XX: X X X X",
+};
+const inputRequired = ["setName"];
 function SetVoca(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [openConfirm, setOpenConfirm] = useState(false);
-  const { item, name, number, time, isExample } = props;
+  const {
+    item,
+    name,
+    number,
+    time,
+    isExample,
+    isEditing,
+    ERROR,
+    handleOnChangeEditing,
+  } = props;
+  const setVocaEditing = useSelector((state) => state.setVocas).setVocaEditing;
   // UI INTERACT:
   const handleGoToSetVocas = (item) => {
     navigate(appUrl.setVocaDetail(item.id));
@@ -86,31 +124,60 @@ function SetVoca(props) {
   };
   return (
     <React.Fragment>
-      <ButtonGroup variant="text" className={classes.btnGroup}>
-        <Button
-          className={classes.setItem}
-          onClick={() => handleGoToSetVocas(item)}
-        >
-          <Typography
-            className={classes.setName}
-            color="textPrimary"
-            variant="subtitle1"
+      {isEditing && (
+        <div className={classes.editingGroup}>
+          <InputGroup
+            ERROR={ERROR}
+            inputFields={inputFields}
+            inputTypes={inputTypes}
+            inputLabels={inputLabels}
+            inputRequired={inputRequired}
+            object={setVocaEditing}
+            handleOnChange={handleOnChangeEditing}
+            // handleOnSubmit={}
+          />
+          <ButtonGroup className={classes.btnGroupEditing}>
+            <Tooltip title="Save" placement="top">
+              <Button variant="text">
+                <SaveOutlinedIcon color="secondary" />
+              </Button>
+            </Tooltip>
+            <Tooltip title="Cancle" placement="top">
+              <Button variant="text">
+                <CancelOutlinedIcon color="error" />
+              </Button>
+            </Tooltip>
+          </ButtonGroup>
+        </div>
+      )}
+      {!isEditing && (
+        <ButtonGroup variant="text" className={classes.btnGroup}>
+          <Button
+            className={classes.setItem}
+            onClick={() => handleGoToSetVocas(item)}
           >
-            {name}
-          </Typography>
-          <Typography color="textSecondary" variant="subtitle2">
-            {`${number}/${constantApp.setVocaLimit}`}
-          </Typography>
-          <Typography color="textSecondary" variant="caption">
-            {formatDate(time)}
-          </Typography>
-        </Button>
-        {!isExample && (
-          <Button size="small" color="secondary" onClick={handleOpenAction}>
-            <PlaylistPlayIcon />
+            <Typography
+              className={classes.setName}
+              color="textPrimary"
+              variant="subtitle1"
+            >
+              {name}
+            </Typography>
+            <Typography color="textSecondary" variant="subtitle2">
+              {`${number}/${constantApp.setVocaLimit}`}
+            </Typography>
+            <Typography color="textSecondary" variant="caption">
+              {formatDate(time)}
+            </Typography>
           </Button>
-        )}
-      </ButtonGroup>
+          {!isExample && (
+            <Button size="small" color="secondary" onClick={handleOpenAction}>
+              <PlaylistPlayIcon />
+            </Button>
+          )}
+        </ButtonGroup>
+      )}
+      {/* Action Popup */}
       <Menu
         id="simple-menu"
         anchorEl={anchorEl}
@@ -120,7 +187,11 @@ function SetVoca(props) {
       >
         <MenuItem key={"edit"} onClick={() => handleEditBtnClick()}>
           <EditOutlinedIcon />
-          <Typography className={classes.marginLeft} variant="caption" color="secondary">
+          <Typography
+            className={classes.marginLeft}
+            variant="caption"
+            color="secondary"
+          >
             Edit
           </Typography>
         </MenuItem>
@@ -151,7 +222,11 @@ function SetVoca(props) {
             <Button onClick={handleOnCloseConfirm} variant="contained">
               Cancel
             </Button>
-            <Button onClick={handleOnRemoveItemConfirm} variant="contained" color="primary">
+            <Button
+              onClick={handleOnRemoveItemConfirm}
+              variant="contained"
+              color="primary"
+            >
               <Typography color="error" variant="button">
                 Remove
               </Typography>

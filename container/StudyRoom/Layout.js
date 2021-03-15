@@ -26,7 +26,14 @@ function StudyRoomLayout(props) {
   const classes = useStyles();
   const [isShowCreateForm, setCreateForm] = useState(false);
   const isValidSubmit = validForm(props.setVoca, inputRequired, props.ERROR);
-  const { listSetVocas, handleOnRemoveItem, handleOnAllowEditSetVoca } = props;
+  const {
+    listSetVocas,
+    handleOnRemoveItem,
+    handleOnAllowEditSetVoca,
+    handleOnChangeEditing,
+    listEditing,
+    ERROR,
+  } = props;
   const prevListLength = useRef(null);
   // UI INTERACT:
   const handleShowCreate = () => {
@@ -69,6 +76,9 @@ function StudyRoomLayout(props) {
               item={el}
               handleOnRemoveItem={handleOnRemoveItem}
               handleOnAllowEditSetVoca={handleOnAllowEditSetVoca}
+              handleOnChangeEditing={handleOnChangeEditing}
+              isEditing={listEditing[index]}
+              ERROR={ERROR}
             />
           );
         })}
@@ -97,10 +107,7 @@ function StudyRoomLayout(props) {
 
       <ActionGroup>
         {isShowCreateForm && (
-          <Button
-            variant="contained"
-            onClick={handleCloseCreate}
-          >
+          <Button variant="contained" onClick={handleCloseCreate}>
             Cancle
           </Button>
         )}
