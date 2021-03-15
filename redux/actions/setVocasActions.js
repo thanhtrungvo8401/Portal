@@ -53,3 +53,10 @@ export const actionSetValueForSetVocaEditing = (setVoca) => {
     payload: setVoca,
   };
 };
+
+export const actionUpdateSetVocaAfterUpdate = (setVoca) => {
+  return {
+    type: SET_VOCA.UPDATE_VALUE_SETVOCAS_AFTER_UPDATE,
+    payload: setVoca,
+  };
+};

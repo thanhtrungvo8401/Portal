@@ -24,7 +24,7 @@ import { formatDate } from "../utils/DateHelper";
 import { appUrl } from "../utils/APP_URL";
 import { navigate } from "../utils/Helper";
 import React, { useState } from "react";
-import InputGroup from "./InputGroup";
+import InputGroup, { validForm } from "./InputGroup";
 import { useDispatch, useSelector } from "react-redux";
 import {
   actionResetListEding,
@@ -97,8 +97,10 @@ function SetVoca(props) {
     isEditing,
     ERROR,
     handleOnChangeEditing,
+    handleOnSubmitUpdateVoca,
   } = props;
   const setVocaEditing = useSelector((state) => state.setVocas).setVocaEditing;
+  const isValidForm = validForm(setVocaEditing, inputRequired, ERROR);
   // UI INTERACT:
   const handleGoToSetVocas = (item) => {
     navigate(appUrl.setVocaDetail(item.id));
@@ -131,8 +133,9 @@ function SetVoca(props) {
     dispatch(actionResetListEding());
     dispatch(actionSetValueForSetVocaEditing({}));
   };
-  const handleOnSaveBtnClick = () => {
-    // dispatch(action)
+  const handleOnSaveBtnClick = (e) => {
+    e.preventDefault();
+    handleOnSubmitUpdateVoca();
   };
   return (
     <React.Fragment>
@@ -146,14 +149,16 @@ function SetVoca(props) {
             inputRequired={inputRequired}
             object={setVocaEditing}
             handleOnChange={handleOnChangeEditing}
-            // handleOnSubmit={}
+            handleOnSubmit={handleOnSaveBtnClick}
           />
           <ButtonGroup className={classes.btnGroupEditing}>
-            <Tooltip title="Save" placement="top">
-              <Button variant="text" onClick={handleOnSaveBtnClick}>
-                <SaveOutlinedIcon color="secondary" />
-              </Button>
-            </Tooltip>
+            {isValidForm && (
+              <Tooltip title="Save" placement="top">
+                <Button variant="text" onClick={handleOnSaveBtnClick}>
+                  <SaveOutlinedIcon color="secondary" />
+                </Button>
+              </Tooltip>
+            )}
             <Tooltip title="Cancle" placement="top">
               <Button variant="text" onClick={handleOnCancleBtnClick}>
                 <CancelOutlinedIcon color="error" />

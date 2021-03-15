@@ -66,6 +66,16 @@ export const setVocasReducer = (
         ...state,
         setVocaEditing: payload,
       };
+    case SET_VOCA.UPDATE_VALUE_SETVOCAS_AFTER_UPDATE:
+      list = state.list.map((el) => {
+        if (el.id === payload.id) {
+          return payload;
+        } else return el;
+      });
+      return {
+        ...state,
+        list,
+      };
     default:
       return state;
   }

@@ -6,6 +6,7 @@ export const enpoint_auth = {
 
 export const enpoint_setVoca = {
   createSetVocas: () => "/set-vocas",
+  updateSetVocas: (id) => `/set-vocas/${id}`,
   getSetVocasByAuthId: (authId) => `/users/${authId}/set-vocas`,
   getSetVocaDetailById: (id) => `/set-vocas/${id}`,
   deleteById: (id) => `/set-vocas/${id}`,

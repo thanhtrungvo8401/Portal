@@ -12,6 +12,7 @@ import {
   serviceCreateSetVoca,
   serviceDeleteSetVocas,
   serviceGetSetVocas,
+  serviceUpdateSetVoca,
 } from "../../service/SetVoca";
 function StudyRoom(props) {
   // Variables:
@@ -39,6 +40,13 @@ function StudyRoom(props) {
       authorId: user.id,
     };
     dispatch(serviceCreateSetVoca(setVocaObject));
+  };
+
+  const handleOnSubmitUpdateVoca = () => {
+    const setVocaObject = {
+      ...setVocaEditing,
+    };
+    dispatch(serviceUpdateSetVoca(setVocaObject));
   };
 
   const handleOnRemoveItem = (item) => {
@@ -83,6 +91,7 @@ function StudyRoom(props) {
       handleOnAllowEditSetVoca={handleOnAllowEditSetVoca}
       handleResetSetVoca={handleResetSetVoca}
       handleOnChangeEditing={handleOnChangeEditing}
+      handleOnSubmitUpdateVoca={handleOnSubmitUpdateVoca}
     />
   );
 }

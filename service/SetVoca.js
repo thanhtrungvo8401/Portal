@@ -4,8 +4,11 @@ import { actionSetError } from "../redux/actions/errorActions";
 import {
   actionAddGroupVocasItem,
   actionRemoveGroupVocasItem,
+  actionResetListEding,
   actionSetGroupVocasList,
+  actionSetValueForSetVocaEditing,
   actionSetvocaObject,
+  actionUpdateSetVocaAfterUpdate,
 } from "../redux/actions/setVocasActions";
 import { enpoint_setVoca } from "../utils/API_URL";
 import { appUrl } from "../utils/APP_URL";
@@ -19,6 +22,23 @@ export const serviceCreateSetVoca = (setVoca) => {
         const newSetVoca = res.data;
         dispatch(actionAddGroupVocasItem(newSetVoca));
         toast.success(codeToMessages(constCODE.CREATE_SET_VOCAS_SUCCESS));
+      })
+      .catch((err) => {
+        const object = handleErrorAPI(err, "toast");
+        dispatch(actionSetError(object.errorCodesObject));
+      });
+  };
+};
+
+export const serviceUpdateSetVoca = (setVoca) => {
+  return (dispatch) => {
+    API.put(enpoint_setVoca.updateSetVocas(setVoca.id), setVoca)
+      .then((res) => {
+        const voca = res.data;
+        dispatch(actionUpdateSetVocaAfterUpdate(voca));
+        dispatch(actionResetListEding());
+        dispatch(actionSetValueForSetVocaEditing({}));
+        toast.success(codeToMessages(constCODE.UPDATE_SET_VOCAS_SUCCESS));
       })
       .catch((err) => {
         const object = handleErrorAPI(err, "toast");

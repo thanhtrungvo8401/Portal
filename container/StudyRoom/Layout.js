@@ -33,6 +33,7 @@ function StudyRoomLayout(props) {
     handleOnChangeEditing,
     listEditing,
     ERROR,
+    handleOnSubmitUpdateVoca
   } = props;
   const prevListLength = useRef(null);
   // UI INTERACT:
@@ -77,6 +78,7 @@ function StudyRoomLayout(props) {
               handleOnRemoveItem={handleOnRemoveItem}
               handleOnAllowEditSetVoca={handleOnAllowEditSetVoca}
               handleOnChangeEditing={handleOnChangeEditing}
+              handleOnSubmitUpdateVoca={handleOnSubmitUpdateVoca}
               isEditing={listEditing[index]}
               ERROR={ERROR}
             />
