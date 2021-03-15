@@ -25,7 +25,11 @@ import { appUrl } from "../utils/APP_URL";
 import { navigate } from "../utils/Helper";
 import React, { useState } from "react";
 import InputGroup from "./InputGroup";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  actionResetListEding,
+  actionSetValueForSetVocaEditing,
+} from "../redux/actions/setVocasActions";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -83,6 +87,7 @@ function SetVoca(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [openConfirm, setOpenConfirm] = useState(false);
+  const dispatch = useDispatch();
   const {
     item,
     name,
@@ -122,6 +127,13 @@ function SetVoca(props) {
     handleCloseAction();
     handleOnCloseConfirm();
   };
+  const handleOnCancleBtnClick = () => {
+    dispatch(actionResetListEding());
+    dispatch(actionSetValueForSetVocaEditing({}));
+  };
+  const handleOnSaveBtnClick = () => {
+    // dispatch(action)
+  };
   return (
     <React.Fragment>
       {isEditing && (
@@ -138,12 +150,12 @@ function SetVoca(props) {
           />
           <ButtonGroup className={classes.btnGroupEditing}>
             <Tooltip title="Save" placement="top">
-              <Button variant="text">
+              <Button variant="text" onClick={handleOnSaveBtnClick}>
                 <SaveOutlinedIcon color="secondary" />
               </Button>
             </Tooltip>
             <Tooltip title="Cancle" placement="top">
-              <Button variant="text">
+              <Button variant="text" onClick={handleOnCancleBtnClick}>
                 <CancelOutlinedIcon color="error" />
               </Button>
             </Tooltip>
