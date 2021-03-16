@@ -12,86 +12,54 @@ export const vocaReducer = (state = { ...initState }, { type, payload }) => {
     case VOCABULARY.SET_LIST:
       let list;
       let listEditing;
-      let voca;
-      let vocaId;
-      list = [...payload];
-      listEditing = list.map((el) => false);
       return {
         ...state,
-        list: list,
-        listEditing,
+        list: payload,
+        listEditing: payload.map((el) => false),
       };
     case VOCABULARY.UPDATE_VOCA_IN_LIST:
-      list = [...state.list];
-      voca = payload;
-      for (let i = 0; i < list.length; i++) {
-        if (list[i].id === voca.id) {
-          list[i] = voca;
-          break;
-        }
-      }
       return {
         ...state,
-        list,
+        list: state.list.map((el) => (el.id === payload.id ? payload : el)),
       };
     case VOCABULARY.SET_VOCA_OBJECT:
-      voca = { ...payload };
       return {
         ...state,
-        voca: voca,
+        voca: { ...payload },
       };
     case VOCABULARY.SET_VOCA_EDITING:
-      voca = { ...payload };
       return {
         ...state,
-        vocaEditing: voca,
+        vocaEditing: { ...payload },
       };
     case VOCABULARY.ADD_VOCA_TO_LIST:
       list = [...state.list];
-      list.push(payload);
-      listEditing = list.map((el) => el.false);
-      return {
-        ...state,
-        list: list,
-      };
-    case VOCABULARY.REMOVE_VOCA_FROM_LIST:
-      list = [...state.list];
       listEditing = [...state.listEditing];
-      vocaId = payload;
-      list.every((item, index) => {
-        if (item.id === vocaId) {
-          list.splice(index, 1);
-          listEditing.splice(index, 1);
-          return false;
-        }
-        return true;
-      });
+      list.push(payload);
+      listEditing.push(false);
       return {
         ...state,
         list,
         listEditing,
       };
+    case VOCABULARY.REMOVE_VOCA_FROM_LIST:
+      list = [...state.list].filter((el) => el.id !== payload);
+      return {
+        ...state,
+        list,
+        listEditing: list.map((el) => false),
+      };
     case VOCABULARY.SET_SHOW_CREATE_VOCA_FORM:
-      listEditing = [...state.list].map((el) => false);
+      listEditing = state.list.map((el) => false);
       listEditing.push(true);
       return {
         ...state,
         listEditing,
       };
     case VOCABULARY.SET_VOCA_EDITING_FOR_LIST:
-      list = state.list;
-      listEditing = [...state.listEditing];
-      vocaId = payload;
-      list.forEach((item, index) => {
-        if (item.id === vocaId) {
-          listEditing[index] = true;
-        } else {
-          listEditing[index] = false;
-        }
-      });
       return {
         ...state,
-        listEditing,
+        listEditing: state.list.map((el) => (el.id === payload ? true : false)),
       };
     case VOCABULARY.RESET_LIST_EDITING:
       listEditing = state.list.map((el) => false);
