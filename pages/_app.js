@@ -17,6 +17,10 @@ export default function MyApp({ Component, pageProps }) {
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
+    const body = document.querySelector("#next-body")
+    if (body) {
+      body.style.backgroundColor = theme.palette.background.main
+    }
   }, []);
   return (
     <React.Fragment>

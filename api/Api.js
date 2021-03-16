@@ -7,7 +7,7 @@ import { storeClient } from "../redux/store";
 import { constAuth, constEnv } from "../utils/Constant";
 import { getCookie, removeCookie } from "../utils/Cookies";
 import { handleErrorAPI, navigate } from "../utils/Helper";
-import { appUrl } from "../utils/URL";
+import { appUrl } from "../utils/APP_URL";
 
 const configure = {
   baseURL: constEnv.API_URL,
@@ -36,7 +36,8 @@ API.interceptors.response.use(
     const status = handleErrorAPI(err).status;
     if (status === 401) {
       removeCookie(constAuth.JWT);
-      navigate(appUrl.setVocaList());
+      navigate(appUrl.studyRoom());
+      storeClient.dispatch(actionSetIsLogined(false));
     }
     throw err;
   }

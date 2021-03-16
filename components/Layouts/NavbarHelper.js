@@ -1,4 +1,5 @@
 import {
+  Avatar,
   IconButton,
   Menu,
   MenuItem,
@@ -9,7 +10,8 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import MyLink from "../MyLink";
-import { removeGmailTag } from "../../utils/Helper";
+import { navigate, removeGmailTag } from "../../utils/Helper";
+import { appUrl } from "../../utils/APP_URL";
 
 export const useStyles = makeStyles((theme) => {
   return {
@@ -36,6 +38,7 @@ export const useStyles = makeStyles((theme) => {
     },
     sectionMobile: {
       display: "flex",
+      marginLeft: "-12px",
       [theme.breakpoints.up("md")]: {
         display: "none",
       },
@@ -60,14 +63,14 @@ export const useStyles = makeStyles((theme) => {
         bottom: theme.spacing(4),
       },
     },
+    loginBtn: {
+      marginLeft: theme.spacing(2)
+    },
     myLink: {
       width: "100%",
     },
-    roomEnter: {
-      marginRight: theme.spacing(2),
-      "& .MuiTypography-root.MuiTypography-h6.MuiTypography-noWrap": {
-        overflow: "visible",
-      },
+    avatarLink: {
+      justifyContent: "center",
     },
     responsiveUserInfo: {
       [theme.breakpoints.up("md")]: {
@@ -137,49 +140,38 @@ export const MobileMenuPopup = (props) => {
       open={props.isMobileMenuOpen}
       onClose={props.handleMobileMenuClose}
     >
+      <MenuItem
+        className={classes.avatarLink}
+        onClick={() => {
+          navigate(appUrl.dashboard());
+          props.handleMobileMenuClose();
+        }}
+      >
+        <Avatar alt="avatar" src="/image/cat.png" />
+      </MenuItem>
       <MenuItem onClick={props.handleMobileMenuClose}>
-        <MyLink
-          variant="h6"
-          url="/"
-          color="secondary"
-          className={classes.myLink}
-        >
-          Neko-kun
+        <MyLink url={appUrl.dashboard()} className={`${classes.myLink}`}>
+          <span>Meomeo-kun</span>
         </MyLink>
       </MenuItem>
       <MenuItem onClick={props.handleMobileMenuClose}>
-        <MyLink
-          variant="h6"
-          url="/top-student"
-          color="secondary"
-          className={classes.myLink}
-        >
+        <MyLink url="/top-student" className={classes.myLink}>
           Top Student
         </MyLink>
       </MenuItem>
       <MenuItem onClick={props.handleMobileMenuClose}>
-        <MyLink
-          variant="h6"
-          url="/top-student"
-          color="secondary"
-          className={classes.myLink}
-        >
+        <MyLink url="/top-student" className={classes.myLink}>
           News
         </MyLink>
       </MenuItem>
       <MenuItem onClick={props.handleMobileMenuClose}>
-        <MyLink
-          variant="h6"
-          url="/top-student"
-          color="secondary"
-          className={classes.myLink}
-        >
+        <MyLink url="/top-student" className={classes.myLink}>
           About Neko
         </MyLink>
       </MenuItem>
       <MenuItem className="close-btn">
         <IconButton onClick={props.handleMobileMenuClose}>
-          <HighlightOffIcon color={"secondary"} fontSize="large" />
+          <HighlightOffIcon color="secondary" fontSize="large" />
         </IconButton>
       </MenuItem>
     </Menu>

@@ -15,11 +15,6 @@ export const constAuth = {
   BEARER: "Bearer",
 };
 
-export const constPages = {
-  signUp: "sign-up",
-  studyRoom: "study-room",
-};
-
 export const constantInfo = {
   email: "neko-kun@gmail.com",
 };

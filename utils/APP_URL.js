@@ -1,5 +1,6 @@
 export const appUrl = {
-  setVocaList: () => "/study-room",
+  studyRoom: () => "/study-room",
   setVocaDetail: (setId) => `/study-room/${setId}`,
   dashboard: () => "/",
+  signUp: () => "/sign-up",
 };

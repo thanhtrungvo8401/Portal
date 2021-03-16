@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import jwt_decode from "jwt-decode";
+import React, { useState } from "react";
 import {
   AppBar,
+  Avatar,
   Button,
   Container,
   IconButton,
@@ -18,13 +18,11 @@ import {
 } from "./NavbarHelper";
 import MyLink from "../MyLink";
 import styles from "./styles.module.css";
-import { isServer, removeGmailTag, showLoginForm } from "../../utils/Helper";
+import { navigate, removeGmailTag, showLoginForm } from "../../utils/Helper";
 import Login from "../../container/Login";
 import { useDispatch, useSelector } from "react-redux";
-import { getCookie } from "../../utils/Cookies";
-import { constAuth } from "../../utils/Constant";
-import { actionSetUser } from "../../redux/actions/userActions";
 import { serviceLogout } from "../../service/authenticate";
+import { appUrl } from "../../utils/APP_URL";
 function Navbar(props) {
   // VARIABLES:
   const classes = useStyles();
@@ -54,79 +52,62 @@ function Navbar(props) {
   const handleLogout = () => {
     dispatch(serviceLogout(handleProfileMenuClose));
   };
-  // HELPERS:
-  const handleExtractUserData = () => {
-    if (!isServer && _isLogined) {
-      const jwt = getCookie(constAuth.JWT);
-      const decode = jwt_decode(jwt);
-      const email = decode && decode.sub;
-      const newUser = { ...user, email: email };
-      dispatch(actionSetUser(newUser));
-    }
-  };
   const profileId = "profile-menu-popup";
 
   const mobileMenuId = "primary-search-account-menu-mobile";
-  // LIFE CYCLE HOOK:
-  useEffect(() => {
-    handleExtractUserData();
-  }, [_isLogined]);
   return (
     <React.Fragment>
       <HideOnScroll {...props}>
         <AppBar color="primary">
           <Container>
             <Toolbar>
-              <MyLink variant="h6" url="/" className={classes.title}>
-                Neko-kun
-              </MyLink>
+              <Avatar
+                alt="avatar"
+                src="/image/cat.png"
+                className={classes.title}
+                onClick={() => {
+                  navigate(appUrl.dashboard());
+                }}
+              />
 
-              <div className={classes.sectionDesktop}>
-                <MyLink
-                  variant="h6"
-                  className={classes.navItem}
-                  url="/top-student"
-                >
-                  Top Student
-                </MyLink>
-                <MyLink
-                  variant="h6"
-                  className={classes.navItem}
-                  url="/top-student"
-                >
-                  News
-                </MyLink>
-                <MyLink
-                  variant="h6"
-                  className={classes.navItem}
-                  url="/top-student"
-                >
-                  About Neko
-                </MyLink>
-              </div>
               <div className={classes.sectionMobile}>
                 <IconButton
                   aria-label="show more"
                   aria-controls={mobileMenuId}
                   aria-haspopup="true"
                   onClick={handleMobileMenuOpen}
-                  color="secondary"
+                  color="default"
                 >
-                  <MenuIcon />
+                  <MenuIcon color="secondary" />
                 </IconButton>
               </div>
-              <div className={classes.grow} />
-              <div className={classes.roomEnter}>
-                <MyLink variant="h6" url="/study-room">
-                  <Button
-                    color="secondary"
-                    variant="outlined"
-                    className={styles.flashEffect}
-                  >
-                    STUDY NOW
-                  </Button>
+
+              <div className={classes.sectionDesktop}>
+                <MyLink className={classes.navItem} url="/top-student">
+                  Top Student
+                </MyLink>
+                <MyLink className={classes.navItem} url="/top-student">
+                  News
+                </MyLink>
+                <MyLink className={classes.navItem} url="/top-student">
+                  About Neko
                 </MyLink>
               </div>
+
+              <div className={classes.grow} />
+
+              <Button
+                color="default"
+                variant="outlined"
+                className={styles.flashEffect}
+                size="medium"
+                onClick={() => {
+                  navigate(appUrl.studyRoom());
+                }}
+              >
+                STUDY NOW
+              </Button>
+
               {_isLogined && (
                 <IconButton
                   edge="end"
@@ -134,7 +115,7 @@ function Navbar(props) {
                   aria-controls={profileId}
                   aria-haspopup="true"
                   onClick={handleProfileMenuOpen}
-                  color="secondary"
+                  color="default"
                 >
                   <Typography
                     className={classes.responsiveUserInfoDesktop}
@@ -142,14 +123,12 @@ function Navbar(props) {
                   >
                     {removeGmailTag(user && user.email)}
                   </Typography>
-                  <AccountCircle />
+                  <AccountCircle color="secondary" />
                 </IconButton>
               )}
               {!_isLogined && (
-                <div onClick={() => showLoginForm()}>
-                  <MyLink variant="h6" className={classes.navItem}>
-                    Login
-                  </MyLink>
+                <div onClick={() => showLoginForm()} className={classes.loginBtn} >
+                  <MyLink className={classes.navItem}>Login</MyLink>
                 </div>
               )}
             </Toolbar>

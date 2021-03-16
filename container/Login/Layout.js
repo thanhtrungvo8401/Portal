@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
       },
     },
     "& .MuiPaper-root.MuiDialog-paper.MuiDialog-paperScrollPaper": {
-      backgroundColor: theme.palette.info.light,
+      backgroundColor: theme.palette.primary.main,
     },
   },
   closeBtn: {
@@ -54,12 +54,8 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  link: {
-    color: theme.palette.primary.dark,
-  },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
   },
 }));
 const inputFields = ["email", "password"];
@@ -84,12 +80,12 @@ function LoginLayout(props) {
       className={`${classes.dialog} ${isLoading ? classes.zindex500 : ""}`}
     >
       <IconButton className={classes.closeBtn} onClick={props.handleCloseLogin}>
-        <HighlightOffIcon color="error" fontSize="large" />
+        <HighlightOffIcon color="secondary" fontSize="large" />
       </IconButton>
       <Container className={classes.container} component="main" maxWidth="xs">
         <DialogContent>
           <Avatar className={classes.avatar}>
-            <VpnKeyOutlinedIcon />
+            <VpnKeyOutlinedIcon color="primary" />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
@@ -121,22 +117,12 @@ function LoginLayout(props) {
           </Button>
           <Grid container>
             <Grid item xs>
-              <MyLink
-                variant="caption"
-                url="#"
-                color="primary"
-                className={classes.link}
-              >
+              <MyLink variant="caption" url="#">
                 Forgot password?
               </MyLink>
             </Grid>
             <Grid item xs>
-              <MyLink
-                variant="caption"
-                url="/sign-up"
-                color="primary"
-                className={classes.link}
-              >
+              <MyLink variant="caption" url="/sign-up">
                 Don't have an account? Sign Up
               </MyLink>
             </Grid>
