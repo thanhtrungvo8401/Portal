@@ -1,24 +1,27 @@
+import { BASE_API, BASE_API_COMMON } from "../api/Constant";
+
 export const enpoint_auth = {
-  sign_up: () => "/students",
-  login: () => "/authenticate/login",
-  logout: () => "/authenticate/logout",
+  sign_up: () => `${BASE_API_COMMON}/students`,
+  login: () => `${BASE_API_COMMON}/authenticate/login`,
+  logout: () => `${BASE_API_COMMON}/authenticate/logout`,
 };
 
 export const enpoint_setVoca = {
-  createSetVocas: () => "/set-vocas",
-  updateSetVocas: (id) => `/set-vocas/${id}`,
-  getSetVocasByAuthId: (authId) => `/users/${authId}/set-vocas`,
-  getSetVocaDetailById: (id) => `/set-vocas/${id}`,
-  deleteById: (id) => `/set-vocas/${id}`,
+  createSetVocas: () => `${BASE_API_COMMON}/set-vocas`,
+  updateSetVocas: (id) => `${BASE_API_COMMON}/set-vocas/${id}`,
+  getSetVocasByAuthId: (authId) =>
+    `${BASE_API_COMMON}/users/${authId}/set-vocas`,
+  getSetVocaDetailById: (id) => `${BASE_API_COMMON}/set-vocas/${id}`,
+  deleteById: (id) => `${BASE_API_COMMON}/set-vocas/${id}`,
 };
 
 export const enpoint_voca = {
-  fetVocas: (setId) => `/set-vocas/${setId}/vocas`,
-  create: () => `/vocas`,
-  update: (id) => `/vocas/${id}`,
-  delete: (id) => `/vocas/${id}`,
+  fetVocas: (setId) => `${BASE_API_COMMON}/set-vocas/${setId}/vocas`,
+  create: () => `${BASE_API_COMMON}/vocas`,
+  update: (id) => `${BASE_API_COMMON}/vocas/${id}`,
+  delete: (id) => `${BASE_API_COMMON}/vocas/${id}`,
 };
 
 export const enpoint_user = {
-  getProfile: () => "/my-profile",
+  getProfile: () => `${BASE_API_COMMON}/my-profile`,
 };
