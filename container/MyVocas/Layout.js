@@ -56,7 +56,7 @@ function MyVocasLayout(props) {
     prevListLength.current = listSetVocas.length;
   });
   return (
-    <div className="stydy-room-layout">
+    <div className="my-vocas-layout">
       <MultiTabStudy />
       <PageTitle>Create your own vocabularies in this page</PageTitle>
       <ParagraphTitle>Instruction</ParagraphTitle>
