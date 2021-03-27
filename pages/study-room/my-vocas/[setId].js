@@ -15,7 +15,7 @@ import {
   serviceUpdateVoca,
 } from "../../../service/vocaService";
 
-function SetVocas(props) {
+function SetVocasDetail(props) {
   const router = useRouter();
   const { setId } = router.query;
   const dispatch = useDispatch();
@@ -70,4 +70,6 @@ function SetVocas(props) {
   );
 }
 
-export default withPrivateLayout(SetVocas, { title: "Vocabularies list!" });
+export default withPrivateLayout(SetVocasDetail, {
+  title: "Vocabularies list!",
+});
