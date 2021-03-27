@@ -1,9 +1,9 @@
 export const appUrl = {
-  studyRoom: () => "/study",
-  rememberVoca: () => `/study/remember-vocas`,
-  createVoca: () => `/study/create-vocas`,
-  setVocaDetail: (setId) => `/study/create-vocas/set-vocas/${setId}`,
-  testVoca: () => `/study/test-vocas`,
+  studyRoom: () => "/study-room",
+  rememberVoca: () => `/study-room/remember-vocas`,
+  createVoca: () => `/study-room/my-vocas`,
+  setVocaDetail: (setId) => `/study-room/my-vocas/${setId}`,
+  testVoca: () => `/study-room/test-vocas`,
   dashboard: () => "/",
   signUp: () => "/sign-up",
 };
