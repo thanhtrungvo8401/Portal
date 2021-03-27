@@ -6,6 +6,8 @@ import ParagraphTitle from "../../components/ParagraphTitle";
 import ParagraphBody from "../../components/ParagraphBody";
 import Voca from "../../components/Voca";
 import { actionSetShowCreateVocaForm } from "../../redux/actions/vocaActions";
+import { listTabItem } from "../../components/MultiTabStudy/MultiTabStudy";
+import BreadcrumbsCustom from "../../components/Breadcrumbs/Breadcrumbs";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -33,6 +35,7 @@ function Layout(props) {
   };
   return (
     <React.Fragment>
+      <BreadcrumbsCustom {...listTabItem[2]} childLabel="Danh sach tu vung" />
       <ParagraphTitle>Instruction</ParagraphTitle>
       <ParagraphBody>
         <Typography variant="body1">

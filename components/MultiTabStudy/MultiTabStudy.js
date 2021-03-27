@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const listTabItem = [
+export const listTabItem = [
   {
     Icon: HomeIcon,
     label: "Quay lại phòng học",
