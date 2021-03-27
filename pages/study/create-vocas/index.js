@@ -1,20 +1,20 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { withPrivateLayout } from "../../components/Layouts/PrivateLayout";
-import StudyRoomLayout from "../../container/StudyRoom/Layout";
-import { actionResetError } from "../../redux/actions/errorActions";
+import { withPrivateLayout } from "../../../components/Layouts/PrivateLayout";
+import CreateVocasLayout from "../../../container/CreateVoca/Layout";
+import { actionResetError } from "../../../redux/actions/errorActions";
 import {
   actionSetValueForlistEditing,
   actionSetValueForSetVocaEditing,
   actionSetvocaObject,
-} from "../../redux/actions/setVocasActions";
+} from "../../../redux/actions/setVocasActions";
 import {
   serviceCreateSetVoca,
   serviceDeleteSetVocas,
   serviceGetSetVocas,
   serviceUpdateSetVoca,
-} from "../../service/SetVoca";
-function StudyRoom(props) {
+} from "../../../service/SetVoca";
+function CreateVocas(props) {
   // Variables:
   const setVoca = useSelector((state) => state.setVocas).setVoca;
   const setVocaEditing = useSelector((state) => state.setVocas).setVocaEditing;
@@ -80,7 +80,7 @@ function StudyRoom(props) {
     }
   }, [user.id]);
   return (
-    <StudyRoomLayout
+    <CreateVocasLayout
       handleOnChange={handleOnChange}
       handleOnSubmit={handleOnSubmitCreateVoca}
       ERROR={ERROR}
@@ -96,4 +96,6 @@ function StudyRoom(props) {
   );
 }
 
-export default withPrivateLayout(StudyRoom, { title: "Study Room" });
+export default withPrivateLayout(CreateVocas, {
+  title: "Study Room - Create more vocabularies",
+});
