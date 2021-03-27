@@ -5,7 +5,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
     marginTop: theme.spacing(2)
   },
-  typo: {},
+  typo: {
+    fontWeight: "400"
+  },
 }));
 
 function ParagraphTitle(props) {

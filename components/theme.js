@@ -21,7 +21,7 @@ const theme = createMuiTheme({
       main: red.A400,
     },
     background: {
-      main: "rgb(226,229,231)"
+      main: "#f0f0f0"
     }
   },
 });

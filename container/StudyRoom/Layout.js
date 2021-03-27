@@ -5,6 +5,8 @@ import ActionGroup from "../../components/ActionGroup";
 import { useEffect, useRef, useState } from "react";
 import InputGroup, { validForm } from "../../components/InputGroup";
 import ParagraphBody from "../../components/ParagraphBody";
+import MultiTabStudy from "../../components/MultiTabStudy/MultiTabStudy";
+import PageTitle from "../../components/PageComponent/PageTitle";
 
 const inputFields = ["setName"];
 const inputTypes = {
@@ -33,7 +35,7 @@ function StudyRoomLayout(props) {
     handleOnChangeEditing,
     listEditing,
     ERROR,
-    handleOnSubmitUpdateVoca
+    handleOnSubmitUpdateVoca,
   } = props;
   const prevListLength = useRef(null);
   // UI INTERACT:
@@ -55,6 +57,8 @@ function StudyRoomLayout(props) {
   });
   return (
     <div className="stydy-room-layout">
+      <MultiTabStudy />
+      <PageTitle>Create your own vocabularies in this page</PageTitle>
       <ParagraphTitle>An example vocabularies group</ParagraphTitle>
       <ParagraphBody>
         <SetVoca
