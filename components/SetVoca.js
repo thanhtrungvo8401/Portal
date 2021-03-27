@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => {
       textTransform: "uppercase",
       [theme.breakpoints.up("sm")]: {
         display: "inline",
-        width: "auto",
+        width: "calc(100% - 8rem)",
       },
     },
     marginLeft: {

@@ -1,13 +1,13 @@
-import { Button, makeStyles } from "@material-ui/core";
+import { Button, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ActionGroup from "../../components/ActionGroup";
 import ParagraphTitle from "../../components/ParagraphTitle";
 import ParagraphBody from "../../components/ParagraphBody";
 import Voca from "../../components/Voca";
-import {
-  actionSetShowCreateVocaForm,
-} from "../../redux/actions/vocaActions";
+import { actionSetShowCreateVocaForm } from "../../redux/actions/vocaActions";
+import { listTabItem } from "../../components/MultiTabStudy/MultiTabStudy";
+import BreadcrumbsCustom from "../../components/Breadcrumbs/Breadcrumbs";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -35,10 +35,14 @@ function Layout(props) {
   };
   return (
     <React.Fragment>
-      <ParagraphTitle>A vocabulary example</ParagraphTitle>
+      <BreadcrumbsCustom {...listTabItem[2]} childLabel="Danh sach tu vung" />
+      <ParagraphTitle>Instruction</ParagraphTitle>
       <ParagraphBody>
-        <Voca isExample={true} voca={{}} />
+        <Typography variant="body1">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
+        </Typography>
       </ParagraphBody>
+
       <ParagraphTitle>Your vocabularies</ParagraphTitle>
       {Boolean(listVocas.length || isShowCreateForm) && (
         <ParagraphBody>

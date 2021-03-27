@@ -5,6 +5,8 @@ import ActionGroup from "../../components/ActionGroup";
 import { useEffect, useRef, useState } from "react";
 import InputGroup, { validForm } from "../../components/InputGroup";
 import ParagraphBody from "../../components/ParagraphBody";
+import MultiTabStudy from "../../components/MultiTabStudy/MultiTabStudy";
+import PageTitle from "../../components/PageComponent/PageTitle";
 
 const inputFields = ["setName"];
 const inputTypes = {
@@ -22,7 +24,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-function StudyRoomLayout(props) {
+function MyVocasLayout(props) {
   const classes = useStyles();
   const [isShowCreateForm, setCreateForm] = useState(false);
   const isValidSubmit = validForm(props.setVoca, inputRequired, props.ERROR);
@@ -33,7 +35,7 @@ function StudyRoomLayout(props) {
     handleOnChangeEditing,
     listEditing,
     ERROR,
-    handleOnSubmitUpdateVoca
+    handleOnSubmitUpdateVoca,
   } = props;
   const prevListLength = useRef(null);
   // UI INTERACT:
@@ -54,15 +56,14 @@ function StudyRoomLayout(props) {
     prevListLength.current = listSetVocas.length;
   });
   return (
-    <div className="stydy-room-layout">
-      <ParagraphTitle>An example vocabularies group</ParagraphTitle>
+    <div className="my-vocas-layout">
+      <MultiTabStudy />
+      <PageTitle>Create your own vocabularies in this page</PageTitle>
+      <ParagraphTitle>Instruction</ParagraphTitle>
       <ParagraphBody>
-        <SetVoca
-          isExample={true}
-          name="Lesson 20: gohan wo tapemasuta"
-          number={7}
-          time={Date.now()}
-        />
+        <Typography variant="body1">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
+        </Typography>
       </ParagraphBody>
 
       <ParagraphTitle>Your vocabularies groups</ParagraphTitle>
@@ -137,4 +138,4 @@ function StudyRoomLayout(props) {
   );
 }
 
-export default StudyRoomLayout;
+export default MyVocasLayout;

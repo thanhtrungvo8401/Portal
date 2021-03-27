@@ -5,12 +5,14 @@ import { navigate } from "../utils/Helper";
 const useStyles = makeStyles((theme) => {
   return {
     link: {
+      alignItems: "center",
+      display: "flex",
       cursor: "pointer",
       "&:hover": {
         transition: theme.transitions.create("all", {
           duration: theme.transitions.duration.short,
         }),
-        color: theme.palette.text.primary
+        color: theme.palette.text.primary,
       },
     },
   };
