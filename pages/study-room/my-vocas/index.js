@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { withPrivateLayout } from "../../../components/Layouts/PrivateLayout";
-import CreateVocasLayout from "../../../container/CreateVoca/Layout";
+import MyVocasLayout from "../../../container/MyVocas/Layout";
 import { actionResetError } from "../../../redux/actions/errorActions";
 import {
   actionSetValueForlistEditing,
@@ -14,7 +14,7 @@ import {
   serviceGetSetVocas,
   serviceUpdateSetVoca,
 } from "../../../service/SetVoca";
-function CreateVocas(props) {
+function MyVocas(props) {
   // Variables:
   const setVoca = useSelector((state) => state.setVocas).setVoca;
   const setVocaEditing = useSelector((state) => state.setVocas).setVocaEditing;
@@ -80,7 +80,7 @@ function CreateVocas(props) {
     }
   }, [user.id]);
   return (
-    <CreateVocasLayout
+    <MyVocasLayout
       handleOnChange={handleOnChange}
       handleOnSubmit={handleOnSubmitCreateVoca}
       ERROR={ERROR}
@@ -96,6 +96,6 @@ function CreateVocas(props) {
   );
 }
 
-export default withPrivateLayout(CreateVocas, {
+export default withPrivateLayout(MyVocas, {
   title: "Study Room - Create more vocabularies",
 });

@@ -1,8 +1,8 @@
 import { withPrivateLayout } from "../../components/Layouts/PrivateLayout";
-import StudyLayout from "../../container/Study/Layout";
+import StudyRoomLayout from "../../container/Study-room/Layout";
 
 function Study (props) {
-  return <StudyLayout />
+  return <StudyRoomLayout />
 }
 
 export default withPrivateLayout(Study, "Study Now")

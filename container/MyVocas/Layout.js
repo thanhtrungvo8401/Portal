@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-function StudyRoomLayout(props) {
+function MyVocasLayout(props) {
   const classes = useStyles();
   const [isShowCreateForm, setCreateForm] = useState(false);
   const isValidSubmit = validForm(props.setVoca, inputRequired, props.ERROR);
@@ -141,4 +141,4 @@ function StudyRoomLayout(props) {
   );
 }
 
-export default StudyRoomLayout;
+export default MyVocasLayout;
