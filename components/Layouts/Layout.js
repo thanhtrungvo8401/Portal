@@ -69,7 +69,7 @@ export const withLayout = (Component, propsPages, isPrivatePage) => {
         <LoadingComponent />
         <ToastComponent />
         <Container id="animation-navigate" className="animation-in">
-          <Box my={2}>
+          <Box py={2}>
             {isPrivatePage && !_isLogined ? (
               <NotLoginComponent />
             ) : (

@@ -59,14 +59,11 @@ function MyVocasLayout(props) {
     <div className="stydy-room-layout">
       <MultiTabStudy />
       <PageTitle>Create your own vocabularies in this page</PageTitle>
-      <ParagraphTitle>An example vocabularies group</ParagraphTitle>
+      <ParagraphTitle>Instruction</ParagraphTitle>
       <ParagraphBody>
-        <SetVoca
-          isExample={true}
-          name="Lesson 20: gohan wo tapemasuta"
-          number={7}
-          time={Date.now()}
-        />
+        <Typography variant="body1">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
+        </Typography>
       </ParagraphBody>
 
       <ParagraphTitle>Your vocabularies groups</ParagraphTitle>

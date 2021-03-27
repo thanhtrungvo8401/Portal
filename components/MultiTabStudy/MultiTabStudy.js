@@ -1,5 +1,5 @@
-import { Paper, Tab, Tabs } from "@material-ui/core";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import { makeStyles, Paper, Tab, Tabs } from "@material-ui/core";
+import HomeIcon from "@material-ui/icons/Home";
 import CastForEducationIcon from "@material-ui/icons/CastForEducation";
 import FiberNewIcon from "@material-ui/icons/FiberNew";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
@@ -7,11 +7,15 @@ import React, { useEffect, useState } from "react";
 import { appUrl } from "../../utils/APP_URL";
 import { isServer, navigate } from "../../utils/Helper";
 
-// const useStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles((theme) => ({
+  tabHome: {
+    borderRight: `2px solid ${theme.palette.background.main}`,
+  },
+}));
 
 const listTabItem = [
   {
-    Icon: ArrowBackIcon,
+    Icon: HomeIcon,
     label: "Quay lại phòng học",
     url: appUrl.studyRoom(),
   },
@@ -25,7 +29,7 @@ const listTabItem = [
 ];
 
 export default function MultiTabStudy() {
-  // const classes = useStyles();
+  const classes = useStyles();
   const [isDestop, setIsDesktop] = useState(
     !isServer && window.innerWidth > 600
   );
@@ -52,7 +56,6 @@ export default function MultiTabStudy() {
     getCurrentActiveTab();
     window.addEventListener("resize", listenerResizeScreen);
   }, []);
-  // console.log(activeTab === 0 && index === 0);
   return (
     <React.Fragment>
       <Paper elevation={0}>
@@ -66,6 +69,7 @@ export default function MultiTabStudy() {
           {listTabItem.map(({ Icon, label, url }, index) => {
             return (
               <Tab
+                className={index === 0 ? classes.tabHome : ""}
                 key={index}
                 label={isDestop ? label : ""}
                 icon={<Icon />}
