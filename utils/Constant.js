@@ -18,3 +18,7 @@ export const constAuth = {
 export const constantInfo = {
   email: "neko-kun@gmail.com",
 };
+
+export const storageKey = {
+  MY_PROFILE: "MY_PROFILE",
+};

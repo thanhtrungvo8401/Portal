@@ -13,6 +13,7 @@ import {
 import { removeCookie, setCookie } from "../utils/Cookies";
 import { appUrl } from "../utils/APP_URL";
 import { actionSetUser } from "../redux/actions/userActions";
+import { serviceGetProfile } from "./userService";
 
 export const serviceSignUp = (user) => {
   return (dispatch) => {
@@ -38,6 +39,7 @@ export const serviceLogin = (user) => {
         dispatch(actionSetIsLogined(true));
         dispatch(actionCloseLogin());
         dispatch(actionSetUserLogin({}));
+        dispatch(serviceGetProfile());
       })
       .catch((err) => {
         const object = handleErrorAPI(err, "toast");
