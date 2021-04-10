@@ -23,3 +23,16 @@ export const constantInfo = {
 export const storageKey = {
   MY_PROFILE: "MY_PROFILE",
 };
+
+export const CREATE_REMEMBER_TYPE = {
+  TYPE_OWN_SET: "TYPE_OWN_SET",
+  TYPE_DEFAULT_CENTER_SET: "TYPE_DEFAULT_CENTER_SET",
+};
+
+export const LEVEL = {
+  N5: "N5",
+  N4: "N4",
+  N3: "N3",
+  N2: "N2",
+  N1: "N1",
+};
