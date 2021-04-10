@@ -23,13 +23,15 @@ import Login from "../../container/Login";
 import { useDispatch, useSelector } from "react-redux";
 import { serviceLogout } from "../../service/authenticate";
 import { appUrl } from "../../utils/APP_URL";
+import { localStorageHelper } from "../../utils/storageHelper";
+import { storageKey } from "../../utils/Constant";
 function Navbar(props) {
   // VARIABLES:
   const classes = useStyles();
   const [anchorProfileEl, setAnchorProfileEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE));
   const isProfileMenuOpen = Boolean(anchorProfileEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 

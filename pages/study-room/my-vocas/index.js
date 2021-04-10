@@ -14,12 +14,14 @@ import {
   serviceGetSetVocas,
   serviceUpdateSetVoca,
 } from "../../../service/SetVoca";
+import { storageKey } from "../../../utils/Constant";
+import { localStorageHelper } from "../../../utils/storageHelper";
 function MyVocas(props) {
   // Variables:
   const setVoca = useSelector((state) => state.setVocas).setVoca;
   const setVocaEditing = useSelector((state) => state.setVocas).setVocaEditing;
   const ERROR = useSelector((state) => state.error);
-  const user = useSelector((state) => state.user);
+  const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE));
   const listSetVocas = useSelector(
     (state) => state.setVocas && state.setVocas.list
   );
