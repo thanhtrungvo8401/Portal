@@ -6,6 +6,7 @@ export const constantApp = {
 export const constEnv = {
   API_URL: process.env.NEXT_PUBLIC_API_URL,
   APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+  ENVIRONMENT: process.env.NEXT_PUBLIC_ENV,
 };
 
 export const constAuth = {

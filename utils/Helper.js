@@ -43,6 +43,7 @@ export const handleErrorAPI = (err, isToast = false) => {
   errorCodes.forEach((ob) => {
     errorCodesObject[ob.field] = ob.code;
   });
+  if (!isPro) console.log(err);
   return {
     status: object.status,
     message: object.data ? object.data.message || "" : "",
@@ -63,3 +64,5 @@ export const removeGmailTag = (email = "") => {
 };
 
 export const isServer = typeof window === "undefined";
+
+export const isPro = process.env.NEXT_PUBLIC_ENV === "PRODUCTION";

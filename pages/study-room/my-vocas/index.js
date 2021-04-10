@@ -21,7 +21,7 @@ function MyVocas(props) {
   const setVoca = useSelector((state) => state.setVocas).setVoca;
   const setVocaEditing = useSelector((state) => state.setVocas).setVocaEditing;
   const ERROR = useSelector((state) => state.error);
-  const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE));
+  const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
   const listSetVocas = useSelector(
     (state) => state.setVocas && state.setVocas.list
   );

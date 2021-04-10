@@ -5,11 +5,7 @@ import { enpoint_auth } from "../utils/API_URL";
 import { actionSetError } from "../redux/actions/errorActions";
 import { toast } from "../components/Toast";
 import { codeToMessages, constCODE } from "../utils/CodeToMessages";
-import {
-  actionCloseLogin,
-  actionSetIsLogined,
-  actionSetUserLogin,
-} from "../redux/actions/loginActions";
+import { actionSetIsLogined } from "../redux/actions/loginActions";
 import { removeCookie, setCookie } from "../utils/Cookies";
 import { appUrl } from "../utils/APP_URL";
 import { actionSetUser } from "../redux/actions/userActions";
@@ -36,9 +32,6 @@ export const serviceLogin = (user) => {
         const data = res.data;
         const jwt = data.token;
         setCookie(constAuth.JWT, jwt, 30);
-        dispatch(actionSetIsLogined(true));
-        dispatch(actionCloseLogin());
-        dispatch(actionSetUserLogin({}));
         dispatch(serviceGetProfile());
       })
       .catch((err) => {
