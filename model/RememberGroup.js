@@ -5,7 +5,7 @@ export const createRememberObject = {
   level: LEVEL.N5,
   setVoca: {},
   vocas: [],
-  step: 0,
+  step: 1,
   totalStep: 5,
 };
 

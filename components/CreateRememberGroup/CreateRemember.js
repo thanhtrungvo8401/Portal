@@ -1,20 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Grow from "@material-ui/core/Grow";
 import { useDispatch, useSelector } from "react-redux";
-import { actionSetIsCreating } from "../../redux/actions/rememberGroupAction";
+import {
+  actionSetCreateRememberGroup,
+  actionSetIsCreating,
+} from "../../redux/actions/rememberGroupAction";
 import { constantApp } from "../../utils/Constant";
-
-const useStyles = makeStyles((theme) => ({}));
+import { Button, Card, CardContent, MobileStepper } from "@material-ui/core";
+import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
 
 export default function CreateRememberGroup() {
-  const classes = useStyles();
-  const { isCreating } = useSelector((state) => state.rememberGroup);
+  const { isCreating, createObject } = useSelector(
+    (state) => state.rememberGroup
+  );
+  const { type, level, setVoca, vocas, step, totalStep } = createObject;
   const [isRender, setIsRender] = useState(isCreating);
   const dispatch = useDispatch();
 
-  // this useEffect to and hide component
+  // UI INTERACT:
+  const handleNext = () => {
+    if (step < totalStep) {
+      dispatch(
+        actionSetCreateRememberGroup({
+          ...createObject,
+          step: step + 1,
+        })
+      );
+    }
+  };
+  const handleBack = () => {
+    if (step > 1) {
+      dispatch(
+        actionSetCreateRememberGroup({
+          ...createObject,
+          step: step - 1,
+        })
+      );
+    }
+  };
+
+  // Animation useEffect:
   useEffect(() => {
     if (isCreating) setIsRender(true);
     else {
@@ -29,25 +55,40 @@ export default function CreateRememberGroup() {
         style={{ transformOrigin: "0 0 0" }}
         {...(isCreating ? { timeout: constantApp.timeout } : {})}
       >
-        <Paper elevation={4} className={classes.paper}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-          <button
-            onClick={() => {
-              dispatch(actionSetIsCreating(false));
-            }}
-          >
-            Cancle
-          </button>
-        </Paper>
+        <Card>
+          <CardContent>
+            <MobileStepper
+              variant="progress"
+              color=""
+              steps={totalStep}
+              position="static"
+              activeStep={step - 1}
+              nextButton={
+                <Button
+                  size="small"
+                  onClick={handleNext}
+                  disabled={step === totalStep}
+                >
+                  Next
+                  <KeyboardArrowRight />
+                </Button>
+              }
+              backButton={
+                <Button size="small" onClick={handleBack} disabled={step === 1}>
+                  <KeyboardArrowLeft />
+                  Back
+                </Button>
+              }
+            />
+            <button
+              onClick={() => {
+                dispatch(actionSetIsCreating(false));
+              }}
+            >
+              Cancle
+            </button>
+          </CardContent>
+        </Card>
       </Grow>
     )
   );
