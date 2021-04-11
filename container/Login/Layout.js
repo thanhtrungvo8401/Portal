@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
       },
     },
     "& .MuiPaper-root.MuiDialog-paper.MuiDialog-paperScrollPaper": {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.info.light,
     },
   },
   closeBtn: {
@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
+    backgroundColor: theme.palette.info.main,
   },
 }));
 const inputFields = ["email", "password"];
@@ -85,7 +86,7 @@ function LoginLayout(props) {
       <Container className={classes.container} component="main" maxWidth="xs">
         <DialogContent>
           <Avatar className={classes.avatar}>
-            <VpnKeyOutlinedIcon color="primary" />
+            <VpnKeyOutlinedIcon color="secondary" />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in

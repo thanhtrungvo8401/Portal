@@ -19,13 +19,14 @@ const theme = createMuiTheme({
       main: "#dc3545",
     },
     background: {
-      main: "#d2f4ea",
+      main: "#e9ecef",
     },
     success: {
       main: "#20c997",
     },
     info: {
-      main: "#ffc107", // bg-nav
+      main: "#ffda6a", // bg-nav
+      light: "#fff3cd", // bg-popup
     },
   },
 });
