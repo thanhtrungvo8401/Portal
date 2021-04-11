@@ -40,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
   },
   navItem: {
     cursor: "pointer",
-    marginRight: theme.spacing(2),
   },
   sectionDesktop: {
     display: "none",
@@ -161,17 +160,14 @@ function Navbar(props) {
 
               <div style={{ flexGrow: 1 }} />
 
-              <Button
-                color="default"
-                variant="outlined"
+              <MyLink
                 className={styles.flashEffect}
-                size="medium"
                 onClick={() => {
                   navigate(appUrl.studyRoom());
                 }}
               >
                 STUDY NOW
-              </Button>
+              </MyLink>
 
               {_isLogined && (
                 <React.Fragment>
