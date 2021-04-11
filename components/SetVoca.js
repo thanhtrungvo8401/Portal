@@ -13,7 +13,6 @@ import {
   DialogContent,
   DialogActions,
   DialogContentText,
-  Tooltip,
   IconButton,
 } from "@material-ui/core";
 import SettingsIcon from "@material-ui/icons/Settings";
@@ -63,9 +62,6 @@ const useStyles = makeStyles((theme) => {
         width: "calc(100% - 8rem)",
       },
     },
-    marginLeft: {
-      marginLeft: theme.spacing(1),
-    },
     editingGroup: {
       display: "block",
       alignItems: "center",
@@ -78,8 +74,10 @@ const useStyles = makeStyles((theme) => {
         textAlign: "center",
       },
     },
-    btnGroupEditing: {
-      // marginLeft: theme.spacing(1)
+    menuSetting: {
+      "& ul.MuiList-root.MuiMenu-list.MuiList-padding": {
+        backgroundColor: theme.palette.info.light,
+      },
     },
   };
 });
@@ -161,17 +159,15 @@ function SetVoca(props) {
           />
           <ButtonGroup className={classes.btnGroupEditing}>
             {isValidForm && (
-              <Tooltip title="Save" placement="top">
-                <Button variant="text" onClick={handleOnSaveBtnClick}>
-                  <SaveOutlinedIcon color="secondary" />
-                </Button>
-              </Tooltip>
-            )}
-            <Tooltip title="Cancle" placement="top">
-              <Button variant="text" onClick={handleOnCancleBtnClick}>
-                <CancelOutlinedIcon color="error" />
+              <Button variant="text" onClick={handleOnSaveBtnClick}>
+                <SaveOutlinedIcon color="secondary" />
+                Save
               </Button>
-            </Tooltip>
+            )}
+            <Button variant="text" onClick={handleOnCancleBtnClick}>
+              <CancelOutlinedIcon color="error" />
+              Cancel
+            </Button>
           </ButtonGroup>
         </div>
       )}
@@ -224,26 +220,18 @@ function SetVoca(props) {
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleCloseAction}
+        className={classes.menuSetting}
       >
         <MenuItem key={"edit"} onClick={() => handleEditBtnClick()}>
-          <EditOutlinedIcon />
-          <Typography
-            className={classes.marginLeft}
-            variant="caption"
+          <EditOutlinedIcon
             color="secondary"
-          >
-            Edit
-          </Typography>
+            style={{ marginRight: "0.5rem" }}
+          />
+          Edit
         </MenuItem>
         <MenuItem key={"delete"} onClick={handleRemoveBtnClick}>
-          <DeleteOutlinedIcon color="error" />
-          <Typography
-            className={classes.marginLeft}
-            variant="caption"
-            color="error"
-          >
-            Remove
-          </Typography>
+          <DeleteOutlinedIcon color="error" style={{ marginRight: "0.5rem" }} />
+          Remove
         </MenuItem>
       </Menu>
       {/* Confirm Action Popup */}
