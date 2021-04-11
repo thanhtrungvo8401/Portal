@@ -7,10 +7,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ParagraphBody({ children }) {
+export default function ParagraphBody({ children, hidden }) {
   const classes = useStyles();
   return (
-    <Paper className={classes.paragraphBody}>
+    <Paper hidden={hidden} className={classes.paragraphBody}>
       <Container>{children}</Container>
     </Paper>
   );
