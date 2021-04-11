@@ -7,6 +7,7 @@ import Voca from "../../components/Voca";
 import { actionSetShowCreateVocaForm } from "../../redux/actions/vocaActions";
 import { listTabItem } from "../../components/MultiTabStudy/MultiTabStudy";
 import BreadcrumbsCustom from "../../components/Breadcrumbs/Breadcrumbs";
+import VocaDisplayGroup from "../../components/VocaDisplay/VocaDisplayGroup";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -46,7 +47,7 @@ function Layout(props) {
       {Boolean(listVocas.length || isShowCreateForm) && (
         <Container>
           <div className={classes.setVocas}>
-            {listVocas.map((voca, index) => {
+            {/* {listVocas.map((voca, index) => {
               return (
                 <Voca
                   key={index}
@@ -58,7 +59,8 @@ function Layout(props) {
                   handleOnSubmit={props.handleOnSubmitUpdate}
                 />
               );
-            })}
+            })} */}
+            <VocaDisplayGroup vocas={listVocas} />
             {isShowCreateForm && (
               <Voca
                 handleOnChange={props.handleOnChangeCreate}
