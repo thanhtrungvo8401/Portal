@@ -160,12 +160,7 @@ function Navbar(props) {
 
               <div style={{ flexGrow: 1 }} />
 
-              <MyLink
-                className={styles.flashEffect}
-                onClick={() => {
-                  navigate(appUrl.studyRoom());
-                }}
-              >
+              <MyLink url={appUrl.studyRoom()} className={styles.flashEffect}>
                 STUDY NOW
               </MyLink>
 
