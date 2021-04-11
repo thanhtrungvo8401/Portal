@@ -1,65 +1,51 @@
 import { Button, Typography } from "@material-ui/core";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ActionGroup from "../../components/ActionGroup";
+import CreateRememberGroup from "../../components/CreateRememberGroup/CreateRemember";
 import MultiTabStudy from "../../components/MultiTabStudy/MultiTabStudy";
 import PageTitle from "../../components/PageComponent/PageTitle";
 import ParagraphBody from "../../components/ParagraphBody";
 import ParagraphTitle from "../../components/ParagraphTitle";
+import { actionSetIsCreating } from "../../redux/actions/rememberGroupAction";
 
 function RememberVocasLayout(props) {
   const listRememberGroups = [];
 
-  const [isShowCreateForm, setCreateForm] = useState(false);
-  const isValidSubmit = false;
-  const handleShowCreate = () => {
-    setCreateForm(true);
-  };
-  const handleCloseCreate = () => {
-    setCreateForm(false);
-  };
+  const { isCreating } = useSelector((state) => state.rememberGroup);
+  const dispatch = useDispatch();
   return (
     <div className="remember-vocas-layout">
       <MultiTabStudy />
-      {/* intro */}
       <PageTitle>Let's learn vocabularies</PageTitle>
-      <ParagraphTitle>Instruction</ParagraphTitle>
-      <ParagraphBody>
+      {/* intro */}
+      <ParagraphTitle hidden={isCreating}>Instruction</ParagraphTitle>
+      <ParagraphBody hidden={isCreating}>
         <Typography variant="body1">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
         </Typography>
       </ParagraphBody>
       {/* main */}
-      <ParagraphTitle>Learning vocabularies group</ParagraphTitle>
-      <ParagraphBody>
-        {!isShowCreateForm && !listRememberGroups.length && (
+      <ParagraphTitle hidden={isCreating}>
+        Learning vocabularies group
+      </ParagraphTitle>
+      <ParagraphBody hidden={isCreating}>
+        {!listRememberGroups.length && (
           <Typography>
             There are no remembers-group, Click into the following (+) Icon to
             create a new one!
           </Typography>
         )}
       </ParagraphBody>
+      {/* create new remember-group */}
+      <CreateRememberGroup />
       {/* action */}
       <ActionGroup>
-        {isShowCreateForm && (
-          <Button variant="contained" onClick={handleCloseCreate}>
-            Cancle
-          </Button>
-        )}
-        {isShowCreateForm && (
+        {!isCreating && (
           <Button
+            hidden={true}
             color="primary"
             variant="contained"
-            onClick={props.handleOnSubmit}
-            disabled={!isValidSubmit}
-          >
-            Save
-          </Button>
-        )}
-        {!isShowCreateForm && (
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={handleShowCreate}
+            onClick={() => dispatch(actionSetIsCreating(true))}
           >
             Create (+)
           </Button>

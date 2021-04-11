@@ -1,6 +1,8 @@
 export const constantApp = {
   animationTime: 0.5,
   setVocaLimit: 10,
+  timeout: 1000,
+  timeOutUseEffect: 500,
 };
 
 export const constEnv = {
