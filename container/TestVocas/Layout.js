@@ -1,7 +1,6 @@
-import { Typography } from "@material-ui/core";
+import { Container, Typography } from "@material-ui/core";
 import MultiTabStudy from "../../components/MultiTabStudy/MultiTabStudy";
 import PageTitle from "../../components/PageComponent/PageTitle";
-import ParagraphBody from "../../components/ParagraphBody";
 import ParagraphTitle from "../../components/ParagraphTitle";
 
 function TestVocasLayout(props) {
@@ -10,13 +9,13 @@ function TestVocasLayout(props) {
       <MultiTabStudy />
       <PageTitle>Let's create and check your memories</PageTitle>
       <ParagraphTitle>Instruction</ParagraphTitle>
-      <ParagraphBody>
+      <Container>
         <Typography variant="body1">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
         </Typography>
-      </ParagraphBody>
+      </Container>
       <ParagraphTitle>Learning vocabularies group</ParagraphTitle>
-      <ParagraphBody>STUDY</ParagraphBody>
+      <Container>STUDY</Container>
     </div>
   );
 }

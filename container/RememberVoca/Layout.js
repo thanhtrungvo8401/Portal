@@ -4,7 +4,6 @@ import ActionGroup from "../../components/ActionGroup";
 import CreateRememberGroup from "../../components/CreateRememberGroup/CreateRemember";
 import MultiTabStudy from "../../components/MultiTabStudy/MultiTabStudy";
 import PageTitle from "../../components/PageComponent/PageTitle";
-import ParagraphBody from "../../components/ParagraphBody";
 import ParagraphTitle from "../../components/ParagraphTitle";
 import { actionSetIsCreating } from "../../redux/actions/rememberGroupAction";
 
@@ -19,23 +18,23 @@ function RememberVocasLayout(props) {
       <PageTitle>Let's learn vocabularies</PageTitle>
       {/* intro */}
       <ParagraphTitle hidden={isCreating}>Instruction</ParagraphTitle>
-      <ParagraphBody hidden={isCreating}>
+      <Container hidden={isCreating}>
         <Typography variant="body1">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
         </Typography>
-      </ParagraphBody>
+      </Container>
       {/* main */}
       <ParagraphTitle hidden={isCreating}>
         Learning vocabularies group
       </ParagraphTitle>
-      <ParagraphBody hidden={isCreating}>
+      <Container hidden={isCreating}>
         {!listRememberGroups.length && (
           <Typography>
             There are no remembers-group, Click into the following (+) Icon to
             create a new one!
           </Typography>
         )}
-      </ParagraphBody>
+      </Container>
       {/* create new remember-group */}
       <CreateRememberGroup />
       {/* action */}

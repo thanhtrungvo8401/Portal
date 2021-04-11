@@ -1,9 +1,8 @@
-import { Button, makeStyles, Typography } from "@material-ui/core";
+import { Button, Container, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ActionGroup from "../../components/ActionGroup";
 import ParagraphTitle from "../../components/ParagraphTitle";
-import ParagraphBody from "../../components/ParagraphBody";
 import Voca from "../../components/Voca";
 import { actionSetShowCreateVocaForm } from "../../redux/actions/vocaActions";
 import { listTabItem } from "../../components/MultiTabStudy/MultiTabStudy";
@@ -37,15 +36,15 @@ function Layout(props) {
     <React.Fragment>
       <BreadcrumbsCustom {...listTabItem[2]} childLabel="Danh sach tu vung" />
       <ParagraphTitle>Instruction</ParagraphTitle>
-      <ParagraphBody>
+      <Container>
         <Typography variant="body1">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
         </Typography>
-      </ParagraphBody>
+      </Container>
 
       <ParagraphTitle>Your vocabularies</ParagraphTitle>
       {Boolean(listVocas.length || isShowCreateForm) && (
-        <ParagraphBody>
+        <Container>
           <div className={classes.setVocas}>
             {listVocas.map((voca, index) => {
               return (
@@ -70,7 +69,7 @@ function Layout(props) {
               />
             )}
           </div>
-        </ParagraphBody>
+        </Container>
       )}
       <ActionGroup>
         {!isShowCreateForm && (
