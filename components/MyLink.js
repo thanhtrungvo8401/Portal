@@ -8,14 +8,12 @@ const useStyles = makeStyles((theme) => {
       alignItems: "center",
       display: "flex",
       cursor: "pointer",
-      padding: "0.5rem",
       borderRadius: "0.5rem",
       "&:hover": {
         transition: theme.transitions.create("all", {
           duration: theme.transitions.duration.short,
         }),
         color: theme.palette.primary.main,
-        backgroundColor: "rgba(52, 58, 64, 0.04)"
       },
     },
   };
@@ -38,18 +36,6 @@ export default function MyLink(props) {
       color={color || "textPrimary"}
     >
       {children}
-      {/* <div style={{ position: "relative", display: "inline-block" }}>
-        <span>{children}</span>
-        <span
-          style={{
-            position: "absolute",
-            width: "100%",
-            height: "2px",
-            backgroundColor: "#212529",
-            bottom: 0,
-          }}
-        ></span>
-      </div> */}
     </Typography>
   );
 }

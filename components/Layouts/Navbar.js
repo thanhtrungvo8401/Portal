@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   AppBar,
   Avatar,
-  Button,
   Container,
   IconButton,
   makeStyles,
@@ -40,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
   navItem: {
     cursor: "pointer",
+    marginRight: theme.spacing(2),
   },
   sectionDesktop: {
     display: "none",
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   mobileMenu: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.info.main,
     "& .MuiPaper-root.MuiMenu-paper.MuiPopover-paper.MuiPaper-rounded": {
       width: "100%",
       height: "100%",
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     "& ul.MuiList-root.MuiMenu-list.MuiList-padding": {
       position: "relative",
       height: "100%",
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.info.main,
     },
     "& .MuiButtonBase-root.MuiListItem-root.MuiMenuItem-root.close-btn.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button": {
       justifyContent: "center",
