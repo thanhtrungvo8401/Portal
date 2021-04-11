@@ -15,57 +15,6 @@ import { appUrl } from "../../utils/APP_URL";
 
 export const useStyles = makeStyles((theme) => {
   return {
-    grow: {
-      flexGrow: 1,
-    },
-    title: {
-      display: "none",
-      cursor: "pointer",
-      marginRight: theme.spacing(4),
-      [theme.breakpoints.up("sm")]: {
-        display: "block",
-      },
-    },
-    navItem: {
-      cursor: "pointer",
-      marginRight: theme.spacing(2),
-    },
-    sectionDesktop: {
-      display: "none",
-      [theme.breakpoints.up("md")]: {
-        display: "flex",
-      },
-    },
-    sectionMobile: {
-      display: "flex",
-      marginLeft: "-12px",
-      [theme.breakpoints.up("md")]: {
-        display: "none",
-      },
-    },
-    mobileMenu: {
-      backgroundColor: theme.palette.primary.main,
-      "& .MuiPaper-root.MuiMenu-paper.MuiPopover-paper.MuiPaper-rounded": {
-        width: "100%",
-        height: "100%",
-        maxHeight: "calc(100% - 32px)",
-      },
-      "& ul.MuiList-root.MuiMenu-list.MuiList-padding": {
-        position: "relative",
-        height: "100%",
-        backgroundColor: theme.palette.primary.main,
-      },
-      "& .MuiButtonBase-root.MuiListItem-root.MuiMenuItem-root.close-btn.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button": {
-        justifyContent: "center",
-        position: "absolute",
-        width: "100%",
-        left: 0,
-        bottom: theme.spacing(4),
-      },
-    },
-    loginBtn: {
-      marginLeft: theme.spacing(2)
-    },
     myLink: {
       width: "100%",
     },
@@ -75,13 +24,6 @@ export const useStyles = makeStyles((theme) => {
     responsiveUserInfo: {
       [theme.breakpoints.up("md")]: {
         display: "none",
-      },
-    },
-    responsiveUserInfoDesktop: {
-      marginRight: theme.spacing(1),
-      [theme.breakpoints.down("sm")]: {
-        display: "none",
-        marginRight: 0,
       },
     },
   };

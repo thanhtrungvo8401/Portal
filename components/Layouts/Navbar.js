@@ -5,13 +5,13 @@ import {
   Button,
   Container,
   IconButton,
+  makeStyles,
   Toolbar,
   Typography,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { AccountCircle } from "@material-ui/icons";
 import {
-  useStyles,
   HideOnScroll,
   MobileMenuPopup,
   ProfileMenuPopup,
@@ -25,6 +25,69 @@ import { serviceLogout } from "../../service/authenticate";
 import { appUrl } from "../../utils/APP_URL";
 import { localStorageHelper } from "../../utils/storageHelper";
 import { storageKey } from "../../utils/Constant";
+
+const useStyles = makeStyles((theme) => ({
+  navbar: {
+    backgroundColor: theme.palette.info.main,
+  },
+  title: {
+    display: "none",
+    cursor: "pointer",
+    marginRight: theme.spacing(4),
+    [theme.breakpoints.up("sm")]: {
+      display: "block",
+    },
+  },
+  navItem: {
+    cursor: "pointer",
+    marginRight: theme.spacing(2),
+  },
+  sectionDesktop: {
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+    },
+  },
+  sectionMobile: {
+    display: "flex",
+    marginLeft: "-12px",
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
+  },
+  mobileMenu: {
+    backgroundColor: theme.palette.primary.main,
+    "& .MuiPaper-root.MuiMenu-paper.MuiPopover-paper.MuiPaper-rounded": {
+      width: "100%",
+      height: "100%",
+      maxHeight: "calc(100% - 32px)",
+    },
+    "& ul.MuiList-root.MuiMenu-list.MuiList-padding": {
+      position: "relative",
+      height: "100%",
+      backgroundColor: theme.palette.primary.main,
+    },
+    "& .MuiButtonBase-root.MuiListItem-root.MuiMenuItem-root.close-btn.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button": {
+      justifyContent: "center",
+      position: "absolute",
+      width: "100%",
+      left: 0,
+      bottom: theme.spacing(4),
+    },
+  },
+  loginBtn: {
+    marginLeft: theme.spacing(2),
+  },
+  responsiveUserInfoDesktop: {
+    marginLeft: theme.spacing(2),
+    cursor: "pointer",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+      marginRight: 0,
+    },
+  },
+}));
+
 function Navbar(props) {
   // VARIABLES:
   const classes = useStyles();
@@ -60,7 +123,7 @@ function Navbar(props) {
   return (
     <React.Fragment>
       <HideOnScroll {...props}>
-        <AppBar color="primary">
+        <AppBar className={classes.navbar}>
           <Container>
             <Toolbar>
               <Avatar
@@ -96,7 +159,7 @@ function Navbar(props) {
                 </MyLink>
               </div>
 
-              <div className={classes.grow} />
+              <div style={{ flexGrow: 1 }} />
 
               <Button
                 color="default"
@@ -111,25 +174,32 @@ function Navbar(props) {
               </Button>
 
               {_isLogined && (
-                <IconButton
-                  edge="end"
-                  aria-label="account of current user"
-                  aria-controls={profileId}
-                  aria-haspopup="true"
-                  onClick={handleProfileMenuOpen}
-                  color="default"
-                >
+                <React.Fragment>
                   <Typography
                     className={classes.responsiveUserInfoDesktop}
                     variant="caption"
+                    onClick={handleProfileMenuOpen}
+                    color="textPrimary"
                   >
                     {removeGmailTag(user && user.email)}
                   </Typography>
-                  <AccountCircle color="secondary" />
-                </IconButton>
+                  <IconButton
+                    edge="end"
+                    aria-label="account of current user"
+                    aria-controls={profileId}
+                    aria-haspopup="true"
+                    onClick={handleProfileMenuOpen}
+                    color="secondary"
+                  >
+                    <AccountCircle color="secondary" />
+                  </IconButton>
+                </React.Fragment>
               )}
               {!_isLogined && (
-                <div onClick={() => showLoginForm()} className={classes.loginBtn} >
+                <div
+                  onClick={() => showLoginForm()}
+                  className={classes.loginBtn}
+                >
                   <MyLink className={classes.navItem}>Login</MyLink>
                 </div>
               )}
