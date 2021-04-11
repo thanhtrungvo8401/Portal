@@ -168,7 +168,7 @@ function SetVoca(props) {
         </div>
       )}
       {!isEditing && (
-        <ButtonGroup variant="text" className={classes.btnGroup}>
+        <ButtonGroup variant="outlined" className={classes.btnGroup}>
           <Button
             className={classes.setItem}
             onClick={() => handleGoToSetVocas(item)}
