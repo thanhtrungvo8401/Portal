@@ -49,15 +49,16 @@ const useStyles = makeStyles((theme) => {
     actionVoca: {
       flexDirection: "column",
       [theme.breakpoints.down("xs")]: {
-        width: "100%",
-        flexDirection: "row",
-        justifyContent: "center",
-        marginTop: theme.spacing(1),
+        // width: "100%",
+        // flexDirection: "row",
+        // justifyContent: "center",
+        // marginTop: theme.spacing(1),
+        display: "none",
       },
     },
     voca: {
       width: "100%",
-      backgroundColor: theme.palette.primary.main,
+      // backgroundColor: theme.palette.primary.main,
       "& .MuiCardContent-root": {
         display: "flex",
         justifyContent: "space-between",
@@ -99,7 +100,7 @@ const useStyles = makeStyles((theme) => {
       transform: "rotate(180deg)",
     },
     collapseItem: {
-      backgroundColor: theme.palette.primary.dark,
+      // backgroundColor: theme.palette.primary.dark,
     },
     mt: {
       marginTop: theme.spacing(1),
@@ -148,7 +149,7 @@ function Voca(props) {
   };
   const handleCloseExpaned = () => {
     setExpanded(false);
-  }
+  };
   const handleOnChange = (e) => {
     const { target } = e;
     setINTERACT({

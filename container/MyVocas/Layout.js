@@ -67,74 +67,72 @@ function MyVocasLayout(props) {
         </Container>
 
         <ParagraphTitle>Your vocabularies groups</ParagraphTitle>
-        <Container>
-          {listSetVocas.map((el, index) => {
-            return (
-              <SetVoca
-                key={index}
-                name={el.setName}
-                number={el.totalVocas}
-                time={el.createdDate}
-                item={el}
-                handleOnRemoveItem={handleOnRemoveItem}
-                handleOnAllowEditSetVoca={handleOnAllowEditSetVoca}
-                handleOnChangeEditing={handleOnChangeEditing}
-                handleOnSubmitUpdateVoca={handleOnSubmitUpdateVoca}
-                isEditing={listEditing[index]}
-                ERROR={ERROR}
-              />
-            );
-          })}
-          {!isShowCreateForm && !listSetVocas.length && (
-            <Typography variant="body1">
-              There are no vocabularies group in your room, Click into the
-              following (+) Icon to create a new one!
-            </Typography>
-          )}
+        {listSetVocas.map((el, index) => {
+          return (
+            <SetVoca
+              key={index}
+              name={el.setName}
+              number={el.totalVocas}
+              time={el.createdDate}
+              item={el}
+              handleOnRemoveItem={handleOnRemoveItem}
+              handleOnAllowEditSetVoca={handleOnAllowEditSetVoca}
+              handleOnChangeEditing={handleOnChangeEditing}
+              handleOnSubmitUpdateVoca={handleOnSubmitUpdateVoca}
+              isEditing={listEditing[index]}
+              ERROR={ERROR}
+            />
+          );
+        })}
+        {!isShowCreateForm && !listSetVocas.length && (
+          <Typography variant="body1">
+            There are no vocabularies group in your room, Click into the
+            following (+) Icon to create a new one!
+          </Typography>
+        )}
 
-          {isShowCreateForm && (
-            <div className={classes.setVocaForm}>
-              <InputGroup
-                ERROR={props.ERROR}
-                inputFields={inputFields}
-                inputTypes={inputTypes}
-                inputLabels={inputLabels}
-                inputRequired={inputRequired}
-                object={props.setVoca}
-                handleOnChange={props.handleOnChange}
-                handleOnSubmit={props.handleOnSubmit}
-              />
-            </div>
-          )}
-        </Container>
-
-        <ActionGroup>
-          {isShowCreateForm && (
-            <Button variant="contained" onClick={handleCloseCreate}>
-              Cancle
-            </Button>
-          )}
-          {isShowCreateForm && (
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={props.handleOnSubmit}
-              disabled={!isValidSubmit}
-            >
-              Save
-            </Button>
-          )}
-          {!isShowCreateForm && (
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={handleShowCreate}
-            >
-              Create (+)
-            </Button>
-          )}
-        </ActionGroup>
+        {isShowCreateForm && (
+          <div className={classes.setVocaForm}>
+            <InputGroup
+              ERROR={props.ERROR}
+              inputFields={inputFields}
+              inputTypes={inputTypes}
+              inputLabels={inputLabels}
+              inputRequired={inputRequired}
+              object={props.setVoca}
+              handleOnChange={props.handleOnChange}
+              handleOnSubmit={props.handleOnSubmit}
+            />
+          </div>
+        )}
       </Container>
+
+      <ActionGroup>
+        {isShowCreateForm && (
+          <Button variant="contained" onClick={handleCloseCreate}>
+            Cancle
+          </Button>
+        )}
+        {isShowCreateForm && (
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={props.handleOnSubmit}
+            disabled={!isValidSubmit}
+          >
+            Save
+          </Button>
+        )}
+        {!isShowCreateForm && (
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={handleShowCreate}
+          >
+            Create (+)
+          </Button>
+        )}
+      </ActionGroup>
     </div>
   );
 }

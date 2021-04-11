@@ -14,8 +14,9 @@ import {
   DialogActions,
   DialogContentText,
   Tooltip,
+  IconButton,
 } from "@material-ui/core";
-import PlaylistPlayIcon from "@material-ui/icons/PlaylistPlay";
+import SettingsIcon from "@material-ui/icons/Settings";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import SaveOutlinedIcon from "@material-ui/icons/SaveOutlined";
@@ -36,14 +37,21 @@ const useStyles = makeStyles((theme) => {
     btnGroup: {
       width: "100%",
       marginBottom: theme.spacing(1),
+      position: "relative",
     },
     setItem: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
       width: "100%",
+      border: "1px solid rgba(0, 0, 0, 0.23)",
+      padding: "5px 15px",
       "& .MuiButton-label": {
         justifyContent: "space-between",
         display: "flex",
         flexWrap: "wrap",
       },
+      textTransform: "none!important",
     },
     setName: {
       display: "block",
@@ -168,15 +176,20 @@ function SetVoca(props) {
         </div>
       )}
       {!isEditing && (
-        <ButtonGroup variant="outlined" className={classes.btnGroup}>
+        <div className={classes.btnGroup}>
           <Button
+            variant="outlined"
             className={classes.setItem}
             onClick={() => handleGoToSetVocas(item)}
+            style={{
+              textTransform: "none!important",
+            }}
           >
             <Typography
               className={classes.setName}
               color="textPrimary"
               variant="subtitle1"
+              style={{ textTransform: "none" }}
             >
               {name}
             </Typography>
@@ -188,11 +201,21 @@ function SetVoca(props) {
             </Typography>
           </Button>
           {!isExample && (
-            <Button size="small" color="secondary" onClick={handleOpenAction}>
-              <PlaylistPlayIcon />
-            </Button>
+            <IconButton
+              style={{
+                position: "absolute",
+                left: "100%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+              size="medium"
+              color="secondary"
+              onClick={handleOpenAction}
+            >
+              <SettingsIcon />
+            </IconButton>
           )}
-        </ButtonGroup>
+        </div>
       )}
       {/* Action Popup */}
       <Menu
