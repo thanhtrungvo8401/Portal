@@ -14,13 +14,6 @@ export const actionSetVocabularyObject = (voca) => {
   };
 };
 
-export const actionSetVocabularyEditing = (voca) => {
-  return {
-    type: VOCABULARY.SET_VOCA_EDITING,
-    payload: voca,
-  };
-};
-
 export const actionAddVocabularyToList = (voca) => {
   return {
     type: VOCABULARY.ADD_VOCA_TO_LIST,
@@ -42,21 +35,9 @@ export const actionRemoveVocabularyFromList = (vocaId) => {
   };
 };
 
-export const actionSetShowCreateVocaForm = () => {
+export const actionSetIsShowVocaModal = (isShow = false) => {
   return {
-    type: VOCABULARY.SET_SHOW_CREATE_VOCA_FORM,
-  };
-};
-
-export const actionSetVocaListEditingItem = (vocaId) => {
-  return {
-    type: VOCABULARY.SET_VOCA_EDITING_FOR_LIST,
-    payload: vocaId,
-  };
-};
-
-export const actionResetVocaListEditing = () => {
-  return {
-    type: VOCABULARY.RESET_LIST_EDITING,
+    type: VOCABULARY.SET_IS_SHOW_VOCA_MODAL,
+    payload: isShow,
   };
 };

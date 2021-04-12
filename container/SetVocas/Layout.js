@@ -1,13 +1,23 @@
-import { Button, Container, makeStyles, Typography } from "@material-ui/core";
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  Button,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import ActionGroup from "../../components/ActionGroup";
 import ParagraphTitle from "../../components/ParagraphTitle";
-import Voca from "../../components/Voca";
-import { actionSetShowCreateVocaForm } from "../../redux/actions/vocaActions";
+import VocaModal from "../../components/VocaModal";
 import { listTabItem } from "../../components/MultiTabStudy/MultiTabStudy";
 import BreadcrumbsCustom from "../../components/Breadcrumbs/Breadcrumbs";
 import VocaDisplayGroup from "../../components/VocaDisplay/VocaDisplayGroup";
+import { actionSetIsShowVocaModal } from "../../redux/actions/vocaActions";
+import theme from "../../components/theme";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -23,67 +33,70 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-function Layout(props) {
+function Layout({
+  handleOnChangeVoca,
+  handleOnSubmitVocaModal,
+  handleOnRemoveVocaById,
+}) {
   const classes = useStyles();
-  const { listVocas, voca, ERROR } = props;
-  const listEditing = useSelector((state) => state.vocas).listEditing;
-  const isShowCreateForm = listEditing[listVocas.length];
   const dispatch = useDispatch();
-  // UI INTERACT:
-  const handleOnShowCreateForm = () => {
-    dispatch(actionSetShowCreateVocaForm());
-  };
+  const [deleteVocaId, setDeleteVocaId] = useState();
   return (
     <React.Fragment>
       <BreadcrumbsCustom {...listTabItem[2]} childLabel="Danh sach tu vung" />
+      {/* Instruction */}
       <ParagraphTitle>Instruction</ParagraphTitle>
       <Container>
         <Typography variant="body1">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
         </Typography>
       </Container>
-
+      {/* Vocabularies list */}
       <ParagraphTitle>Your vocabularies</ParagraphTitle>
-      {Boolean(listVocas.length || isShowCreateForm) && (
-        <Container>
-          <div className={classes.setVocas}>
-            {/* {listVocas.map((voca, index) => {
-              return (
-                <Voca
-                  key={index}
-                  voca={voca}
-                  ERROR={ERROR}
-                  handleOnRemoveVocaById={props.handleOnRemoveVocaById}
-                  isEditing={listEditing[index]}
-                  handleOnChange={props.handleOnChangeUpdate}
-                  handleOnSubmit={props.handleOnSubmitUpdate}
-                />
-              );
-            })} */}
-            <VocaDisplayGroup vocas={listVocas} />
-            {isShowCreateForm && (
-              <Voca
-                handleOnChange={props.handleOnChangeCreate}
-                handleOnSubmit={props.handleOnSubmitCreate}
-                voca={voca}
-                ERROR={ERROR}
-                isEditing={true}
-              />
-            )}
-          </div>
-        </Container>
-      )}
+      <Container>
+        <div className={classes.setVocas}>
+          <VocaDisplayGroup onSelectVocaIdToDelete={setDeleteVocaId} />
+        </div>
+      </Container>
+      {/* Action Group */}
       <ActionGroup>
-        {!isShowCreateForm && (
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={handleOnShowCreateForm}
-          >
-            Create (+)
-          </Button>
-        )}
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={() => dispatch(actionSetIsShowVocaModal(true))}
+        >
+          Create (+)
+        </Button>
       </ActionGroup>
+      {/* VocaModal: Create, update voca */}
+      <VocaModal
+        handleOnChange={handleOnChangeVoca}
+        handleOnSubmit={handleOnSubmitVocaModal}
+      />
+      {/* Confirm Delete Popup */}
+      <Dialog
+        open={Boolean(deleteVocaId)}
+        aria-labelledby="form-dialog-title"
+        onClose={() => setDeleteVocaId(null)}
+      >
+        <DialogTitle id="form-dialog-title">Confirm Delete</DialogTitle>
+        <DialogContent>Are you sure want to remove this voca!</DialogContent>
+        <DialogActions>
+          <Button size="small" onClick={() => setDeleteVocaId(null)}>
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              handleOnRemoveVocaById(deleteVocaId);
+              setDeleteVocaId(null);
+            }}
+            style={{ color: theme.palette.error.main }}
+            size="small"
+          >
+            Remove
+          </Button>
+        </DialogActions>
+      </Dialog>
     </React.Fragment>
   );
 }

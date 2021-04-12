@@ -4,10 +4,8 @@ import { actionSetError } from "../redux/actions/errorActions";
 import {
   actionAddVocabularyToList,
   actionRemoveVocabularyFromList,
-  actionResetVocaListEditing,
-  actionSetVocabularyEditing,
+  actionSetIsShowVocaModal,
   actionSetVocabularyList,
-  actionSetVocabularyObject,
   actionUpdateVocaInList,
 } from "../redux/actions/vocaActions";
 import { enpoint_voca } from "../utils/API_URL";
@@ -25,7 +23,7 @@ export const serviceFetVocaBySetId = (setId) => {
       .catch((err) => {
         const object = handleErrorAPI(err, "toast");
         const status = object.status;
-        if (status === 400) {
+        if (status === 404) {
           navigate(appUrl.studyRoom());
         }
         dispatch(actionSetError(object.errorCodesObject));
@@ -38,9 +36,8 @@ export const serviceCreateVoca = (voca) => {
     API.post(enpoint_voca.create(), voca)
       .then((res) => {
         const voca = res.data;
-        dispatch(actionResetVocaListEditing());
         dispatch(actionAddVocabularyToList(voca));
-        dispatch(actionSetVocabularyObject({}));
+        dispatch(actionSetIsShowVocaModal(false));
         toast.success(codeToMessages(constCODE.CREATE_VOCA_SUCCESS));
       })
       .catch((err) => {
@@ -50,16 +47,12 @@ export const serviceCreateVoca = (voca) => {
   };
 };
 
-export const serviceUpdateVoca = (voca, actionCloseExpand) => {
+export const serviceUpdateVoca = (voca) => {
   return (dispatch) => {
     API.put(enpoint_voca.update(voca.id), voca)
       .then((res) => {
-        dispatch(actionResetVocaListEditing());
         dispatch(actionUpdateVocaInList(voca));
-        dispatch(actionSetVocabularyEditing({}))
-        if (actionCloseExpand) {
-          actionCloseExpand();
-        }
+        dispatch(actionSetIsShowVocaModal(false));
         toast.success(codeToMessages(constCODE.UPDATE_VOCA_SUCCESS));
       })
       .catch((err) => {

@@ -20,7 +20,6 @@ import {
   actionSetVocabularyObject,
 } from "../redux/actions/vocaActions";
 import theme from "./theme";
-// import { actionSetVocabularyObject } from "../redux/actions/vocaActions";
 const Transition = React.forwardRef((props, ref) => {
   return <Slide direction="down" ref={ref} {...props} />;
 });
