@@ -46,17 +46,17 @@ const useStyles = makeStyles((theme) => ({
 function VocaDisplayGroup({ vocas = [] }) {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
-  const handleChange = (code) => (event, isExpanded) => {
-    setExpanded(isExpanded ? code : false);
+  const handleChange = (id) => (event, isExpanded) => {
+    setExpanded(isExpanded ? id : false);
   };
   return (
     <div className={classes.root}>
       {vocas.map((voca) => {
         return (
           <Accordion
-            key={voca.code}
-            expanded={expanded === voca.code}
-            onChange={handleChange(voca.code)}
+            key={voca.id}
+            expanded={expanded === voca.id}
+            onChange={handleChange(voca.id)}
           >
             {/* MAIN */}
             <AccordionSummary>
@@ -66,21 +66,22 @@ function VocaDisplayGroup({ vocas = [] }) {
               </Typography>
             </AccordionSummary>
             {/* DETAIL */}
-            {Boolean(voca.note || voca.description) && (
+            {Boolean(voca.note || voca.sentence) && (
               <AccordionDetails>
                 <div>
-                  <Typography
-                    hidden={!voca.note}
-                    className={classes.detailGroup}
-                  >
-                    Yomikata: {voca.note}
-                  </Typography>
-                  <Typography
-                    hidden={!voca.description}
-                    className={classes.detailGroup}
-                  >
-                    Sentence: {voca.description}
-                  </Typography>
+                  {voca.note && (
+                    <Typography className={classes.detailGroup}>
+                      {voca.note}
+                    </Typography>
+                  )}
+                  {voca.sentence && (
+                    <Typography
+                      style={{ marginTop: theme.spacing(1) }}
+                      className={classes.detailGroup}
+                    >
+                      {voca.sentence}
+                    </Typography>
+                  )}
                 </div>
               </AccordionDetails>
             )}
@@ -105,3 +106,24 @@ function VocaDisplayGroup({ vocas = [] }) {
 }
 
 export default VocaDisplayGroup;
+{
+  /* Confirm Action Popup */
+}
+{
+  /* <Dialog
+        open={openConfirm}
+        aria-labelledby="form-dialog-title"
+        onClose={handleCloseConfirmRemoveVoca}
+      >
+        <DialogTitle id="form-dialog-title">Confirm Delete</DialogTitle>
+        <DialogContent>Are you sure want to remove this voca!</DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseConfirmRemoveVoca}>Cancel</Button>
+          <Button onClick={handleRemoveVoca}>
+            <Typography color="error" variant="button">
+              Remove
+            </Typography>
+          </Button>
+        </DialogActions>
+      </Dialog> */
+}

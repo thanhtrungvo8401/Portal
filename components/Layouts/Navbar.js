@@ -28,6 +28,7 @@ import { storageKey } from "../../utils/Constant";
 const useStyles = makeStyles((theme) => ({
   navbar: {
     backgroundColor: theme.palette.info.main,
+    zIndex: 499,
   },
   title: {
     display: "none",

@@ -239,6 +239,7 @@ function SetVoca(props) {
         open={openConfirm}
         onClose={handleOnCloseConfirm}
         aria-labelledby="form-dialog-title"
+        style={{ zIndex: 500 }}
       >
         <DialogTitle id="form-dialog-title">Confirm Delete</DialogTitle>
         <DialogContent>

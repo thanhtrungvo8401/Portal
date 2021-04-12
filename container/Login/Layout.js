@@ -76,6 +76,7 @@ function LoginLayout(props) {
   const isValidSubmit = validForm(user, inputRequired, ERROR);
   return (
     <Dialog
+      style={{ zIndex: 500 }}
       open={showLogin}
       // onClose={props.handleCloseLogin}
       className={`${classes.dialog} ${isLoading ? classes.zindex500 : ""}`}

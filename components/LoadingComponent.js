@@ -1,5 +1,11 @@
 import { CircularProgress, makeStyles } from "@material-ui/core";
 import { useSelector } from "react-redux";
+
+// z-index
+// loading: 999
+// Dialog: 500
+// header: 499
+
 const useStyle = makeStyles((theme) => {
   return {
     loadingComponent: {
