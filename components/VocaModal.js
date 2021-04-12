@@ -70,6 +70,7 @@ function VocaModal({ handleOnChange, handleOnSubmit }) {
   useEffect(() => {
     if (!isShowVocaModal) {
       dispatch(actionSetVocabularyObject({}));
+      setINTERACT({});
     }
   }, [isShowVocaModal]);
 

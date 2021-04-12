@@ -9,6 +9,11 @@ import {
   Typography,
 } from "@material-ui/core";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  actionSetIsShowVocaModal,
+  actionSetVocabularyObject,
+} from "../../redux/actions/vocaActions";
 import theme from "../theme";
 
 const useStyles = makeStyles((theme) => ({
@@ -43,15 +48,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function VocaDisplayGroup({ vocas = [] }) {
+function VocaDisplayGroup({ onSelectVocaIdToDelete }) {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
+  const list = useSelector((state) => state.vocas).list;
+
+  const dispatch = useDispatch();
+  // UI INTERACT:
   const handleChange = (id) => (event, isExpanded) => {
     setExpanded(isExpanded ? id : false);
   };
   return (
     <div className={classes.root}>
-      {vocas.map((voca) => {
+      {list.map((voca) => {
         return (
           <Accordion
             key={voca.id}
@@ -88,13 +97,24 @@ function VocaDisplayGroup({ vocas = [] }) {
             {/* ACTION */}
             <Divider />
             <AccordionActions>
+              <Button size="small" onClick={() => setExpanded(false)}>
+                Shrink
+              </Button>
               <Button
                 size="small"
                 style={{ color: theme.palette.success.main }}
+                onClick={() => {
+                  dispatch(actionSetIsShowVocaModal(true));
+                  dispatch(actionSetVocabularyObject({ ...voca }));
+                }}
               >
                 Edit
               </Button>
-              <Button style={{ color: theme.palette.error.main }} size="small">
+              <Button
+                onClick={() => onSelectVocaIdToDelete(voca.id)}
+                style={{ color: theme.palette.error.main }}
+                size="small"
+              >
                 Remove
               </Button>
             </AccordionActions>
@@ -106,24 +126,3 @@ function VocaDisplayGroup({ vocas = [] }) {
 }
 
 export default VocaDisplayGroup;
-{
-  /* Confirm Action Popup */
-}
-{
-  /* <Dialog
-        open={openConfirm}
-        aria-labelledby="form-dialog-title"
-        onClose={handleCloseConfirmRemoveVoca}
-      >
-        <DialogTitle id="form-dialog-title">Confirm Delete</DialogTitle>
-        <DialogContent>Are you sure want to remove this voca!</DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseConfirmRemoveVoca}>Cancel</Button>
-          <Button onClick={handleRemoveVoca}>
-            <Typography color="error" variant="button">
-              Remove
-            </Typography>
-          </Button>
-        </DialogActions>
-      </Dialog> */
-}
