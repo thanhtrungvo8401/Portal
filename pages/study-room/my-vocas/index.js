@@ -13,7 +13,7 @@ import {
   serviceDeleteSetVocas,
   serviceGetSetVocas,
   serviceUpdateSetVoca,
-} from "../../../service/SetVoca";
+} from "../../../service/setVocaService";
 import { storageKey } from "../../../utils/Constant";
 import { localStorageHelper } from "../../../utils/storageHelper";
 function MyVocas(props) {
