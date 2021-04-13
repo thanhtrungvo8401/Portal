@@ -18,6 +18,7 @@ import BreadcrumbsCustom from "../../components/Breadcrumbs/Breadcrumbs";
 import VocaDisplayGroup from "../../components/VocaDisplay/VocaDisplayGroup";
 import { actionSetIsShowVocaModal } from "../../redux/actions/vocaActions";
 import theme from "../../components/theme";
+import PageTitle from "../../components/PageComponent/PageTitle";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -44,30 +45,33 @@ function Layout({
   return (
     <React.Fragment>
       <BreadcrumbsCustom {...listTabItem[2]} childLabel="Danh sach tu vung" />
-      {/* Instruction */}
-      <ParagraphTitle>Instruction</ParagraphTitle>
+      <PageTitle>Vocabularies list</PageTitle>
       <Container>
-        <Typography variant="body1">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-        </Typography>
+        {/* Instruction */}
+        <ParagraphTitle>Instruction</ParagraphTitle>
+        <Container>
+          <Typography variant="body1">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
+          </Typography>
+        </Container>
+        {/* Vocabularies list */}
+        <ParagraphTitle>Your vocabularies</ParagraphTitle>
+        <Container>
+          <div className={classes.setVocas}>
+            <VocaDisplayGroup onSelectVocaIdToDelete={setDeleteVocaId} />
+          </div>
+        </Container>
+        {/* Action Group */}
+        <ActionGroup>
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={() => dispatch(actionSetIsShowVocaModal(true))}
+          >
+            Create (+)
+          </Button>
+        </ActionGroup>
       </Container>
-      {/* Vocabularies list */}
-      <ParagraphTitle>Your vocabularies</ParagraphTitle>
-      <Container>
-        <div className={classes.setVocas}>
-          <VocaDisplayGroup onSelectVocaIdToDelete={setDeleteVocaId} />
-        </div>
-      </Container>
-      {/* Action Group */}
-      <ActionGroup>
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={() => dispatch(actionSetIsShowVocaModal(true))}
-        >
-          Create (+)
-        </Button>
-      </ActionGroup>
       {/* VocaModal: Create, update voca */}
       <VocaModal
         handleOnChange={handleOnChangeVoca}

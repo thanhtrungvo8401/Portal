@@ -59,32 +59,28 @@ function MyVocasLayout(props) {
       <MultiTabStudy />
       <PageTitle>Create your own vocabularies in this page</PageTitle>
       <Container>
+        {/* Instruction */}
         <ParagraphTitle>Instruction</ParagraphTitle>
         <Container>
           <Typography variant="body1">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
           </Typography>
         </Container>
-
+        {/* Vocabularies */}
         <ParagraphTitle>Your vocabularies groups</ParagraphTitle>
-        {listSetVocas.map((el, index) => {
-          return (
-            <SetVoca
-              key={index}
-              name={el.setName}
-              number={el.totalVocas}
-              time={el.createdDate}
-              item={el}
-              handleOnRemoveItem={handleOnRemoveItem}
-              handleOnAllowEditSetVoca={handleOnAllowEditSetVoca}
-              handleOnChangeEditing={handleOnChangeEditing}
-              handleOnSubmitUpdateVoca={handleOnSubmitUpdateVoca}
-              isEditing={listEditing[index]}
-              ERROR={ERROR}
-            />
-          );
-        })}
-        {!isShowCreateForm && !listSetVocas.length && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+          }}
+        >
+          {listSetVocas.map((el, index) => {
+            return <SetVoca key={index} setVoca={el} />;
+          })}
+        </div>
+        {/* Create new Set-Voca */}
+        {!listSetVocas.length && (
           <Typography variant="body1">
             There are no vocabularies group in your room, Click into the
             following (+) Icon to create a new one!

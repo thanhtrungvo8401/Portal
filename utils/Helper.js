@@ -43,7 +43,9 @@ export const handleErrorAPI = (err, isToast = false) => {
   errorCodes.forEach((ob) => {
     errorCodesObject[ob.field] = ob.code;
   });
-  if (!isPro) console.log(err);
+  if (!isPro) {
+    console.log(err);
+  }
   return {
     status: object.status,
     message: object.data ? object.data.message || "" : "",

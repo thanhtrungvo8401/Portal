@@ -11,7 +11,7 @@ function PageTitle(props) {
   const classes = useStyles();
   return (
     <div className={classes.pageTitle}>
-      <Typography color="primary" variant="h5">
+      <Typography color="primary" variant="h5" component="h1">
         {props.children}
       </Typography>
     </div>

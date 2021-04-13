@@ -51,7 +51,7 @@ export const serviceUpdateVoca = (voca) => {
   return (dispatch) => {
     API.put(enpoint_voca.update(voca.id), voca)
       .then((res) => {
-        dispatch(actionUpdateVocaInList(voca));
+        dispatch(actionUpdateVocaInList(res.data));
         dispatch(actionSetIsShowVocaModal(false));
         toast.success(codeToMessages(constCODE.UPDATE_VOCA_SUCCESS));
       })
