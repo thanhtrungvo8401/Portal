@@ -1,13 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { withPrivateLayout } from "../../../components/Layouts/PrivateLayout";
-import MyVocasLayout from "../../../container/MyVocas/Layout";
-import { actionResetError } from "../../../redux/actions/errorActions";
-import {
-  actionSetValueForlistEditing,
-  actionSetValueForSetVocaEditing,
-  actionSetvocaObject,
-} from "../../../redux/actions/setVocasActions";
+import MyVocasLayout from "../../../container/MySetVocas/Layout";
 import {
   serviceCreateSetVoca,
   serviceDeleteSetVocas,
@@ -16,88 +10,45 @@ import {
 } from "../../../service/setVocaService";
 import { storageKey } from "../../../utils/Constant";
 import { localStorageHelper } from "../../../utils/storageHelper";
-function MyVocas(props) {
+function MySetVocas(props) {
   // Variables:
-  const setVoca = useSelector((state) => state.setVocas).setVoca;
-  const setVocaEditing = useSelector((state) => state.setVocas).setVocaEditing;
-  const ERROR = useSelector((state) => state.error);
-  const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
-  const listSetVocas = useSelector(
-    (state) => state.setVocas && state.setVocas.list
-  );
-  const listEditing = useSelector((state) => state.setVocas).listEditing;
+  const { setVoca } = useSelector((state) => state.setVocas);
   const dispatch = useDispatch();
+  const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
   // UI INTERACT:
-  const handleOnChange = (e) => {
-    const { name, value } = e.target;
-    const newSetVoca = { ...setVoca, [name]: value };
-    dispatch(actionSetvocaObject(newSetVoca));
-    dispatch(actionResetError());
+  // const handleOnChange = (e) => {
+  //   const { name, value } = e.target;
+  //   const newSetVoca = { ...setVoca, [name]: value };
+  //   dispatch(actionSet_SetVocaObject(newSetVoca));
+  //   dispatch(actionResetError());
+  // };
+
+  const handleOnSubmitModal = () => {
+    if (!setVoca.id) {
+      dispatch(serviceCreateSetVoca({ ...setVoca, authorId: user.id }));
+    } else {
+      dispatch(serviceUpdateSetVoca(setVoca));
+    }
   };
 
-  const handleOnSubmitCreateVoca = (e) => {
-    e.preventDefault();
-    const setVocaObject = {
-      ...setVoca,
-      authorId: user.id,
-    };
-    dispatch(serviceCreateSetVoca(setVocaObject));
+  const handleOnRemoveSetVocaById = (setVocaId) => {
+    dispatch(serviceDeleteSetVocas(setVocaId));
   };
 
-  const handleOnSubmitUpdateVoca = () => {
-    const setVocaObject = {
-      ...setVocaEditing,
-    };
-    dispatch(serviceUpdateSetVoca(setVocaObject));
-  };
-
-  const handleOnRemoveItem = (item) => {
-    dispatch(serviceDeleteSetVocas(item.id));
-  };
-
-  const handleOnAllowEditSetVoca = (setVoca) => {
-    dispatch(actionSetValueForlistEditing(setVoca));
-    dispatch(actionSetValueForSetVocaEditing(setVoca));
-  };
-
-  const handleOnChangeEditing = (e) => {
-    const { name, value } = e.target;
-    const newSetVoca = { ...setVocaEditing, [name]: value };
-    dispatch(actionSetValueForSetVocaEditing(newSetVoca));
-    dispatch(actionResetError());
-  };
-
-  const handleResetSetVoca = () => {
-    dispatch(actionSetvocaObject({}));
-  };
-  // FUNCTION DEFINED:
-  const handleFetAllSetVoca = () => {
-    dispatch(serviceGetSetVocas(user.id));
-  };
-  // LIFE CYCLE HOOK:
-  // fetch all set-vocas:
   useEffect(() => {
     if (user.id) {
-      handleFetAllSetVoca();
+      // fetch set-vocas by authorId:
+      dispatch(serviceGetSetVocas(user.id));
     }
   }, [user.id]);
   return (
     <MyVocasLayout
-      handleOnChange={handleOnChange}
-      handleOnSubmit={handleOnSubmitCreateVoca}
-      ERROR={ERROR}
-      setVoca={setVoca}
-      listSetVocas={listSetVocas}
-      listEditing={listEditing}
-      handleOnRemoveItem={handleOnRemoveItem}
-      handleOnAllowEditSetVoca={handleOnAllowEditSetVoca}
-      handleResetSetVoca={handleResetSetVoca}
-      handleOnChangeEditing={handleOnChangeEditing}
-      handleOnSubmitUpdateVoca={handleOnSubmitUpdateVoca}
+      handleOnRemoveSetVocaById={handleOnRemoveSetVocaById}
+      handleOnSubmitModal={handleOnSubmitModal}
     />
   );
 }
 
-export default withPrivateLayout(MyVocas, {
+export default withPrivateLayout(MySetVocas, {
   title: "Study Room - Create more vocabularies",
 });
