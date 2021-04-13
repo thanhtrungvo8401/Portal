@@ -45,11 +45,12 @@ const inputLabels = {
 const inputRequired = ["voca", "meaning"];
 function VocaModal({ handleOnChange, handleOnSubmit }) {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { isShowVocaModal, voca } = useSelector((state) => state.vocas);
   const ERROR = useSelector((state) => state.error);
-  const dispatch = useDispatch();
   const [INTERACT, setINTERACT] = useState({});
 
+  const isValidModal = validForm(voca, inputRequired, ERROR);
   // UI INTERACT:
   const handleOnChangeF = (e) => {
     const { target } = e;
@@ -140,7 +141,12 @@ function VocaModal({ handleOnChange, handleOnSubmit }) {
         >
           Cancel
         </Button>
-        <Button onClick={handleOnSubmit} size="medium" color="primary">
+        <Button
+          disabled={!isValidModal}
+          onClick={handleOnSubmit}
+          size="medium"
+          color="primary"
+        >
           Save
         </Button>
       </DialogActions>
