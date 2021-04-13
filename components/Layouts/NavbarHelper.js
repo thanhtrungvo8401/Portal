@@ -12,6 +12,7 @@ import PropTypes from "prop-types";
 import MyLink from "../MyLink";
 import { navigate, removeGmailTag } from "../../utils/Helper";
 import { appUrl } from "../../utils/APP_URL";
+import theme from "../theme";
 
 export const useStyles = makeStyles((theme) => {
   return {
@@ -92,28 +93,35 @@ export const MobileMenuPopup = (props) => {
         <Avatar alt="avatar" src="/image/cat.png" />
       </MenuItem>
       <MenuItem onClick={props.handleMobileMenuClose}>
-        <MyLink url={appUrl.dashboard()} className={`${classes.myLink}`}>
+        <MyLink
+          isNav={true}
+          url={appUrl.dashboard()}
+          className={`${classes.myLink}`}
+        >
           <span>Meomeo-kun</span>
         </MyLink>
       </MenuItem>
-      <MenuItem onClick={props.handleMobileMenuClose}>
-        <MyLink url="/top-student" className={classes.myLink}>
+      <MenuItem  onClick={props.handleMobileMenuClose}>
+        <MyLink isNav={true} url="/top-student" className={classes.myLink}>
           Top Student
         </MyLink>
       </MenuItem>
       <MenuItem onClick={props.handleMobileMenuClose}>
-        <MyLink url="/top-student" className={classes.myLink}>
+        <MyLink isNav={true} url="/top-student" className={classes.myLink}>
           News
         </MyLink>
       </MenuItem>
       <MenuItem onClick={props.handleMobileMenuClose}>
-        <MyLink url="/top-student" className={classes.myLink}>
+        <MyLink isNav={true} url="/top-student" className={classes.myLink}>
           About Neko
         </MyLink>
       </MenuItem>
       <MenuItem className="close-btn">
         <IconButton onClick={props.handleMobileMenuClose}>
-          <HighlightOffIcon color="secondary" fontSize="large" />
+          <HighlightOffIcon
+            style={{ color: theme.palette.white.main }}
+            fontSize="large"
+          />
         </IconButton>
       </MenuItem>
     </Menu>

@@ -5,6 +5,7 @@ import ActionGroup from "../../components/ActionGroup";
 import MultiTabStudy from "../../components/MultiTabStudy/MultiTabStudy";
 import PageTitle from "../../components/PageComponent/PageTitle";
 import { useDispatch, useSelector } from "react-redux";
+import { actionSetIsShowSetVocaModal } from "../../redux/actions/setVocasActions";
 
 // const inputFields = ["setName"];
 // const inputTypes = {
@@ -26,7 +27,7 @@ function MySetVocasLayout({ handleOnRemoveSetVocaById, handleOnSubmitModal }) {
         {/* Instruction */}
         <ParagraphTitle>Instruction</ParagraphTitle>
         <Container>
-          <Typography variant="body1">
+          <Typography color="textSecondary" variant="body1">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
           </Typography>
         </Container>

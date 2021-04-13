@@ -1,4 +1,4 @@
-import { Button, Typography } from "@material-ui/core";
+import { Button, Container, Typography } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import ActionGroup from "../../components/ActionGroup";
 import CreateRememberGroup from "../../components/CreateRememberGroup/CreateRemember";
@@ -19,7 +19,7 @@ function RememberVocasLayout(props) {
       {/* intro */}
       <ParagraphTitle hidden={isCreating}>Instruction</ParagraphTitle>
       <Container hidden={isCreating}>
-        <Typography variant="body1">
+        <Typography color="textSecondary" variant="body1">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
         </Typography>
       </Container>

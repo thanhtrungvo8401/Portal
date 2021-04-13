@@ -3,7 +3,7 @@ import { createMuiTheme } from "@material-ui/core/styles";
 export const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "#0d6efd",
+      main: "#3d0a91",
     },
     secondary: {
       main: "#343a40",
@@ -13,20 +13,23 @@ export const theme = createMuiTheme({
       secondary: "#495057",
     },
     warning: {
-      main: "#fd7e14",
+      main: "#ffc107",
     },
     error: {
       main: "#dc3545",
     },
     background: {
-      main: "#e9ecef",
+      main: "#f8f9fa",
     },
     success: {
       main: "#198754",
     },
     info: {
-      main: "#ffda6a", // bg-nav
-      light: "#fff3cd", // bg-popup
+      main: "#6f42c1", // bg-nav
+      light: "#e0cffc", // bg-popup
+    },
+    white: {
+      main: "#FFFFFF",
     },
   },
 });

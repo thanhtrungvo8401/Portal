@@ -31,7 +31,7 @@ export default function BreadcrumbsCustom(props) {
         <Icon className={classes.icon} />
         <span className={classes.label}>{label}</span>
       </MyLink>
-      <Typography color="textPrimary" className={classes.link}>
+      <Typography color="textSecondary" className={classes.link}>
         {childLabel}
       </Typography>
     </Breadcrumbs>

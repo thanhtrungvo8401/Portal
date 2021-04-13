@@ -24,6 +24,7 @@ import { serviceLogout } from "../../service/authenticate";
 import { appUrl } from "../../utils/APP_URL";
 import { localStorageHelper } from "../../utils/storageHelper";
 import { storageKey } from "../../utils/Constant";
+import theme from "../theme";
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
@@ -143,25 +144,41 @@ function Navbar(props) {
                   onClick={handleMobileMenuOpen}
                   color="default"
                 >
-                  <MenuIcon color="secondary" />
+                  <MenuIcon style={{ color: theme.palette.white.main }} />
                 </IconButton>
               </div>
 
               <div className={classes.sectionDesktop}>
-                <MyLink className={classes.navItem} url="/top-student">
+                <MyLink
+                  isNav={true}
+                  className={classes.navItem}
+                  url="/top-student"
+                >
                   Top Student
                 </MyLink>
-                <MyLink className={classes.navItem} url="/top-student">
+                <MyLink
+                  isNav={true}
+                  className={classes.navItem}
+                  url="/top-student"
+                >
                   News
                 </MyLink>
-                <MyLink className={classes.navItem} url="/top-student">
+                <MyLink
+                  isNav={true}
+                  className={classes.navItem}
+                  url="/top-student"
+                >
                   About Neko
                 </MyLink>
               </div>
 
               <div style={{ flexGrow: 1 }} />
 
-              <MyLink url={appUrl.studyRoom()} className={styles.flashEffect}>
+              <MyLink
+                isNav={true}
+                url={appUrl.studyRoom()}
+                className={styles.flashEffect}
+              >
                 STUDY NOW
               </MyLink>
 
@@ -170,8 +187,7 @@ function Navbar(props) {
                   <Typography
                     className={classes.responsiveUserInfoDesktop}
                     variant="caption"
-                    onClick={handleProfileMenuOpen}
-                    color="textPrimary"
+                    style={{ color: theme.palette.white.main }}
                   >
                     {removeGmailTag(user && user.email)}
                   </Typography>
@@ -183,7 +199,9 @@ function Navbar(props) {
                     onClick={handleProfileMenuOpen}
                     color="secondary"
                   >
-                    <AccountCircle color="secondary" />
+                    <AccountCircle
+                      style={{ color: theme.palette.white.main }}
+                    />
                   </IconButton>
                 </React.Fragment>
               )}
@@ -192,7 +210,9 @@ function Navbar(props) {
                   onClick={() => showLoginForm()}
                   className={classes.loginBtn}
                 >
-                  <MyLink className={classes.navItem}>Login</MyLink>
+                  <MyLink isNav={true} className={classes.navItem}>
+                    Login
+                  </MyLink>
                 </div>
               )}
             </Toolbar>

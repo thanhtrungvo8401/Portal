@@ -10,7 +10,7 @@ function TestVocasLayout(props) {
       <PageTitle>Let's create and check your memories</PageTitle>
       <ParagraphTitle>Instruction</ParagraphTitle>
       <Container>
-        <Typography variant="body1">
+        <Typography color="textSecondary" variant="body1">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
         </Typography>
       </Container>

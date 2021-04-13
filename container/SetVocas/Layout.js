@@ -50,7 +50,7 @@ function Layout({
         {/* Instruction */}
         <ParagraphTitle>Instruction</ParagraphTitle>
         <Container>
-          <Typography variant="body1">
+          <Typography color="textSecondary" variant="body1">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
           </Typography>
         </Container>

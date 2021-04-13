@@ -9,18 +9,31 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       cursor: "pointer",
       borderRadius: "0.5rem",
+      color: theme.palette.primary.main,
       "&:hover": {
         transition: theme.transitions.create("all", {
           duration: theme.transitions.duration.short,
         }),
-        color: theme.palette.primary.main,
+        color: theme.palette.text.primary,
+      },
+    },
+    navLink: {
+      alignItems: "center",
+      display: "flex",
+      cursor: "pointer",
+      borderRadius: "0.5rem",
+      color: theme.palette.white.main,
+      "&:hover": {
+        transition: theme.transitions.create("all", {
+          duration: theme.transitions.duration.short,
+        }),
+        color: theme.palette.warning.main,
       },
     },
   };
 });
 
-export default function MyLink(props) {
-  const { className, variant, url, children, color } = props;
+export default function MyLink({ className, variant, url, children, isNav }) {
   const classes = useStyles();
   const navigateToUrl = () => {
     if (Boolean(url)) {
@@ -30,10 +43,9 @@ export default function MyLink(props) {
   return (
     <Typography
       onClick={navigateToUrl}
-      className={`${className} ${classes.link}`}
+      className={`${className} ${isNav ? classes.navLink : classes.link}`}
       variant={variant || "body1"}
       noWrap
-      color={color || "textPrimary"}
     >
       {children}
     </Typography>
