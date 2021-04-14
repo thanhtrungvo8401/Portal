@@ -14,7 +14,12 @@ function ParagraphTitle({ children, hidden }) {
   const classes = useStyles();
   return (
     <div hidden={hidden} className={classes.paragraphTitle}>
-      <Typography className={classes.typo} variant="h6" color="textPrimary">
+      <Typography
+        className={classes.typo}
+        variant="h6"
+        component="h2"
+        color="textSecondary"
+      >
         {children}
       </Typography>
     </div>

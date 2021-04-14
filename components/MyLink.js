@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => {
         transition: theme.transitions.create("all", {
           duration: theme.transitions.duration.short,
         }),
-        color: theme.palette.text.primary,
+        color: theme.palette.primary.light,
       },
     },
     navLink: {
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => {
         transition: theme.transitions.create("all", {
           duration: theme.transitions.duration.short,
         }),
-        color: theme.palette.warning.main,
+        color: theme.palette.info.light,
       },
     },
   };
