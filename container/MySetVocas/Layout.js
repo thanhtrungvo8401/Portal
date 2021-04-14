@@ -1,4 +1,12 @@
-import { Button, Container, Typography } from "@material-ui/core";
+import {
+  Button,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Typography,
+} from "@material-ui/core";
 import ParagraphTitle from "../../components/ParagraphTitle";
 import SetVoca from "../../components/SetVoca";
 import ActionGroup from "../../components/ActionGroup";
@@ -7,9 +15,12 @@ import PageTitle from "../../components/PageComponent/PageTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { actionSetIsShowSetVocaModal } from "../../redux/actions/setVocasActions";
 import SetVocaModal from "../../components/SetVocaModal/SetVocaModal";
+import { useState } from "react";
+import theme from "../../components/theme";
 
 function MySetVocasLayout({ handleOnRemoveSetVocaById, handleOnSubmitModal }) {
   const { list } = useSelector((state) => state.setVocas);
+  const [deleteVocaId, setDeleteVocaId] = useState();
   const dispatch = useDispatch();
   return (
     <div className="my-vocas-layout">
@@ -34,7 +45,13 @@ function MySetVocasLayout({ handleOnRemoveSetVocaById, handleOnSubmitModal }) {
           }}
         >
           {list.map((el, index) => {
-            return <SetVoca key={index} setVoca={el} />;
+            return (
+              <SetVoca
+                onSelectSetVocaIdToDelete={setDeleteVocaId}
+                key={index}
+                setVoca={el}
+              />
+            );
           })}
         </div>
 
@@ -56,6 +73,34 @@ function MySetVocasLayout({ handleOnRemoveSetVocaById, handleOnSubmitModal }) {
           Create (+)
         </Button>
       </ActionGroup>
+      {/* Comfirm Delete SetVoca */}
+      <Dialog
+        open={Boolean(deleteVocaId)}
+        aria-labelledby="form-dialog-title"
+        onClose={() => setDeleteVocaId(null)}
+      >
+        <DialogTitle id="form-dialog-title">Confirm Delete</DialogTitle>
+        <DialogContent style={{ color: theme.palette.error.main }}>
+          Are you sure want to delete this group, all vocabularies will be
+          deleted too!
+        </DialogContent>
+        <DialogActions>
+          <Button size="small" onClick={() => setDeleteVocaId(null)}>
+            Cancel
+          </Button>
+          <Button
+            size="small"
+            onClick={() => {
+              handleOnRemoveSetVocaById(deleteVocaId);
+              setDeleteVocaId(null);
+            }}
+            style={{ color: theme.palette.error.main }}
+            size="small"
+          >
+            Remove
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => {
     },
   };
 });
-function SetVoca({ setVoca }) {
+function SetVoca({ setVoca, onSelectSetVocaIdToDelete }) {
   const classes = useStyles();
   // UI INTERACT:
   const handleGoToSetVocas = () => {
@@ -70,7 +70,12 @@ function SetVoca({ setVoca }) {
       <CardActions style={{ justifyContent: "flex-end" }}>
         <Button color="secondary">Detail</Button>
         <Button style={{ color: theme.palette.success.main }}>Edit</Button>
-        <Button style={{ color: theme.palette.error.main }}>Remove</Button>
+        <Button
+          style={{ color: theme.palette.error.main }}
+          onClick={() => onSelectSetVocaIdToDelete(setVoca.id)}
+        >
+          Remove
+        </Button>
       </CardActions>
     </Card>
   );
