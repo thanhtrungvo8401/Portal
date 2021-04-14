@@ -1,26 +1,16 @@
 import { makeStyles, Paper, Tab, Tabs } from "@material-ui/core";
-import HomeIcon from "@material-ui/icons/Home";
 import CastForEducationIcon from "@material-ui/icons/CastForEducation";
 import FiberNewIcon from "@material-ui/icons/FiberNew";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 import React, { useEffect, useState } from "react";
 import { appUrl } from "../../utils/APP_URL";
-import { isServer, navigate } from "../../utils/Helper";
+import { isServer } from "../../utils/Helper";
 
-const useStyles = makeStyles((theme) => ({
-  tabHome: {
-    borderRight: `2px solid ${theme.palette.background.main}`,
-  },
-}));
+// const useStyles = makeStyles((theme) => ({}));
 
 export const listTabItem = [
-  {
-    Icon: HomeIcon,
-    label: "Quay lại phòng học",
-    url: appUrl.studyRoom(),
-  },
-  { Icon: MenuBookIcon, label: "Nhớ từ", url: appUrl.rememberVoca() },
-  { Icon: FiberNewIcon, label: "Tạo thêm từ", url: appUrl.myVoca() },
+  { Icon: MenuBookIcon, label: "Nhớ từ" },
+  { Icon: FiberNewIcon, label: "Tạo thêm từ" },
   {
     Icon: CastForEducationIcon,
     label: "Kiểm tra kiến thức",
@@ -28,22 +18,10 @@ export const listTabItem = [
   },
 ];
 
-export default function MultiTabStudy() {
-  const classes = useStyles();
+export default function MultiTabStudy({ activeTab, setActiveTab }) {
   const [isDestop, setIsDesktop] = useState(
     !isServer && window.innerWidth > 600
   );
-  const [activeTab, setActiveTab] = useState(0);
-  const getCurrentActiveTab = () => {
-    const tabUrl = window.location.pathname;
-    const studyTabArray = [
-      appUrl.studyRoom(),
-      appUrl.rememberVoca(),
-      appUrl.myVoca(),
-      appUrl.testVoca(),
-    ];
-    setActiveTab(studyTabArray.indexOf(tabUrl));
-  };
   const listenerResizeScreen = () => {
     if (window.innerWidth < 600) {
       setIsDesktop(false);
@@ -53,7 +31,6 @@ export default function MultiTabStudy() {
     }
   };
   useEffect(() => {
-    getCurrentActiveTab();
     window.addEventListener("resize", listenerResizeScreen);
   }, []);
   return (
@@ -62,22 +39,18 @@ export default function MultiTabStudy() {
         <Tabs
           variant="scrollable"
           scrollButtons="on"
-          indicatorColor="secondary"
-          textColor="secondary"
+          indicatorColor="primary"
+          textColor="primary"
           value={activeTab}
         >
-          {listTabItem.map(({ Icon, label, url }, index) => {
+          {listTabItem.map(({ Icon, label }, index) => {
             return (
               <Tab
-                className={index === 0 ? classes.tabHome : ""}
                 key={index}
                 label={isDestop ? label : ""}
                 icon={<Icon />}
                 hidden={true}
-                style={{
-                  display: activeTab === 0 && index === 0 ? "none" : "block",
-                }}
-                onClick={() => navigate(url)}
+                onClick={() => setActiveTab(index)}
               />
             );
           })}
