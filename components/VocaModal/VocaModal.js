@@ -61,14 +61,14 @@ function VocaModal({ handleOnChange, handleOnSubmit }) {
       handleOnChange(e);
     }
   };
-  const isCreateVocaModal = Boolean(voca.id); // true => create, false => update
-  const titleVocaModal = !isCreateVocaModal
+  const titleVocaModal = !Boolean(voca.id)
     ? "Create new vocabularies"
     : "Edit vocabularies";
 
   useEffect(() => {
     if (!isShowVocaModal) {
       dispatch(actionSetVocabularyObject({}));
+      dispatch(actionResetError());
       setINTERACT({});
     }
   }, [isShowVocaModal]);

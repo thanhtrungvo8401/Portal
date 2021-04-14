@@ -6,15 +6,7 @@ import MultiTabStudy from "../../components/MultiTabStudy/MultiTabStudy";
 import PageTitle from "../../components/PageComponent/PageTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { actionSetIsShowSetVocaModal } from "../../redux/actions/setVocasActions";
-
-// const inputFields = ["setName"];
-// const inputTypes = {
-//   setName: "input",
-// };
-// const inputLabels = {
-//   setName: "Lesson XX: X X X X",
-// };
-// const inputRequired = ["setName"];
+import SetVocaModal from "../../components/SetVocaModal/SetVocaModal";
 
 function MySetVocasLayout({ handleOnRemoveSetVocaById, handleOnSubmitModal }) {
   const { list } = useSelector((state) => state.setVocas);
@@ -54,7 +46,7 @@ function MySetVocasLayout({ handleOnRemoveSetVocaById, handleOnSubmitModal }) {
           </Typography>
         )}
       </Container>
-
+      <SetVocaModal handleOnSubmit={handleOnSubmitModal} />
       <ActionGroup>
         <Button
           color="primary"

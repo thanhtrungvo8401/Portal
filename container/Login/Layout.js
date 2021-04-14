@@ -16,6 +16,7 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { useSelector } from "react-redux";
 import InputGroup, { validForm } from "../../components/InputGroup";
 import MyLink from "../../components/MyLink";
+import theme from "../../components/theme";
 const useStyles = makeStyles((theme) => ({
   zindex500: {
     zIndex: "500!important",
@@ -82,12 +83,12 @@ function LoginLayout(props) {
       className={`${classes.dialog} ${isLoading ? classes.zindex500 : ""}`}
     >
       <IconButton className={classes.closeBtn} onClick={props.handleCloseLogin}>
-        <HighlightOffIcon color="secondary" fontSize="large" />
+        <HighlightOffIcon color="primary" fontSize="large" />
       </IconButton>
       <Container className={classes.container} component="main" maxWidth="xs">
         <DialogContent>
           <Avatar className={classes.avatar}>
-            <VpnKeyOutlinedIcon color="secondary" />
+            <VpnKeyOutlinedIcon style={{ color: theme.palette.white.main }} />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in

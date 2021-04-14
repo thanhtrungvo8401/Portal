@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => {
       width: "100%", // Fix IE 11 issue.
       marginTop: theme.spacing(3),
     },
+    formInModal: {
+      width: "100%", // Fix IE 11 issue.
+    },
     submit: {
       margin: theme.spacing(3, 0, 2),
     },
@@ -33,6 +36,7 @@ function InputGroup(props) {
     object,
     submitTitle,
     ERROR,
+    isUsedInModal,
   } = props;
   const { handleOnChange, handleOnSubmit } = props;
   const [INTERACT, setINTERACT] = useState({});
@@ -52,10 +56,19 @@ function InputGroup(props) {
   useEffect(() => {
     // reset Error when new InputGroup is Loaded! => Change page!
     dispatch(actionResetError());
+    return () => {
+      setINTERACT({});
+    };
   }, []);
 
   return (
-    <form className={classes.form} onSubmit={handleOnSubmit}>
+    <form
+      className={!isUsedInModal ? classes.form : classes.formInModal}
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleOnSubmit();
+      }}
+    >
       {inputFields.map((key) => {
         const value = object[key] || "";
         const isShowRequiredMsg =

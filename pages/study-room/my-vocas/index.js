@@ -15,13 +15,6 @@ function MySetVocas(props) {
   const { setVoca } = useSelector((state) => state.setVocas);
   const dispatch = useDispatch();
   const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
-  // UI INTERACT:
-  // const handleOnChange = (e) => {
-  //   const { name, value } = e.target;
-  //   const newSetVoca = { ...setVoca, [name]: value };
-  //   dispatch(actionSet_SetVocaObject(newSetVoca));
-  //   dispatch(actionResetError());
-  // };
 
   const handleOnSubmitModal = () => {
     if (!setVoca.id) {

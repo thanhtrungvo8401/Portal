@@ -101,7 +101,7 @@ export const MobileMenuPopup = (props) => {
           <span>Meomeo-kun</span>
         </MyLink>
       </MenuItem>
-      <MenuItem  onClick={props.handleMobileMenuClose}>
+      <MenuItem onClick={props.handleMobileMenuClose}>
         <MyLink isNav={true} url="/top-student" className={classes.myLink}>
           Top Student
         </MyLink>
