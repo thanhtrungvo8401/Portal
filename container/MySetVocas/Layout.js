@@ -10,13 +10,15 @@ import {
 import ParagraphTitle from "../../components/ParagraphTitle";
 import SetVoca from "../../components/SetVoca";
 import ActionGroup from "../../components/ActionGroup";
-import MultiTabStudy from "../../components/MultiTabStudy/MultiTabStudy";
 import PageTitle from "../../components/PageComponent/PageTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { actionSetIsShowSetVocaModal } from "../../redux/actions/setVocasActions";
 import SetVocaModal from "../../components/SetVocaModal/SetVocaModal";
 import { useState } from "react";
 import theme from "../../components/theme";
+import BreadcrumbsCustom from "../../components/Breadcrumbs/Breadcrumbs";
+import HomeIcon from "@material-ui/icons/Home";
+import { appUrl } from "../../utils/APP_URL";
 
 function MySetVocasLayout({ handleOnRemoveSetVocaById, handleOnSubmitModal }) {
   const { list } = useSelector((state) => state.setVocas);
@@ -24,7 +26,16 @@ function MySetVocasLayout({ handleOnRemoveSetVocaById, handleOnSubmitModal }) {
   const dispatch = useDispatch();
   return (
     <div className="my-vocas-layout">
-      <MultiTabStudy />
+      <BreadcrumbsCustom
+        parents={[
+          {
+            Icon: HomeIcon,
+            label: "Study room",
+            url: appUrl.studyRoom(),
+          },
+        ]}
+        label="Danh sach nhom tu"
+      />
       <PageTitle>Create your own vocabularies in this page</PageTitle>
       <Container>
         {/* Instruction */}

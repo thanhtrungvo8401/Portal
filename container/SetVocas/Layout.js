@@ -13,13 +13,14 @@ import { useDispatch } from "react-redux";
 import ActionGroup from "../../components/ActionGroup";
 import ParagraphTitle from "../../components/ParagraphTitle";
 import VocaModal from "../../components/VocaModal/VocaModal";
-import { listTabItem } from "../../components/MultiTabStudy/MultiTabStudy";
 import BreadcrumbsCustom from "../../components/Breadcrumbs/Breadcrumbs";
 import VocaDisplayGroup from "../../components/VocaDisplay/VocaDisplayGroup";
 import { actionSetIsShowVocaModal } from "../../redux/actions/vocaActions";
 import theme from "../../components/theme";
 import PageTitle from "../../components/PageComponent/PageTitle";
-
+import HomeIcon from "@material-ui/icons/Home";
+import FiberNewIcon from "@material-ui/icons/FiberNew";
+import { appUrl } from "../../utils/APP_URL";
 const useStyles = makeStyles((theme) => {
   return {
     setVocas: {
@@ -44,7 +45,17 @@ function Layout({
   const [deleteVocaId, setDeleteVocaId] = useState();
   return (
     <React.Fragment>
-      <BreadcrumbsCustom {...listTabItem[2]} childLabel="Danh sach tu vung" />
+      <BreadcrumbsCustom
+        parents={[
+          {
+            Icon: HomeIcon,
+            label: "Study room",
+            url: appUrl.studyRoom(),
+          },
+          { Icon: FiberNewIcon, label: "Tạo thêm từ", url: appUrl.myVoca() },
+        ]}
+        label="Danh sach tu vung"
+      />
       <PageTitle>Vocabularies list</PageTitle>
       <Container>
         {/* Instruction */}

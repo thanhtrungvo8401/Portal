@@ -2,10 +2,12 @@ import { Button, Container, Typography } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import ActionGroup from "../../components/ActionGroup";
 import CreateRememberGroup from "../../components/CreateRememberGroup/CreateRemember";
-import MultiTabStudy from "../../components/MultiTabStudy/MultiTabStudy";
 import PageTitle from "../../components/PageComponent/PageTitle";
 import ParagraphTitle from "../../components/ParagraphTitle";
 import { actionSetIsCreating } from "../../redux/actions/rememberGroupAction";
+import HomeIcon from "@material-ui/icons/Home";
+import { appUrl } from "../../utils/APP_URL";
+import BreadcrumbsCustom from "../../components/Breadcrumbs/Breadcrumbs";
 
 function RememberVocasLayout(props) {
   const listRememberGroups = [];
@@ -14,7 +16,16 @@ function RememberVocasLayout(props) {
   const dispatch = useDispatch();
   return (
     <div className="remember-vocas-layout">
-      <MultiTabStudy />
+      <BreadcrumbsCustom
+        parents={[
+          {
+            Icon: HomeIcon,
+            label: "Study room",
+            url: appUrl.studyRoom(),
+          },
+        ]}
+        label="Remember-groups list"
+      />
       <PageTitle>Let's learn vocabularies</PageTitle>
       {/* intro */}
       <ParagraphTitle hidden={isCreating}>Instruction</ParagraphTitle>
