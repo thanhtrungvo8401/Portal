@@ -11,6 +11,11 @@ import { formatDate } from "../utils/DateHelper";
 import { appUrl } from "../utils/APP_URL";
 import { navigate } from "../utils/Helper";
 import React from "react";
+import { useDispatch } from "react-redux";
+import {
+  actionSetIsShowSetVocaModal,
+  actionSet_SetVocaObject,
+} from "../redux/actions/setVocasActions";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -33,6 +38,7 @@ const useStyles = makeStyles((theme) => {
 });
 function SetVoca({ setVoca, onSelectSetVocaIdToDelete }) {
   const classes = useStyles();
+  const dispatch = useDispatch();
   // UI INTERACT:
   const handleGoToSetVocas = () => {
     navigate(appUrl.setVocaDetail(setVoca.id));
@@ -69,7 +75,15 @@ function SetVoca({ setVoca, onSelectSetVocaIdToDelete }) {
       </CardContent>
       <CardActions style={{ justifyContent: "flex-end" }}>
         <Button color="secondary">Detail</Button>
-        <Button style={{ color: theme.palette.success.main }}>Edit</Button>
+        <Button
+          style={{ color: theme.palette.success.main }}
+          onClick={() => {
+            dispatch(actionSet_SetVocaObject({ ...setVoca }));
+            dispatch(actionSetIsShowSetVocaModal(true));
+          }}
+        >
+          Edit
+        </Button>
         <Button
           style={{ color: theme.palette.error.main }}
           onClick={() => onSelectSetVocaIdToDelete(setVoca.id)}
