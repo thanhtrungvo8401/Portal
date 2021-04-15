@@ -6,9 +6,13 @@ import HomeIcon from "@material-ui/icons/Home";
 import { appUrl } from "../../utils/APP_URL";
 import BreadcrumbsCustom from "../../components/Breadcrumbs/Breadcrumbs";
 import ParagraphBody from "../../components/ParagraphBody/ParagraphBody";
+import CreateRememberGroupModal from "./CreateModal";
+import { useDispatch } from "react-redux";
+import { actionSetIshowCreateModal } from "../../redux/actions/rememberGroupAction";
 
 function RememberVocasLayout(props) {
   const listRememberGroups = [];
+  const dispatch = useDispatch();
 
   return (
     <div className="remember-vocas-layout">
@@ -41,13 +45,14 @@ function RememberVocasLayout(props) {
         )}
       </Container>
       {/* create new remember-group */}
+      <CreateRememberGroupModal />
       {/* action */}
       <ActionGroup>
         <Button
           hidden={true}
           color="primary"
           variant="contained"
-          // onClick={() => dispatch(actionSetIsCreating(true))}
+          onClick={() => dispatch(actionSetIshowCreateModal(true))}
         >
           Create (+)
         </Button>
