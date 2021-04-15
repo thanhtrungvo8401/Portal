@@ -14,7 +14,7 @@ import ActionGroup from "../../components/ActionGroup";
 import ParagraphTitle from "../../components/ParagraphTitle";
 import VocaModal from "./VocaModal";
 import BreadcrumbsCustom from "../../components/Breadcrumbs/Breadcrumbs";
-import VocaDisplayGroup from "../../components/VocaDisplay/VocaDisplayGroup";
+import VocaDisplayGroup from "./VocaDisplayGroup";
 import { actionSetIsShowVocaModal } from "../../redux/actions/vocaActions";
 import theme from "../../components/theme";
 import PageTitle from "../../components/PageComponent/PageTitle";

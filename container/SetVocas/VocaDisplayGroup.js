@@ -14,7 +14,7 @@ import {
   actionSetIsShowVocaModal,
   actionSetVocabularyObject,
 } from "../../redux/actions/vocaActions";
-import theme from "../theme";
+import theme from "../../components/theme";
 
 const useStyles = makeStyles((theme) => ({
   root: {
