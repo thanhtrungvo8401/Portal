@@ -5,7 +5,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Typography,
 } from "@material-ui/core";
 import ParagraphTitle from "../../components/ParagraphTitle";
 import SetVoca from "../../components/SetVoca";
@@ -19,6 +18,7 @@ import theme from "../../components/theme";
 import BreadcrumbsCustom from "../../components/Breadcrumbs/Breadcrumbs";
 import HomeIcon from "@material-ui/icons/Home";
 import { appUrl } from "../../utils/APP_URL";
+import ParagraphBody from "../../components/ParagraphBody/ParagraphBody";
 
 function MySetVocasLayout({ handleOnRemoveSetVocaById, handleOnSubmitModal }) {
   const { list } = useSelector((state) => state.setVocas);
@@ -31,7 +31,7 @@ function MySetVocasLayout({ handleOnRemoveSetVocaById, handleOnSubmitModal }) {
           {
             Icon: HomeIcon,
             label: "Study room",
-            url: appUrl.studyRoom(),
+            url: `${appUrl.studyRoom()}?activeTab=1`,
           },
         ]}
         label="Danh sach nhom tu"
@@ -41,9 +41,9 @@ function MySetVocasLayout({ handleOnRemoveSetVocaById, handleOnSubmitModal }) {
         {/* Instruction */}
         <ParagraphTitle>Instruction</ParagraphTitle>
         <Container>
-          <Typography color="textSecondary" variant="body1">
+          <ParagraphBody>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-          </Typography>
+          </ParagraphBody>
         </Container>
 
         {/* Vocabularies */}
@@ -68,10 +68,10 @@ function MySetVocasLayout({ handleOnRemoveSetVocaById, handleOnSubmitModal }) {
 
         {/* Create new Set-Voca */}
         {!list.length && (
-          <Typography variant="body1">
+          <ParagraphBody>
             There are no vocabularies group in your room, Click into the
             following (+) Icon to create a new one!
-          </Typography>
+          </ParagraphBody>
         )}
       </Container>
       <SetVocaModal handleOnSubmit={handleOnSubmitModal} />

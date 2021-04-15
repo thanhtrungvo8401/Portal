@@ -1,4 +1,4 @@
-import { Button, Container, Typography } from "@material-ui/core";
+import { Button, Container } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import ActionGroup from "../../components/ActionGroup";
 import CreateRememberGroup from "../../components/CreateRememberGroup/CreateRemember";
@@ -8,6 +8,7 @@ import { actionSetIsCreating } from "../../redux/actions/rememberGroupAction";
 import HomeIcon from "@material-ui/icons/Home";
 import { appUrl } from "../../utils/APP_URL";
 import BreadcrumbsCustom from "../../components/Breadcrumbs/Breadcrumbs";
+import ParagraphBody from "../../components/ParagraphBody/ParagraphBody";
 
 function RememberVocasLayout(props) {
   const listRememberGroups = [];
@@ -21,7 +22,7 @@ function RememberVocasLayout(props) {
           {
             Icon: HomeIcon,
             label: "Study room",
-            url: appUrl.studyRoom(),
+            url: `${appUrl.studyRoom()}?activeTab=0`,
           },
         ]}
         label="Remember-groups list"
@@ -30,9 +31,9 @@ function RememberVocasLayout(props) {
       {/* intro */}
       <ParagraphTitle hidden={isCreating}>Instruction</ParagraphTitle>
       <Container hidden={isCreating}>
-        <Typography color="textSecondary" variant="body1">
+        <ParagraphBody>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-        </Typography>
+        </ParagraphBody>
       </Container>
       {/* main */}
       <ParagraphTitle hidden={isCreating}>
@@ -40,10 +41,10 @@ function RememberVocasLayout(props) {
       </ParagraphTitle>
       <Container hidden={isCreating}>
         {!listRememberGroups.length && (
-          <Typography>
+          <ParagraphBody>
             There are no remembers-group, Click into the following (+) Icon to
             create a new one!
-          </Typography>
+          </ParagraphBody>
         )}
       </Container>
       {/* create new remember-group */}
