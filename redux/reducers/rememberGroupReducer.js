@@ -1,16 +1,10 @@
-import {
-  createRememberObject,
-  rememberGroupModel,
-} from "../../model/RememberGroup";
 import { REMEMBER_GROUP } from "../types";
 const initState = {
   list: [],
   total: 0,
-  createObject: { ...createRememberObject },
-  rememberGroup: {
-    ...rememberGroupModel,
-  },
-  isCreating: false,
+  rememberGroup: {},
+  isShowCreateModal: false,
+  isShowUpdateModal: false,
 };
 
 export const rememberGroupReducer = (
@@ -44,15 +38,15 @@ export const rememberGroupReducer = (
         ...state,
         rememberGroup: payload,
       };
-    case REMEMBER_GROUP.SET_CREATE_REMEMBER_OBJECT:
+    case REMEMBER_GROUP.SET_IS_SHOW_CREATE_MODAL:
       return {
         ...state,
-        createObject: payload,
+        isShowCreateModal: payload,
       };
-    case REMEMBER_GROUP.SET_IS_CREATING:
+    case REMEMBER_GROUP.SET_IS_SHOW_UPDATE_MODAL:
       return {
         ...state,
-        isCreating: payload,
+        isShowUpdateModal: payload,
       };
     default:
       return state;
