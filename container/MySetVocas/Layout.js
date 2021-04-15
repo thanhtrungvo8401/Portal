@@ -12,7 +12,7 @@ import ActionGroup from "../../components/ActionGroup";
 import PageTitle from "../../components/PageComponent/PageTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { actionSetIsShowSetVocaModal } from "../../redux/actions/setVocasActions";
-import SetVocaModal from "../../components/SetVocaModal/SetVocaModal";
+import SetVocaModal from "./SetVocaModal";
 import { useState } from "react";
 import theme from "../../components/theme";
 import BreadcrumbsCustom from "../../components/Breadcrumbs/Breadcrumbs";
