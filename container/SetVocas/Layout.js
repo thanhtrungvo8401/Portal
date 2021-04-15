@@ -12,7 +12,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import ActionGroup from "../../components/ActionGroup";
 import ParagraphTitle from "../../components/ParagraphTitle";
-import VocaModal from "../../components/VocaModal/VocaModal";
+import VocaModal from "./VocaModal";
 import BreadcrumbsCustom from "../../components/Breadcrumbs/Breadcrumbs";
 import VocaDisplayGroup from "../../components/VocaDisplay/VocaDisplayGroup";
 import { actionSetIsShowVocaModal } from "../../redux/actions/vocaActions";

@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { validForm } from "../InputGroup";
+import { validForm } from "../../components/InputGroup";
 import { Alert } from "@material-ui/lab";
 import { codeToMessages, constCODE } from "../../utils/CodeToMessages";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,7 +18,7 @@ import {
   actionSetIsShowVocaModal,
   actionSetVocabularyObject,
 } from "../../redux/actions/vocaActions";
-import theme from "../theme";
+import theme from "../../components/theme";
 import { actionResetError } from "../../redux/actions/errorActions";
 const Transition = React.forwardRef((props, ref) => {
   return <Slide direction="down" ref={ref} {...props} />;
