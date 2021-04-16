@@ -12,6 +12,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionSetIshowCreateModal } from "../../redux/actions/rememberGroupAction";
 import { CREATE_REMEMBER_TYPE, LEVEL } from "../../utils/Constant";
+import Step1 from "./Step1";
 
 const initCreateObject = {
   type: CREATE_REMEMBER_TYPE.TYPE_DEFAULT_CENTER_SET,
@@ -25,6 +26,15 @@ const initCreateObject = {
 const Transition = React.forwardRef((props, ref) => {
   return <Slide direction="down" ref={ref} {...props} />;
 });
+
+const getComponentByStep = (createObject, actionUpdate) => {
+  switch (createObject.step) {
+    case 1:
+      return <Step1 object={createObject} actionUpdate={actionUpdate} />;
+    default:
+      break;
+  }
+};
 
 export default function CreateRememberGroupModal({}) {
   const dispatch = useDispatch();
@@ -83,6 +93,7 @@ export default function CreateRememberGroupModal({}) {
             </Button>
           }
         ></MobileStepper>
+        {getComponentByStep(createObject, setCreateObject)}
       </DialogContent>
       <DialogActions>
         <Button
