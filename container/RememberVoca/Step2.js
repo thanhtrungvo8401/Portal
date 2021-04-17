@@ -39,12 +39,10 @@ function FromYourOwnVocas({ object, actionUpdate }) {
   const { list } = useSelector((state) => state.setVocas);
   const dispatch = useDispatch();
   useEffect(() => {
+    actionUpdate({ ...object, isValidStep: false });
     if (user.id) {
       dispatch(serviceGetSetVocas(user.id));
     }
-  }, [user.id]);
-  useEffect(() => {
-    actionUpdate({ ...object, isValidStep: false });
   }, []);
   return (
     <React.Fragment>
@@ -52,7 +50,7 @@ function FromYourOwnVocas({ object, actionUpdate }) {
         variant="subtitle2"
         style={{ marginBottom: theme.spacing(1) }}
       >
-        Select one set that you want to learn
+        Select one group that you want to learn
       </Typography>
       <Autocomplete
         id="set-voca-select"
@@ -67,10 +65,11 @@ function FromYourOwnVocas({ object, actionUpdate }) {
           />
         )}
         onChange={(event, value, reason) => {
-          const updateObject = Boolean(value)
-            ? { ...object, setVoca: value, isValidStep: true }
-            : { ...object, setVoca: value, isValidStep: false };
-          actionUpdate(updateObject);
+          actionUpdate({
+            ...object,
+            setVoca: value,
+            isValidStep: Boolean(value),
+          });
         }}
       />
     </React.Fragment>
@@ -100,8 +99,10 @@ function FromDefaultVocas({ object, actionUpdate }) {
         }}
         style={{ width: "100%" }}
       >
-        {Object.keys(LEVEL).map((value) => (
-          <MenuItem value={value}>{value}</MenuItem>
+        {Object.keys(LEVEL).map((value, index) => (
+          <MenuItem key={index} value={value}>
+            {value}
+          </MenuItem>
         ))}
       </Select>
     </React.Fragment>

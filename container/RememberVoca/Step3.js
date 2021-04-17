@@ -3,13 +3,16 @@ import {
   ListItem,
   ListItemText,
   makeStyles,
+  TextField,
   Typography,
 } from "@material-ui/core";
+import { Autocomplete } from "@material-ui/lab";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import theme from "../../components/theme";
 import { serviceFetVocaBySetId } from "../../service/vocaService";
-import { CREATE_REMEMBER_TYPE } from "../../utils/Constant";
+import { CREATE_REMEMBER_TYPE, storageKey } from "../../utils/Constant";
+import { localStorageHelper } from "../../utils/storageHelper";
 
 const step2Styles = makeStyles((theme) => ({
   root: {},
@@ -29,7 +32,7 @@ export default function Step3({ object, actionUpdate }) {
         <VocasFromYourOwnSet object={object} actionUpdate={actionUpdate} />
       )}
       {isDefaultCenter && (
-        <Typography>Please choose one section in level: {level}</Typography>
+        <LessonFromYourLevel object={object} actionUpdate={actionUpdate} />
       )}
     </div>
   );
@@ -80,6 +83,46 @@ function VocasFromYourOwnSet({ object, actionUpdate }) {
           ))}
         </List>
       </div>
+    </React.Fragment>
+  );
+}
+
+function LessonFromYourLevel({ object, actionUpdate }) {
+  const { level } = object;
+  const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
+  const { list } = useSelector((state) => state.setVocas);
+  useEffect(() => {
+    actionUpdate({ ...object, isValidStep: false });
+    if (user.id) {
+      // dispatch(); fetSetVoca with Level in name
+    }
+  }, []);
+  return (
+    <React.Fragment>
+      {/* Title Page */}
+      <Typography
+        variant="subtitle2"
+        style={{ marginBottom: theme.spacing(1) }}
+      >
+        Please select the lesson that you want to learn from the following list
+        ({level})
+      </Typography>
+      {/* Select Option */}
+      <Autocomplete
+        id="set-voca-from-default-select"
+        getOptionLabel={(option) => option.setName}
+        options={list}
+        style={{ width: "100%" }}
+        renderInput={(params) => (
+          <TextField {...params} label="Enter the lesson" variant="outlined" />
+        )}
+        onChange={(event, value, reason) => {
+          const updateObject = Boolean(value)
+            ? { ...object, setVoca: value, isValidStep: true }
+            : { ...object, setVoca: value, isValidStep: false };
+          actionUpdate(updateObject);
+        }}
+      ></Autocomplete>
     </React.Fragment>
   );
 }
