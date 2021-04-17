@@ -1,10 +1,17 @@
-import { makeStyles, TextField, Typography } from "@material-ui/core";
+import {
+  InputLabel,
+  makeStyles,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import theme from "../../components/theme";
 import { serviceGetSetVocas } from "../../service/setVocaService";
-import { CREATE_REMEMBER_TYPE, storageKey } from "../../utils/Constant";
+import { CREATE_REMEMBER_TYPE, LEVEL, storageKey } from "../../utils/Constant";
 import { localStorageHelper } from "../../utils/storageHelper";
 
 const step2Styles = makeStyles((theme) => ({
@@ -20,7 +27,9 @@ export default function Step2({ object, actionUpdate }) {
       {!isDefaultCenter && (
         <FromYourOwnVocas object={object} actionUpdate={actionUpdate} />
       )}
-      {isDefaultCenter && <Typography>From default center </Typography>}
+      {isDefaultCenter && (
+        <FromDefaultVocas object={object} actionUpdate={actionUpdate} />
+      )}
     </div>
   );
 }
@@ -39,14 +48,17 @@ function FromYourOwnVocas({ object, actionUpdate }) {
   }, []);
   return (
     <React.Fragment>
-      <Typography variant="subtitle2">
+      <Typography
+        variant="subtitle2"
+        style={{ marginBottom: theme.spacing(1) }}
+      >
         Select one set that you want to learn
       </Typography>
       <Autocomplete
         id="set-voca-select"
         getOptionLabel={(option) => option.setName}
         options={list}
-        style={{ width: "100%", marginTop: theme.spacing(1) }}
+        style={{ width: "100%" }}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -61,6 +73,37 @@ function FromYourOwnVocas({ object, actionUpdate }) {
           actionUpdate(updateObject);
         }}
       />
+    </React.Fragment>
+  );
+}
+
+function FromDefaultVocas({ object, actionUpdate }) {
+  const { level } = object;
+  return (
+    <React.Fragment>
+      <Typography
+        variant="subtitle2"
+        style={{ marginBottom: theme.spacing(1) }}
+      >
+        Select the level that you want to learn
+      </Typography>
+      <InputLabel id="learn-vocas-from-level-label">Level</InputLabel>
+      <Select
+        labelId="learn-vocas-from-level-label"
+        id="learn-vocas-from-level-select"
+        value={level}
+        onChange={(event) => {
+          actionUpdate({
+            ...object,
+            level: event.target.value,
+          });
+        }}
+        style={{ width: "100%" }}
+      >
+        {Object.keys(LEVEL).map((value) => (
+          <MenuItem value={value}>{value}</MenuItem>
+        ))}
+      </Select>
     </React.Fragment>
   );
 }
