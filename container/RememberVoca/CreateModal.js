@@ -15,6 +15,7 @@ import { CREATE_REMEMBER_TYPE, LEVEL } from "../../utils/Constant";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
+import Step4 from "./Step4";
 
 const initCreateObject = {
   type: CREATE_REMEMBER_TYPE.TYPE_DEFAULT_CENTER_SET,
@@ -38,8 +39,10 @@ const getComponentByStep = (createObject, actionUpdate) => {
       return <Step2 object={createObject} actionUpdate={actionUpdate}></Step2>;
     case 3:
       return <Step3 object={createObject} actionUpdate={actionUpdate} />;
+    case 4:
+      return <Step4 object={createObject} actionUpdate={actionUpdate} />;
     default:
-      return <></>;
+      return <Step4></Step4>;
   }
 };
 

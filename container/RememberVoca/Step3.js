@@ -19,7 +19,7 @@ import {
 } from "../../utils/Constant";
 import { localStorageHelper } from "../../utils/storageHelper";
 
-const step2Styles = makeStyles((theme) => ({
+const step3Styles = makeStyles((theme) => ({
   root: {},
   vocasCover: {
     maxHeight: "18rem",
@@ -30,7 +30,7 @@ const step2Styles = makeStyles((theme) => ({
 export default function Step3({ object, actionUpdate }) {
   const { type, level } = object;
   const isDefaultCenter = type === CREATE_REMEMBER_TYPE.TYPE_DEFAULT_CENTER_SET;
-  const classes = step2Styles();
+  const classes = step3Styles();
   return (
     <div className={classes.root}>
       {!isDefaultCenter && (
