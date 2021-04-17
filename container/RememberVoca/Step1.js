@@ -1,4 +1,5 @@
 import { Card, CardContent, makeStyles, Typography } from "@material-ui/core";
+import { useEffect } from "react";
 import { CREATE_REMEMBER_TYPE } from "../../utils/Constant";
 
 const totalStepWhenUsingDefaultCenterVocas = 5;
@@ -31,6 +32,9 @@ export default function Step1({ object, actionUpdate }) {
   const activeItem = (type) => {
     return object.type === type ? "active" : "";
   };
+  useEffect(() => {
+    actionUpdate({ ...object, isValidStep: true });
+  }, []);
   return (
     <div className={classes.root}>
       <Card

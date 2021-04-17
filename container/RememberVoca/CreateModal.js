@@ -22,6 +22,7 @@ const initCreateObject = {
   vocas: [],
   step: 1,
   totalStep: 5,
+  isValidStep: false,
 };
 
 const Transition = React.forwardRef((props, ref) => {
@@ -48,6 +49,7 @@ export default function CreateRememberGroupModal({}) {
       setCreateObject({ ...initCreateObject });
     }
   }, [isShowCreateModal]);
+  console.log(createObject);
   return (
     <Dialog
       open={isShowCreateModal}
@@ -56,7 +58,7 @@ export default function CreateRememberGroupModal({}) {
       style={{ zIndex: 500 }}
       keepMounted
     >
-      <DialogTitle>Create your remember-group</DialogTitle>
+      <DialogTitle color="primary">Create your remember-group</DialogTitle>
       <DialogContent>
         <MobileStepper
           variant="progress"
@@ -69,6 +71,7 @@ export default function CreateRememberGroupModal({}) {
           }}
           nextButton={
             <Button
+              color="primary"
               onClick={() =>
                 setCreateObject({
                   ...createObject,
@@ -76,13 +79,17 @@ export default function CreateRememberGroupModal({}) {
                 })
               }
               size="small"
-              disabled={createObject.step === createObject.totalStep}
+              disabled={
+                createObject.step === createObject.totalStep ||
+                !createObject.isValidStep
+              }
             >
               <KeyboardArrowRight /> Next
             </Button>
           }
           backButton={
             <Button
+              color="secondary"
               onClick={() =>
                 setCreateObject({
                   ...createObject,
