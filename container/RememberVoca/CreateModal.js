@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionSetIshowCreateModal } from "../../redux/actions/rememberGroupAction";
 import { CREATE_REMEMBER_TYPE, LEVEL } from "../../utils/Constant";
 import Step1 from "./Step1";
+import Step2 from "./Step2";
 
 const initCreateObject = {
   type: CREATE_REMEMBER_TYPE.TYPE_DEFAULT_CENTER_SET,
@@ -31,8 +32,10 @@ const getComponentByStep = (createObject, actionUpdate) => {
   switch (createObject.step) {
     case 1:
       return <Step1 object={createObject} actionUpdate={actionUpdate} />;
+    case 2:
+      return <Step2 object={createObject} actionUpdate={actionUpdate}></Step2>;
     default:
-      break;
+      return <></>;
   }
 };
 
@@ -102,8 +105,14 @@ export default function CreateRememberGroupModal({}) {
         >
           Cancel
         </Button>
-        <Button size="medium" color="primary">
-          Save
+        <Button
+          className={`${
+            createObject.step !== createObject.totalStep ? "hide" : ""
+          }`}
+          size="medium"
+          color="primary"
+        >
+          Create Now
         </Button>
       </DialogActions>
     </Dialog>

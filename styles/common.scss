@@ -1,6 +1,9 @@
 #animation-navigate {
   position: relative;
 }
+.hide {
+  display: none !important;
+}
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
