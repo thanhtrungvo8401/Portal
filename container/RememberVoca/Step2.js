@@ -78,6 +78,9 @@ function FromYourOwnVocas({ object, actionUpdate }) {
 
 function FromDefaultVocas({ object, actionUpdate }) {
   const { level } = object;
+  useEffect(() => {
+    actionUpdate({ ...object, isValidStep: true });
+  }, []);
   return (
     <React.Fragment>
       <Typography
@@ -98,6 +101,7 @@ function FromDefaultVocas({ object, actionUpdate }) {
           });
         }}
         style={{ width: "100%" }}
+        variant="outlined"
       >
         {Object.keys(LEVEL).map((value, index) => (
           <MenuItem key={index} value={value}>
