@@ -25,6 +25,7 @@ const initCreateObject = {
   step: 1,
   totalStep: 5,
   isValidStep: false,
+  isRemoveStudiedVoca: true,
 };
 
 const Transition = React.forwardRef((props, ref) => {
@@ -42,7 +43,7 @@ const getComponentByStep = (createObject, actionUpdate) => {
     case 4:
       return <Step4 object={createObject} actionUpdate={actionUpdate} />;
     default:
-      return <Step4></Step4>;
+      return <></>;
   }
 };
 
