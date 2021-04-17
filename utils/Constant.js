@@ -38,3 +38,9 @@ export const LEVEL = {
   N2: "N2",
   N1: "N1",
 };
+
+export const ROLE_NAME = {
+  ADMIN: "ADMIN",
+  STUDENT: "STUDENT",
+  ASSISTANT: "ASSISTANT",
+};

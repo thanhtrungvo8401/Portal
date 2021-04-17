@@ -11,6 +11,8 @@ export const enpoint_setVoca = {
   updateSetVocas: (id) => `${BASE_API_COMMON}/set-vocas/${id}`,
   getSetVocasByAuthId: (authId) =>
     `${BASE_API_COMMON}/users/${authId}/set-vocas`,
+  getSetVocasByCentersAndRoleName: () =>
+    `${BASE_API_COMMON}/centers/roles/set-vocas`,
   getSetVocaDetailById: (id) => `${BASE_API_COMMON}/set-vocas/${id}`,
   deleteById: (id) => `${BASE_API_COMMON}/set-vocas/${id}`,
 };

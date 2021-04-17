@@ -25,6 +25,24 @@ export const serviceGetSetVocas = (authId) => {
   };
 };
 
+export const serviceGetCenterSetVocas = (centerId, roleName, params = {}) => {
+  return (dispatch) => {
+    API.get(enpoint_setVoca.getSetVocasByCentersAndRoleName(), {
+      params: {
+        centerId,
+        roleName,
+        ...params,
+      },
+    })
+      .then((res) => {
+        dispatch(actionSet_SetVoca_List(res.data.list));
+      })
+      .catch((err) => {
+        handleErrorAPI(err, "toast");
+      });
+  };
+};
+
 export const serviceCreateSetVoca = (setVoca) => {
   return (dispatch) => {
     API.post(enpoint_setVoca.createSetVocas(), setVoca)

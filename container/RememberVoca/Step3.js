@@ -10,8 +10,13 @@ import { Autocomplete } from "@material-ui/lab";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import theme from "../../components/theme";
+import { serviceGetCenterSetVocas } from "../../service/setVocaService";
 import { serviceFetVocaBySetId } from "../../service/vocaService";
-import { CREATE_REMEMBER_TYPE, storageKey } from "../../utils/Constant";
+import {
+  CREATE_REMEMBER_TYPE,
+  ROLE_NAME,
+  storageKey,
+} from "../../utils/Constant";
 import { localStorageHelper } from "../../utils/storageHelper";
 
 const step2Styles = makeStyles((theme) => ({
@@ -88,13 +93,26 @@ function VocasFromYourOwnSet({ object, actionUpdate }) {
 }
 
 function LessonFromYourLevel({ object, actionUpdate }) {
-  const { level } = object;
+  const dispatch = useDispatch();
   const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
+  const { level } = object;
   const { list } = useSelector((state) => state.setVocas);
+
   useEffect(() => {
     actionUpdate({ ...object, isValidStep: false });
-    if (user.id) {
-      // dispatch(); fetSetVoca with Level in name
+    if (user.center) {
+      dispatch(
+        serviceGetCenterSetVocas(
+          user.center && user.center.id,
+          ROLE_NAME.ASSISTANT,
+          {
+            filters: { setName: `like-start<!>${level}--Bai` },
+            limit: 100,
+            sortBy: "setName",
+            order: "ASC",
+          }
+        )
+      );
     }
   }, []);
   return (
