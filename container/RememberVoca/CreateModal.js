@@ -14,6 +14,7 @@ import { actionSetIshowCreateModal } from "../../redux/actions/rememberGroupActi
 import { CREATE_REMEMBER_TYPE, LEVEL } from "../../utils/Constant";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
+import Step3 from "./Step3";
 
 const initCreateObject = {
   type: CREATE_REMEMBER_TYPE.TYPE_DEFAULT_CENTER_SET,
@@ -35,6 +36,8 @@ const getComponentByStep = (createObject, actionUpdate) => {
       return <Step1 object={createObject} actionUpdate={actionUpdate} />;
     case 2:
       return <Step2 object={createObject} actionUpdate={actionUpdate}></Step2>;
+    case 3:
+      return <Step3 object={createObject} actionUpdate={actionUpdate} />;
     default:
       return <></>;
   }
@@ -43,7 +46,18 @@ const getComponentByStep = (createObject, actionUpdate) => {
 export default function CreateRememberGroupModal({}) {
   const dispatch = useDispatch();
   const { isShowCreateModal } = useSelector((state) => state.rememberGroup);
-  const [createObject, setCreateObject] = useState({ ...initCreateObject });
+  const [createObject, setCreateObject] = useState({
+    ...initCreateObject,
+  });
+  const {
+    // type,
+    // level,
+    totalStep,
+    step,
+    // setVoca,
+    isValidStep,
+    // vocas,
+  } = createObject;
   useEffect(() => {
     if (!isShowCreateModal) {
       setCreateObject({ ...initCreateObject });
@@ -62,9 +76,9 @@ export default function CreateRememberGroupModal({}) {
       <DialogContent>
         <MobileStepper
           variant="progress"
-          steps={createObject.totalStep}
+          steps={totalStep}
           position="static"
-          activeStep={createObject.step - 1}
+          activeStep={step - 1}
           style={{
             maxWidth: 400,
             flexGrow: 1,
@@ -75,14 +89,11 @@ export default function CreateRememberGroupModal({}) {
               onClick={() =>
                 setCreateObject({
                   ...createObject,
-                  step: createObject.step + 1,
+                  step: step + 1,
                 })
               }
               size="small"
-              disabled={
-                createObject.step === createObject.totalStep ||
-                !createObject.isValidStep
-              }
+              disabled={step === totalStep || !isValidStep}
             >
               <KeyboardArrowRight /> Next
             </Button>
@@ -93,11 +104,11 @@ export default function CreateRememberGroupModal({}) {
               onClick={() =>
                 setCreateObject({
                   ...createObject,
-                  step: createObject.step - 1,
+                  step: step - 1,
                 })
               }
               size="small"
-              disabled={createObject.step === 1}
+              disabled={step === 1}
             >
               Back <KeyboardArrowLeft />
             </Button>
@@ -113,9 +124,7 @@ export default function CreateRememberGroupModal({}) {
           Cancel
         </Button>
         <Button
-          className={`${
-            createObject.step !== createObject.totalStep ? "hide" : ""
-          }`}
+          className={`${step !== totalStep || !isValidStep ? "hide" : ""}`}
           size="medium"
           color="primary"
         >
