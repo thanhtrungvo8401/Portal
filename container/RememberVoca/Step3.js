@@ -117,10 +117,11 @@ function LessonFromYourLevel({ object, actionUpdate }) {
           <TextField {...params} label="Enter the lesson" variant="outlined" />
         )}
         onChange={(event, value, reason) => {
-          const updateObject = Boolean(value)
-            ? { ...object, setVoca: value, isValidStep: true }
-            : { ...object, setVoca: value, isValidStep: false };
-          actionUpdate(updateObject);
+          actionUpdate({
+            ...object,
+            setVoca: value,
+            isValidStep: Boolean(value),
+          });
         }}
       ></Autocomplete>
     </React.Fragment>
