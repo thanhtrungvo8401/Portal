@@ -19,17 +19,16 @@ const step4Styles = makeStyles((theme) => ({
 
 const not = (a, b) => a.filter((el) => b.indexOf(el) === -1);
 const intersection = (a, b) => a.filter((el) => b.indexOf(el) !== -1);
-
+const getRandom = (min, max) => Math.round(Math.random() * (max - min));
 export default function Step4({ object, actionUpdate }) {
   const classes = step4Styles();
   const dispatch = useDispatch();
   const { setVoca } = object;
   const appVocas = useSelector((state) => state.vocas.list);
-  const ids = appVocas.map((voca) => voca.id);
 
   const [checked, setChecked] = React.useState([]);
-  const [resources, setResources] = React.useState(ids.slice(7));
-  const [remembers, setRemembers] = React.useState(ids.slice(0, 7));
+  const [resources, setResources] = React.useState([]);
+  const [remembers, setRemembers] = React.useState([]);
 
   const resourcesChecked = intersection(checked, resources);
   const remembersChecked = intersection(checked, remembers);
@@ -54,6 +53,21 @@ export default function Step4({ object, actionUpdate }) {
     const voca = appVocas.find((voca) => voca.id === id);
     return { voca: voca.voca, meaning: voca.meaning };
   };
+  const randomData = (items) => {
+    const ids = items.map((voca) => voca.id);
+    if (ids.length <= MAX_VOCA_IN_REMEMBER) {
+      setRemembers(ids);
+    } else {
+      const idsForRem = [];
+      while (idsForRem.length < MAX_VOCA_IN_REMEMBER) {
+        const random = getRandom(0, ids.length - 1);
+        idsForRem.push(ids[random]);
+        ids.splice(random, 1);
+      }
+      setRemembers(idsForRem);
+      setResources(ids);
+    }
+  };
 
   React.useEffect(() => {
     dispatch(serviceFetVocaBySetId(setVoca.id));
@@ -62,8 +76,14 @@ export default function Step4({ object, actionUpdate }) {
     actionUpdate({
       ...object,
       vocas: appVocas.filter((el) => remembers.includes(el.id)),
+      isValidStep: Boolean(remembers.length),
     });
   }, [remembers]);
+  React.useEffect(() => {
+    if (appVocas.length) {
+      randomData(appVocas);
+    }
+  }, [appVocas.length]);
   const isValidRemember =
     resourcesChecked.length + remembers.length <= MAX_VOCA_IN_REMEMBER;
   return (
@@ -85,6 +105,14 @@ export default function Step4({ object, actionUpdate }) {
           aria-label="move selected right"
         >
           <span style={{ transform: "rotate(-90deg)" }}>&gt;</span>
+        </Button>
+        <Button
+          size="small"
+          className={classes.button}
+          onClick={() => randomData(appVocas)}
+          aria-label="move selected right"
+        >
+          Ngẫu nhiên
         </Button>
         <Button
           size="small"

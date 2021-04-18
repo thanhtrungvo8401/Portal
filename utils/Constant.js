@@ -45,4 +45,4 @@ export const ROLE_NAME = {
   ASSISTANT: "ASSISTANT",
 };
 
-export const MAX_VOCA_IN_REMEMBER = 10;
+export const MAX_VOCA_IN_REMEMBER = 7;
