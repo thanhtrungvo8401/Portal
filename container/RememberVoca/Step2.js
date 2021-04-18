@@ -79,7 +79,12 @@ function FromYourOwnVocas({ object, actionUpdate }) {
 function FromDefaultVocas({ object, actionUpdate }) {
   const { level } = object;
   useEffect(() => {
-    actionUpdate({ ...object, isValidStep: true });
+    const LEVEL = localStorageHelper.get(storageKey.MY_JP_LEVEL);
+    if (LEVEL) {
+      actionUpdate({ ...object, isValidStep: true, level: LEVEL });
+    } else {
+      actionUpdate({ ...object, isValidStep: true });
+    }
   }, []);
   return (
     <React.Fragment>
@@ -99,6 +104,7 @@ function FromDefaultVocas({ object, actionUpdate }) {
             ...object,
             level: event.target.value,
           });
+          localStorageHelper.set(storageKey.MY_JP_LEVEL, event.target.value);
         }}
         style={{ width: "100%" }}
         variant="outlined"

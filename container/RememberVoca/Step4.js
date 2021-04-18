@@ -112,7 +112,7 @@ export default function Step4({ object, actionUpdate }) {
           onClick={() => randomData(appVocas)}
           aria-label="move selected right"
         >
-          Ngẫu nhiên
+          Re-Random
         </Button>
         <Button
           size="small"

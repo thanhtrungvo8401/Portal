@@ -24,6 +24,7 @@ export const constantInfo = {
 
 export const storageKey = {
   MY_PROFILE: "MY_PROFILE",
+  MY_JP_LEVEL: "MY_JP_LEVEL",
 };
 
 export const CREATE_REMEMBER_TYPE = {
