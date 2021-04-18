@@ -19,6 +19,7 @@ import Step4 from "./Step4";
 import Step5 from "./Step5";
 
 const initCreateObject = {
+  name: "",
   type: CREATE_REMEMBER_TYPE.TYPE_DEFAULT_CENTER_SET,
   level: LEVEL.N5,
   setVoca: {},
@@ -49,7 +50,7 @@ const getComponentByStep = (createObject, actionUpdate) => {
   }
 };
 
-export default function CreateRememberGroupModal({}) {
+export default function CreateRememberGroupModal({ onSubmit }) {
   const dispatch = useDispatch();
   const { isShowCreateModal } = useSelector((state) => state.rememberGroup);
   const [createObject, setCreateObject] = useState({
@@ -61,7 +62,6 @@ export default function CreateRememberGroupModal({}) {
       setCreateObject({ ...initCreateObject });
     }
   }, [isShowCreateModal]);
-  console.log(createObject);
   return (
     <Dialog
       open={isShowCreateModal}
@@ -125,6 +125,7 @@ export default function CreateRememberGroupModal({}) {
           className={`${step !== totalStep || !isValidStep ? "hide" : ""}`}
           size="medium"
           color="primary"
+          onClick={() => onSubmit(createObject)}
         >
           Create Now
         </Button>

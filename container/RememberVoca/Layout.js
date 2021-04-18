@@ -10,7 +10,7 @@ import CreateRememberGroupModal from "./CreateModal";
 import { useDispatch } from "react-redux";
 import { actionSetIshowCreateModal } from "../../redux/actions/rememberGroupAction";
 
-function RememberVocasLayout(props) {
+function RememberVocasLayout({ submitCreateRemember }) {
   const listRememberGroups = [];
   const dispatch = useDispatch();
 
@@ -45,7 +45,7 @@ function RememberVocasLayout(props) {
         )}
       </Container>
       {/* create new remember-group */}
-      <CreateRememberGroupModal />
+      <CreateRememberGroupModal onSubmit={submitCreateRemember} />
       {/* action */}
       <ActionGroup>
         <Button

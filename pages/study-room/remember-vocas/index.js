@@ -2,7 +2,11 @@ import { withPrivateLayout } from "../../../components/Layouts/PrivateLayout";
 import RememberVocasLayout from "../../../container/RememberVoca/Layout";
 
 function RememberVocas(props) {
-  return <RememberVocasLayout />;
+  const submitCreateRemember = (remember) => {
+    const { vocas, name } = remember;
+    
+  };
+  return <RememberVocasLayout submitCreateRemember={submitCreateRemember} />;
 }
 
 export default withPrivateLayout(RememberVocas, {
