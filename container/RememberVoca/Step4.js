@@ -1,8 +1,10 @@
 import { Button, ButtonGroup, makeStyles } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import VocaGroup from "../../components/VocaGroup/VocaGroup";
 import { serviceFetVocaBySetId } from "../../service/vocaService";
+import { MAX_VOCA_IN_REMEMBER } from "../../utils/Constant";
 
 const step4Styles = makeStyles((theme) => ({
   root: {
@@ -62,7 +64,8 @@ export default function Step4({ object, actionUpdate }) {
       vocas: appVocas.filter((el) => remembers.includes(el.id)),
     });
   }, [remembers]);
-
+  const isValidRemember =
+    resourcesChecked.length + remembers.length <= MAX_VOCA_IN_REMEMBER;
   return (
     <div className={classes.root}>
       <VocaGroup
@@ -78,7 +81,7 @@ export default function Step4({ object, actionUpdate }) {
           size="small"
           className={classes.button}
           onClick={handleCheckedRemembers}
-          disabled={!resourcesChecked.length}
+          disabled={!resourcesChecked.length || !isValidRemember}
           aria-label="move selected right"
         >
           <span style={{ transform: "rotate(-90deg)" }}>&gt;</span>
@@ -93,6 +96,11 @@ export default function Step4({ object, actionUpdate }) {
           <span style={{ transform: "rotate(-90deg)" }}>&lt;</span>
         </Button>
       </ButtonGroup>
+      {!isValidRemember && (
+        <Alert severity="error">
+          {`Nhiều hơn ${MAX_VOCA_IN_REMEMBER} từ sẽ gây cho bạn khó khăn trong việc ghi nhớ... Tách nhỏ ra để học tốt hơn nhé ! <3`}
+        </Alert>
+      )}
       <VocaGroup
         title={setVoca.setName}
         activeList={checked}

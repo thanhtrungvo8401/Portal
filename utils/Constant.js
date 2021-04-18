@@ -44,3 +44,5 @@ export const ROLE_NAME = {
   STUDENT: "STUDENT",
   ASSISTANT: "ASSISTANT",
 };
+
+export const MAX_VOCA_IN_REMEMBER = 10;
