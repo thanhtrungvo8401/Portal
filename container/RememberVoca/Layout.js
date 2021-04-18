@@ -13,6 +13,7 @@ import { localStorageHelper } from "../../utils/storageHelper";
 import { storageKey } from "../../utils/Constant";
 import React from "react";
 import { serviceGetRememberOfOwnerId } from "../../service/rememberService";
+import Remember from "./Remember";
 
 function RememberVocasLayout({ submitCreateRemember }) {
   const dispatch = useDispatch();
@@ -56,6 +57,10 @@ function RememberVocasLayout({ submitCreateRemember }) {
       </Container>
       {/* create new remember-group */}
       <CreateRememberGroupModal onSubmit={submitCreateRemember} />
+      {/* display list remember-group*/}
+      {list.map((el) => (
+        <Remember remember={el} key={el.id} />
+      ))}
       {/* action */}
       <ActionGroup>
         <Button

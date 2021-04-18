@@ -1,21 +1,14 @@
-import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
   Card,
   CardActions,
   CardContent,
+  makeStyles,
   Typography,
 } from "@material-ui/core";
-import { theme } from "./theme";
-import { formatDate } from "../utils/DateHelper";
-import { appUrl } from "../utils/APP_URL";
-import { navigate } from "../utils/Helper";
 import React from "react";
-import { useDispatch } from "react-redux";
-import {
-  actionSetIsShowSetVocaModal,
-  actionSet_SetVocaObject,
-} from "../redux/actions/setVocasActions";
+import theme from "../../components/theme";
+import { formatDate } from "../../utils/DateHelper";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -36,25 +29,22 @@ const useStyles = makeStyles((theme) => {
     },
   };
 });
-function SetVoca({ setVoca, onSelectSetVocaIdToDelete }) {
+export default function Remember({ remember = {} }) {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  // UI INTERACT:
-  const handleGoToSetVocas = () => {
-    navigate(appUrl.setVocaDetail(setVoca.id));
-  };
+  const total = remember.vocaCodes.split(",").length;
+  const date = formatDate(remember.createdDate);
   return (
     <Card className={classes.root} variant="outlined">
-      <CardContent onClick={handleGoToSetVocas} style={{ cursor: "pointer" }}>
+      <CardContent>
         <Typography
           className={classes.miniText}
           color="textSecondary"
           gutterBottom
         >
-          A vocabularies group
+          Remember-group
         </Typography>
         <Typography variant="h5" component="h2">
-          {setVoca.setName}
+          {remember.name}
         </Typography>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <Typography
@@ -62,36 +52,22 @@ function SetVoca({ setVoca, onSelectSetVocaIdToDelete }) {
             color="textSecondary"
             gutterBottom
           >
-            {setVoca.totalVocas}/{setVoca.maxVoca || constantApp.setVocaLimit}
+            Total: {total}
           </Typography>
           <Typography
             className={classes.miniText}
             color="textSecondary"
             gutterBottom
           >
-            {formatDate(setVoca.createdDate)}
+            {date}
           </Typography>
         </div>
       </CardContent>
       <CardActions style={{ justifyContent: "flex-end" }}>
-        <Button color="secondary">Detail</Button>
-        <Button
-          onClick={() => {
-            dispatch(actionSet_SetVocaObject({ ...setVoca }));
-            dispatch(actionSetIsShowSetVocaModal(true));
-          }}
-        >
-          Edit
-        </Button>
-        <Button
-          style={{ color: theme.palette.error.main }}
-          onClick={() => onSelectSetVocaIdToDelete(setVoca.id)}
-        >
-          Remove
-        </Button>
+        <Button>Edit</Button>
+        <Button color="primary">Study now</Button>
+        <Button style={{ color: theme.palette.error.main }}>Remove</Button>
       </CardActions>
     </Card>
   );
 }
-
-export default SetVoca;
