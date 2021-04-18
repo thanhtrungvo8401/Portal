@@ -52,7 +52,7 @@ const getComponentByStep = (createObject, actionUpdate) => {
 
 export default function CreateRememberGroupModal({ onSubmit }) {
   const dispatch = useDispatch();
-  const { isShowCreateModal } = useSelector((state) => state.rememberGroup);
+  const { isShowCreateModal } = useSelector((state) => state.rememberGroups);
   const [createObject, setCreateObject] = useState({
     ...initCreateObject,
   });

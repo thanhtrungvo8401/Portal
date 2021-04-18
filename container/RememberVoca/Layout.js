@@ -7,13 +7,23 @@ import { appUrl } from "../../utils/APP_URL";
 import BreadcrumbsCustom from "../../components/Breadcrumbs/Breadcrumbs";
 import ParagraphBody from "../../components/ParagraphBody/ParagraphBody";
 import CreateRememberGroupModal from "./CreateModal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actionSetIshowCreateModal } from "../../redux/actions/rememberGroupAction";
+import { localStorageHelper } from "../../utils/storageHelper";
+import { storageKey } from "../../utils/Constant";
+import React from "react";
+import { serviceGetRememberOfOwnerId } from "../../service/rememberService";
 
 function RememberVocasLayout({ submitCreateRemember }) {
-  const listRememberGroups = [];
   const dispatch = useDispatch();
+  const { list } = useSelector((state) => state.rememberGroups);
+  const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
 
+  React.useEffect(() => {
+    if (user.id) {
+      dispatch(serviceGetRememberOfOwnerId(user.id));
+    }
+  }, [user.id]);
   return (
     <div className="remember-vocas-layout">
       <BreadcrumbsCustom
@@ -37,7 +47,7 @@ function RememberVocasLayout({ submitCreateRemember }) {
       {/* main */}
       <ParagraphTitle>Learning vocabularies group</ParagraphTitle>
       <Container>
-        {!listRememberGroups.length && (
+        {!list.length && (
           <ParagraphBody>
             There are no remembers-group, Click into the following (+) Icon to
             create a new one!

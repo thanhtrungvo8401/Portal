@@ -26,6 +26,8 @@ export const enpoint_voca = {
 
 export const enpoint_remember = {
   create: () => `${BASE_API_COMMON}/remember-groups`,
+  fetRememberByOwnerId: (ownerId) =>
+    `${BASE_API_COMMON}/owners/${ownerId}/remember-groups`,
 };
 
 export const enpoint_user = {

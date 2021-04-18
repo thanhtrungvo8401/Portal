@@ -1,6 +1,11 @@
 import { API } from "../api/Api";
-import { actionAddRememberIntoList, actionSetIshowCreateModal } from "../redux/actions/rememberGroupAction";
+import {
+  actionAddRememberIntoList,
+  actionSetIshowCreateModal,
+  actionSetRememberGroupsList,
+} from "../redux/actions/rememberGroupAction";
 import { enpoint_remember } from "../utils/API_URL";
+import { handleErrorAPI } from "../utils/Helper";
 
 export const serviceCreateRemember = (remember) => {
   return (dispatch) => {
@@ -12,6 +17,23 @@ export const serviceCreateRemember = (remember) => {
       .catch((err) => {
         const object = handleErrorAPI(err, "toast");
         dispatch(actionSetError(object.errorCodesObject));
+      });
+  };
+};
+
+export const serviceGetRememberOfOwnerId = (ownerId) => {
+  return (dispatch) => {
+    API.get(enpoint_remember.fetRememberByOwnerId(ownerId))
+      .then((res) => {
+        dispatch(
+          actionSetRememberGroupsList({
+            list: res.data,
+            total: res.data.length,
+          })
+        );
+      })
+      .catch((err) => {
+        handleErrorAPI(err, "toast");
       });
   };
 };

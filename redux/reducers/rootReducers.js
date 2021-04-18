@@ -18,7 +18,7 @@ const reducers = {
   error: errorReducer,
   setVocas: setVocasReducer,
   vocas: vocaReducer,
-  rememberGroup: rememberGroupReducer,
+  rememberGroups: rememberGroupReducer,
 };
 
 export default combineReducers(reducers);
