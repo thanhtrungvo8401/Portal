@@ -1,6 +1,8 @@
 import { Typography } from "@material-ui/core";
 import React from "react";
 import VocaList from "../../components/VocaGroup/VocaList";
+import { theme } from "../../components/theme";
+
 export default function Step5({ object, actionUpdate }) {
   const { vocas } = object;
   React.useEffect(() => {
