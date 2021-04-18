@@ -1,7 +1,10 @@
 import { useDispatch } from "react-redux";
 import { withPrivateLayout } from "../../../components/Layouts/PrivateLayout";
 import RememberVocasLayout from "../../../container/RememberVoca/Layout";
-import { serviceCreateRemember } from "../../../service/rememberService";
+import {
+  serviceCreateRemember,
+  serviceDeleteRememberById,
+} from "../../../service/rememberService";
 import { storageKey } from "../../../utils/Constant";
 import { localStorageHelper } from "../../../utils/storageHelper";
 
@@ -22,9 +25,14 @@ function RememberVocas(props) {
     dispatch(serviceCreateRemember(remember));
   };
   const actionDeleteRemember = (rememberId) => {
-    console.log("Remove " + rememberId);
+    dispatch(serviceDeleteRememberById(rememberId));
   };
-  return <RememberVocasLayout actionDelete={actionDeleteRemember} submitCreateRemember={submitCreateRemember} />;
+  return (
+    <RememberVocasLayout
+      actionDelete={actionDeleteRemember}
+      submitCreateRemember={submitCreateRemember}
+    />
+  );
 }
 
 export default withPrivateLayout(RememberVocas, {

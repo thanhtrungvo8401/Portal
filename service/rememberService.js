@@ -1,6 +1,7 @@
 import { API } from "../api/Api";
 import {
   actionAddRememberIntoList,
+  actionRemoveRememberFromList,
   actionSetIshowCreateModal,
   actionSetRememberGroupsList,
 } from "../redux/actions/rememberGroupAction";
@@ -36,4 +37,16 @@ export const serviceGetRememberOfOwnerId = (ownerId) => {
         handleErrorAPI(err, "toast");
       });
   };
+};
+
+export const serviceDeleteRememberById = (id) => {
+  return (dispatch) => [
+    API.delete(enpoint_remember.deleteRememberById(id))
+      .then((res) => {
+        dispatch(actionRemoveRememberFromList(res.data));
+      })
+      .catch((err) => {
+        handleErrorAPI(err, "toast");
+      }),
+  ];
 };

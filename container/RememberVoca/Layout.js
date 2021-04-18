@@ -1,4 +1,11 @@
-import { Button, Container } from "@material-ui/core";
+import {
+  Button,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@material-ui/core";
 import ActionGroup from "../../components/ActionGroup";
 import PageTitle from "../../components/PageComponent/PageTitle";
 import ParagraphTitle from "../../components/ParagraphTitle";
@@ -14,10 +21,12 @@ import { storageKey } from "../../utils/Constant";
 import React from "react";
 import { serviceGetRememberOfOwnerId } from "../../service/rememberService";
 import Remember from "./Remember";
+import theme from "../../components/theme";
 
 function RememberVocasLayout({ submitCreateRemember, actionDelete }) {
   const dispatch = useDispatch();
   const { list } = useSelector((state) => state.rememberGroups);
+  const [deleteId, setDeleteId] = React.useState();
   const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
 
   React.useEffect(() => {
@@ -66,7 +75,7 @@ function RememberVocasLayout({ submitCreateRemember, actionDelete }) {
         }}
       >
         {list.map((el) => (
-          <Remember remember={el} key={el.id} actionDelete={actionDelete} />
+          <Remember remember={el} key={el.id} actionDelete={setDeleteId} />
         ))}
       </div>
       {/* action */}
@@ -80,6 +89,33 @@ function RememberVocasLayout({ submitCreateRemember, actionDelete }) {
           Create (+)
         </Button>
       </ActionGroup>
+      {/* Confirm Delete Remember */}
+      <Dialog
+        open={Boolean(deleteId)}
+        aria-labelledby="form-dialog-title"
+        onClose={() => setDeleteId(null)}
+      >
+        <DialogTitle id="form-dialog-title">Confirm Delete</DialogTitle>
+        <DialogContent style={{ color: theme.palette.error.main }}>
+          Are you sure want to delete this remember-group!!!
+        </DialogContent>
+        <DialogActions>
+          <Button size="small" onClick={() => setDeleteId(null)}>
+            Cancel
+          </Button>
+          <Button
+            size="small"
+            onClick={() => {
+              actionDelete(deleteId);
+              setDeleteId(null);
+            }}
+            style={{ color: theme.palette.error.main }}
+            size="small"
+          >
+            Remove
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
