@@ -15,7 +15,7 @@ import React from "react";
 import { serviceGetRememberOfOwnerId } from "../../service/rememberService";
 import Remember from "./Remember";
 
-function RememberVocasLayout({ submitCreateRemember }) {
+function RememberVocasLayout({ submitCreateRemember, actionDelete }) {
   const dispatch = useDispatch();
   const { list } = useSelector((state) => state.rememberGroups);
   const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
@@ -58,9 +58,17 @@ function RememberVocasLayout({ submitCreateRemember }) {
       {/* create new remember-group */}
       <CreateRememberGroupModal onSubmit={submitCreateRemember} />
       {/* display list remember-group*/}
-      {list.map((el) => (
-        <Remember remember={el} key={el.id} />
-      ))}
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+        }}
+      >
+        {list.map((el) => (
+          <Remember remember={el} key={el.id} actionDelete={actionDelete} />
+        ))}
+      </div>
       {/* action */}
       <ActionGroup>
         <Button

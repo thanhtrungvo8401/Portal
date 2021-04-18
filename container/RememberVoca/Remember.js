@@ -7,7 +7,12 @@ import {
   Typography,
 } from "@material-ui/core";
 import React from "react";
+import { useDispatch } from "react-redux";
 import theme from "../../components/theme";
+import {
+  actionSetIshowUpdateModal,
+  actionSetRememberGroup,
+} from "../../redux/actions/rememberGroupAction";
 import { formatDate } from "../../utils/DateHelper";
 const useStyles = makeStyles((theme) => {
   return {
@@ -29,8 +34,9 @@ const useStyles = makeStyles((theme) => {
     },
   };
 });
-export default function Remember({ remember = {} }) {
+export default function Remember({ remember = {}, actionDelete }) {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const total = remember.vocaCodes.split(",").length;
   const date = formatDate(remember.createdDate);
   return (
@@ -64,9 +70,21 @@ export default function Remember({ remember = {} }) {
         </div>
       </CardContent>
       <CardActions style={{ justifyContent: "flex-end" }}>
-        <Button>Edit</Button>
+        <Button
+          onClick={() => {
+            dispatch(actionSetRememberGroup(remember));
+            dispatch(actionSetIshowUpdateModal(true));
+          }}
+        >
+          Edit
+        </Button>
         <Button color="primary">Study now</Button>
-        <Button style={{ color: theme.palette.error.main }}>Remove</Button>
+        <Button
+          onClick={() => actionDelete(remember.id)}
+          style={{ color: theme.palette.error.main }}
+        >
+          Remove
+        </Button>
       </CardActions>
     </Card>
   );

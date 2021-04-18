@@ -21,7 +21,10 @@ function RememberVocas(props) {
     };
     dispatch(serviceCreateRemember(remember));
   };
-  return <RememberVocasLayout submitCreateRemember={submitCreateRemember} />;
+  const actionDeleteRemember = (rememberId) => {
+    console.log("Remove " + rememberId);
+  };
+  return <RememberVocasLayout actionDelete={actionDeleteRemember} submitCreateRemember={submitCreateRemember} />;
 }
 
 export default withPrivateLayout(RememberVocas, {
