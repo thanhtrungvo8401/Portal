@@ -26,7 +26,6 @@ const initCreateObject = {
   step: 1,
   totalStep: 5,
   isValidStep: false,
-  isRemoveStudiedVoca: true,
 };
 
 const Transition = React.forwardRef((props, ref) => {
@@ -56,15 +55,7 @@ export default function CreateRememberGroupModal({}) {
   const [createObject, setCreateObject] = useState({
     ...initCreateObject,
   });
-  const {
-    // type,
-    // level,
-    totalStep,
-    step,
-    // setVoca,
-    isValidStep,
-    // vocas,
-  } = createObject;
+  const { totalStep, step, isValidStep } = createObject;
   useEffect(() => {
     if (!isShowCreateModal) {
       setCreateObject({ ...initCreateObject });

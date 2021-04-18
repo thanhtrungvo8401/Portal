@@ -5,9 +5,6 @@ import { theme } from "../../components/theme";
 
 export default function Step5({ object, actionUpdate }) {
   const { vocas } = object;
-  React.useEffect(() => {
-    actionUpdate({ ...object, isRemoveStudiedVoca: true });
-  }, []);
   return (
     <React.Fragment>
       <Typography
