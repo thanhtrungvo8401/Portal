@@ -27,12 +27,12 @@ export const actionSetRememberGroup = (payload = {}) => ({
   payload,
 });
 
-export const actionSetIshowCreateModal = (payload) => ({
+export const actionSetIshowCreateModal = (payload = false) => ({
   type: REMEMBER_GROUP.SET_IS_SHOW_CREATE_MODAL,
   payload,
 });
 
-export const actionSetIshowUpdateModal = (payload) => ({
+export const actionSetIshowUpdateModal = (payload = false) => ({
   type: REMEMBER_GROUP.SET_IS_SHOW_UPDATE_MODAL,
   payload,
 });

@@ -1,10 +1,25 @@
+import { useDispatch } from "react-redux";
 import { withPrivateLayout } from "../../../components/Layouts/PrivateLayout";
 import RememberVocasLayout from "../../../container/RememberVoca/Layout";
+import { serviceCreateRemember } from "../../../service/rememberService";
+import { storageKey } from "../../../utils/Constant";
+import { localStorageHelper } from "../../../utils/storageHelper";
 
 function RememberVocas(props) {
-  const submitCreateRemember = (remember) => {
-    const { vocas, name } = remember;
-    
+  const dispatch = useDispatch();
+
+  const submitCreateRemember = (object) => {
+    const { vocas, name } = object;
+    const codes = vocas.map((el) => el.code);
+    const user =
+      JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
+    const remember = {
+      name,
+      ownerId: user.id,
+      vocaCodes: codes.join(","),
+      activeCodes: codes.join(","),
+    };
+    dispatch(serviceCreateRemember(remember));
   };
   return <RememberVocasLayout submitCreateRemember={submitCreateRemember} />;
 }

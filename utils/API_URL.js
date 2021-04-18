@@ -24,6 +24,10 @@ export const enpoint_voca = {
   delete: (id) => `${BASE_API_COMMON}/vocas/${id}`,
 };
 
+export const enpoint_remember = {
+  create: () => `${BASE_API_COMMON}/remember-groups`,
+};
+
 export const enpoint_user = {
   getProfile: () => `${BASE_API_COMMON}/my-profile`,
 };
