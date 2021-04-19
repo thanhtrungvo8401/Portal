@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import InputGroup from "../../components/InputGroup";
 import { CREATE_REMEMBER_TYPE } from "../../utils/Constant";
 
-const totalStepWhenUsingDefaultCenterVocas = 5;
+const totalStepWhenUsingDefaultCenterVocas = 4;
 const totalStepWhenUsingYourVocas = 3;
 
 const step1Styles = makeStyles((theme) => ({

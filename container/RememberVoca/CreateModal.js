@@ -16,7 +16,6 @@ import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
 import Step4 from "./Step4";
-import Step5 from "./Step5";
 
 const initCreateObject = {
   name: "",
@@ -24,8 +23,9 @@ const initCreateObject = {
   level: LEVEL.N5,
   setVoca: {},
   vocas: [],
+  multiRemember: {}, // Create more than one vocas-remember
   step: 1,
-  totalStep: 5,
+  totalStep: 4,
   isValidStep: false,
 };
 
@@ -43,8 +43,6 @@ const getComponentByStep = (createObject, actionUpdate) => {
       return <Step3 object={createObject} actionUpdate={actionUpdate} />;
     case 4:
       return <Step4 object={createObject} actionUpdate={actionUpdate} />;
-    case 5:
-      return <Step5 object={createObject} actionUpdate={actionUpdate} />;
     default:
       return;
   }

@@ -13,12 +13,13 @@ import { appUrl } from "../utils/APP_URL";
 import { codeToMessages, constCODE } from "../utils/CodeToMessages";
 import { handleErrorAPI, navigate } from "../utils/Helper";
 
-export const serviceFetVocaBySetId = (setId) => {
+export const serviceFetVocaBySetId = (setId, actionAfterCallApi) => {
   return (dispatch) => {
     API.get(enpoint_voca.fetVocas(setId))
       .then((res) => {
-        const listVoca = res.data;
-        dispatch(actionSetVocabularyList(listVoca));
+        dispatch(actionSetVocabularyList(res.data));
+        // ignore it if you dont need to execute anything after call api
+        if (actionAfterCallApi) actionAfterCallApi();
       })
       .catch((err) => {
         const object = handleErrorAPI(err, "toast");

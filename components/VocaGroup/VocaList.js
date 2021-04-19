@@ -3,10 +3,10 @@ import { List, ListItem, ListItemText, makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   root: { maxHeight: "18rem", overflowY: "scroll" },
 }));
-export default function VocaList({ vocas }) {
+export default function VocaList({ vocas, hidden }) {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
+    <div hidden={hidden} className={classes.root}>
       <List>
         {vocas.map((el, index) => (
           <ListItem
