@@ -4,6 +4,7 @@ import RememberVocasLayout from "../../../container/RememberVoca/Layout";
 import {
   serviceCreateRemember,
   serviceDeleteRememberById,
+  serviceUpdateRemember,
 } from "../../../service/rememberService";
 import { storageKey } from "../../../utils/Constant";
 import { localStorageHelper } from "../../../utils/storageHelper";
@@ -26,7 +27,7 @@ function RememberVocas(props) {
     dispatch(serviceCreateRemember(remember));
   };
   const submitUpdateRemember = () => {
-    console.log(rememberGroup);
+    dispatch(serviceUpdateRemember(rememberGroup));
   };
   const actionDeleteRemember = (rememberId) => {
     dispatch(serviceDeleteRememberById(rememberId));
