@@ -22,8 +22,13 @@ import React from "react";
 import { serviceGetRememberOfOwnerId } from "../../service/rememberService";
 import Remember from "./Remember";
 import theme from "../../components/theme";
+import UpdateRememberGroupModal from "./UpdateModal";
 
-function RememberVocasLayout({ submitCreateRemember, actionDelete }) {
+function RememberVocasLayout({
+  submitCreateRemember,
+  actionDelete,
+  submitUpdateRemember,
+}) {
   const dispatch = useDispatch();
   const { list } = useSelector((state) => state.rememberGroups);
   const [deleteId, setDeleteId] = React.useState();
@@ -66,6 +71,7 @@ function RememberVocasLayout({ submitCreateRemember, actionDelete }) {
       </Container>
       {/* create new remember-group */}
       <CreateRememberGroupModal onSubmit={submitCreateRemember} />
+      <UpdateRememberGroupModal onSubmit={submitUpdateRemember} />
       {/* display list remember-group*/}
       <div
         style={{

@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { withPrivateLayout } from "../../../components/Layouts/PrivateLayout";
 import RememberVocasLayout from "../../../container/RememberVoca/Layout";
 import {
@@ -10,6 +10,7 @@ import { localStorageHelper } from "../../../utils/storageHelper";
 
 function RememberVocas(props) {
   const dispatch = useDispatch();
+  const { rememberGroup } = useSelector((state) => state.rememberGroups);
 
   const submitCreateRemember = (object) => {
     const { vocas, name } = object;
@@ -24,6 +25,9 @@ function RememberVocas(props) {
     };
     dispatch(serviceCreateRemember(remember));
   };
+  const submitUpdateRemember = () => {
+    console.log(rememberGroup);
+  };
   const actionDeleteRemember = (rememberId) => {
     dispatch(serviceDeleteRememberById(rememberId));
   };
@@ -31,6 +35,7 @@ function RememberVocas(props) {
     <RememberVocasLayout
       actionDelete={actionDeleteRemember}
       submitCreateRemember={submitCreateRemember}
+      submitUpdateRemember={submitUpdateRemember}
     />
   );
 }
