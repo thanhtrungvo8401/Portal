@@ -82,7 +82,6 @@ export default function Step4({ object, actionUpdate }) {
         value={activeTab}
         indicatorColor="primary"
         textColor="primary"
-        centered
         variant="scrollable"
         onChange={(event, newValue) => setActiveTab(newValue)}
       >
