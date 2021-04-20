@@ -23,6 +23,7 @@ import { serviceGetRememberOfOwnerId } from "../../service/rememberService";
 import Remember from "./Remember";
 import theme from "../../components/theme";
 import UpdateRememberGroupModal from "./UpdateModal";
+import StudyModal from "./StudyModal";
 
 function RememberVocasLayout({
   submitCreateRemember,
@@ -69,9 +70,10 @@ function RememberVocasLayout({
           </ParagraphBody>
         )}
       </Container>
-      {/* create new remember-group */}
+      {/* MODAL DISPLAY */}
       <CreateRememberGroupModal onSubmit={submitCreateRemember} />
       <UpdateRememberGroupModal onSubmit={submitUpdateRemember} />
+      <StudyModal />
       {/* display list remember-group*/}
       <div
         style={{

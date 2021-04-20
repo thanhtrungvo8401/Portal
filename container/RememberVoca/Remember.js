@@ -12,6 +12,7 @@ import theme from "../../components/theme";
 import {
   actionSetIshowUpdateModal,
   actionSetRememberGroup,
+  actionSetIsStudy,
 } from "../../redux/actions/rememberGroupAction";
 import { formatDate } from "../../utils/DateHelper";
 const useStyles = makeStyles((theme) => {
@@ -78,7 +79,15 @@ export default function Remember({ remember = {}, actionDelete }) {
         >
           Edit
         </Button>
-        <Button color="primary">Study now</Button>
+        <Button
+          color="primary"
+          onClick={() => {
+            dispatch(actionSetRememberGroup(remember));
+            dispatch(actionSetIsStudy(true));
+          }}
+        >
+          Study now
+        </Button>
         <Button
           onClick={() => actionDelete(remember.id)}
           style={{ color: theme.palette.error.main }}
