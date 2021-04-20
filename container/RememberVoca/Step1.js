@@ -48,7 +48,7 @@ export default function Step1({ object, actionUpdate }) {
         object={object}
         inputFields={["name"]}
         inputTypes={{ name: "input" }}
-        inputLabels={{ name: "Tu vung bai XX - phan X" }}
+        inputLabels={{ name: "Name" }}
         inputRequired={["name"]}
         ERROR={ERROR}
         isUsedInModal={true}

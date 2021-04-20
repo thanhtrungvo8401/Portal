@@ -51,6 +51,12 @@ function InputGroup(props) {
     });
     handleOnChange(e);
   };
+  const handleOnBlur = (e) => {
+    setINTERACT({
+      ...INTERACT,
+      [e.target.name]: true,
+    });
+  };
 
   // Life Cycle Hook:
   useEffect(() => {
@@ -93,6 +99,7 @@ function InputGroup(props) {
                   label={inputLabels[key]}
                   required={inputRequired.includes(key)}
                   type={isPassword ? "password" : "text"}
+                  onBlur={(e) => handleOnBlur(e)}
                 />
                 {isShowRequiredMsg && (
                   <Alert severity="error">

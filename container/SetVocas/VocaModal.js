@@ -62,6 +62,12 @@ function VocaModal({ handleOnChange, handleOnSubmit }) {
       handleOnChange(e);
     }
   };
+  const handleOnBlur = (e) => {
+    setINTERACT({
+      ...INTERACT,
+      [e.target.name]: true,
+    });
+  }
   const titleVocaModal = !Boolean(voca.id)
     ? "Create new vocabularies"
     : "Edit vocabularies";
@@ -109,6 +115,7 @@ function VocaModal({ handleOnChange, handleOnSubmit }) {
                   name={key}
                   value={value}
                   onChange={handleOnChangeF}
+                  onBlur={handleOnBlur}
                   style={{ fontSize: theme.typography.pxToRem(14) }}
                 />
                 {isShowRequiredMsg && (
