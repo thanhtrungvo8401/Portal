@@ -74,7 +74,9 @@ function SetVoca({ setVoca, onSelectSetVocaIdToDelete }) {
         </div>
       </CardContent>
       <CardActions style={{ justifyContent: "flex-end" }}>
-        <Button color="secondary">Detail</Button>
+        <Button onClick={handleGoToSetVocas} color="secondary">
+          Detail
+        </Button>
         <Button
           onClick={() => {
             dispatch(actionSet_SetVocaObject({ ...setVoca }));
