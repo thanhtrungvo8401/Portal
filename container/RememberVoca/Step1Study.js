@@ -8,10 +8,15 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     maxWidth: 600,
     margin: "0 auto",
+    zIndex: 0,
   },
 }));
 
-export default function Step1Study({ study, actionUpdate }) {
+export default function Step1Study({
+  study,
+  actionUpdate,
+  actionBgAnimationStep,
+}) {
   const [detailList, setDetailList] = React.useState([]);
   const classes = useStyles();
   const { vocas, inActiveVocas } = study;
@@ -104,7 +109,7 @@ export default function Step1Study({ study, actionUpdate }) {
         style={{ display: "flex", justifyContent: "center", marginTop: "2rem" }}
       >
         <Button
-          onClick={() => actionUpdate({ ...study, step: 2 })}
+          onClick={() => actionBgAnimationStep(1)}
           className={styles.flashEffect}
           variant="contained"
           color="primary"

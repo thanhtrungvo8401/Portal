@@ -5,6 +5,13 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     maxWidth: 600,
     margin: "0 auto",
+    position: "absolute",
+    zIndex: 2,
+    backgroundColor: theme.palette.primary.main,
+    height: "100%",
+    width: "100%",
+    top: 0,
+    left: 0,
   },
 }));
 
