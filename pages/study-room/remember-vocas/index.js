@@ -21,7 +21,6 @@ function RememberVocas(props) {
       name,
       ownerId: user.id,
       vocaCodes: codes.join(","),
-      activeCodes: codes.join(","),
     };
     dispatch(serviceCreateRemember(remember));
   };

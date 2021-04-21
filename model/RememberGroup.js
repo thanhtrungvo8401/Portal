@@ -8,10 +8,3 @@ export const createRememberObject = {
   step: 1,
   totalStep: 5,
 };
-
-export const rememberGroupModel = {
-  vocaCodes: [],
-  activeCodes: [],
-  name: "",
-  ownerId: "",
-};
