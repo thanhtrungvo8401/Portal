@@ -76,3 +76,22 @@ export const serviceDeleteVocaById = (id) => {
       });
   };
 };
+
+export const serviceGetVocasByCodes = (codes = "") => {
+  return (dispatch) => {
+    API.get(enpoint_voca.getByCodes(), {
+      params: {
+        filters: {
+          code: `in<!>${codes}`,
+        },
+        limit: 1000,
+      },
+    })
+      .then((res) => {
+        dispatch(actionSetVocabularyList(res.data.list));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};

@@ -82,6 +82,7 @@ export default function Remember({ remember = {}, actionDelete }) {
         <Button
           color="primary"
           onClick={() => {
+            // Important note: => always dispatch(REMEMBER) before dispatch(IS_STUDY);
             dispatch(actionSetRememberGroup(remember));
             dispatch(actionSetIsStudy(true));
           }}
