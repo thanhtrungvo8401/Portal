@@ -13,6 +13,7 @@ import { serviceGetVocasByCodes } from "../../service/vocaService";
 import { actionSetIsStudy } from "../../redux/actions/rememberGroupAction";
 import Step1Study from "./Step1Study";
 import Step2Study from "./Step2Study";
+import StudyBg from "./StudyBg";
 
 const Transition = React.forwardRef((props, ref) => {
   return <Slide direction="down" ref={ref} {...props} />;
@@ -26,6 +27,8 @@ const useStyles = makeStyles((theme) => ({
       maxWidth: "100%!important",
       maxHeight: "100%!important",
       borderRadius: 0,
+      overflow: "hidden",
+      position: "relative",
     },
   },
   studyModalHeader: {
@@ -40,6 +43,7 @@ const initState = {
   inActiveVocas: [],
   step: 1,
 };
+const initBg = { step: 0 };
 export default function StudyModal({}) {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -49,13 +53,17 @@ export default function StudyModal({}) {
   const { list } = useSelector((state) => state.vocas);
 
   const [study, setStudy] = React.useState({ ...initState });
+  const [bgAni, setBgAni] = React.useState({ ...initBg });
 
   useEffect(() => {
     if (IS_STUDY) {
       dispatch(serviceGetVocasByCodes(rememberGroup.vocaCodes));
+    } else {
       setStudy({ ...initState });
+      setBgAni({ ...initBg });
     }
   }, [IS_STUDY]);
+  // update data after fetch vocas:
   useEffect(() => {
     setStudy({ ...study, vocas: list, inActiveVocas: [] });
   }, [list]);
@@ -81,12 +89,24 @@ export default function StudyModal({}) {
         </IconButton>
       </div>
       <DialogContent>
-        {study.step === 1 && (
-          <Step1Study study={study} actionUpdate={setStudy} />
-        )}
-        {study.step === 2 && (
-          <Step2Study study={study} actionUpdate={setStudy} />
-        )}
+        <Step1Study
+          hidden={study.step !== 1}
+          study={study}
+          actionUpdate={setStudy}
+          actionUpdateBg={setBgAni}
+        />
+        <Step2Study
+          hidden={study.step !== 2}
+          study={study}
+          actionUpdate={setStudy}
+        />
+
+        <StudyBg
+          bgAni={bgAni}
+          actionUpdateBg={setBgAni}
+          study={study}
+          actionUpdate={setStudy}
+        />
       </DialogContent>
     </Dialog>
   );

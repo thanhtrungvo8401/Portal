@@ -5,17 +5,16 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     maxWidth: 600,
     margin: "0 auto",
-    position: "absolute",
-    zIndex: 2,
-    backgroundColor: theme.palette.primary.main,
-    height: "100%",
-    width: "100%",
-    top: 0,
-    left: 0,
+    zIndex: 0,
+    position: "relative",
   },
 }));
 
-export default function Step2Study({ study, actionUpdate }) {
+export default function Step2Study({ study, actionUpdate, hidden }) {
   const classes = useStyles();
-  return <div className={classes.step2Study}>Programming...</div>;
+  return (
+    <div hidden={hidden} className={classes.step2Study}>
+      Programming...
+    </div>
+  );
 }

@@ -15,7 +15,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Step1Study({
   study,
   actionUpdate,
-  actionBgAnimationStep,
+  actionUpdateBg,
+  hidden,
 }) {
   const [detailList, setDetailList] = React.useState([]);
   const classes = useStyles();
@@ -42,7 +43,7 @@ export default function Step1Study({
     );
   };
   return (
-    <div className={classes.step1Study}>
+    <div className={classes.step1Study} hidden={hidden}>
       <Typography
         variant="subtitle2"
         style={{ marginBottom: theme.spacing(1) }}
@@ -109,7 +110,7 @@ export default function Step1Study({
         style={{ display: "flex", justifyContent: "center", marginTop: "2rem" }}
       >
         <Button
-          onClick={() => actionBgAnimationStep(1)}
+          onClick={() => actionUpdateBg({ step: 2 })}
           className={styles.flashEffect}
           variant="contained"
           color="primary"
