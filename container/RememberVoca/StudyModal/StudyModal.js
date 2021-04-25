@@ -36,7 +36,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     padding: "0px 24px",
-  },
+    maxWidth: 600,
+    width: "100%",
+    margin: "0 auto",
+  }, 
 }));
 const initState = {
   vocas: [],
@@ -95,10 +98,7 @@ export default function StudyModal({}) {
           actionUpdate={setStudy}
           actionUpdateBg={setBgAni}
         />
-        <Step2Study
-          hidden={study.step !== 2}
-          study={study}
-        />
+        <Step2Study hidden={study.step !== 2} study={study} />
 
         <StudyBg
           bgAni={bgAni}
