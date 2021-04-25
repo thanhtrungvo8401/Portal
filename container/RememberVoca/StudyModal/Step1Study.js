@@ -1,8 +1,8 @@
 import { Button, Chip, makeStyles, Paper, Typography } from "@material-ui/core";
 import PublishIcon from "@material-ui/icons/Publish";
 import React from "react";
-import theme from "../../components/theme";
-import styles from "../../components/Layouts/styles.module.css";
+import theme from "../../../components/theme";
+import styles from "../../../components/Layouts/styles.module.css";
 const useStyles = makeStyles((theme) => ({
   step1Study: {
     width: "100%",

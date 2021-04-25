@@ -1,6 +1,6 @@
 import { makeStyles, Typography } from "@material-ui/core";
 import React from "react";
-import theme from "../../components/theme";
+import theme from "../../../components/theme";
 import styles from "./styles.module.css";
 const useStyles = makeStyles((theme) => ({
   bgAnimation: {

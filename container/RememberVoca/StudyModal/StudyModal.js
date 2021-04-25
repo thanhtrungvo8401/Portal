@@ -9,8 +9,8 @@ import {
 } from "@material-ui/core";
 import HighlightOffIcon from "@material-ui/icons/HighlightOffOutlined";
 import { useDispatch, useSelector } from "react-redux";
-import { serviceGetVocasByCodes } from "../../service/vocaService";
-import { actionSetIsStudy } from "../../redux/actions/rememberGroupAction";
+import { serviceGetVocasByCodes } from "../../../service/vocaService";
+import { actionSetIsStudy } from "../../../redux/actions/rememberGroupAction";
 import Step1Study from "./Step1Study";
 import Step2Study from "./Step2Study";
 import StudyBg from "./StudyBg";
