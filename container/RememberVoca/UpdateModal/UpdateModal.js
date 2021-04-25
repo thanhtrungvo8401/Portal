@@ -8,11 +8,11 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import InputGroup, { validForm } from "../../components/InputGroup";
+import InputGroup, { validForm } from "../../../components/InputGroup";
 import {
   actionSetIshowUpdateModal,
   actionSetRememberGroup,
-} from "../../redux/actions/rememberGroupAction";
+} from "../../../redux/actions/rememberGroupAction";
 const Transition = React.forwardRef((props, ref) => {
   return <Slide direction="down" ref={ref} {...props} />;
 });
