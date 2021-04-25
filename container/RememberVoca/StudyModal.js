@@ -98,7 +98,6 @@ export default function StudyModal({}) {
         <Step2Study
           hidden={study.step !== 2}
           study={study}
-          actionUpdate={setStudy}
         />
 
         <StudyBg
