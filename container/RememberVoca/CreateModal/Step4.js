@@ -1,10 +1,10 @@
 import { Button, Tab, Tabs, Typography } from "@material-ui/core";
 import React from "react";
-import VocaList from "../../components/VocaGroup/VocaList";
-import { theme } from "../../components/theme";
+import VocaList from "../../../components/VocaGroup/VocaList";
+import { theme } from "../../../components/theme";
 import { useDispatch, useSelector } from "react-redux";
-import { serviceFetVocaBySetId } from "../../service/vocaService";
-import { MAX_VOCA_IN_REMEMBER } from "../../utils/Constant";
+import { serviceFetVocaBySetId } from "../../../service/vocaService";
+import { MAX_VOCA_IN_REMEMBER } from "../../../utils/Constant";
 
 const getRandom = (min, max) => Math.round(Math.random() * (max - min));
 const getRandomObject = (items) => {

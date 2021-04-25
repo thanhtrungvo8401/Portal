@@ -13,7 +13,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import { appUrl } from "../../utils/APP_URL";
 import BreadcrumbsCustom from "../../components/Breadcrumbs/Breadcrumbs";
 import ParagraphBody from "../../components/ParagraphBody/ParagraphBody";
-import CreateRememberGroupModal from "./CreateModal";
+import CreateRememberGroupModal from "./CreateModal/CreateModal";
 import { useDispatch, useSelector } from "react-redux";
 import { actionSetIshowCreateModal } from "../../redux/actions/rememberGroupAction";
 import { localStorageHelper } from "../../utils/storageHelper";

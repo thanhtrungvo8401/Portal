@@ -1,21 +1,17 @@
-import {
-  makeStyles,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { makeStyles, TextField, Typography } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import theme from "../../components/theme";
-import VocaList from "../../components/VocaGroup/VocaList";
-import { serviceGetCenterSetVocas } from "../../service/setVocaService";
-import { serviceFetVocaBySetId } from "../../service/vocaService";
+import theme from "../../../components/theme";
+import VocaList from "../../../components/VocaGroup/VocaList";
+import { serviceGetCenterSetVocas } from "../../../service/setVocaService";
+import { serviceFetVocaBySetId } from "../../../service/vocaService";
 import {
   CREATE_REMEMBER_TYPE,
   ROLE_NAME,
   storageKey,
-} from "../../utils/Constant";
-import { localStorageHelper } from "../../utils/storageHelper";
+} from "../../../utils/Constant";
+import { localStorageHelper } from "../../../utils/storageHelper";
 
 const step3Styles = makeStyles((theme) => ({
   root: {},

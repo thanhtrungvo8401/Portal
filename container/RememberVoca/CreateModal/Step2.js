@@ -9,10 +9,14 @@ import {
 import { Autocomplete } from "@material-ui/lab";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import theme from "../../components/theme";
-import { serviceGetSetVocas } from "../../service/setVocaService";
-import { CREATE_REMEMBER_TYPE, LEVEL, storageKey } from "../../utils/Constant";
-import { localStorageHelper } from "../../utils/storageHelper";
+import theme from "../../../components/theme";
+import { serviceGetSetVocas } from "../../../service/setVocaService";
+import {
+  CREATE_REMEMBER_TYPE,
+  LEVEL,
+  storageKey,
+} from "../../../utils/Constant";
+import { localStorageHelper } from "../../../utils/storageHelper";
 
 const step2Styles = makeStyles((theme) => ({
   root: {},

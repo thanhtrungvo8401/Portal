@@ -1,7 +1,7 @@
 import { Card, CardContent, makeStyles, Typography } from "@material-ui/core";
 import { useSelector } from "react-redux";
-import InputGroup from "../../components/InputGroup";
-import { CREATE_REMEMBER_TYPE } from "../../utils/Constant";
+import InputGroup from "../../../components/InputGroup";
+import { CREATE_REMEMBER_TYPE } from "../../../utils/Constant";
 
 const totalStepWhenUsingDefaultCenterVocas = 4;
 const totalStepWhenUsingYourVocas = 3;
