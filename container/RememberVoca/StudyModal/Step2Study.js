@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core";
+import Step2StudyUI from "./Step2StudyUI";
 
 const useStyles = makeStyles((theme) => ({
   step2Study: {
@@ -18,8 +19,7 @@ export default function Step2Study({ study, hidden }) {
   const classes = useStyles();
   return (
     <div hidden={hidden} className={classes.step2Study}>
-      Programming...
-      {JSON.stringify(study)}
+      <Step2StudyUI study={study} />
     </div>
   );
 }
