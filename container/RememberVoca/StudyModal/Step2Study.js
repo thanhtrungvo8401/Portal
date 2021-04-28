@@ -15,11 +15,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Step2Study({ study, hidden }) {
+export default function Step2Study({ study, hidden, actionUpdate }) {
   const classes = useStyles();
   return (
     <div hidden={hidden} className={classes.step2Study}>
-      <Step2StudyUI study={study} />
+      <Step2StudyUI actionUpdate={actionUpdate} study={study} />
     </div>
   );
 }

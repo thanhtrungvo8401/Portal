@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 600,
     width: "100%",
     margin: "0 auto",
-  }, 
+  },
 }));
 const initState = {
   vocas: [],
@@ -92,13 +92,19 @@ export default function StudyModal({}) {
         </IconButton>
       </div>
       <DialogContent>
-        <Step1Study
-          hidden={study.step !== 1}
-          study={study}
-          actionUpdate={setStudy}
-          actionUpdateBg={setBgAni}
-        />
-        <Step2Study hidden={study.step !== 2} study={study} />
+        {study.step === 1 && (
+          <Step1Study
+            study={study}
+            actionUpdate={setStudy}
+            actionUpdateBg={setBgAni}
+          />
+        )}
+        {study.step === 2 && (
+          <Step2Study
+            study={study}
+            actionUpdate={setStudy}
+          />
+        )}
 
         <StudyBg
           bgAni={bgAni}

@@ -8,6 +8,7 @@ import {
 import React from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { theme } from "../../../components/theme";
+import { jpSpeak, otherSpeack } from "../../../utils/textToSpeech";
 
 // MAIN UI
 const useStyles = makeStyles(() => ({
@@ -19,7 +20,7 @@ const useStyles = makeStyles(() => ({
 }));
 const duration = 500;
 
-export default function Step2StudyUI({ study }) {
+export default function Step2StudyUI({ study, actionUpdate }) {
   const classes = useStyles();
   const list = [...study.vocas];
   const listDone = [];
@@ -35,13 +36,26 @@ export default function Step2StudyUI({ study }) {
           ))}
         </ul>
       </Container>
-      <div onClick={() => setActiveVocaCover(!activeVocaCover)}>Toggle</div>
+      <div
+        onClick={() => {
+          if (!activeVocaCover) {
+            setActiveVocaCover(!activeVocaCover);
+          } else {
+            actionUpdate({
+              ...study,
+              step: 1,
+            });
+          }
+        }}
+      >
+        Toggle
+      </div>
       <CSSTransition
         in={activeVocaCover}
         timeout={duration}
         classNames="voca-cover"
       >
-        <CoverVoca isActive={activeVocaCover} voca={list[0]} />
+        <CoverVoca isActive={activeVocaCover} voca={list[4]} />
       </CSSTransition>
     </div>
   );
@@ -75,10 +89,6 @@ const useStyles1 = makeStyles((theme) => ({
   },
 }));
 
-const readJP = (jpTxt, action) => {
-  console.log(jpTxt);
-  setTimeout(() => action(), 2000);
-};
 const fields = ["voca", "meaning", "sentence"];
 function CoverVoca({ voca = {}, isActive }) {
   const classes = useStyles1();
@@ -103,7 +113,9 @@ function CoverVoca({ voca = {}, isActive }) {
             className="jp"
             key={1}
             timeout={duration}
-            onEntered={() => readJP(voca[fields[0]], nextRun1)}
+            onEntered={() =>
+              jpSpeak({ content: voca["voca"], callback: nextRun1 })
+            }
           >
             <div>
               <Typography variant="h5">{voca.voca}</Typography>
@@ -118,7 +130,7 @@ function CoverVoca({ voca = {}, isActive }) {
             className="jp"
             key={2}
             timeout={duration}
-            onEntered={() => readJP(voca[fields[1]], nextRun1)}
+            onEntered={() => nextRun1()}
           >
             <div>
               <Divider
@@ -136,7 +148,9 @@ function CoverVoca({ voca = {}, isActive }) {
             className="jp"
             key={3}
             timeout={duration}
-            onEntered={() => readJP(voca[fields[2]], nextRun1)}
+            onEntered={() =>
+              jpSpeak({ content: voca["sentence"], callback: nextRun1 })
+            }
           >
             <div>
               <Divider
