@@ -82,28 +82,28 @@ const readJP = (jpTxt, action) => {
 const fields = ["voca", "meaning", "sentence"];
 function CoverVoca({ voca = {}, isActive }) {
   const classes = useStyles1();
-  const [order, setOrder] = React.useState(0);
-  const nextRun = () => {
-    if (order < 3) {
-      setOrder(order + 1);
+  const [run1, setRun1] = React.useState(0);
+  const nextRun1 = () => {
+    if (run1 < 3) {
+      setRun1(run1 + 1);
     }
   };
   React.useEffect(() => {
     if (isActive) {
       setTimeout(() => {
-        nextRun();
+        nextRun1();
       }, duration);
     }
   }, [isActive]);
   return (
     <Paper elevation={3} className={classes.VocaCover}>
       <TransitionGroup className="group">
-        {order >= 1 && (
+        {run1 >= 1 && (
           <CSSTransition
             className="jp"
             key={1}
             timeout={duration}
-            onEntered={() => readJP(voca[fields[0]], nextRun)}
+            onEntered={() => readJP(voca[fields[0]], nextRun1)}
           >
             <div>
               <Typography variant="h5">{voca.voca}</Typography>
@@ -113,12 +113,12 @@ function CoverVoca({ voca = {}, isActive }) {
             </div>
           </CSSTransition>
         )}
-        {order >= 2 && (
+        {run1 >= 2 && (
           <CSSTransition
             className="jp"
             key={2}
             timeout={duration}
-            onEntered={() => readJP(voca[fields[1]], nextRun)}
+            onEntered={() => readJP(voca[fields[1]], nextRun1)}
           >
             <div>
               <Divider
@@ -131,12 +131,12 @@ function CoverVoca({ voca = {}, isActive }) {
             </div>
           </CSSTransition>
         )}
-        {order >= 3 && (
+        {run1 >= 3 && (
           <CSSTransition
             className="jp"
             key={3}
             timeout={duration}
-            onEntered={() => readJP(voca[fields[2]], nextRun)}
+            onEntered={() => readJP(voca[fields[2]], nextRun1)}
           >
             <div>
               <Divider
