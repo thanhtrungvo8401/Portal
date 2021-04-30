@@ -68,3 +68,5 @@ export const removeGmailTag = (email = "") => {
 export const isServer = typeof window === "undefined";
 
 export const isPro = process.env.NEXT_PUBLIC_ENV === "PRODUCTION";
+
+export const getRandom = (min, max) => Math.round(Math.random() * (max - min));

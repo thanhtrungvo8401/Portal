@@ -8,7 +8,8 @@ import {
 import React from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { theme } from "../../../components/theme";
-import { jpSpeak } from "../../../utils/textToSpeech";
+import { getRandom } from "../../../utils/Helper";
+import { jpSpeak, otherSpeack } from "../../../utils/textToSpeech";
 
 // MAIN UI
 const useStyles = makeStyles(() => ({
@@ -22,10 +23,36 @@ const duration = 500;
 
 export default function Step2StudyUI({ study, actionUpdate }) {
   const classes = useStyles();
-  const list = [...study.vocas];
-  const listDone = [];
+  const [list, setList] = React.useState([...study.vocas]);
+  const [listShowed, setListShowed] = React.useState([]);
+  // Animation for Intro Voca:
+  const [voca, setVoca] = React.useState({});
+  const [isActiveIntroVoca, setIsActiveIntroVoca] = React.useState(false);
+  const introAnimationIn = () => {
+    setIsActiveIntroVoca(true);
+  };
+  const handleAfterEnter = () => {
+    const random = getRandom(0, list.length - 1);
+    setVoca(list[random]);
+    setList(list.filter((el, index) => index !== random));
+  };
+  const introAnimationOut = () => {
+    setIsActiveIntroVoca(false);
+  };
+  const handleAfterExit = () => {
+    setListShowed([...listShowed, voca]);
+    setVoca({});
+    if (list.length) {
+      introAnimationIn();
+    }
+    // in again
+  };
+  React.useEffect(() => {
+    setTimeout(() => {
+      introAnimationIn();
+    }, 2000);
+  }, []);
 
-  const [activeVocaCover, setActiveVocaCover] = React.useState(false);
   return (
     <div className={classes.Step2StudyUI}>
       <Container>
@@ -36,26 +63,24 @@ export default function Step2StudyUI({ study, actionUpdate }) {
           ))}
         </ul>
       </Container>
-      <div
-        onClick={() => {
-          if (!activeVocaCover) {
-            setActiveVocaCover(!activeVocaCover);
-          } else {
-            actionUpdate({
-              ...study,
-              step: 1,
-            });
-          }
-        }}
+      <h2
+        style={{ cursor: "pointer" }}
+        onClick={() => actionUpdate({ ...study, step: 1 })}
       >
-        Toggle
-      </div>
+        Reset
+      </h2>
       <CSSTransition
-        in={activeVocaCover}
+        in={Boolean(isActiveIntroVoca)}
         timeout={duration}
         classNames="voca-cover"
+        onEntered={handleAfterEnter}
+        onExited={handleAfterExit}
       >
-        <CoverVoca isActive={activeVocaCover} voca={list[4]} />
+        <CoverVoca
+          callback={introAnimationOut}
+          isActive={isActiveIntroVoca}
+          voca={voca}
+        />
       </CSSTransition>
     </div>
   );
@@ -72,6 +97,26 @@ const useStyles1 = makeStyles((theme) => ({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
+    // intro-voca-animation
+    "&.voca-cover-enter": {
+      opacity: 0,
+      top: 0,
+    },
+    "&.voca-cover-enter-active": {
+      opacity: 1,
+      top: "50%",
+      transition: `all ${duration}ms ease-in`,
+    },
+    "&.voca-cover-exit": {
+      opacity: 1,
+      top: "50%",
+    },
+    "&.voca-cover-exit-active": {
+      opacity: 0,
+      top: 0,
+      transition: `all ${duration}ms ease-in`,
+    },
+    // voca in intro-voca:
     "& .jp.enter": {
       opacity: 0,
     },
@@ -89,8 +134,8 @@ const useStyles1 = makeStyles((theme) => ({
   },
 }));
 
-const fields = ["voca", "meaning", "sentence"];
-function CoverVoca({ voca = {}, isActive }) {
+// const fields = ["voca", "meaning", "sentence"];
+function CoverVoca({ voca = {}, isActive, callback }) {
   const classes = useStyles1();
   const [run1, setRun1] = React.useState(0);
   const nextRun1 = () => {
@@ -99,15 +144,31 @@ function CoverVoca({ voca = {}, isActive }) {
     } else if (run1 == 2 && voca.sentence) {
       setRun1(run1 + 1);
     } else {
-      alert("DONE");
+      runStep2();
     }
+  };
+  const runStep2 = () => {
+    jpSpeak({ content: voca["voca"] })
+      .then(() => {
+        return otherSpeack({ content: voca["meaning"] });
+      })
+      .then(() => {
+        if (voca["sentence"]) {
+          jpSpeak({ content: voca["sentence"] }).then(() => callback());
+        } else {
+          callback();
+        }
+      });
   };
   React.useEffect(() => {
     if (isActive) {
       setTimeout(() => {
         nextRun1();
       }, duration);
+    } else {
+      setRun1(0);
     }
+    speechSynthesis.cancel();
   }, [isActive]);
   return (
     <Paper elevation={3} className={classes.VocaCover}>
@@ -118,10 +179,11 @@ function CoverVoca({ voca = {}, isActive }) {
             key={1}
             timeout={duration}
             onEntered={() => {
-              jpSpeak({ content: voca["voca"] }).then((res) => {
-                console.log(res);
-                nextRun1();
-              });
+              jpSpeak({ content: voca["voca"] })
+                .then(() => {
+                  nextRun1();
+                })
+                .catch((err) => console.log(err));
             }}
           >
             <div>
@@ -137,7 +199,13 @@ function CoverVoca({ voca = {}, isActive }) {
             className="jp"
             key={2}
             timeout={duration}
-            onEntered={() => nextRun1()}
+            onEntered={() => {
+              otherSpeack({ content: voca["meaning"] })
+                .then(() => {
+                  nextRun1();
+                })
+                .catch((err) => console.log(err));
+            }}
           >
             <div>
               <Divider
@@ -156,10 +224,11 @@ function CoverVoca({ voca = {}, isActive }) {
             key={3}
             timeout={duration}
             onEntered={() => {
-              jpSpeak({ content: voca["voca"] }).then((res) => {
-                console.log(res);
-                nextRun1();
-              });
+              jpSpeak({ content: voca["sentence"] })
+                .then(() => {
+                  nextRun1();
+                })
+                .catch((err) => console.log(err));
             }}
           >
             <div>

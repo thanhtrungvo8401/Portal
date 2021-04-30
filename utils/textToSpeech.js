@@ -20,7 +20,9 @@ const speakHelper = (content, lang, speed) => {
       reject(content + ": Content must not be string and not empty !!!");
     }
     if (isServer) reject("This function can not be called in server");
-    if (speechSynthesis.speaking) reject("We are speaking, please waiting!!!");
+    if (speechSynthesis.speaking) {
+      reject("We are speaking, please waiting!!!");
+    }
 
     const utterThis = new SpeechSynthesisUtterance(content);
     utterThis.onerror = (e) => {
@@ -43,5 +45,5 @@ export const jpSpeak = ({ content, speed = 1 }) => {
 };
 
 export const otherSpeack = ({ content, speed = 1 }) => {
-  return speakHelper(content, "en-US", speed);
+  return speakHelper(content, "en-GB", speed);
 };
