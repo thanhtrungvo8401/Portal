@@ -8,7 +8,7 @@ import {
 import React from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { theme } from "../../../components/theme";
-import { jpSpeak, otherSpeack } from "../../../utils/textToSpeech";
+import { jpSpeak } from "../../../utils/textToSpeech";
 
 // MAIN UI
 const useStyles = makeStyles(() => ({
@@ -94,8 +94,12 @@ function CoverVoca({ voca = {}, isActive }) {
   const classes = useStyles1();
   const [run1, setRun1] = React.useState(0);
   const nextRun1 = () => {
-    if (run1 < 3) {
+    if (run1 < 2) {
       setRun1(run1 + 1);
+    } else if (run1 == 2 && voca.sentence) {
+      setRun1(run1 + 1);
+    } else {
+      alert("DONE");
     }
   };
   React.useEffect(() => {
@@ -113,9 +117,12 @@ function CoverVoca({ voca = {}, isActive }) {
             className="jp"
             key={1}
             timeout={duration}
-            onEntered={() =>
-              jpSpeak({ content: voca["voca"], callback: nextRun1 })
-            }
+            onEntered={() => {
+              jpSpeak({ content: voca["voca"] }).then((res) => {
+                console.log(res);
+                nextRun1();
+              });
+            }}
           >
             <div>
               <Typography variant="h5">{voca.voca}</Typography>
@@ -148,9 +155,12 @@ function CoverVoca({ voca = {}, isActive }) {
             className="jp"
             key={3}
             timeout={duration}
-            onEntered={() =>
-              jpSpeak({ content: voca["sentence"], callback: nextRun1 })
-            }
+            onEntered={() => {
+              jpSpeak({ content: voca["voca"] }).then((res) => {
+                console.log(res);
+                nextRun1();
+              });
+            }}
           >
             <div>
               <Divider

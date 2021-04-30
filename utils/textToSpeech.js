@@ -1,39 +1,47 @@
 import { isServer } from "./Helper";
 
-const speakHelper = (content, lang, speed, callback) => {
-  if (!speechSynthesis.getVoices().length) {
-    speechSynthesis.onvoiceschanged = (e) => {
-      console.log("VOICE READY");
-      speakHelper(content, lang, speed, callback);
+const getVoices = () => {
+  return new Promise((resolve, reject) => {
+    if (isServer) reject("This function can not be called in server");
+
+    if (speechSynthesis.getVoices().length > 0) {
+      resolve(speechSynthesis.getVoices());
+    } else {
+      speechSynthesis.onvoiceschanged = () => {
+        resolve(speechSynthesis.getVoices());
+      };
+    }
+  });
+};
+
+const speakHelper = (content, lang, speed) => {
+  return new Promise((resolve, reject) => {
+    if (!content || typeof content !== "string") {
+      reject(content + ": Content must not be string and not empty !!!");
+    }
+    if (isServer) reject("This function can not be called in server");
+    if (speechSynthesis.speaking) reject("We are speaking, please waiting!!!");
+
+    const utterThis = new SpeechSynthesisUtterance(content);
+    utterThis.onerror = (e) => {
+      reject(e);
     };
-    return;
-  }
-  if (!content || typeof content !== "string") return;
-  if (isServer) return;
-  if (speechSynthesis.speaking) {
-    console.log("We are speaking, please waiting!!!");
-    return;
-  }
-
-  const utterThis = new SpeechSynthesisUtterance(content);
-
-  utterThis.pitch = 1;
-  utterThis.rate = speed;
-  utterThis.voice = speechSynthesis.getVoices().find((el) => el.lang === lang);
-  speechSynthesis.speak(utterThis);
-
-  utterThis.onend = function (event) {
-    if (callback) callback();
-  };
-  utterThis.onerror = function (event) {
-    console.error("SpeechSynthesisUtterance.onerror", event);
-  };
+    utterThis.onend = () => {
+      resolve(`"${content}" was spoken !!!`);
+    };
+    getVoices().then((voices) => {
+      utterThis.pitch = 1;
+      utterThis.rate = speed;
+      utterThis.voice = voices.find((el) => el.lang === lang);
+      speechSynthesis.speak(utterThis);
+    });
+  });
 };
 
-export const jpSpeak = ({ content = "", speed = 1, callback }) => {
-  speakHelper(content, "ja-JP", speed, callback);
+export const jpSpeak = ({ content, speed = 1 }) => {
+  return speakHelper(content, "ja-JP", speed);
 };
 
-export const otherSpeack = ({ content = "", speed = 1, callback }) => {
-  speakHelper(content, "en-US", speed, callback);
+export const otherSpeack = ({ content, speed = 1 }) => {
+  return speakHelper(content, "en-US", speed);
 };
