@@ -50,7 +50,7 @@ export default function Step2StudyUI({ study, actionUpdate }) {
   React.useEffect(() => {
     setTimeout(() => {
       introAnimationIn();
-    }, 2000);
+    }, duration);
   }, []);
 
   return (
@@ -72,11 +72,11 @@ export default function Step2StudyUI({ study, actionUpdate }) {
       <CSSTransition
         in={Boolean(isActiveIntroVoca)}
         timeout={duration}
-        classNames="voca-cover"
+        classNames="voca-intro"
         onEntered={handleAfterEnter}
         onExited={handleAfterExit}
       >
-        <CoverVoca
+        <IntroVoca
           callback={introAnimationOut}
           isActive={isActiveIntroVoca}
           voca={voca}
@@ -86,9 +86,9 @@ export default function Step2StudyUI({ study, actionUpdate }) {
   );
 }
 
-// COVER VOCA COMPONENT
+// INTRO VOCA COMPONENT
 const useStyles1 = makeStyles((theme) => ({
-  VocaCover: {
+  VocaIntro: {
     display: "inline-block",
     minWidth: "300px",
     padding: `${theme.spacing(2)}px ${theme.spacing(1)}px`,
@@ -96,24 +96,36 @@ const useStyles1 = makeStyles((theme) => ({
     textAlign: "Center",
     top: "50%",
     left: "50%",
-    transform: "translate(-50%, -50%)",
+    transform: "translateY(-100%) translateX(-50%)",
+    top: 0,
+    opacity: 0,
     // intro-voca-animation
-    "&.voca-cover-enter": {
+    "&.voca-intro-enter": {
       opacity: 0,
       top: 0,
+      transform: "translateY(-100%) translateX(-50%)",
     },
-    "&.voca-cover-enter-active": {
+    "&.voca-intro-enter-active": {
       opacity: 1,
       top: "50%",
+      transform: "translateY(-50%) translateX(-50%)",
       transition: `all ${duration}ms ease-in`,
     },
-    "&.voca-cover-exit": {
+    "&.voca-intro-enter-done": {
       opacity: 1,
       top: "50%",
+      transform: "translateY(-50%) translateX(-50%)",
+      transition: `all ${duration}ms ease-in`,
     },
-    "&.voca-cover-exit-active": {
+    "&.voca-intro-exit": {
+      opacity: 1,
+      top: "50%",
+      transform: "translateY(-50%) translateX(-50%)",
+    },
+    "&.voca-intro-exit-active": {
       opacity: 0,
       top: 0,
+      transform: "translateY(-100%) translateX(-50%)",
       transition: `all ${duration}ms ease-in`,
     },
     // voca in intro-voca:
@@ -135,7 +147,7 @@ const useStyles1 = makeStyles((theme) => ({
 }));
 
 // const fields = ["voca", "meaning", "sentence"];
-function CoverVoca({ voca = {}, isActive, callback }) {
+function IntroVoca({ voca = {}, isActive, callback }) {
   const classes = useStyles1();
   const [run1, setRun1] = React.useState(0);
   const nextRun1 = () => {
@@ -171,7 +183,7 @@ function CoverVoca({ voca = {}, isActive, callback }) {
     speechSynthesis.cancel();
   }, [isActive]);
   return (
-    <Paper elevation={3} className={classes.VocaCover}>
+    <Paper elevation={3} className={classes.VocaIntro}>
       <TransitionGroup className="group">
         {run1 >= 1 && (
           <CSSTransition
