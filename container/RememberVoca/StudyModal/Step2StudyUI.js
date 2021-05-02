@@ -1,8 +1,13 @@
 import {
   Container,
   Divider,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
   makeStyles,
   Paper,
+  Switch,
   Typography,
 } from "@material-ui/core";
 import React from "react";
@@ -17,6 +22,11 @@ const useStyles = makeStyles(() => ({
     width: "100%",
     maxWidth: 600,
     margin: "0 auto",
+    position: "absolute",
+    top: 0,
+    left: "50%",
+    transform: "translateX(-50%)",
+    height: "100%",
   },
 }));
 const duration = 500;
@@ -24,8 +34,8 @@ const duration = 500;
 export default function Step2StudyUI({ study, actionUpdate }) {
   const classes = useStyles();
   const [list, setList] = React.useState([...study.vocas]);
-  const [listShowed, setListShowed] = React.useState([]);
-  // Animation for Intro Voca:
+  const [listIntroduced, setListIntroduced] = React.useState([]);
+  // Animation for Intro Voca:listIntroduced
   const [voca, setVoca] = React.useState({});
   const [isActiveIntroVoca, setIsActiveIntroVoca] = React.useState(false);
   const introAnimationIn = () => {
@@ -40,7 +50,7 @@ export default function Step2StudyUI({ study, actionUpdate }) {
     setIsActiveIntroVoca(false);
   };
   const handleAfterExit = () => {
-    setListShowed([...listShowed, voca]);
+    setListIntroduced([...listIntroduced, voca]);
     setVoca({});
     if (list.length) {
       introAnimationIn();
@@ -55,14 +65,7 @@ export default function Step2StudyUI({ study, actionUpdate }) {
 
   return (
     <div className={classes.Step2StudyUI}>
-      <Container>
-        List Items
-        <ul>
-          {study.vocas.map((el) => (
-            <li key={el.id}>{el.voca}</li>
-          ))}
-        </ul>
-      </Container>
+      <DisplayVocas vocas={listIntroduced} />
       <h2
         style={{ cursor: "pointer" }}
         onClick={() => actionUpdate({ ...study, step: 1 })}
@@ -93,6 +96,7 @@ const useStyles1 = makeStyles((theme) => ({
     minWidth: "300px",
     padding: `${theme.spacing(2)}px ${theme.spacing(1)}px`,
     position: "absolute",
+    zIndex: 1,
     textAlign: "Center",
     top: "50%",
     left: "50%",
@@ -129,17 +133,17 @@ const useStyles1 = makeStyles((theme) => ({
       transition: `all ${duration}ms ease-in`,
     },
     // voca in intro-voca:
-    "& .jp.enter": {
+    "& .jp-enter": {
       opacity: 0,
     },
-    "& .jp.enter-active": {
+    "& .jp-enter-active": {
       opacity: 1,
       transition: `opacity ${duration}ms ease-in`,
     },
-    "& .jp.exit": {
+    "& .jp-exit": {
       opacity: 1,
     },
-    "& .jp.exit-active": {
+    "& .jp-exit-active": {
       opacity: 0,
       transition: `opacity ${duration}ms ease-in`,
     },
@@ -180,14 +184,13 @@ function IntroVoca({ voca = {}, isActive, callback }) {
     } else {
       setRun1(0);
     }
-    speechSynthesis.cancel();
   }, [isActive]);
   return (
     <Paper elevation={3} className={classes.VocaIntro}>
       <TransitionGroup className="group">
         {run1 >= 1 && (
           <CSSTransition
-            className="jp"
+            classNames="jp"
             key={1}
             timeout={duration}
             onEntered={() => {
@@ -208,7 +211,7 @@ function IntroVoca({ voca = {}, isActive, callback }) {
         )}
         {run1 >= 2 && (
           <CSSTransition
-            className="jp"
+            classNames="jp"
             key={2}
             timeout={duration}
             onEntered={() => {
@@ -232,7 +235,7 @@ function IntroVoca({ voca = {}, isActive, callback }) {
         )}
         {run1 >= 3 && (
           <CSSTransition
-            className="jp"
+            classNames="jp"
             key={3}
             timeout={duration}
             onEntered={() => {
@@ -260,3 +263,90 @@ function IntroVoca({ voca = {}, isActive, callback }) {
 }
 
 // LIST COMPONENT
+const useStyles2 = makeStyles((theme) => ({
+  DisplayVocas: {
+    position: "absolute",
+    zIndex: 0,
+    top: "50%",
+    left: "50%",
+    transform: "translateY(-50%) translateX(-50%)",
+    width: "100%",
+    "& .one-voca": {
+      transition: `all ${duration}ms ease-in`,
+      backgroundColor: theme.palette.background.paper,
+      borderRadius: theme.spacing(1),
+      marginBottom: theme.spacing(1),
+      "& :hover": {
+        backgroundColor: theme.palette.info.light,
+      },
+    },
+    "& .one-voca-enter": {
+      opacity: 0,
+      // transform: "translateY(-200%)",
+    },
+    "& .one-voca-enter-active": {
+      opacity: 1,
+      // transform: "translateY(0%)",
+      transition: `all ${duration}ms ease-in`,
+    },
+  },
+}));
+function DisplayVocas({ vocas = [] }) {
+  const classes = useStyles2();
+  const [vocasRender, setVocasRender] = React.useState([]);
+  const handleToggleShowMeaning = (id) => {
+    const newVocaRender = vocasRender.map((el) =>
+      el.id === id ? { ...el, isShow: !el.isShow } : el
+    );
+    setVocasRender(newVocaRender);
+  };
+  React.useEffect(() => {
+    if (vocas.length) {
+      setVocasRender([
+        { ...vocas[vocas.length - 1], isShow: false },
+        ...vocasRender,
+      ]);
+    }
+  }, [vocas]);
+  if (!vocas.length) return null;
+  return (
+    <Container className={classes.DisplayVocas}>
+      <List
+      //  style={{ backgroundColor: theme.palette.background.paper }}
+      >
+        <TransitionGroup className="vocas-group">
+          {vocasRender.map((voca) => {
+            return (
+              <CSSTransition
+                key={voca.id}
+                classNames="one-voca"
+                timeout={duration}
+              >
+                <ListItem className="one-voca">
+                  <ListItemText
+                    id={voca.id}
+                    hidden={voca.isShow}
+                    primary={voca.voca}
+                  />
+                  <ListItemText
+                    id={voca.id}
+                    hidden={!voca.isShow}
+                    secondary={voca.meaning}
+                  />
+                  <ListItemSecondaryAction>
+                    <Switch
+                      checked={!voca.isShow}
+                      edge="end"
+                      onChange={() => handleToggleShowMeaning(voca.id)}
+                      inputProps={{ "aria-labelledby": voca.id }}
+                    />
+                  </ListItemSecondaryAction>
+                </ListItem>
+              </CSSTransition>
+            );
+          })}
+        </TransitionGroup>
+      </List>
+    </Container>
+  );
+}

@@ -20,9 +20,8 @@ const speakHelper = (content, lang, speed) => {
       reject(content + ": Content must not be string and not empty !!!");
     }
     if (isServer) reject("This function can not be called in server");
-    if (speechSynthesis.speaking) {
-      reject("We are speaking, please waiting!!!");
-    }
+    // cancle all current speaking action to speak a new word:
+    speechSynthesis.cancel();
 
     const utterThis = new SpeechSynthesisUtterance(content);
     utterThis.onerror = (e) => {
