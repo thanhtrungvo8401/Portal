@@ -116,7 +116,7 @@ export default function StudyModal({}) {
   );
 }
 
-export const bgStepXStudy = {
+export const bgStep_X_Study = {
   width: "100%",
   height: "100%",
   top: 0,
@@ -127,3 +127,16 @@ export const bgStepXStudy = {
   backgroundImage:
     "linear-gradient(to left top, #ffffff, #e9e4fb, #d4caf7, #c1aff1, #ae94ea, #ae94ea, #ae94ea, #ae94ea, #c1aff1, #d4caf7, #e9e4fb, #ffffff)",
 };
+
+export const styleStep_X_StudyUI = {
+  width: "100%",
+  maxWidth: 600,
+  margin: "0 auto",
+  position: "absolute",
+  top: 0,
+  left: "50%",
+  transform: "translateX(-50%)",
+  height: "100%",
+};
+
+export const animationDuration = 500;

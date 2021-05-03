@@ -17,21 +17,12 @@ import { jpSpeak, otherSpeack } from "../../../utils/textToSpeech";
 import VolumeUpRoundedIcon from "@material-ui/icons/VolumeUpRounded";
 import SyncRoundedIcon from "@material-ui/icons/SyncRounded";
 import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
+import { animationDuration, styleStep_X_StudyUI } from "./StudyModal";
 
 // MAIN UI
 const useStyles = makeStyles(() => ({
-  Step2StudyUI: {
-    width: "100%",
-    maxWidth: 600,
-    margin: "0 auto",
-    position: "absolute",
-    top: 0,
-    left: "50%",
-    transform: "translateX(-50%)",
-    height: "100%",
-  },
+  Step2StudyUI: styleStep_X_StudyUI,
 }));
-const duration = 500;
 
 export default function Step2StudyUI({ study, actionUpdateBg }) {
   const classes = useStyles();
@@ -62,7 +53,7 @@ export default function Step2StudyUI({ study, actionUpdateBg }) {
   React.useEffect(() => {
     setTimeout(() => {
       introAnimationIn();
-    }, duration);
+    }, animationDuration);
   }, []);
 
   return (
@@ -96,7 +87,7 @@ export default function Step2StudyUI({ study, actionUpdateBg }) {
       )}
       <CSSTransition
         in={Boolean(isActiveIntroVoca)}
-        timeout={duration}
+        timeout={animationDuration}
         classNames="voca-intro"
         onEntered={handleAfterEnter}
         onExited={handleAfterExit}
@@ -155,13 +146,13 @@ const useStyles1 = makeStyles((theme) => ({
       opacity: 1,
       top: "50%",
       transform: "translateY(-50%) translateX(-50%)",
-      transition: `all ${duration}ms ease-in`,
+      transition: `all ${animationDuration}ms ease-in`,
     },
     "&.voca-intro-enter-done": {
       opacity: 1,
       top: "50%",
       transform: "translateY(-50%) translateX(-50%)",
-      transition: `all ${duration}ms ease-in`,
+      transition: `all ${animationDuration}ms ease-in`,
     },
     "&.voca-intro-exit": {
       opacity: 1,
@@ -172,7 +163,7 @@ const useStyles1 = makeStyles((theme) => ({
       opacity: 0,
       top: 0,
       transform: "translateY(-100%) translateX(-50%)",
-      transition: `all ${duration}ms ease-in`,
+      transition: `all ${animationDuration}ms ease-in`,
     },
     // voca in intro-voca:
     "& .jp-enter": {
@@ -180,14 +171,14 @@ const useStyles1 = makeStyles((theme) => ({
     },
     "& .jp-enter-active": {
       opacity: 1,
-      transition: `opacity ${duration}ms ease-in`,
+      transition: `opacity ${animationDuration}ms ease-in`,
     },
     "& .jp-exit": {
       opacity: 1,
     },
     "& .jp-exit-active": {
       opacity: 0,
-      transition: `opacity ${duration}ms ease-in`,
+      transition: `opacity ${animationDuration}ms ease-in`,
     },
   },
 }));
@@ -222,7 +213,7 @@ function IntroVoca({ voca = {}, isActive, callback }) {
     if (isActive) {
       setTimeout(() => {
         nextRun1();
-      }, duration);
+      }, animationDuration);
     } else {
       setRun1(0);
     }
@@ -234,7 +225,7 @@ function IntroVoca({ voca = {}, isActive, callback }) {
           <CSSTransition
             classNames="jp"
             key={1}
-            timeout={duration}
+            timeout={animationDuration}
             onEntered={() => {
               jpSpeak({ content: voca["voca"] })
                 .then(() => {
@@ -255,7 +246,7 @@ function IntroVoca({ voca = {}, isActive, callback }) {
           <CSSTransition
             classNames="jp"
             key={2}
-            timeout={duration}
+            timeout={animationDuration}
             onEntered={() => {
               otherSpeack({ content: voca["meaning"] })
                 .then(() => {
@@ -279,7 +270,7 @@ function IntroVoca({ voca = {}, isActive, callback }) {
           <CSSTransition
             classNames="jp"
             key={3}
-            timeout={duration}
+            timeout={animationDuration}
             onEntered={() => {
               jpSpeak({ content: voca["sentence"] })
                 .then(() => {
@@ -315,7 +306,7 @@ const useStyles2 = makeStyles((theme) => ({
     width: "100%",
     textAlign: "center",
     "& .one-voca": {
-      transition: `all ${duration}ms ease-in`,
+      transition: `all ${animationDuration}ms ease-in`,
       backgroundColor: theme.palette.background.paper,
       borderRadius: theme.spacing(1),
       marginBottom: theme.spacing(1),
@@ -332,14 +323,14 @@ const useStyles2 = makeStyles((theme) => ({
     },
     "& .one-voca-enter-active": {
       opacity: 1,
-      transition: `all ${duration}ms ease-in`,
+      transition: `all ${animationDuration}ms ease-in`,
     },
     "& .one-voca-exit": {
       opacity: 1,
     },
     "& .one-voca-exit-active": {
       opacity: 0,
-      transition: `all ${duration}ms ease-in`,
+      transition: `all ${animationDuration}ms ease-in`,
     },
     // Voca Meaning
     "& .voca-meaning": {
@@ -362,7 +353,7 @@ const useStyles2 = makeStyles((theme) => ({
     "& .voca-meaning-enter-active": {
       transform: "translateX(0%)",
       opacity: 1,
-      transition: `all ${duration}ms ease-in`,
+      transition: `all ${animationDuration}ms ease-in`,
     },
     "& .voca-meaning-enter-done": {
       transform: "translateX(0%)",
@@ -375,7 +366,7 @@ const useStyles2 = makeStyles((theme) => ({
     "& .voca-meaning-exit-active": {
       transform: "translateX(-100%)",
       opacity: 0,
-      transition: `all ${duration}ms ease-in`,
+      transition: `all ${animationDuration}ms ease-in`,
     },
     "& .voca-meaning-exit-done": {
       transform: "translateX(-100%)",
@@ -403,7 +394,7 @@ function DisplayVocas({ vocas = [] }) {
         oldList.splice(rand, 1);
       }
       setVocasRender(newList);
-    }, duration);
+    }, animationDuration);
   };
   React.useEffect(() => {
     if (vocas.length) {
@@ -423,7 +414,7 @@ function DisplayVocas({ vocas = [] }) {
               <CSSTransition
                 key={voca.id}
                 classNames="one-voca"
-                timeout={duration}
+                timeout={animationDuration}
               >
                 <ListItem
                   className="one-voca"
@@ -436,7 +427,7 @@ function DisplayVocas({ vocas = [] }) {
                   {/* VN */}
                   <CSSTransition
                     classNames="voca-meaning"
-                    timeout={duration}
+                    timeout={animationDuration}
                     in={voca.isShow}
                   >
                     <Typography

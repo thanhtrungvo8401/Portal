@@ -1,9 +1,9 @@
 import { makeStyles } from "@material-ui/core";
 import Step2StudyUI from "./Step2StudyUI";
-import { bgStepXStudy } from "./StudyModal";
+import { bgStep_X_Study } from "./StudyModal";
 
 const useStyles = makeStyles((theme) => ({
-  step2Study: bgStepXStudy,
+  step2Study: bgStep_X_Study,
 }));
 
 export default function Step2Study({ study, hidden, actionUpdateBg }) {
