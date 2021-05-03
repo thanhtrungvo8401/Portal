@@ -12,7 +12,7 @@ import {
 import React from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { theme } from "../../../components/theme";
-import { getRandom } from "../../../utils/Helper";
+import { getRandom, getWidth } from "../../../utils/Helper";
 import { jpSpeak, otherSpeack } from "../../../utils/textToSpeech";
 import VolumeUpRoundedIcon from "@material-ui/icons/VolumeUpRounded";
 import SyncRoundedIcon from "@material-ui/icons/SyncRounded";
@@ -74,11 +74,14 @@ export default function Step2StudyUI({ study, actionUpdate }) {
             backgroundColor: "rgba(0, 0, 0, 0.87)",
             opacity: 0.3,
             position: "absolute",
-            width: "100vw",
+            width: "200vw",
             height: "100vh",
             left: 0,
             top: 0,
-            transform: "translateX(calc(300px - 50%))",
+            transform:
+              getWidth > 600
+                ? "translateX(calc(200px - 50%))"
+                : "translateX(0)",
             zIndex: 1,
           }}
         ></div>
@@ -439,7 +442,7 @@ function DisplayVocas({ vocas = [] }) {
         color="primary"
       >
         <SyncRoundedIcon />
-        Random
+        Random vocas
       </Button>
     </Container>
   );

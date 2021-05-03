@@ -1,12 +1,10 @@
-import { makeStyles, Paper, Tab, Tabs } from "@material-ui/core";
+import { Paper, Tab, Tabs } from "@material-ui/core";
 import CastForEducationIcon from "@material-ui/icons/CastForEducation";
 import FiberNewIcon from "@material-ui/icons/FiberNew";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 import React, { useEffect, useState } from "react";
 import { appUrl } from "../../utils/APP_URL";
-import { isServer } from "../../utils/Helper";
-
-// const useStyles = makeStyles((theme) => ({}));
+import { getWidth } from "../../utils/Helper";
 
 export const listTabItem = [
   { Icon: MenuBookIcon, label: "Nhớ từ" },
@@ -19,14 +17,12 @@ export const listTabItem = [
 ];
 
 export default function MultiTabStudy({ activeTab, setActiveTab }) {
-  const [isDestop, setIsDesktop] = useState(
-    !isServer && window.innerWidth > 600
-  );
+  const [isDestop, setIsDesktop] = useState(getWidth > 600);
   const listenerResizeScreen = () => {
-    if (window.innerWidth < 600) {
+    if (getWidth < 600) {
       setIsDesktop(false);
     }
-    if (window.innerWidth > 600) {
+    if (getWidth > 600) {
       setIsDesktop(true);
     }
   };
