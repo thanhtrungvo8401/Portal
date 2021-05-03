@@ -4,10 +4,8 @@ import {
   List,
   ListItem,
   ListItemSecondaryAction,
-  ListItemText,
   makeStyles,
   Paper,
-  Switch,
   Typography,
 } from "@material-ui/core";
 import React from "react";
@@ -15,6 +13,7 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { theme } from "../../../components/theme";
 import { getRandom } from "../../../utils/Helper";
 import { jpSpeak, otherSpeack } from "../../../utils/textToSpeech";
+import VolumeUpRoundedIcon from "@material-ui/icons/VolumeUpRounded";
 
 // MAIN UI
 const useStyles = makeStyles(() => ({
@@ -276,18 +275,60 @@ const useStyles2 = makeStyles((theme) => ({
       backgroundColor: theme.palette.background.paper,
       borderRadius: theme.spacing(1),
       marginBottom: theme.spacing(1),
-      "& :hover": {
-        backgroundColor: theme.palette.info.light,
+      cursor: "pointer",
+      position: "relative",
+      overflow: "hidden",
+      "&:hover": {
+        boxShadow:
+          "0px 3px 3px -2px rgb(0 0 0 / 20%), 0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%)",
       },
     },
     "& .one-voca-enter": {
       opacity: 0,
-      // transform: "translateY(-200%)",
     },
     "& .one-voca-enter-active": {
       opacity: 1,
-      // transform: "translateY(0%)",
       transition: `all ${duration}ms ease-in`,
+    },
+    // Voca Meaning
+    "& .voca-meaning": {
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      left: 0,
+      top: 0,
+      zIndex: 1,
+      padding: "8px 48px 8px 16px",
+      boxSizing: "border-box",
+      backgroundColor: theme.palette.background.paper,
+      transform: "translateX(-100%)",
+      opacity: 0,
+    },
+    "& .voca-meaning-enter": {
+      transform: "translateX(100%)",
+      opacity: 0,
+    },
+    "& .voca-meaning-enter-active": {
+      transform: "translateX(0%)",
+      opacity: 1,
+      transition: `all ${duration}ms ease-in`,
+    },
+    "& .voca-meaning-enter-done": {
+      transform: "translateX(0%)",
+      opacity: 1,
+    },
+    "& .voca-meaning-exit": {
+      transform: "translateX(0%)",
+      opacity: 1,
+    },
+    "& .voca-meaning-exit-active": {
+      transform: "translateX(-100%)",
+      opacity: 0,
+      transition: `all ${duration}ms ease-in`,
+    },
+    "& .voca-meaning-exit-done": {
+      transform: "translateX(-100%)",
+      opacity: 0,
     },
   },
 }));
@@ -311,9 +352,7 @@ function DisplayVocas({ vocas = [] }) {
   if (!vocas.length) return null;
   return (
     <Container className={classes.DisplayVocas}>
-      <List
-      //  style={{ backgroundColor: theme.palette.background.paper }}
-      >
+      <List>
         <TransitionGroup className="vocas-group">
           {vocasRender.map((voca) => {
             return (
@@ -322,23 +361,36 @@ function DisplayVocas({ vocas = [] }) {
                 classNames="one-voca"
                 timeout={duration}
               >
-                <ListItem className="one-voca">
-                  <ListItemText
-                    id={voca.id}
-                    hidden={voca.isShow}
-                    primary={voca.voca}
-                  />
-                  <ListItemText
-                    id={voca.id}
-                    hidden={!voca.isShow}
-                    secondary={voca.meaning}
-                  />
-                  <ListItemSecondaryAction>
-                    <Switch
-                      checked={!voca.isShow}
-                      edge="end"
-                      onChange={() => handleToggleShowMeaning(voca.id)}
-                      inputProps={{ "aria-labelledby": voca.id }}
+                <ListItem
+                  className="one-voca"
+                  onClick={() => handleToggleShowMeaning(voca.id)}
+                >
+                  {/* JP */}
+                  <Typography color="primary" variant="h6">
+                    {voca.voca}
+                  </Typography>
+                  {/* VN */}
+                  <CSSTransition
+                    classNames="voca-meaning"
+                    timeout={duration}
+                    in={voca.isShow}
+                  >
+                    <Typography
+                      className="voca-meaning"
+                      color="textSecondary"
+                      style={{ fontWeight: "lighter" }}
+                      variant="h6"
+                    >
+                      {voca.meaning}
+                    </Typography>
+                  </CSSTransition>
+                  <ListItemSecondaryAction
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <VolumeUpRoundedIcon
+                      onClick={() => jpSpeak({ content: voca.voca })}
+                      style={{ cursor: "pointer" }}
+                      color="primary"
                     />
                   </ListItemSecondaryAction>
                 </ListItem>
