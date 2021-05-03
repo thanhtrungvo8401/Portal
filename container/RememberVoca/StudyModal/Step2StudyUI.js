@@ -1,4 +1,5 @@
 import {
+  Button,
   Container,
   Divider,
   List,
@@ -14,6 +15,7 @@ import { theme } from "../../../components/theme";
 import { getRandom } from "../../../utils/Helper";
 import { jpSpeak, otherSpeack } from "../../../utils/textToSpeech";
 import VolumeUpRoundedIcon from "@material-ui/icons/VolumeUpRounded";
+import SyncRoundedIcon from "@material-ui/icons/SyncRounded";
 
 // MAIN UI
 const useStyles = makeStyles(() => ({
@@ -65,6 +67,7 @@ export default function Step2StudyUI({ study, actionUpdate }) {
   return (
     <div className={classes.Step2StudyUI}>
       <DisplayVocas vocas={listIntroduced} />
+      {/* BG_DIV */}
       {isActiveIntroVoca && (
         <div
           style={{
@@ -80,12 +83,6 @@ export default function Step2StudyUI({ study, actionUpdate }) {
           }}
         ></div>
       )}
-      <h2
-        style={{ cursor: "pointer" }}
-        onClick={() => actionUpdate({ ...study, step: 1 })}
-      >
-        Reset
-      </h2>
       <CSSTransition
         in={Boolean(isActiveIntroVoca)}
         timeout={duration}
@@ -285,6 +282,7 @@ const useStyles2 = makeStyles((theme) => ({
     left: "50%",
     transform: "translateY(-50%) translateX(-50%)",
     width: "100%",
+    textAlign: "center",
     "& .one-voca": {
       transition: `all ${duration}ms ease-in`,
       backgroundColor: theme.palette.background.paper,
@@ -303,6 +301,13 @@ const useStyles2 = makeStyles((theme) => ({
     },
     "& .one-voca-enter-active": {
       opacity: 1,
+      transition: `all ${duration}ms ease-in`,
+    },
+    "& .one-voca-exit": {
+      opacity: 1,
+    },
+    "& .one-voca-exit-active": {
+      opacity: 0,
       transition: `all ${duration}ms ease-in`,
     },
     // Voca Meaning
@@ -355,6 +360,19 @@ function DisplayVocas({ vocas = [] }) {
       el.id === id ? { ...el, isShow: !el.isShow } : el
     );
     setVocasRender(newVocaRender);
+  };
+  const handleRandomVoca = () => {
+    const oldList = [...vocasRender];
+    const newList = [];
+    setVocasRender([]);
+    setTimeout(() => {
+      while (oldList.length > 0) {
+        const rand = getRandom(0, oldList.length - 1);
+        newList.push(oldList[rand]);
+        oldList.splice(rand, 1);
+      }
+      setVocasRender(newList);
+    }, duration);
   };
   React.useEffect(() => {
     if (vocas.length) {
@@ -414,6 +432,15 @@ function DisplayVocas({ vocas = [] }) {
           })}
         </TransitionGroup>
       </List>
+
+      <Button
+        onClick={() => handleRandomVoca()}
+        variant="contained"
+        color="primary"
+      >
+        <SyncRoundedIcon />
+        Random
+      </Button>
     </Container>
   );
 }
