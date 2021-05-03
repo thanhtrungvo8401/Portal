@@ -14,7 +14,9 @@ import {
   actionSetRememberGroup,
   actionSetIsStudy,
 } from "../../redux/actions/rememberGroupAction";
+import { appUrl } from "../../utils/APP_URL";
 import { formatDate } from "../../utils/DateHelper";
+import { navigate } from "../../utils/Helper";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -82,9 +84,9 @@ export default function Remember({ remember = {}, actionDelete }) {
         <Button
           color="primary"
           onClick={() => {
-            // Important note: => always dispatch(REMEMBER) before dispatch(IS_STUDY);
-            dispatch(actionSetRememberGroup(remember));
-            dispatch(actionSetIsStudy(true));
+            // Important note: => always reset REMEMBER = {} before navigate to remember-group-detail
+            dispatch(actionSetRememberGroup({}));
+            navigate(appUrl.rememberVocaWithId(remember.id));
           }}
         >
           Study now

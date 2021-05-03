@@ -73,7 +73,7 @@ function RememberVocasLayout({
       {/* MODAL DISPLAY */}
       <CreateRememberGroupModal onSubmit={submitCreateRemember} />
       <UpdateRememberGroupModal onSubmit={submitUpdateRemember} />
-      <StudyModal />
+      {/* <StudyModal /> */}
       {/* display list remember-group*/}
       <div
         style={{
