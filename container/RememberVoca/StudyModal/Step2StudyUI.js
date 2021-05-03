@@ -16,6 +16,7 @@ import { getRandom, getWidth } from "../../../utils/Helper";
 import { jpSpeak, otherSpeack } from "../../../utils/textToSpeech";
 import VolumeUpRoundedIcon from "@material-ui/icons/VolumeUpRounded";
 import SyncRoundedIcon from "@material-ui/icons/SyncRounded";
+import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
 
 // MAIN UI
 const useStyles = makeStyles(() => ({
@@ -32,7 +33,7 @@ const useStyles = makeStyles(() => ({
 }));
 const duration = 500;
 
-export default function Step2StudyUI({ study, actionUpdate }) {
+export default function Step2StudyUI({ study, actionUpdateBg }) {
   const classes = useStyles();
   const [list, setList] = React.useState([...study.vocas]);
   const [listIntroduced, setListIntroduced] = React.useState([]);
@@ -106,6 +107,26 @@ export default function Step2StudyUI({ study, actionUpdate }) {
           voca={voca}
         />
       </CSSTransition>
+
+      <div
+        style={{
+          position: "absolute",
+          width: "100%",
+          left: 0,
+          bottom: theme.spacing(3),
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Button
+          onClick={() => actionUpdateBg({ step: 3 })}
+          variant="contained"
+          color="primary"
+        >
+          Qua bước tiếp theo
+          <DoubleArrowIcon />
+        </Button>
+      </div>
     </div>
   );
 }
@@ -445,11 +466,11 @@ function DisplayVocas({ vocas = [] }) {
 
       <Button
         onClick={() => handleRandomVoca()}
-        variant="contained"
+        variant="outlined"
         color="primary"
       >
         <SyncRoundedIcon />
-        Random vocas
+        Trộn từ
       </Button>
     </Container>
   );

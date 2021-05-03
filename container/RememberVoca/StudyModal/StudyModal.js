@@ -14,6 +14,7 @@ import { actionSetIsStudy } from "../../../redux/actions/rememberGroupAction";
 import Step1Study from "./Step1Study";
 import Step2Study from "./Step2Study";
 import StudyBg from "./StudyBg";
+import Step3Study from "./Step3Study";
 
 const Transition = React.forwardRef((props, ref) => {
   return <Slide direction="down" ref={ref} {...props} />;
@@ -100,11 +101,9 @@ export default function StudyModal({}) {
           />
         )}
         {study.step === 2 && (
-          <Step2Study
-            study={study}
-            actionUpdate={setStudy}
-          />
+          <Step2Study study={study} actionUpdateBg={setBgAni} />
         )}
+        {study.step === 3 && <Step3Study />}
 
         <StudyBg
           bgAni={bgAni}
@@ -116,3 +115,15 @@ export default function StudyModal({}) {
     </Dialog>
   );
 }
+
+export const bgStepXStudy = {
+  width: "100%",
+  height: "100%",
+  top: 0,
+  left: 0,
+  margin: "0 auto",
+  zIndex: 0,
+  position: "absolute",
+  backgroundImage:
+    "linear-gradient(to left top, #ffffff, #e9e4fb, #d4caf7, #c1aff1, #ae94ea, #ae94ea, #ae94ea, #ae94ea, #c1aff1, #d4caf7, #e9e4fb, #ffffff)",
+};
