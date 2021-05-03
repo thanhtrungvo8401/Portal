@@ -65,6 +65,21 @@ export default function Step2StudyUI({ study, actionUpdate }) {
   return (
     <div className={classes.Step2StudyUI}>
       <DisplayVocas vocas={listIntroduced} />
+      {isActiveIntroVoca && (
+        <div
+          style={{
+            backgroundColor: "rgba(0, 0, 0, 0.87)",
+            opacity: 0.3,
+            position: "absolute",
+            width: "100vw",
+            height: "100vh",
+            left: 0,
+            top: 0,
+            transform: "translateX(calc(300px - 50%))",
+            zIndex: 1,
+          }}
+        ></div>
+      )}
       <h2
         style={{ cursor: "pointer" }}
         onClick={() => actionUpdate({ ...study, step: 1 })}
@@ -95,7 +110,7 @@ const useStyles1 = makeStyles((theme) => ({
     minWidth: "300px",
     padding: `${theme.spacing(2)}px ${theme.spacing(1)}px`,
     position: "absolute",
-    zIndex: 1,
+    zIndex: 2,
     textAlign: "Center",
     top: "50%",
     left: "50%",
