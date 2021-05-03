@@ -4,10 +4,10 @@ import theme from "../../../components/theme";
 import styles from "./styles.module.css";
 const useStyles = makeStyles((theme) => ({
   bgAnimation: {
-    position: "absolute",
+    position: "fixed",
     left: 0,
     bottom: "120%",
-    zIndex: 1,
+    zIndex: 501,
     height: "120%",
     width: "100%",
     background: `linear-gradient(0deg, transparent 0%, #fff 30%, #fff 100%)`,

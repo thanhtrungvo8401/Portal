@@ -1,47 +1,18 @@
 import React, { useEffect } from "react";
-import {
-  Dialog,
-  DialogContent,
-  IconButton,
-  makeStyles,
-  Slide,
-  Typography,
-} from "@material-ui/core";
-import HighlightOffIcon from "@material-ui/icons/HighlightOffOutlined";
-import { useDispatch, useSelector } from "react-redux";
-import { serviceGetVocasByCodes } from "../../../service/vocaService";
-import { actionSetIsStudy } from "../../../redux/actions/rememberGroupAction";
+import { makeStyles } from "@material-ui/core";
+import { useSelector } from "react-redux";
 import Step1Study from "./Step1Study";
 import Step2Study from "./Step2Study";
 import StudyBg from "./StudyBg";
 import Step3Study from "./Step3Study";
+import BreadcrumbsCustom from "../../../components/Breadcrumbs/Breadcrumbs";
+import PageTitle from "../../../components/PageComponent/PageTitle";
 
-const Transition = React.forwardRef((props, ref) => {
-  return <Slide direction="down" ref={ref} {...props} />;
-});
-const useStyles = makeStyles((theme) => ({
-  studyModal: {
-    "& .MuiPaper-root.MuiDialog-paper": {
-      margin: 0,
-      width: "100%",
-      height: "100%",
-      maxWidth: "100%!important",
-      maxHeight: "100%!important",
-      borderRadius: 0,
-      overflow: "hidden",
-      position: "relative",
-    },
-  },
-  studyModalHeader: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "0px 24px",
-    maxWidth: 600,
-    width: "100%",
-    margin: "0 auto",
-  },
-}));
+import HomeIcon from "@material-ui/icons/Home";
+import MenuBookIcon from "@material-ui/icons/MenuBook";
+import { appUrl } from "../../../utils/APP_URL";
+
+const useStyles = makeStyles((theme) => ({}));
 const initState = {
   vocas: [],
   inActiveVocas: [],
@@ -50,69 +21,52 @@ const initState = {
 const initBg = { step: 0 };
 export default function StudyModal({}) {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const { IS_STUDY, rememberGroup } = useSelector(
-    (state) => state.rememberGroups
-  );
   const { list } = useSelector((state) => state.vocas);
 
   const [study, setStudy] = React.useState({ ...initState });
   const [bgAni, setBgAni] = React.useState({ ...initBg });
 
-  useEffect(() => {
-    if (IS_STUDY) {
-      dispatch(serviceGetVocasByCodes(rememberGroup.vocaCodes));
-    } else {
-      setStudy({ ...initState });
-      setBgAni({ ...initBg });
-    }
-  }, [IS_STUDY]);
   // update data after fetch vocas:
   useEffect(() => {
     setStudy({ ...study, vocas: list, inActiveVocas: [] });
   }, [list]);
   return (
-    <Dialog
-      open={IS_STUDY}
-      TransitionComponent={Transition}
-      aria-labelledby="alert-dialog-slide-title"
-      keepMounted
-      className={classes.studyModal}
-      style={{ zIndex: 500 }}
-    >
-      {/* TITLE */}
-      <div className={classes.studyModalHeader}>
-        <Typography color="primary">MEOMEO-kun.com</Typography>
-        <IconButton
-          onClick={() => {
-            dispatch(actionSetIsStudy(false));
-          }}
-          style={{ marginRight: "-12px" }}
-        >
-          <HighlightOffIcon color="primary" fontSize="large" />
-        </IconButton>
-      </div>
-      <DialogContent>
-        {study.step === 1 && (
-          <Step1Study
-            study={study}
-            actionUpdate={setStudy}
-            actionUpdateBg={setBgAni}
-          />
-        )}
-        {study.step === 2 && (
-          <Step2Study study={study} actionUpdateBg={setBgAni} />
-        )}
-        {study.step === 3 && <Step3Study />}
-
-        <StudyBg
-          bgAni={bgAni}
-          actionUpdateBg={setBgAni}
+    <React.Fragment>
+      <BreadcrumbsCustom
+        parents={[
+          {
+            Icon: HomeIcon,
+            label: "Study room",
+            url: appUrl.studyRoom(),
+          },
+          {
+            Icon: MenuBookIcon,
+            label: "Remember group",
+            url: appUrl.rememberVoca(),
+          },
+        ]}
+        label="Danh sach tu vung"
+      />
+      <PageTitle>Try to remember all the words</PageTitle>
+      {study.step === 1 && (
+        <Step1Study
           study={study}
           actionUpdate={setStudy}
+          actionUpdateBg={setBgAni}
         />
-      </DialogContent>
-    </Dialog>
+      )}
+      {study.step === 2 && (
+        <Step2Study study={study} actionUpdateBg={setBgAni} />
+      )}
+      {study.step === 3 && <Step3Study />}
+
+      <StudyBg
+        bgAni={bgAni}
+        actionUpdateBg={setBgAni}
+        study={study}
+        actionUpdate={setStudy}
+      />
+    </React.Fragment>
   );
 }
 
@@ -122,8 +76,8 @@ export const bgStep_X_Study = {
   top: 0,
   left: 0,
   margin: "0 auto",
-  zIndex: 0,
-  position: "absolute",
+  zIndex: 500,
+  position: "fixed",
   backgroundImage:
     "linear-gradient(to left top, #ffffff, #e9e4fb, #d4caf7, #c1aff1, #ae94ea, #ae94ea, #ae94ea, #ae94ea, #c1aff1, #d4caf7, #e9e4fb, #ffffff)",
 };
