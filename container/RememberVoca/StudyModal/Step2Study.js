@@ -10,8 +10,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 auto",
     zIndex: 0,
     position: "absolute",
-    backgroundImage:
-      "linear-gradient(to left top, #976fdf, #a88ae7, #bba5ef, #cec0f5, #e2dbfa, #e2dbfa, #e2dbfa, #e2dbfa, #cec0f5, #bba5ef, #a88ae7, #976fdf)",
+    backgroundImage: `linear-gradient(to left top, #ffffff, #e9e4fb, #d4caf7, #c1aff1, #ae94ea, #ae94ea, #ae94ea, #ae94ea, #c1aff1, #d4caf7, #e9e4fb, #ffffff)`,
   },
 }));
 

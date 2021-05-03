@@ -66,6 +66,13 @@ export default function Step2StudyUI({ study, actionUpdate }) {
 
   return (
     <div className={classes.Step2StudyUI}>
+      <Container style={{ paddingTop: theme.spacing(1) }}>
+        <Typography color="primary">
+          Cố gắng nhìn từ và đoán nghĩa của từ. Bạn có thế click (
+          <VolumeUpRoundedIcon style={{ transform: `translateY(6px)` }} />) để
+          nghe cách đọc và click vào từ để xem nghĩa của nó
+        </Typography>
+      </Container>
       <DisplayVocas vocas={listIntroduced} />
       {/* BG_DIV */}
       {isActiveIntroVoca && (
