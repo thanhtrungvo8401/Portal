@@ -10,7 +10,7 @@ export default function Step3Study({ study, hidden }) {
   const classes = useStyles();
   return (
     <div hidden={hidden} className={classes.step3Study}>
-      <Step3StudyUI />
+      <Step3StudyUI study={study} />
     </div>
   );
 }
