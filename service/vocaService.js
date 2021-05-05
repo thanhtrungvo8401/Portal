@@ -32,6 +32,18 @@ export const serviceFetVocaBySetId = (setId, actionAfterCallApi) => {
   };
 };
 
+export const serviceFetVocaRandomByLevel = (level) => {
+  return (dispatch) => {
+    API.get(enpoint_voca.fetVocasRandom(level))
+      .then((res) => {
+        dispatch(actionSetVocabularyList(res.data));
+      })
+      .catch((err) => {
+        handleErrorAPI(err, "toast");
+      });
+  };
+};
+
 export const serviceCreateVoca = (voca) => {
   return (dispatch) => {
     API.post(enpoint_voca.create(), voca)

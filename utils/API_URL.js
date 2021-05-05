@@ -19,6 +19,7 @@ export const enpoint_setVoca = {
 
 export const enpoint_voca = {
   fetVocas: (setId) => `${BASE_API_COMMON}/set-vocas/${setId}/vocas`,
+  fetVocasRandom: (level) => `${BASE_API_COMMON}/vocas/random/${level}`,
   create: () => `${BASE_API_COMMON}/vocas`,
   getByCodes: () => `${BASE_API_COMMON}/vocas`,
   update: (id) => `${BASE_API_COMMON}/vocas/${id}`,
