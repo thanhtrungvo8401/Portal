@@ -64,6 +64,9 @@ const useStyles = makeStyles((theme) => ({
       transition: `all ${animationDuration}ms ease-in`,
     },
     // result-emotion ENTER:
+    "& .result-emotion": {
+      opacity: 0,
+    },
     "& .result-emotion-enter": {
       opacity: 0,
     },
@@ -103,18 +106,19 @@ export default function Step3StudyUI({ study, actionUpdateBg }) {
   const meaningOptions = React.useMemo(() => {
     return generateMeaningOptions(list, vocasRandom);
   }, [vocasRandom]);
-
-  const startQandA = () => {
-    const random = getRandom(0, list.length - 1);
-    const vocaQA = list[random];
-    setVoca(vocaQA);
-    setListAnswer([...listAnswer, vocaQA]);
-    setList(list.filter((v) => v.id !== vocaQA.id));
+  const nextQandA = () => {
+    if (list.length > 0) {
+      const random = getRandom(0, list.length - 1);
+      const vocaQA = { ...list[random], isIn: true };
+      setVoca(vocaQA);
+      setListAnswer([...listAnswer, vocaQA]);
+      setList(list.filter((v) => v.id !== vocaQA.id));
+    }
   };
 
   React.useEffect(() => {
     if (vocasRandom.length === VOCA_RANDOM_LIMIT) {
-      startQandA();
+      nextQandA();
     }
   }, [vocasRandom]);
   React.useEffect(() => {
@@ -132,12 +136,13 @@ export default function Step3StudyUI({ study, actionUpdateBg }) {
         <Typography color="primary">Chọn nghĩa cho từ bên dưới</Typography>
         {/* Voca*/}
         <CSSTransition
-          in={Boolean(voca.voca)}
-          classNames="Q-A-voca"
+          in={voca.isIn}
           timeout={animationDuration}
-          onEnter={() => jpSpeak({ content: voca.voca })}
+          onEntered={() => jpSpeak({ content: voca.voca })}
+          onExited={() => nextQandA()}
         >
           <Paper
+            className="Q-A-voca"
             elevation={3}
             style={{
               padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
@@ -183,10 +188,14 @@ export default function Step3StudyUI({ study, actionUpdateBg }) {
             setTimeout(() => {
               setResultEmotion("");
               setSelectMeaning("");
+              setVoca({ ...voca, isIn: false });
             }, 2 * animationDuration);
           }}
         >
-          <div style={{ textAlign: "center", marginTop: theme.spacing(6) }}>
+          <div
+            style={{ textAlign: "center", marginTop: theme.spacing(6) }}
+            className="result-emotion"
+          >
             <InsertEmoticonIcon
               style={{
                 color: theme.palette.success.main,
@@ -212,7 +221,10 @@ export default function Step3StudyUI({ study, actionUpdateBg }) {
             }, 2 * animationDuration);
           }}
         >
-          <div style={{ textAlign: "center", marginTop: theme.spacing(6) }}>
+          <div
+            style={{ textAlign: "center", marginTop: theme.spacing(6) }}
+            className="result-emotion"
+          >
             <SentimentVeryDissatisfiedIcon
               style={{ color: theme.palette.error.main, fontSize: "5rem" }}
             />
