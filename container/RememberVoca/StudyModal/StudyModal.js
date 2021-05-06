@@ -79,7 +79,7 @@ export const bgStep_X_Study = {
   zIndex: 500,
   position: "fixed",
   backgroundImage:
-    "linear-gradient(to left top, #ffffff, #e9e4fb, #d4caf7, #c1aff1, #ae94ea, #ae94ea, #ae94ea, #ae94ea, #c1aff1, #d4caf7, #e9e4fb, #ffffff)",
+    "linear-gradient(to left top, #ae94ea, #bca8ef, #cabcf4, #d9d0f8, #e9e4fb, #e9e4fb, #e9e4fb, #e9e4fb, #d9d0f8, #cabcf4, #bca8ef, #ae94ea)",
 };
 
 export const styleStep_X_StudyUI = {

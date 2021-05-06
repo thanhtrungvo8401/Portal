@@ -47,3 +47,5 @@ export const ROLE_NAME = {
 };
 
 export const MAX_VOCA_IN_REMEMBER = 7;
+
+export const VOCA_RANDOM_LIMIT = 30;
