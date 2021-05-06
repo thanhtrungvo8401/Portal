@@ -13,14 +13,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Step3Study({ study, hidden }) {
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const [randVocas, setRandomVocas] = React.useState([]);
   React.useEffect(() => {
-    const level = localStorageHelper.get(storageKey.MY_JP_LEVEL) || 'N4';
-    dispatch(serviceFetVocaRandomByLevel(level));
+    const level = localStorageHelper.get(storageKey.MY_JP_LEVEL) || "N4";
+    serviceFetVocaRandomByLevel(level).then((vocas) => setRandomVocas(vocas));
   }, []);
   return (
     <div hidden={hidden} className={classes.step3Study}>
-      <Step3StudyUI study={study} />
+      <Step3StudyUI randVocas={randVocas} study={study} />
     </div>
   );
 }

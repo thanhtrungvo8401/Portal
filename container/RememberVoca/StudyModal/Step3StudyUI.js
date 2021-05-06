@@ -1,4 +1,6 @@
 import {
+  Box,
+  CircularProgress,
   Container,
   makeStyles,
   Paper,
@@ -8,7 +10,6 @@ import {
 import { CSSTransition } from "react-transition-group";
 import { Autocomplete } from "@material-ui/lab";
 import React from "react";
-import { useSelector } from "react-redux";
 import theme from "../../../components/theme";
 import { VOCA_RANDOM_LIMIT } from "../../../utils/Constant";
 import { getRandom } from "../../../utils/Helper";
@@ -33,6 +34,7 @@ const RESULT_EMOTION = { TRUE: "TRUE", FALSE: "FALSE" };
 const useStyles = makeStyles((theme) => ({
   Step3StudyUI: styleStep_X_StudyUI,
   Step3Animation: {
+    position: "relative",
     // Q-A-voca ENTER
     "& .Q-A-voca-enter": {
       opacity: 0,
@@ -92,151 +94,262 @@ const useStyles = makeStyles((theme) => ({
       transform: "translateY(50px)",
       transition: `all ${animationDuration}ms ease-in`,
     },
+    // FINISH STEP
+    "& .finish-step": {
+      position: "absolute",
+      top: "120%",
+      left: 0,
+      opacity: 0,
+    },
+    "& .finish-step-enter": {
+      opacity: 0,
+      top: "120%",
+    },
+    "& .finish-step-enter-active": {
+      opacity: 1,
+      top: "0",
+      transition: `all ${animationDuration}ms ease-in`,
+    },
+    "& .finish-step-enter-done": {
+      opacity: 1,
+      top: "0",
+      left: 0,
+      transition: `all ${animationDuration}ms ease-in`,
+    },
   },
 }));
 
-export default function Step3StudyUI({ study, actionUpdateBg }) {
+export default function Step3StudyUI({ study, actionUpdateBg, randVocas }) {
   const classes = useStyles();
+  const [isFinish, setIsFinish] = React.useState(false);
   const [list, setList] = React.useState([...study.vocas]);
-  const [listAnswer, setListAnswer] = React.useState([]);
+  const timeCoutDown = 2 * [...study.vocas].length;
+  const [countDown, setCountDown] = React.useState(timeCoutDown);
+  const [listAnswered, setListAnswered] = React.useState([]);
   const [voca, setVoca] = React.useState({});
   const [selectMeaning, setSelectMeaning] = React.useState("");
   const [resultEmotion, setResultEmotion] = React.useState("");
-  const vocasRandom = useSelector((state) => state.vocas.list);
   const meaningOptions = React.useMemo(() => {
-    return generateMeaningOptions(list, vocasRandom);
-  }, [vocasRandom]);
+    return generateMeaningOptions(list, randVocas);
+  }, [randVocas]);
   const nextQandA = () => {
     if (list.length > 0) {
       const random = getRandom(0, list.length - 1);
       const vocaQA = { ...list[random], isIn: true };
       setVoca(vocaQA);
-      setListAnswer([...listAnswer, vocaQA]);
+      setListAnswered([...listAnswered, vocaQA]);
       setList(list.filter((v) => v.id !== vocaQA.id));
+    } else {
+      setIsFinish(true);
     }
   };
 
   React.useEffect(() => {
-    if (vocasRandom.length === VOCA_RANDOM_LIMIT) {
+    if (randVocas.length) {
       nextQandA();
     }
-  }, [vocasRandom]);
+  }, [randVocas]);
   React.useEffect(() => {
     if (selectMeaning) {
-      if (selectMeaning == voca.meaning) {
+      if (selectMeaning.toLowerCase() === voca.meaning.toLowerCase()) {
         setResultEmotion(RESULT_EMOTION.TRUE);
       } else {
         setResultEmotion(RESULT_EMOTION.FALSE);
       }
     }
   }, [selectMeaning]);
+  React.useEffect(() => {
+    if (isFinish && countDown > 0) {
+      setTimeout(() => setCountDown(countDown - 0.1), 100);
+    } else if (isFinish) {
+      alert("DONE");
+    }
+  }, [isFinish, countDown]);
   return (
     <section className={`${classes.Step3StudyUI} ${classes.Step3Animation}`}>
-      <Container style={{ paddingTop: theme.spacing(1) }}>
-        <Typography color="primary">Chọn nghĩa cho từ bên dưới</Typography>
-        {/* Voca*/}
-        <CSSTransition
-          in={voca.isIn}
-          timeout={animationDuration}
-          onEntered={() => jpSpeak({ content: voca.voca })}
-          onExited={() => nextQandA()}
-        >
-          <Paper
-            className="Q-A-voca"
-            elevation={3}
-            style={{
-              padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
-              marginTop: theme.spacing(2),
-              textAlign: "center",
+      {!isFinish && (
+        <Container style={{ paddingTop: theme.spacing(1) }}>
+          <Typography color="primary">Chọn nghĩa cho từ bên dưới</Typography>
+          {/* Voca*/}
+          <CSSTransition
+            classNames="Q-A-voca"
+            in={voca.isIn}
+            timeout={animationDuration}
+            onEntering={() => jpSpeak({ content: voca.voca })}
+            onExited={() => nextQandA()}
+          >
+            <Paper
+              elevation={3}
+              style={{
+                padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
+                marginTop: theme.spacing(2),
+                textAlign: "center",
+              }}
+            >
+              <Typography
+                style={{ textAlign: "center" }}
+                variant="h5"
+                color="primary"
+              >
+                {voca.voca}
+              </Typography>
+              <Typography variant="caption" color="textSecondary">
+                {voca.note}
+              </Typography>
+            </Paper>
+          </CSSTransition>
+          {/* Select result */}
+          <Autocomplete
+            style={{ marginTop: theme.spacing(2) }}
+            id="select-result"
+            freeSolo
+            options={meaningOptions}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Nghĩa của từ"
+                margin="normal"
+                variant="outlined"
+              />
+            )}
+            onChange={(e, value, reason) => setSelectMeaning(value)}
+            value={selectMeaning}
+          />
+          {/* Show Result */}
+          <CSSTransition
+            timeout={animationDuration}
+            classNames="result-emotion"
+            in={resultEmotion === RESULT_EMOTION.TRUE}
+            onEntered={() => {
+              setTimeout(() => {
+                setResultEmotion("");
+                setSelectMeaning("");
+                setVoca({ ...voca, isIn: false });
+              }, 2 * animationDuration);
             }}
           >
-            <Typography
-              style={{ textAlign: "center" }}
-              variant="h5"
-              color="primary"
+            <div
+              style={{ textAlign: "center", marginTop: theme.spacing(6) }}
+              className="result-emotion"
             >
-              {voca.voca}
-            </Typography>
-            <Typography variant="caption" color="textSecondary">
-              {voca.note}
-            </Typography>
-          </Paper>
-        </CSSTransition>
-        {/* Select result */}
-        <Autocomplete
-          style={{ marginTop: theme.spacing(2) }}
-          id="select-result"
-          freeSolo
-          options={meaningOptions}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Nghĩa của từ"
-              margin="normal"
-              variant="outlined"
-            />
-          )}
-          onChange={(e, value, reason) => setSelectMeaning(value)}
-          value={selectMeaning}
-        />
-        {/* Show Result */}
-        <CSSTransition
-          timeout={animationDuration}
-          classNames="result-emotion"
-          in={resultEmotion === RESULT_EMOTION.TRUE}
-          onEntered={() => {
-            setTimeout(() => {
-              setResultEmotion("");
-              setSelectMeaning("");
-              setVoca({ ...voca, isIn: false });
-            }, 2 * animationDuration);
+              <InsertEmoticonIcon
+                style={{
+                  color: theme.palette.success.main,
+                  fontSize: "5rem",
+                }}
+              />
+              <Typography
+                variant="h6"
+                style={{ color: theme.palette.success.main }}
+              >
+                Đúng rồi !!!
+              </Typography>
+            </div>
+          </CSSTransition>
+          <CSSTransition
+            timeout={animationDuration}
+            classNames="result-emotion"
+            in={resultEmotion === RESULT_EMOTION.FALSE}
+            onEntered={() => {
+              setTimeout(() => {
+                setResultEmotion("");
+                setSelectMeaning("");
+              }, 2 * animationDuration);
+            }}
+          >
+            <div
+              style={{ textAlign: "center", marginTop: theme.spacing(6) }}
+              className="result-emotion"
+            >
+              <SentimentVeryDissatisfiedIcon
+                style={{ color: theme.palette.error.main, fontSize: "5rem" }}
+              />
+              <Typography
+                variant="h6"
+                style={{ color: theme.palette.error.main }}
+              >
+                Thử lại xem nào !!!
+              </Typography>
+            </div>
+          </CSSTransition>
+        </Container>
+      )}
+      <CSSTransition
+        in={isFinish}
+        classNames="finish-step"
+        timeout={animationDuration}
+      >
+        <Container className="finish-step">
+          <Typography
+            variant="h6"
+            color="primary"
+            style={{ margin: `${theme.spacing(2)}px 0px` }}
+          >
+            Bạn hãy tự mình đọc lại từng từ và nghĩa của chúng xem nào !!!
+          </Typography>
+          {listAnswered.map((voca) => {
+            return (
+              <Paper
+                style={{
+                  padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
+                  marginTop: theme.spacing(1),
+                  display: "flex",
+                  justifyContent: "space-between",
+                  backgroundColor: "transparent",
+                }}
+                className={`review-voca`}
+                key={voca.id}
+                elevation={3}
+              >
+                <Typography
+                  variant="h5"
+                  style={{ fontWeight: "lighter" }}
+                  color="primary"
+                >
+                  {voca.voca}
+                </Typography>
+                <Typography
+                  style={{ fontWeight: "lighter" }}
+                  variant="h5"
+                  color="textSecondary"
+                >
+                  {voca.meaning}
+                </Typography>
+              </Paper>
+            );
+          })}
+        </Container>
+      </CSSTransition>
+      {isFinish && (
+        <Box
+          style={{
+            position: "absolute",
+            bottom: "10%",
+            left: "50%",
+            transform: "translateX(-50%)",
+            height: "3rem",
+            width: "3rem",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          <div
-            style={{ textAlign: "center", marginTop: theme.spacing(6) }}
-            className="result-emotion"
-          >
-            <InsertEmoticonIcon
-              style={{
-                color: theme.palette.success.main,
-                fontSize: "5rem",
-              }}
-            />
-            <Typography
-              variant="h6"
-              style={{ color: theme.palette.success.main }}
-            >
-              Đúng rồi !!!
-            </Typography>
-          </div>
-        </CSSTransition>
-        <CSSTransition
-          timeout={animationDuration}
-          classNames="result-emotion"
-          in={resultEmotion === RESULT_EMOTION.FALSE}
-          onEntered={() => {
-            setTimeout(() => {
-              setResultEmotion("");
-              setSelectMeaning("");
-            }, 2 * animationDuration);
-          }}
-        >
-          <div
-            style={{ textAlign: "center", marginTop: theme.spacing(6) }}
-            className="result-emotion"
-          >
-            <SentimentVeryDissatisfiedIcon
-              style={{ color: theme.palette.error.main, fontSize: "5rem" }}
-            />
-            <Typography
-              variant="h6"
-              style={{ color: theme.palette.error.main }}
-            >
-              Thử lại xem nào !!!
-            </Typography>
-          </div>
-        </CSSTransition>
-      </Container>
+          <CircularProgress
+            variant="determinate"
+            value={(1 - countDown / timeCoutDown) * 100}
+            style={{
+              position: "absolute",
+              width: "100%",
+              height: "100%",
+              left: 0,
+              top: 0,
+            }}
+          />
+          <Typography variant="caption" color="textSecondary">
+            {Math.round((1 - countDown / timeCoutDown) * 100)}
+          </Typography>
+        </Box>
+      )}
     </section>
   );
 }
