@@ -144,12 +144,14 @@ export default function Step3StudyUI({ study, actionUpdateBg, randVocas }) {
       setIsFinish(true);
     }
   };
-
+  // first fetch voca-random to show meaning
+  // we start function nextQ&A() first-time
   React.useEffect(() => {
     if (randVocas.length) {
       nextQandA();
     }
   }, [randVocas]);
+  // Check meaning right-after user select the answer:
   React.useEffect(() => {
     if (selectMeaning) {
       if (selectMeaning.toLowerCase() === voca.meaning.toLowerCase()) {
@@ -159,11 +161,12 @@ export default function Step3StudyUI({ study, actionUpdateBg, randVocas }) {
       }
     }
   }, [selectMeaning]);
+  // Count-down function use for review-voca-bularies
   React.useEffect(() => {
     if (isFinish && countDown > 0) {
       setTimeout(() => setCountDown(countDown - 0.1), 100);
     } else if (isFinish) {
-      alert("DONE");
+      actionUpdateBg({ step: 4 });
     }
   }, [isFinish, countDown]);
   return (

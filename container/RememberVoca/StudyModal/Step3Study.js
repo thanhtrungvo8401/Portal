@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   step3Study: bgStep_X_Study,
 }));
 
-export default function Step3Study({ study, hidden }) {
+export default function Step3Study({ study, hidden, actionUpdateBg }) {
   const classes = useStyles();
   const [randVocas, setRandomVocas] = React.useState([]);
   React.useEffect(() => {
@@ -20,7 +20,11 @@ export default function Step3Study({ study, hidden }) {
   }, []);
   return (
     <div hidden={hidden} className={classes.step3Study}>
-      <Step3StudyUI randVocas={randVocas} study={study} />
+      <Step3StudyUI
+        randVocas={randVocas}
+        study={study}
+        actionUpdateBg={actionUpdateBg}
+      />
     </div>
   );
 }

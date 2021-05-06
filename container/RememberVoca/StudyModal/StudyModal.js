@@ -58,7 +58,11 @@ export default function StudyModal({}) {
       {study.step === 2 && (
         <Step2Study study={study} actionUpdateBg={setBgAni} />
       )}
-      {study.step === 3 && <Step3Study study={study} />}
+      {study.step === 3 && (
+        <Step3Study study={study} actionUpdateBg={setBgAni} />
+      )}
+
+      {study.step === 4 && <div>STEP 4</div>}
 
       <StudyBg
         bgAni={bgAni}
