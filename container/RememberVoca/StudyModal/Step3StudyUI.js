@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   CircularProgress,
   Container,
   makeStyles,
@@ -285,39 +286,56 @@ export default function Step3StudyUI({ study, actionUpdateBg, randVocas }) {
             color="primary"
             style={{ margin: `${theme.spacing(2)}px 0px` }}
           >
-            Bạn hãy tự mình đọc lại từng từ và nghĩa của chúng xem nào !!!
+            Bạn hãy tự mình đọc lại từng từ và nghĩa của chúng xem nào
           </Typography>
           {listAnswered.map((voca) => {
             return (
-              <Paper
-                style={{
-                  padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
-                  marginTop: theme.spacing(1),
-                  display: "flex",
-                  justifyContent: "space-between",
-                  backgroundColor: "transparent",
-                }}
-                className={`review-voca`}
+              <Button
                 key={voca.id}
-                elevation={3}
+                style={{
+                  display: "block",
+                  width: "100%",
+                  padding: 0,
+                  marginBottom: theme.spacing(1),
+                }}
+                onClick={() => jpSpeak({ content: voca.voca })}
               >
-                <Typography
-                  variant="h5"
-                  style={{ fontWeight: "lighter" }}
-                  color="primary"
+                <Paper
+                  style={{
+                    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    backgroundColor: "transparent",
+                  }}
+                  className={`review-voca`}
+                  elevation={3}
                 >
-                  {voca.voca}
-                </Typography>
-                <Typography
-                  style={{ fontWeight: "lighter" }}
-                  variant="h5"
-                  color="textSecondary"
-                >
-                  {voca.meaning}
-                </Typography>
-              </Paper>
+                  <Typography
+                    variant="h5"
+                    style={{ fontWeight: "lighter" }}
+                    color="primary"
+                  >
+                    {voca.voca}
+                  </Typography>
+                  <Typography
+                    style={{ fontWeight: "lighter", textTransform: "none" }}
+                    variant="body1"
+                    color="textSecondary"
+                  >
+                    {voca.meaning}
+                  </Typography>
+                </Paper>
+              </Button>
             );
           })}
+          <Typography
+            style={{ display: "block" }}
+            color="textSecondary"
+            variant="caption"
+          >
+            Tips: Click vào từ vựng nếu bạn quên đi cách đọc của chúng
+          </Typography>
         </Container>
       </CSSTransition>
       {isFinish && (
