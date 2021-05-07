@@ -11,6 +11,7 @@ import PageTitle from "../../../components/PageComponent/PageTitle";
 import HomeIcon from "@material-ui/icons/Home";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 import { appUrl } from "../../../utils/APP_URL";
+import Step4Study from "./Step4Study";
 
 const useStyles = makeStyles((theme) => ({}));
 const initState = {
@@ -62,7 +63,7 @@ export default function StudyModal({}) {
         <Step3Study study={study} actionUpdateBg={setBgAni} />
       )}
 
-      {study.step === 4 && <div>STEP 4</div>}
+      {study.step === 4 && <Step4Study />}
 
       <StudyBg
         bgAni={bgAni}

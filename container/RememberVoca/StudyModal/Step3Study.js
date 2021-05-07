@@ -1,6 +1,5 @@
 import { makeStyles } from "@material-ui/core";
 import React from "react";
-import { useDispatch } from "react-redux";
 import { serviceFetVocaRandomByLevel } from "../../../service/vocaService";
 import { storageKey } from "../../../utils/Constant";
 import { localStorageHelper } from "../../../utils/storageHelper";
