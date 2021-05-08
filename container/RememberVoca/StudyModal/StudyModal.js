@@ -12,6 +12,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 import { appUrl } from "../../../utils/APP_URL";
 import Step4Study from "./Step4Study";
+import theme from "../../../components/theme";
 
 const useStyles = makeStyles((theme) => ({}));
 const initState = {
@@ -63,7 +64,9 @@ export default function StudyModal({}) {
         <Step3Study study={study} actionUpdateBg={setBgAni} />
       )}
 
-      {study.step === 4 && <Step4Study />}
+      {study.step === 4 && (
+        <Step4Study study={study} actionUpdateBg={setBgAni} />
+      )}
 
       <StudyBg
         bgAni={bgAni}
@@ -83,8 +86,7 @@ export const bgStep_X_Study = {
   margin: "0 auto",
   zIndex: 500,
   position: "fixed",
-  backgroundImage:
-    "linear-gradient(to left top, #ecabf9, #ebbdfe, #ebcdff, #eeddff, #f3ecff, #f3ecff, #f3ecff, #f3ecff, #eeddff, #ebcdff, #ebbdfe, #ecabf9)",
+  backgroundColor: theme.palette.info.light,
 };
 
 export const styleStep_X_StudyUI = {
