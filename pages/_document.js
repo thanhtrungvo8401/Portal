@@ -18,6 +18,8 @@ export default class MyDocument extends Document {
             rel="shortcut icon"
             href="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
           />
+          <script src="/library/kuroshiro.min.js"></script>
+          <script src="/library/kuroshiro-analyzer-kuromoji.min.js"></script>
         </Head>
         <body id="next-body" style={{ height: "100%" }}>
           <Main />
