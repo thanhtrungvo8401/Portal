@@ -13,6 +13,7 @@ import MenuBookIcon from "@material-ui/icons/MenuBook";
 import { appUrl } from "../../../utils/APP_URL";
 import Step4Study from "./Step4Study";
 import theme from "../../../components/theme";
+import Step5Study from "./Step5Study";
 
 const useStyles = makeStyles((theme) => ({}));
 const initState = {
@@ -67,6 +68,8 @@ export default function StudyModal({}) {
       {study.step === 4 && (
         <Step4Study study={study} actionUpdateBg={setBgAni} />
       )}
+
+      {study.step === 5 && <Step5Study />}
 
       <StudyBg
         bgAni={bgAni}
