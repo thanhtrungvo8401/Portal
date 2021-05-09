@@ -23,6 +23,7 @@ import { animationDuration, styleStep_X_StudyUI } from "./StudyModal";
 import { jpRecognition } from "../../../utils/speechToText";
 import { getRandom } from "../../../utils/Helper";
 import { jpConverter } from "../../../utils/kanjiConverter";
+import { jpSpeak } from "../../../utils/textToSpeech";
 
 const CHECK_PRONOUCE = {
   TRUE: "TRUE",
@@ -123,6 +124,7 @@ export default function Step4StudyUI({ study, actionUpdateBg }) {
   // ---
   const nextVoca = () => {
     if (list.length === 0) {
+      setVoca({});
       return alert("DONE");
     }
     const randVoca = list[getRandom(0, list.length - 1)];
@@ -197,6 +199,7 @@ export default function Step4StudyUI({ study, actionUpdateBg }) {
         {/* Micro Icon */}
         <IconButton
           onClick={() => startRecognition()}
+          disabled={Boolean(resultRecog)}
           style={{ marginTop: theme.spacing(4), position: "relative" }}
         >
           <MicNoneIcon
@@ -325,6 +328,7 @@ export default function Step4StudyUI({ study, actionUpdateBg }) {
             <ButtonGroup
               color="primary"
               aria-label="outlined primary button group"
+              variant="text"
             >
               <Button
                 onClick={() => {
@@ -342,9 +346,31 @@ export default function Step4StudyUI({ study, actionUpdateBg }) {
               >
                 Dùng bàn phím
               </Button>
+              <Button
+                onClick={() => {
+                  resetData();
+                  setIsShowHint(true);
+                  setList(
+                    list.map((el) =>
+                      el.id !== voca.id ? el : { ...el, count: el.count - 1 }
+                    )
+                  );
+                  jpSpeak({ content: voca.voca })
+                    .then((result) => {
+                      setIsShowHint(false);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                      setIsShowHint(false);
+                    });
+                }}
+              >
+                Gợi ý
+              </Button>
             </ButtonGroup>
           </Box>
         </CSSTransition>
+        {/* KeyBoard Input */}
         {isUseKeyBoard && (
           <Paper
             component="form"
@@ -393,6 +419,12 @@ export default function Step4StudyUI({ study, actionUpdateBg }) {
               <SubdirectoryArrowRightIcon />
             </IconButton>
           </Paper>
+        )}
+        {/* Show Hint */}
+        {isShowHint && (
+          <Typography variant="h4" color="textSecondary">
+            {voca.voca}
+          </Typography>
         )}
       </Container>
     </section>
