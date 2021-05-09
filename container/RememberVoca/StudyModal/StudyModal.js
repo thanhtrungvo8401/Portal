@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core";
+import React from "react";
 import { useSelector } from "react-redux";
 import Step1Study from "./Step1Study";
 import Step2Study from "./Step2Study";
@@ -14,25 +13,41 @@ import { appUrl } from "../../../utils/APP_URL";
 import Step4Study from "./Step4Study";
 import theme from "../../../components/theme";
 import Step5Study from "./Step5Study";
+import { localStorageHelper } from "../../../utils/storageHelper";
+import { storageKey } from "../../../utils/Constant";
+import { serviceFetVocaRandomByLevel } from "../../../service/vocaService";
+import { handleErrorAPI } from "../../../utils/Helper";
 
-const useStyles = makeStyles((theme) => ({}));
 const initState = {
   vocas: [],
+  randVocas: [],
   inActiveVocas: [],
   step: 1,
 };
 const initBg = { step: 0 };
 export default function StudyModal({}) {
-  const classes = useStyles();
   const { list } = useSelector((state) => state.vocas);
 
   const [study, setStudy] = React.useState({ ...initState });
   const [bgAni, setBgAni] = React.useState({ ...initBg });
 
   // update data after fetch vocas:
-  useEffect(() => {
+  React.useEffect(() => {
     setStudy({ ...study, vocas: list, inActiveVocas: [] });
   }, [list]);
+  React.useEffect(() => {
+    const level = localStorageHelper.get(storageKey.MY_JP_LEVEL) || "N4";
+    serviceFetVocaRandomByLevel(level)
+      .then((randVocas) =>
+        setStudy({
+          ...study,
+          randVocas,
+        })
+      )
+      .catch((err) => {
+        handleErrorAPI(err, "toast");
+      });
+  }, []);
   return (
     <React.Fragment>
       <BreadcrumbsCustom

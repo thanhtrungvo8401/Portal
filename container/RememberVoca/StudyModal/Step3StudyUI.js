@@ -120,7 +120,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Step3StudyUI({ study, actionUpdateBg, randVocas }) {
+export default function Step3StudyUI({ study, actionUpdateBg }) {
   const classes = useStyles();
   const [isFinish, setIsFinish] = React.useState(false);
   const [list, setList] = React.useState([...study.vocas]);
@@ -131,8 +131,8 @@ export default function Step3StudyUI({ study, actionUpdateBg, randVocas }) {
   const [selectMeaning, setSelectMeaning] = React.useState("");
   const [resultEmotion, setResultEmotion] = React.useState("");
   const meaningOptions = React.useMemo(() => {
-    return generateMeaningOptions(list, randVocas);
-  }, [randVocas]);
+    return generateMeaningOptions(list, study.randVocas);
+  }, [study.randVocas]);
   const nextQandA = () => {
     if (list.length > 0) {
       const random = getRandom(0, list.length - 1);
@@ -144,13 +144,10 @@ export default function Step3StudyUI({ study, actionUpdateBg, randVocas }) {
       setIsFinish(true);
     }
   };
-  // first fetch voca-random to show meaning
-  // we start function nextQ&A() first-time
+  // 01: Start step 3
   React.useEffect(() => {
-    if (randVocas.length) {
-      nextQandA();
-    }
-  }, [randVocas]);
+    nextQandA();
+  }, []);
   // Check meaning right-after user select the answer:
   React.useEffect(() => {
     if (selectMeaning) {

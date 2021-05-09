@@ -83,6 +83,7 @@ export default function IntroVoca({ voca = {}, isActive, callback }) {
       })
       .then(() => {
         callback();
+        // console.log("RUNNN _XXX_");
       })
       .catch((err) => console.log(err));
   };
