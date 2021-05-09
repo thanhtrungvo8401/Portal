@@ -21,24 +21,24 @@ export default function Step2StudyUI({ study, actionUpdateBg }) {
   // Animation for Intro Voca:listIntroduced
   const [voca, setVoca] = React.useState({});
   const [isActiveIntroVoca, setIsActiveIntroVoca] = React.useState(false);
-  const introAnimationIn = () => {
-    setIsActiveIntroVoca(true);
-  };
+  const [isFinishIntro, setIsFinishIntro] = React.useState(false);
+  // 01: Animation for in
+  const introAnimationIn = () => setIsActiveIntroVoca(true);
+  // 02: After animation-in is complete => start to read voca:
   const handleAfterEnter = () => {
     const random = getRandom(0, list.length - 1);
     setVoca(list[random]);
     setList(list.filter((el, index) => index !== random));
   };
-  const introAnimationOut = () => {
-    setIsActiveIntroVoca(false);
-  };
+  // 03: Animation for out:
+  const introAnimationOut = () => setIsActiveIntroVoca(false);
+  // 04: IF (list > 0) => 01: Animation in
+  // 04: ELSE finish intro
   const handleAfterExit = () => {
     setListIntroduced([...listIntroduced, voca]);
     setVoca({});
-    if (list.length) {
-      introAnimationIn();
-    }
-    // in again
+    if (list.length > 0) introAnimationIn();
+    else setIsFinishIntro(true);
   };
   React.useEffect(() => {
     setTimeout(() => {
@@ -48,13 +48,15 @@ export default function Step2StudyUI({ study, actionUpdateBg }) {
 
   return (
     <div className={classes.Step2StudyUI}>
-      <Container style={{ paddingTop: theme.spacing(1) }}>
-        <Typography color="primary">
-          Cố gắng nhìn từ và đoán nghĩa của từ. Bạn có thế click (
-          <VolumeUpRoundedIcon style={{ transform: `translateY(6px)` }} />) để
-          nghe cách đọc và click vào từ để xem nghĩa của nó
-        </Typography>
-      </Container>
+      {isFinishIntro && (
+        <Container style={{ paddingTop: theme.spacing(1) }}>
+          <Typography color="primary">
+            Cố gắng nhìn từ và đoán nghĩa của từ. Bạn có thế click (
+            <VolumeUpRoundedIcon style={{ transform: `translateY(6px)` }} />) để
+            nghe cách đọc và click vào từ để xem nghĩa của nó
+          </Typography>
+        </Container>
+      )}
       <DisplayVocas vocas={listIntroduced} />
       {/* BG_DIV */}
       {isActiveIntroVoca && (
@@ -89,25 +91,27 @@ export default function Step2StudyUI({ study, actionUpdateBg }) {
         />
       </CSSTransition>
 
-      <div
-        style={{
-          position: "absolute",
-          width: "100%",
-          left: 0,
-          bottom: theme.spacing(3),
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <Button
-          onClick={() => actionUpdateBg({ step: 3 })}
-          variant="contained"
-          color="primary"
+      {isFinishIntro && (
+        <div
+          style={{
+            position: "absolute",
+            width: "100%",
+            left: 0,
+            bottom: theme.spacing(3),
+            display: "flex",
+            justifyContent: "center",
+          }}
         >
-          Qua bước tiếp theo
-          <DoubleArrowIcon />
-        </Button>
-      </div>
+          <Button
+            onClick={() => actionUpdateBg({ step: 3 })}
+            variant="contained"
+            color="primary"
+          >
+            Qua bước tiếp theo
+            <DoubleArrowIcon />
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
