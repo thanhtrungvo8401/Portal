@@ -86,6 +86,7 @@ export default function IntroVoca({ voca = {}, isActive, callback }) {
       })
       .catch((err) => console.log(err));
   };
+  // Event to start rendering and speaking:
   React.useEffect(() => {
     if (isActive) {
       setTimeout(() => {
