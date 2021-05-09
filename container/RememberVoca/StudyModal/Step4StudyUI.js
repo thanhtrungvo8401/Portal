@@ -1,27 +1,63 @@
 import {
   Box,
+  Button,
+  ButtonGroup,
   Container,
+  Divider,
   IconButton,
+  InputBase,
   makeStyles,
   Paper,
   Typography,
 } from "@material-ui/core";
+import { CSSTransition } from "react-transition-group";
 import MicNoneIcon from "@material-ui/icons/MicNone";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import CheckIcon from "@material-ui/icons/Check";
-import CloseIcon from "@material-ui/icons/Close";
+import MoodBadIcon from "@material-ui/icons/MoodBad";
+import SubdirectoryArrowRightIcon from "@material-ui/icons/SubdirectoryArrowRight";
 
 import React from "react";
 import theme from "../../../components/theme";
-import { styleStep_X_StudyUI } from "./StudyModal";
+import { animationDuration, styleStep_X_StudyUI } from "./StudyModal";
 import { jpRecognition } from "../../../utils/speechToText";
 import { getRandom } from "../../../utils/Helper";
+import { jpConverter } from "../../../utils/kanjiConverter";
 
+const CHECK_PRONOUCE = {
+  TRUE: "TRUE",
+  FALSE: "FALSE",
+};
 const useStyles = makeStyles((theme) => {
   return {
     Step4StudyUI: styleStep_X_StudyUI,
     Step4StudyUI_2: {
       paddingTop: theme.spacing(2),
+      "& .check-pronouce": {
+        opacity: 0,
+      },
+      "& .check-pronouce-enter": {
+        opacity: 0,
+      },
+      "& .check-pronouce-enter-active": {
+        opacity: 1,
+        transition: `all ${animationDuration}ms ease-in`,
+      },
+      "& .check-pronouce-enter-done": {
+        opacity: 1,
+        transition: `all ${animationDuration}ms ease-in`,
+      },
+      "& .check-pronouce-exit": {
+        opacity: 1,
+      },
+      "& .check-pronouce-exit-active": {
+        opacity: 0,
+        transition: `all ${animationDuration}ms ease-in`,
+      },
+      "& .check-pronouce-exit-done": {
+        opacity: 0,
+        transition: `all ${animationDuration}ms ease-in`,
+      },
     },
     listeningIcon: {
       animation: `$listeningAnimation 0.8s ${theme.transitions.easing.easeInOut} 200ms infinite`,
@@ -47,25 +83,16 @@ export default function Step4StudyUI({ study, actionUpdateBg }) {
   );
   const [voca, setVoca] = React.useState({});
   const [resultRecog, setResultRecog] = React.useState("");
+  const [resultConvert, setResultConvert] = React.useState("");
   const [isListening, setIsListening] = React.useState(false);
   const [isSpeaking, setIsSpeaking] = React.useState(false);
   const [errorMsg, setErrorMsg] = React.useState("");
-  const nextVoca = () => {
-    if (list.length === 0) {
-      return alert("DONE");
-    }
-    const randVoca = list[getRandom(0, list.length - 1)];
-    setVoca(randVoca);
-    randVoca.count++;
-    if (randVoca.count === 1) {
-      setList(list.map((el) => (el.id === randVoca.id ? randVoca : el)));
-    } else {
-      setList(list.filter((el) => el.id !== randVoca.id));
-    }
-  };
+  const [checkPronouce, setCheckPronouce] = React.useState("");
+  const [isUseKeyBoard, setIsUseKeyBoard] = React.useState(false);
+  const [isShowHint, setIsShowHint] = React.useState(false);
+  // event
   const onStart = (e) => {
-    setResultRecog("");
-    setErrorMsg("");
+    resetData();
     setIsListening(true);
   };
   const onSpeechStart = (e) => {
@@ -75,33 +102,69 @@ export default function Step4StudyUI({ study, actionUpdateBg }) {
     setIsListening(false);
     setIsSpeaking(false);
   };
-  const onError = (e) => {
-    const { error, message } = e;
-    console.log("onError", error, message);
-    if (error === "no-speech") {
-      setErrorMsg("Meomeo-kun không thể nghe được âm thanh từ bạn !!!");
+  // recognition handler:
+  const startRecognition = async () => {
+    try {
+      const result_1 = await jpRecognition({
+        onStart,
+        onSpeechEnd,
+        onSpeechStart,
+      });
+      return setResultRecog(result_1);
+    } catch (e) {
+      const { error, message } = e;
+      console.log("onError", error, message);
+      if (error === "no-speech") {
+        setErrorMsg("Meomeo-kun không thể nghe được âm thanh từ bạn !!!");
+      }
+      resetData();
     }
+  };
+  // ---
+  const nextVoca = () => {
+    if (list.length === 0) {
+      return alert("DONE");
+    }
+    const randVoca = list[getRandom(0, list.length - 1)];
+    setVoca(randVoca);
+    randVoca.count++;
+    if (randVoca.count < 2) {
+      setList(list.map((el) => (el.id === randVoca.id ? randVoca : el)));
+    } else {
+      setList(list.filter((el) => el.id !== randVoca.id));
+    }
+  };
+  const resetData = () => {
+    setResultRecog("");
+    setResultConvert("");
     setIsListening(false);
     setIsSpeaking(false);
+    setErrorMsg("");
+    setCheckPronouce("");
+    setIsUseKeyBoard(false);
   };
-  const onResult = (result) => {
-    setResultRecog(result);
-    console.log(result);
-  };
-  const jpRecogTool = jpRecognition({
-    onResult,
-    onStart,
-    onSpeechEnd,
-    onSpeechStart,
-    onError,
-  });
 
   React.useEffect(() => {
     nextVoca();
   }, []);
   React.useEffect(() => {
-    console.log(list);
-  }, [list]);
+    jpConverter(resultRecog)
+      .then((result) => setResultConvert(result))
+      .catch((err) => console.log(err));
+  }, [resultRecog]);
+  React.useEffect(() => {
+    if (resultConvert) {
+      jpConverter(voca.voca)
+        .then((result) => {
+          if (result === resultConvert) {
+            setCheckPronouce(CHECK_PRONOUCE.TRUE);
+          } else {
+            setCheckPronouce(CHECK_PRONOUCE.FALSE);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [resultConvert]);
   return (
     <section className={`${classes.Step4StudyUI} ${classes.Step4StudyUI_2}`}>
       <Container style={{ textAlign: "center" }}>
@@ -133,7 +196,7 @@ export default function Step4StudyUI({ study, actionUpdateBg }) {
         </Paper>
         {/* Micro Icon */}
         <IconButton
-          onClick={() => jpRecogTool.start()}
+          onClick={() => startRecognition()}
           style={{ marginTop: theme.spacing(4), position: "relative" }}
         >
           <MicNoneIcon
@@ -186,6 +249,16 @@ export default function Step4StudyUI({ study, actionUpdateBg }) {
               {resultRecog}
             </Typography>
           )}
+          {resultConvert && (
+            <Typography
+              variant="h6"
+              component="label"
+              style={{ display: "block" }}
+              color="textSecondary"
+            >
+              {resultConvert}
+            </Typography>
+          )}
           {errorMsg && (
             <Typography
               variant="h6"
@@ -197,24 +270,130 @@ export default function Step4StudyUI({ study, actionUpdateBg }) {
             </Typography>
           )}
         </Box>
-        <Box
-          style={{
-            position: "absolute",
-            bottom: "10%",
-            left: "50%",
-            transform: "translateX(-50%)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+        {/* check Pronouce */}
+        <CSSTransition
+          classNames="check-pronouce"
+          timeout={2 * animationDuration}
+          in={checkPronouce === CHECK_PRONOUCE.TRUE}
+          onEntered={() => {
+            setCheckPronouce("");
+          }}
+          onExited={() => {
+            resetData();
+            nextVoca();
           }}
         >
-          {/* <CheckIcon
-            style={{ fontSize: "7rem", color: theme.palette.success.main }}
-          /> */}
-          {/* <CloseIcon
-            style={{ fontSize: "7rem", color: theme.palette.error.main }}
-          /> */}
-        </Box>
+          <Box
+            className="check-pronouce"
+            style={{
+              position: "absolute",
+              bottom: "10%",
+              left: "50%",
+              transform: "translateX(-50%)",
+              textAlign: "center",
+            }}
+          >
+            <CheckIcon
+              style={{ fontSize: "7rem", color: theme.palette.success.main }}
+            />
+            <Typography
+              style={{ color: theme.palette.success.main }}
+              variant="h6"
+            >
+              Chúc mừng bạn !!!
+            </Typography>
+          </Box>
+        </CSSTransition>
+        <CSSTransition
+          classNames="check-pronouce"
+          timeout={2 * animationDuration}
+          in={checkPronouce === CHECK_PRONOUCE.FALSE}
+        >
+          <Box
+            className="check-pronouce"
+            style={{
+              position: "absolute",
+              bottom: "10%",
+              left: "50%",
+              transform: "translateX(-50%)",
+              textAlign: "center",
+            }}
+          >
+            <MoodBadIcon
+              style={{ fontSize: "7rem", color: theme.palette.error.main }}
+            />
+            <ButtonGroup
+              color="primary"
+              aria-label="outlined primary button group"
+            >
+              <Button
+                onClick={() => {
+                  resetData();
+                  startRecognition();
+                }}
+              >
+                Thử lại
+              </Button>
+              <Button
+                onClick={() => {
+                  resetData();
+                  setIsUseKeyBoard(true);
+                }}
+              >
+                Dùng bàn phím
+              </Button>
+            </ButtonGroup>
+          </Box>
+        </CSSTransition>
+        {isUseKeyBoard && (
+          <Paper
+            component="form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const input = document.getElementById("result-from-key-board");
+              setResultRecog(input.value);
+              setIsUseKeyBoard(false);
+            }}
+            style={{
+              padding: "2px 4px",
+              display: "flex",
+              alignContent: "center",
+              maxWidth: "350px",
+              width: "100%",
+              margin: "0 auto",
+            }}
+          >
+            <InputBase
+              placeholder="Điền vào kết quả của bạn"
+              inputProps={{ "aria-label": "japanese vocabulary" }}
+              style={{
+                marginLeft: theme.spacing(2),
+                flex: 1,
+              }}
+              id="result-from-key-board"
+            />
+            <Divider
+              style={{
+                height: 32,
+                margin: "0 4px",
+                transform: "translateY(6px)",
+              }}
+              orientation="vertical"
+            />
+            <IconButton
+              aria-label="enter-result"
+              color="primary"
+              style={{ padding: 10 }}
+              onClick={() => {
+                const input = document.getElementById("result-from-key-board");
+                setResultRecog(input.value);
+                setIsUseKeyBoard(false);
+              }}
+            >
+              <SubdirectoryArrowRightIcon />
+            </IconButton>
+          </Paper>
+        )}
       </Container>
     </section>
   );
