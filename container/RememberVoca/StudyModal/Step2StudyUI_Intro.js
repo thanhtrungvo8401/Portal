@@ -70,27 +70,21 @@ const useStyles1 = makeStyles((theme) => ({
 export default function IntroVoca({ voca = {}, isActive, callback }) {
   const classes = useStyles1();
   const [run1, setRun1] = React.useState(0);
+  // render UI and speak voca, meaning one by one time 1:
   const nextRun1 = () => {
-    if (run1 < 2) {
-      setRun1(run1 + 1);
-    } else if (run1 == 2 && voca.sentence) {
-      setRun1(run1 + 1);
-    } else {
-      runStep2();
-    }
+    if (run1 < 2) setRun1(run1 + 1);
+    else runStep2();
   };
+  // speak voca, meaning one by one time 2:
   const runStep2 = () => {
     jpSpeak({ content: voca["voca"] })
       .then(() => {
         return otherSpeack({ content: voca["meaning"] });
       })
       .then(() => {
-        if (voca["sentence"]) {
-          jpSpeak({ content: voca["sentence"] }).then(() => callback());
-        } else {
-          callback();
-        }
-      });
+        callback();
+      })
+      .catch((err) => console.log(err));
   };
   React.useEffect(() => {
     if (isActive) {
@@ -146,30 +140,6 @@ export default function IntroVoca({ voca = {}, isActive, callback }) {
                 }}
               />
               <Typography variant="body2">{voca.meaning}</Typography>
-            </div>
-          </CSSTransition>
-        )}
-        {run1 >= 3 && (
-          <CSSTransition
-            classNames="jp"
-            key={3}
-            timeout={animationDuration}
-            onEntered={() => {
-              jpSpeak({ content: voca["sentence"] })
-                .then(() => {
-                  nextRun1();
-                })
-                .catch((err) => console.log(err));
-            }}
-          >
-            <div>
-              <Divider
-                style={{
-                  marginTop: theme.spacing(1),
-                  marginBottom: theme.spacing(1),
-                }}
-              />
-              <Typography variant="body2">{voca.sentence}</Typography>
             </div>
           </CSSTransition>
         )}
