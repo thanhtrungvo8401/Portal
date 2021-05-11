@@ -39,7 +39,7 @@ export default function ListeningAnimation({ children, isActive }) {
   return (
     <div className={classes.listeningAnimation}>
       <div style={{ position: "relative", zIndex: 1 }}>{children}</div>
-      {isActive && <div class="pulse-ring"></div>}
+      {isActive && <div className="pulse-ring"></div>}
     </div>
   );
 }

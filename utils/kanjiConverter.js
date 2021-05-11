@@ -16,5 +16,16 @@ export const jpConverter = async (content) => {
   if (!kuroshiro) {
     await initKuroShiro();
   }
-  return await kuroshiro.convert(content);
+  return await kuroshiro.convert(content, { to: "hiragana" });
 };
+
+
+export const jpPronouceCompair = async (voca1, voca2) => {
+  try {
+    const read1 = await jpConverter(voca1);
+    const read2 = await jpConverter(voca2);
+    return read1 === read2;
+  } catch (error) {
+    return false;
+  }
+}
