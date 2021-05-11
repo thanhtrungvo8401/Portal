@@ -21,11 +21,28 @@ export const jpRecognition = ({ onStart, onSpeechStart, onSpeechEnd }) => {
       const transcript = e.results[current][0].transcript;
       resolve(transcript);
     };
+
     try {
       recognition.start();
     } catch (error) {
-      console.log("Speech Recognition is already started!!!");
-      recognition.stop();
+      const errMsg = `Error: Failed to execute 'start' on 'SpeechRecognition': recognition has already`;
+      if (JSON.stringify(error.stack).includes(errMsg)) {
+        // check if starting failed due to recognition has already started
+        //  => STOP then RESTART
+        recognition.onend = (e) => {
+          // restart right-after recognition stop succesfully!
+          console.log("STOP then restart");
+          recognition.start();
+        };
+        recognition.onstart = (e) => {
+          // redefine onend event when restart successully!
+          onStart && onStart();
+          recognition.onend = (e) => onSpeechEnd && onSpeechEnd(e);
+          console.log("RESTART SUCCESSULLY");
+        };
+      }
+      // _.abort() = _.stop() but did not trigger onresult.
+      recognition.abort();
     }
   });
 };
