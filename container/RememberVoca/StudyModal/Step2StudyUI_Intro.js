@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Divider,
   FormControl,
   IconButton,
@@ -15,13 +16,15 @@ import React from "react";
 import { jpSpeak, otherSpeack } from "../../../utils/textToSpeech";
 import { animationDuration } from "./StudyModal";
 import MicNoneIcon from "@material-ui/icons/MicNone";
-import PlayForWorkIcon from '@material-ui/icons/PlayForWork';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import ListeningAnimation from "../../../components/SpeakerAnimation/Listening";
 import TypingGif from "../../../components/SpeakerAnimation/TypingGif";
 import { getRandom } from "../../../utils/Helper";
 import { Autocomplete } from "@material-ui/lab";
 import { VOCA_RANDOM_LIMIT } from "../../../utils/Constant";
 import { jpRecognition } from "../../../utils/speechToText";
+import { jpPronouceCompair } from "../../../utils/kanjiConverter";
+import theme from "../../../components/theme";
 
 const generateMeaningOptions = (voca, listRandom = []) => {
   if (listRandom.length !== VOCA_RANDOM_LIMIT) return [];
@@ -120,6 +123,8 @@ const useStyles1 = makeStyles((theme) => ({
   },
 }));
 
+const RENSHIU_NUM = 4;
+
 export default function IntroVoca({
   voca = {},
   isActive,
@@ -130,7 +135,10 @@ export default function IntroVoca({
   const [meaningOptions, setMeaningOptions] = React.useState([]);
   const [run1, setRun1] = React.useState(1);
   const [renshiuValue, setRenshiuValue] = React.useState([]);
-  const [microStatus, setMicroStatus] = React.useState([])
+  const [microStatus, setMicroStatus] = React.useState([]);
+  const [checkRenshiu, setCheckRenshiu] = React.useState([]);
+  const [_isShowWrongMsg, setIsShowwrongMsg] = React.useState(false);
+  const [_isRenshiuFinish, setIsRenShiuFinish] = React.useState(false);
   const _currentSpeakingId = React.useRef(null);
   const updateRenshiuValue = (newValue = {}) => {
     const newRenshiuValue = renshiuValue.map((el) =>
@@ -152,6 +160,26 @@ export default function IntroVoca({
     const _id = Date.now().toString();
     setRenshiuValue([...renshiuValue, { id: _id, voca: "", meaning: "" }]);
     setMicroStatus([...microStatus, { id: _id, isListening: false, isSpeaking: false }])
+  }
+  const handleCheckRenshiu = () => {
+    Promise.all(renshiuValue.map(renshiu => jpPronouceCompair(renshiu.voca, voca.voca)))
+      .then(vocaChecks => {
+        const newCheckRenshiu =
+          renshiuValue.map((renshiu, index) => (
+            { voca: vocaChecks[index], meaning: renshiu.meaning === voca.meaning }
+          ));
+        setCheckRenshiu(newCheckRenshiu);
+        if (!_isRenshiuFinish) setIsRenShiuFinish(true);
+        const isValidAnswer = newCheckRenshiu
+          .reduce((acc, current) => acc && current.voca && current.meaning, true);
+        if (isValidAnswer) {
+          callback();
+        } else {
+          setIsShowwrongMsg(true);
+        }
+      }).catch(err => {
+        console.log(err);
+      })
   }
   // render UI and speak voca, meaning one by one time 1:
   const nextRun1 = () => {
@@ -199,6 +227,11 @@ export default function IntroVoca({
       }, animationDuration);
     } else {
       setRun1(0);
+      setRenshiuValue([]);
+      setMicroStatus([]);
+      setCheckRenshiu([]);
+      setIsShowwrongMsg(false);
+      setIsRenShiuFinish(false);
     }
   }, [isActive]);
 
@@ -207,7 +240,10 @@ export default function IntroVoca({
     if (randVocas.length && voca.voca) {
       setMeaningOptions(generateMeaningOptions(voca, randVocas));
     }
-  }, [randVocas, voca])
+  }, [randVocas, voca]);
+
+  const _isShowMoreRenshiu = renshiuValue.reduce((acc, current) => acc && (!!current.voca && !!current.meaning), true);
+  const _isAllowClickMicro = microStatus.reduce((acc, current) => acc && (!current.isListening && !current.isSpeaking), true);
   return (
     <Paper elevation={3} className={classes.VocaIntro}>
       <TransitionGroup className="group">
@@ -259,25 +295,30 @@ export default function IntroVoca({
         )}
         {/* RENSHIU LIST */}
         {renshiuValue.map((renshiu, index) => {
+          if (!_isRenshiuFinish && index !== renshiuValue.length - 1) return null;
           const { isListening, isSpeaking } = microStatus.find(el => el.id === renshiu.id) || {};
+          const wrongVoca = !!checkRenshiu[index] && !checkRenshiu[index].voca;
+          const wrongMeaning = !!checkRenshiu[index] && !checkRenshiu[index].meaning;
           return (
             <CSSTransition classNames="jp" key={renshiu.id} timeout={animationDuration}>
               <Box component="div" className={classes.RenshiuItem}>
                 <Divider className={classes.Divider} />
                 {/* JP Speech */}
-                {index === renshiuValue.length - 1 && <Typography
+                {!renshiu.voca && <Typography
                   style={{ textAlign: "left", display: "block" }}
                   variant={"caption"}
                 >
                   Click vào micro và đọc lại từ vựng trên
                 </Typography>}
-                <FormControl className={true ? '' : 'error-color'} style={{ width: "100%", position: "relative" }}>
+                <FormControl className={wrongVoca ? 'error-color' : ''} style={{ width: "100%", position: "relative" }}>
                   <Input
                     type="text"
                     value={!isListening ? renshiu.voca : ""}
                     placeholder={!isListening ? ". . ." : ""}
-                    onChange={(e) =>
-                      updateRenshiuValue({ ...renshiu, voca: e.target.value })
+                    onChange={(e) => {
+                      updateRenshiuValue({ ...renshiu, voca: e.target.value });
+                      if (_isShowWrongMsg) setIsShowwrongMsg(false);
+                    }
                     }
                     endAdornment={
                       <InputAdornment position="end">
@@ -285,7 +326,11 @@ export default function IntroVoca({
                           <IconButton
                             size="small"
                             style={{ transform: "translateX(0.5px)" }}
-                            onClick={() => startRecognition(renshiu.id)}
+                            onClick={() => {
+                              startRecognition(renshiu.id);
+                              if (_isShowWrongMsg) setIsShowwrongMsg(false)
+                            }}
+                            disabled={!_isAllowClickMicro}
                           >
                             <MicNoneIcon
                               color={isListening ? "error" : "action"}
@@ -312,7 +357,7 @@ export default function IntroVoca({
                   />
                 </FormControl>
                 {/* Meaning */}
-                {index === renshiuValue.length - 1 && <Typography
+                {!renshiu.meaning && <Typography
                   style={{ textAlign: "left", display: "block" }}
                   variant={"caption"}
                 >
@@ -330,12 +375,14 @@ export default function IntroVoca({
                         margin="normal"
                         variant="standard"
                         placeholder={". . ."}
-                        className={true ? '' : 'error-color'}
+                        className={wrongMeaning ? 'error-color' : ''}
                       />
                     );
                   }}
-                  onChange={(e, selectValue, result) =>
-                    updateRenshiuValue({ ...renshiu, meaning: selectValue })
+                  onChange={(e, selectValue, result) => {
+                    updateRenshiuValue({ ...renshiu, meaning: selectValue });
+                    if (_isShowWrongMsg) setIsShowwrongMsg(false);
+                  }
                   }
                   value={renshiu.meaning}
                 />
@@ -344,9 +391,24 @@ export default function IntroVoca({
           );
         })}
       </TransitionGroup>
-      {renshiuValue.length > 0 && <IconButton onClick={() => createNewRenshiu()} >
-        <PlayForWorkIcon color="primary" />
-      </IconButton>}
-    </Paper>
+      {/* started renshiu && voca and meaning was entered && before finish renshiu */}
+      {Boolean(renshiuValue.length) &&
+        _isShowMoreRenshiu &&
+        renshiuValue.length < RENSHIU_NUM &&
+        <IconButton style={{ marginBottom: '-12px' }} onClick={() => createNewRenshiu()} >
+          <KeyboardArrowDownIcon color="primary" />
+        </IconButton>}
+
+      {_isShowMoreRenshiu &&
+        renshiuValue.length >= RENSHIU_NUM &&
+        <Button color="primary" style={{ marginTop: theme.spacing(1) }} onClick={() => handleCheckRenshiu()}>
+          Next
+        </Button>}
+
+      {_isShowWrongMsg &&
+        <Typography color="error" >
+          Dùng micro hoặc bàn phím để sửa lại kết quả cho đúng trước khi đi đến từ vựng tiếp theo
+      </Typography>}
+    </Paper >
   );
 }
