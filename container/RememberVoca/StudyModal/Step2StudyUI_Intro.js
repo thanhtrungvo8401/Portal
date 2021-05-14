@@ -154,10 +154,21 @@ export default function IntroVoca({
         return otherSpeack({ content: voca["meaning"] });
       })
       .then(() => {
-        createNewRenshiu();
+        runStep3();
       })
       .catch((err) => console.log(err));
   };
+  // speak voca, meaning one by one time 2:
+  const runStep3 = () => {
+    jpSpeak({ content: voca["voca"] })
+      .then(() => {
+        return otherSpeack({ content: voca["meaning"] });
+      })
+      .then(() => {
+        createNewRenshiu();
+      })
+      .catch((err) => console.log(err));
+  }
   // Speech Recognition Handler:
   const onStart = () => {
     updateMicroStatus({ id: _currentSpeakingId.current, isListening: true, isSpeaking: false });
