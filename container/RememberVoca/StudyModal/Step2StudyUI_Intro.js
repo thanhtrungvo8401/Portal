@@ -141,12 +141,12 @@ export default function IntroVoca({
       setIsRenShiuFinish(true);
     }
   }
-  // render UI and speak voca, meaning one by one time 1:
+  // 01: render UI and speak voca, meaning one by one time 1:
   const nextRun1 = () => {
     if (run1 < 2) setRun1(run1 + 1);
     else runStep2();
   };
-  // speak voca, meaning one by one time 2:
+  // 02: speak voca, meaning one by one time 2:
   const runStep2 = () => {
     jpSpeak({ content: voca["voca"] })
       .then(() => {
@@ -157,7 +157,7 @@ export default function IntroVoca({
       })
       .catch((err) => console.log(err));
   };
-  // speak voca, meaning one by one time 2:
+  // 03: speak voca, meaning one by one time 2:
   const runStep3 = () => {
     jpSpeak({ content: voca["voca"] })
       .then(() => {
@@ -168,7 +168,7 @@ export default function IntroVoca({
       })
       .catch((err) => console.log(err));
   }
-  // Speech Recognition Handler:
+  // SPEECH RECOGNITION Handler:
   const onStart = () => {
     updateMicroStatus({ id: _currentSpeakingId.current, isListening: true, isSpeaking: false });
   };
@@ -190,7 +190,7 @@ export default function IntroVoca({
         console.log(err);
       });
   };
-  // Event to start rendering and speaking:
+  // 00: EVENT TO START:
   React.useEffect(() => {
     if (isActive) {
       setTimeout(() => {
