@@ -110,7 +110,6 @@ export default function IntroVoca({
   randVocas = [],
 }) {
   const classes = useStyles1();
-  // const [meaningOptions, setMeaningOptions] = React.useState([]);
   const [run1, setRun1] = React.useState(1);
   const [renshiuValue, setRenshiuValue] = React.useState([]);
   const [microStatus, setMicroStatus] = React.useState([]);
