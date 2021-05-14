@@ -8,7 +8,6 @@ import {
   InputAdornment,
   makeStyles,
   Paper,
-  TextField,
   Typography,
 } from "@material-ui/core";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
@@ -19,25 +18,9 @@ import MicNoneIcon from "@material-ui/icons/MicNone";
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import ListeningAnimation from "../../../components/SpeakerAnimation/Listening";
 import TypingGif from "../../../components/SpeakerAnimation/TypingGif";
-import { getRandom } from "../../../utils/Helper";
-import { Autocomplete } from "@material-ui/lab";
-import { VOCA_RANDOM_LIMIT } from "../../../utils/Constant";
 import { jpRecognition } from "../../../utils/speechToText";
 import { jpPronouceCompair } from "../../../utils/kanjiConverter";
 import theme from "../../../components/theme";
-
-const generateMeaningOptions = (voca, listRandom = []) => {
-  if (listRandom.length !== VOCA_RANDOM_LIMIT) return [];
-  const list = [...listRandom, voca];
-  const results = new Set();
-  while (list.length > 0) {
-    const rand = getRandom(0, list.length - 1);
-    if (!list[rand].meaning) console.log(list[rand]);
-    if (list[rand].meaning) results.add(list[rand].meaning);
-    list.splice(rand, 1);
-  }
-  return Array.from(results);
-};
 
 // INTRO VOCA COMPONENT
 const useStyles1 = makeStyles((theme) => ({
@@ -115,15 +98,10 @@ const useStyles1 = makeStyles((theme) => ({
         color: theme.palette.error.main
       },
     }
-  },
-  Autocomplete: {
-    "& .MuiFormControl-root": {
-      margin: "0!important",
-    },
-  },
+  }
 }));
 
-const RENSHIU_NUM = 4;
+const RENSHIU_NUM = 2;
 
 export default function IntroVoca({
   voca = {},
@@ -132,14 +110,14 @@ export default function IntroVoca({
   randVocas = [],
 }) {
   const classes = useStyles1();
-  const [meaningOptions, setMeaningOptions] = React.useState([]);
+  // const [meaningOptions, setMeaningOptions] = React.useState([]);
   const [run1, setRun1] = React.useState(1);
   const [renshiuValue, setRenshiuValue] = React.useState([]);
   const [microStatus, setMicroStatus] = React.useState([]);
   const [checkRenshiu, setCheckRenshiu] = React.useState([]);
-  const [_isShowWrongMsg, setIsShowwrongMsg] = React.useState(false);
   const [_isRenshiuFinish, setIsRenShiuFinish] = React.useState(false);
   const _currentSpeakingId = React.useRef(null);
+
   const updateRenshiuValue = (newValue = {}) => {
     const newRenshiuValue = renshiuValue.map((el) =>
       el.id === newValue.id
@@ -157,29 +135,13 @@ export default function IntroVoca({
     setMicroStatus(newMicroStatus);
   }
   const createNewRenshiu = () => {
-    const _id = Date.now().toString();
-    setRenshiuValue([...renshiuValue, { id: _id, voca: "", meaning: "" }]);
-    setMicroStatus([...microStatus, { id: _id, isListening: false, isSpeaking: false }])
-  }
-  const handleCheckRenshiu = () => {
-    Promise.all(renshiuValue.map(renshiu => jpPronouceCompair(renshiu.voca, voca.voca)))
-      .then(vocaChecks => {
-        const newCheckRenshiu =
-          renshiuValue.map((renshiu, index) => (
-            { voca: vocaChecks[index], meaning: renshiu.meaning === voca.meaning }
-          ));
-        setCheckRenshiu(newCheckRenshiu);
-        if (!_isRenshiuFinish) setIsRenShiuFinish(true);
-        const isValidAnswer = newCheckRenshiu
-          .reduce((acc, current) => acc && current.voca && current.meaning, true);
-        if (isValidAnswer) {
-          callback();
-        } else {
-          setIsShowwrongMsg(true);
-        }
-      }).catch(err => {
-        console.log(err);
-      })
+    if (renshiuValue.length <= RENSHIU_NUM) {
+      const _id = Date.now().toString();
+      setRenshiuValue([...renshiuValue, { id: _id, voca: "" }]);
+      setMicroStatus([...microStatus, { id: _id, isListening: false, isSpeaking: false }])
+    } else {
+      setIsRenShiuFinish(true);
+    }
   }
   // render UI and speak voca, meaning one by one time 1:
   const nextRun1 = () => {
@@ -230,20 +192,25 @@ export default function IntroVoca({
       setRenshiuValue([]);
       setMicroStatus([]);
       setCheckRenshiu([]);
-      setIsShowwrongMsg(false);
       setIsRenShiuFinish(false);
     }
   }, [isActive]);
 
   React.useEffect(() => {
-    // check randVocas and voca is valid => generate meaning options:
-    if (randVocas.length && voca.voca) {
-      setMeaningOptions(generateMeaningOptions(voca, randVocas));
-    }
-  }, [randVocas, voca]);
+    const changedVoca = renshiuValue.find(el => el.id === _currentSpeakingId.current) || {};
+    jpPronouceCompair(changedVoca.voca, voca.voca)
+      .then(isTrue => {
+        setCheckRenshiu(renshiuValue.map((el, i) => el.id === _currentSpeakingId.current ? isTrue : checkRenshiu[i]));
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }, [renshiuValue]);
 
-  const _isShowMoreRenshiu = renshiuValue.reduce((acc, current) => acc && (!!current.voca && !!current.meaning), true);
-  const _isAllowClickMicro = microStatus.reduce((acc, current) => acc && (!current.isListening && !current.isSpeaking), true);
+
+  const isAllowClickMicro = microStatus.reduce((acc, current) => acc && (!current.isListening && !current.isSpeaking), true);
+  const isValidToNextVoca = checkRenshiu.reduce((acc, current) => acc && current, true);
+
   return (
     <Paper elevation={3} className={classes.VocaIntro}>
       <TransitionGroup className="group">
@@ -297,27 +264,26 @@ export default function IntroVoca({
         {renshiuValue.map((renshiu, index) => {
           if (!_isRenshiuFinish && index !== renshiuValue.length - 1) return null;
           const { isListening, isSpeaking } = microStatus.find(el => el.id === renshiu.id) || {};
-          const wrongVoca = !!checkRenshiu[index] && !checkRenshiu[index].voca;
-          const wrongMeaning = !!checkRenshiu[index] && !checkRenshiu[index].meaning;
+          const isValidVoca = checkRenshiu[index];
           return (
             <CSSTransition classNames="jp" key={renshiu.id} timeout={animationDuration}>
               <Box component="div" className={classes.RenshiuItem}>
                 <Divider className={classes.Divider} />
                 {/* JP Speech */}
-                {!renshiu.voca && <Typography
+                {!_isRenshiuFinish && <Typography
                   style={{ textAlign: "left", display: "block" }}
                   variant={"caption"}
                 >
                   Click vào micro và đọc lại từ vựng trên
                 </Typography>}
-                <FormControl className={wrongVoca ? 'error-color' : ''} style={{ width: "100%", position: "relative" }}>
+                <FormControl className={!isValidVoca ? 'error-color' : ''} style={{ width: "100%", position: "relative" }}>
                   <Input
                     type="text"
-                    value={!isListening ? renshiu.voca : ""}
+                    value={renshiu.voca}
                     placeholder={!isListening ? ". . ." : ""}
                     onChange={(e) => {
+                      _currentSpeakingId.current = renshiu.id;
                       updateRenshiuValue({ ...renshiu, voca: e.target.value });
-                      if (_isShowWrongMsg) setIsShowwrongMsg(false);
                     }
                     }
                     endAdornment={
@@ -328,9 +294,8 @@ export default function IntroVoca({
                             style={{ transform: "translateX(0.5px)" }}
                             onClick={() => {
                               startRecognition(renshiu.id);
-                              if (_isShowWrongMsg) setIsShowwrongMsg(false)
                             }}
-                            disabled={!_isAllowClickMicro}
+                            disabled={!isAllowClickMicro}
                           >
                             <MicNoneIcon
                               color={isListening ? "error" : "action"}
@@ -356,56 +321,31 @@ export default function IntroVoca({
                     }
                   />
                 </FormControl>
-                {/* Meaning */}
-                {!renshiu.meaning && <Typography
-                  style={{ textAlign: "left", display: "block" }}
-                  variant={"caption"}
-                >
-                  Nghĩa của từ
-                </Typography>}
-                <Autocomplete
-                  className={classes.Autocomplete}
-                  id={`renshiu-meaning-${renshiu.id}-meaning`}
-                  freeSolo
-                  options={meaningOptions}
-                  renderInput={(param) => {
-                    return (
-                      <TextField
-                        {...param}
-                        margin="normal"
-                        variant="standard"
-                        placeholder={". . ."}
-                        className={wrongMeaning ? 'error-color' : ''}
-                      />
-                    );
-                  }}
-                  onChange={(e, selectValue, result) => {
-                    updateRenshiuValue({ ...renshiu, meaning: selectValue });
-                    if (_isShowWrongMsg) setIsShowwrongMsg(false);
-                  }
-                  }
-                  value={renshiu.meaning}
-                />
               </Box>
             </CSSTransition>
           );
         })}
       </TransitionGroup>
       {/* started renshiu && voca and meaning was entered && before finish renshiu */}
-      {Boolean(renshiuValue.length) &&
-        _isShowMoreRenshiu &&
-        renshiuValue.length < RENSHIU_NUM &&
-        <IconButton style={{ marginBottom: '-12px' }} onClick={() => createNewRenshiu()} >
-          <KeyboardArrowDownIcon color="primary" />
-        </IconButton>}
+      {!_isRenshiuFinish &&
+        !!renshiuValue.length &&
+        <Button color="primary"
+          disabled={!renshiuValue[renshiuValue.length - 1].voca}
+          style={{ marginBottom: '-12px' }}
+          onClick={() => createNewRenshiu()} >
+          <KeyboardArrowDownIcon />
+        </Button>}
 
-      {_isShowMoreRenshiu &&
-        renshiuValue.length >= RENSHIU_NUM &&
-        <Button color="primary" style={{ marginTop: theme.spacing(1) }} onClick={() => handleCheckRenshiu()}>
+      {_isRenshiuFinish &&
+        <Button color="primary"
+          disabled={!isValidToNextVoca}
+          style={{ marginTop: theme.spacing(1) }}
+          onClick={() => callback()}>
           Next
         </Button>}
 
-      {_isShowWrongMsg &&
+      {_isRenshiuFinish &&
+        !isValidToNextVoca &&
         <Typography color="error" >
           Dùng micro hoặc bàn phím để sửa lại kết quả cho đúng trước khi đi đến từ vựng tiếp theo
       </Typography>}
