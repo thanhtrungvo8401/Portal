@@ -107,7 +107,6 @@ export default function IntroVoca({
   voca = {},
   isActive,
   callback,
-  randVocas = [],
 }) {
   const classes = useStyles1();
   const [run1, setRun1] = React.useState(1);

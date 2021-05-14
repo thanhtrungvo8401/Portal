@@ -88,7 +88,6 @@ export default function Step2StudyUI({ study, actionUpdateBg }) {
           callback={introAnimationOut}
           isActive={isActiveIntroVoca}
           voca={voca}
-          randVocas={study.randVocas}
         />
       </CSSTransition>
 
