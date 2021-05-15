@@ -24,6 +24,8 @@ import { jpRecognition } from "../../../utils/speechToText";
 import { getRandom } from "../../../utils/Helper";
 import { jpConverter } from "../../../utils/kanjiConverter";
 import { jpSpeak } from "../../../utils/textToSpeech";
+import ListeningAnimation from "../../../components/SpeakerAnimation/Listening";
+import TypingGif from "../../../components/SpeakerAnimation/TypingGif";
 
 const CHECK_PRONOUCE = {
   TRUE: "TRUE",
@@ -214,13 +216,15 @@ export default function Step4StudyUI({ study, actionUpdateBg }) {
             disabled={Boolean(resultRecog)}
             style={{ marginTop: theme.spacing(4), position: "relative" }}
           >
-            <MicNoneIcon
-              style={{
-                width: "4rem",
-                height: "4rem",
-                color: `${isListening ? theme.palette.error.main : ""}`,
-              }}
-            />
+            <ListeningAnimation isActive={isListening}>
+              <MicNoneIcon
+                style={{
+                  width: "4rem",
+                  height: "4rem",
+                  color: `${isListening ? theme.palette.error.main : ""}`,
+                }}
+              />
+            </ListeningAnimation>
             <Typography
               color={isListening ? "error" : "textSecondary"}
               variant="caption"
@@ -239,21 +243,11 @@ export default function Step4StudyUI({ study, actionUpdateBg }) {
           </IconButton>
           {/* Result */}
           <Box component="div" style={{ marginTop: theme.spacing(6) }}>
-            {isListening &&
-              [0, 0.2, 0.4].map((el) => {
-                return (
-                  <FiberManualRecordIcon
-                    className={isSpeaking ? classes.listeningIcon : ""}
-                    style={{
-                      animationDelay: `${el}s`,
-                      fontSize: "1rem",
-                      margin: "0 8px",
-                    }}
-                    color="primary"
-                    key={el}
-                  />
-                );
-              })}
+            {isSpeaking && <TypingGif
+              size="1rem"
+              jumpHeight="10px"
+              spacing="5px" />
+            }
             {resultRecog && (
               <Typography
                 variant="h3"
