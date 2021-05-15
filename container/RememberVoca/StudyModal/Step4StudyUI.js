@@ -449,16 +449,7 @@ export default function Step4StudyUI({ study, actionUpdateBg }) {
         >
           <Typography
             variant="h4"
-            style={{
-              color: theme.palette.success.main,
-              marginBottom: theme.spacing(2),
-            }}
-          >
-            Hoàn thành thử thách ...
-          </Typography>
-          <Typography
-            variant="h4"
-            style={{ color: theme.palette.success.main }}
+            color="primary"
           >
             Hít thật sâu và tiến đến thử cách cuối cùng nào
           </Typography>
