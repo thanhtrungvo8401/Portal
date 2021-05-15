@@ -132,7 +132,7 @@ export default function Step4StudyUI({ study, actionUpdateBg }) {
       const randVoca = list[getRandom(0, list.length - 1)];
       setVoca(randVoca);
       randVoca.count++;
-      if (randVoca.count < 2) {
+      if (randVoca.count < 1) { // so lan doc:
         setList(list.map((el) => (el.id === randVoca.id ? randVoca : el)));
       } else {
         setList(list.filter((el) => el.id !== randVoca.id));

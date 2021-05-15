@@ -124,7 +124,7 @@ export default function Step3StudyUI({ study, actionUpdateBg }) {
   const classes = useStyles();
   const [isFinish, setIsFinish] = React.useState(false);
   const [list, setList] = React.useState([...study.vocas]);
-  const timeCoutDown = 2 * [...study.vocas].length;
+  const timeCoutDown = 1 * [...study.vocas].length;
   const [countDown, setCountDown] = React.useState(timeCoutDown);
   const [listAnswered, setListAnswered] = React.useState([]);
   const [voca, setVoca] = React.useState({});
@@ -286,7 +286,7 @@ export default function Step3StudyUI({ study, actionUpdateBg }) {
             color="primary"
             style={{ margin: `${theme.spacing(2)}px 0px` }}
           >
-            Bạn hãy tự mình đọc lại từng từ và nghĩa của chúng xem nào
+            Nhìn lại những từ vừa học
           </Typography>
           {listAnswered.map((voca) => {
             return (
@@ -329,13 +329,6 @@ export default function Step3StudyUI({ study, actionUpdateBg }) {
               </Button>
             );
           })}
-          <Typography
-            style={{ display: "block" }}
-            color="textSecondary"
-            variant="caption"
-          >
-            Tips: Click vào từ vựng nếu bạn quên đi cách đọc của chúng
-          </Typography>
         </Container>
       </CSSTransition>
       {isFinish && (
