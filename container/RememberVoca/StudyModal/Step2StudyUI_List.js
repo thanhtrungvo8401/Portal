@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import SyncRoundedIcon from "@material-ui/icons/SyncRounded";
-import VolumeUpRoundedIcon from "@material-ui/icons/VolumeUpRounded";
+import GTranslateIcon from '@material-ui/icons/GTranslate';
 import DataUsageIcon from '@material-ui/icons/DataUsage';
 
 import React from "react";
@@ -107,6 +107,8 @@ const useStyles2 = makeStyles((theme) => ({
 export default function DisplayVocas({ vocas = [] }) {
   const classes = useStyles2();
   const [vocasRender, setVocasRender] = React.useState([]);
+  const [vocasRandomSpeak, setVocasRandomSpeak] = React.useState([]);
+  const [isRandomSpeak, setIsRandomSpeak] = React.useState(false);
   const handleToggleShowMeaning = (id) => {
     const newVocaRender = vocasRender.map((el) =>
       el.id === id ? { ...el, isShow: !el.isShow } : el
@@ -148,7 +150,9 @@ export default function DisplayVocas({ vocas = [] }) {
               >
                 <ListItem
                   className="one-voca"
-                  onClick={() => handleToggleShowMeaning(voca.id)}
+                  onClick={() => {
+                    jpSpeak({ content: voca.voca });
+                  }}
                 >
                   {/* JP */}
                   <Typography color="primary" variant="h6">
@@ -170,10 +174,12 @@ export default function DisplayVocas({ vocas = [] }) {
                     </Typography>
                   </CSSTransition>
                   <ListItemSecondaryAction
-                    style={{ display: "flex", alignItems: "center" }}
+                    style={{ display: "flex", alignItems: "center", zIndex: 2 }}
                   >
-                    <VolumeUpRoundedIcon
-                      onClick={() => jpSpeak({ content: voca.voca })}
+                    <GTranslateIcon
+                      onClick={() => {
+                        handleToggleShowMeaning(voca.id)
+                      }}
                       style={{ cursor: "pointer" }}
                       color="primary"
                     />
@@ -195,7 +201,7 @@ export default function DisplayVocas({ vocas = [] }) {
           Trộn từ
         </Button>
         <Button>
-          <DataUsageIcon style={{ marginRight: theme.spacing(1) }} />
+          <DataUsageIcon style={{ marginRight: theme.spacing(1) }} onClick={() => setIsRandomSpeak(true)} />
           Random Speak
         </Button>
       </ButtonGroup>
