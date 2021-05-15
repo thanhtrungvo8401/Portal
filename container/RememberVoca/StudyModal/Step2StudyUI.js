@@ -3,7 +3,7 @@ import React from "react";
 import { CSSTransition } from "react-transition-group";
 import { theme } from "../../../components/theme";
 import { getRandom, getWidth } from "../../../utils/Helper";
-import VolumeUpRoundedIcon from "@material-ui/icons/VolumeUpRounded";
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
 import { animationDuration, styleStep_X_StudyUI } from "./StudyModal";
 import IntroVoca from "./Step2StudyUI_Intro";
@@ -50,11 +50,14 @@ export default function Step2StudyUI({ study, actionUpdateBg }) {
     <div className={classes.Step2StudyUI}>
       {isFinishIntro && (
         <Container style={{ paddingTop: theme.spacing(1) }}>
-          <Typography color="primary">
-            Cố gắng nhìn từ và đoán nghĩa của từ. Bạn có thế click (
-            <VolumeUpRoundedIcon style={{ transform: `translateY(6px)` }} />) để
-            nghe cách đọc và click vào từ để xem nghĩa của nó
-          </Typography>
+          <Button color="default" >
+            <HelpOutlineIcon style={{ fontSize: "2.5rem", marginRight: theme.spacing(1) }} />
+            <Typography
+              color="textSecondary"
+            >
+              Click để nghe hướng dẫn
+            </Typography>
+          </Button>
         </Container>
       )}
       <DisplayVocas vocas={listIntroduced} />

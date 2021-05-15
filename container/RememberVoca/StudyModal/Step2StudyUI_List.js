@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonGroup,
   Container,
   List,
   ListItem,
@@ -10,11 +11,13 @@ import {
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import SyncRoundedIcon from "@material-ui/icons/SyncRounded";
 import VolumeUpRoundedIcon from "@material-ui/icons/VolumeUpRounded";
+import DataUsageIcon from '@material-ui/icons/DataUsage';
 
 import React from "react";
 import { animationDuration } from "./StudyModal";
 import { getRandom } from "../../../utils/Helper";
 import { jpSpeak } from "../../../utils/textToSpeech";
+import theme from "../../../components/theme";
 
 // LIST COMPONENT
 const useStyles2 = makeStyles((theme) => ({
@@ -94,6 +97,12 @@ const useStyles2 = makeStyles((theme) => ({
       opacity: 0,
     },
   },
+  BtnGroup: {
+    marginTop: theme.spacing(1),
+    [theme.breakpoints.up("md")]: {
+      marginTop: theme.spacing(4),
+    }
+  }
 }));
 export default function DisplayVocas({ vocas = [] }) {
   const classes = useStyles2();
@@ -175,15 +184,21 @@ export default function DisplayVocas({ vocas = [] }) {
           })}
         </TransitionGroup>
       </List>
-
-      <Button
-        onClick={() => handleRandomVoca()}
-        variant="outlined"
+      <ButtonGroup
+        className={classes.BtnGroup}
         color="primary"
+        aria-label="outlined primary button group"
+        variant="outlined"
       >
-        <SyncRoundedIcon />
-        Trộn từ
-      </Button>
+        <Button onClick={() => handleRandomVoca()}>
+          <SyncRoundedIcon style={{ marginRight: theme.spacing(1) }} />
+          Trộn từ
+        </Button>
+        <Button>
+          <DataUsageIcon style={{ marginRight: theme.spacing(1) }} />
+          Random Speak
+        </Button>
+      </ButtonGroup>
     </Container>
   );
 }
