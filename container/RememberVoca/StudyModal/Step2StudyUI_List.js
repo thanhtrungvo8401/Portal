@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   ButtonGroup,
   Container,
@@ -6,6 +7,7 @@ import {
   ListItem,
   ListItemSecondaryAction,
   makeStyles,
+  Paper,
   Typography,
 } from "@material-ui/core";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
@@ -102,12 +104,71 @@ const useStyles2 = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       marginTop: theme.spacing(4),
     }
+  },
+  RandomVocaQuestion: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    minHeight: "200px",
+    opacity: 0.96,
+    top: "50%",
+    left: "100vw",
+    opacity: 0,
+    zIndex: 3,
+    transform: "translateY(-50%)",
+    cursor: "pointer",
+    "&.random-speak-enter": {
+      left: "100%!important",
+      opacity: '0!important',
+    },
+    "&.random-speak-enter-active": {
+      left: "0%!important",
+      opacity: '1!important',
+      transition: `all ${animationDuration}ms ease-in`,
+    },
+    "&.random-speak-enter-done": {
+      left: "0%",
+      opacity: '1!important',
+      transition: `all ${animationDuration}ms ease-in`,
+    },
+    "&.random-speak-exit": {
+      opacity: '1!important',
+      left: "0%!important",
+    },
+    "&.random-speak-exit-active": {
+      left: "100vw!important",
+      opacity: '0!important',
+      transition: `all ${animationDuration}ms ease-in`,
+    },
+    "&.random-speak-exit-done": {
+      left: "100vw!important",
+      opacity: '0!important',
+      transition: `all ${animationDuration}ms ease-in`,
+    },
+    "& .meaning": {
+      opacity: 0,
+    },
+    "& .meaning-enter": {
+      opacity: 0,
+    },
+    "& .meaning-enter-active": {
+      opacity: 1,
+      transition: `all ${animationDuration}ms ease-in`,
+    },
+    "& .meaning-exit": {
+      opacity: 1,
+    },
+    "& .meaning-exit-active": {
+      opacity: 0,
+      transition: `all ${animationDuration}ms ease-in`,
+    },
   }
 }));
 export default function DisplayVocas({ vocas = [] }) {
   const classes = useStyles2();
   const [vocasRender, setVocasRender] = React.useState([]);
   const [vocasRandomSpeak, setVocasRandomSpeak] = React.useState([]);
+  const [isShowAnswer, setShowAnswer] = React.useState(false);
   const [isRandomSpeak, setIsRandomSpeak] = React.useState(false);
   const handleToggleShowMeaning = (id) => {
     const newVocaRender = vocasRender.map((el) =>
@@ -128,6 +189,25 @@ export default function DisplayVocas({ vocas = [] }) {
       setVocasRender(newList);
     }, animationDuration);
   };
+  const handleSpeakRandom = () => {
+    if (isRandomSpeak) {
+      return setIsRandomSpeak(false);
+    }
+    if (vocasRandomSpeak.length < vocas.length) {
+      const notSpokenVocalist = vocas.filter(el =>
+        !vocasRandomSpeak.map(el => el.id)
+          .includes(el.id)
+      );
+      const randVoca = notSpokenVocalist[getRandom(0, notSpokenVocalist.length - 1)];
+      setVocasRandomSpeak([...vocasRandomSpeak, randVoca]);
+      jpSpeak({ content: randVoca.voca })
+    } else {
+      const randVoca = vocas[getRandom(0, vocas.length - 1)];
+      setVocasRandomSpeak([randVoca]);
+      jpSpeak({ content: randVoca.voca })
+    }
+    setIsRandomSpeak(true);
+  }
   React.useEffect(() => {
     if (vocas.length) {
       setVocasRender([
@@ -136,6 +216,7 @@ export default function DisplayVocas({ vocas = [] }) {
       ]);
     }
   }, [vocas]);
+  const currentRandVoca = vocasRandomSpeak[vocasRandomSpeak.length - 1] || {};
   if (!vocas.length) return null;
   return (
     <Container className={classes.DisplayVocas}>
@@ -200,11 +281,63 @@ export default function DisplayVocas({ vocas = [] }) {
           <SyncRoundedIcon style={{ marginRight: theme.spacing(1) }} />
           Trộn từ
         </Button>
-        <Button>
-          <DataUsageIcon style={{ marginRight: theme.spacing(1) }} onClick={() => setIsRandomSpeak(true)} />
+        <Button onClick={() => handleSpeakRandom()}>
+          <DataUsageIcon style={{ marginRight: theme.spacing(1) }} />
           Random Speak
         </Button>
       </ButtonGroup>
-    </Container>
+      <CSSTransition
+        in={isRandomSpeak}
+        timeout={animationDuration}
+        classNames="random-speak"
+        onExited={() => setShowAnswer(false)}
+      >
+        <Paper
+          className={classes.RandomVocaQuestion}
+          onClick={() => setShowAnswer(true)}
+        >
+          {!isShowAnswer &&
+            <Box
+              style={{
+                position: "absolute",
+                left: "50%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            >
+              <Typography
+                variant="h1"
+                component="label"
+              >?</Typography>
+              <Typography>
+                Click nếu bạn đã nhớ ra câu trả lời
+            </Typography>
+            </Box>
+          }
+          <CSSTransition
+            in={isShowAnswer}
+            timeout={animationDuration}
+            classNames="meaning"
+            onEntered={() => {
+              setIsRandomSpeak(false);
+            }}
+          >
+            <Typography
+              variant="h6"
+              component="label"
+              className="meaning"
+              style={{
+                position: "absolute",
+                left: "50%",
+                top: "50%",
+                transform: "translate(-50%, -50%)"
+              }}
+            >
+              {currentRandVoca.meaning}
+            </Typography>
+          </CSSTransition>
+        </Paper>
+      </CSSTransition>
+    </Container >
   );
 }
