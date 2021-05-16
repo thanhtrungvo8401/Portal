@@ -17,6 +17,7 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { QA_TYPE } from "./Step5Study";
 import React from "react";
 import { CSSTransition } from "react-transition-group";
+import { jpSpeak } from "../../../utils/textToSpeech";
 const useStyles = makeStyles(theme => ({
   Step5StudyUI: styleStep_X_StudyUI,
   Top: {
@@ -82,25 +83,37 @@ const useStyles = makeStyles(theme => ({
       transition: `all ${animationDuration}ms ease-in`,
     }
   },
-}))
+}));
 
-
-export default function Step5StudyUI({ QAndA, QandAOptions, submitQAndA, getNewQAndA, number }) {
+const COUNT_TIME = 4000;
+export default function Step5StudyUI({ QAndA, QandAOptions, submitQAndA, getNewQAndA, number, total }) {
   const classes = useStyles();
   const [isSpeaking, setIsSpeaking] = React.useState(false);
   const [storedQAndA, setStoreQAndA] = React.useState({});
   const [storedOptions, setStoredOptions] = React.useState([]);
+  const [count, setCount] = React.useState(0);
+  const keyName = QAndA.type === QA_TYPE.MEANING
+    ? "voca"
+    : "meaning";
+  const intervalId = React.useRef();
+  const counterIncrease = () => setCount(count + 20);
 
-  React.useEffect(() => {
-    if (QAndA && QAndA.id) {
-      setStoreQAndA(QAndA);
+  const startQAndA = () => {
+    if (QAndA.type === QA_TYPE.SOUND) {
+      setIsSpeaking(true);
+      jpSpeak({ content: QAndA.voca })
+        .then(res => {
+          counterIncrease();
+          setIsSpeaking(false);
+        })
+        .catch(err => {
+          console.log(err);
+          setIsSpeaking(false);
+        })
+    } else {
+      counterIncrease();
     }
-  }, [QAndA]);
-  React.useEffect(() => {
-    if (QandAOptions.length) {
-      setStoredOptions(QandAOptions);
-    }
-  }, [QandAOptions.length])
+  };
   const renderQuestion = () => {
     switch (QAndA.type) {
       case QA_TYPE.JP:
@@ -129,15 +142,64 @@ export default function Step5StudyUI({ QAndA, QandAOptions, submitQAndA, getNewQ
         return null;
     }
   };
+  const selectOptions = (option) => {
+    if (storedOptions.length > 0) {
+      const newStoredOptions = storedOptions.map(el => {
+        return el.value === option.value
+          ? { ...option, selected: true }
+          : el
+      });
+      setStoredOptions(newStoredOptions);
+    };
+  };
+  const checkForSubmitQAndA = () => {
+    const selectedList = storedOptions
+      .filter(el => el.selected)
+      .map(el => el.value);
+    const isExact = selectedList.includes(QAndA[keyName]);
+    const time = count > COUNT_TIME ? COUNT_TIME : count;
+    if (isExact || time >= COUNT_TIME) {
+      setCount(0);
+      clearInterval(intervalId.current);
+      submitQAndA({ ...QAndA, time, isExact })
+    };
+  };
+
+  React.useEffect(() => {
+    if (QAndA && QAndA.id) {
+      setStoreQAndA(QAndA);
+      if (count > 0) setCount(0);
+    }
+  }, [QAndA]);
+  React.useEffect(() => {
+    if (QandAOptions.length) {
+      setStoredOptions(QandAOptions.map(el => ({ value: el, selected: false })));
+    }
+  }, [QandAOptions.length]);
+  React.useEffect(() => {
+    if (count > 0 && count < COUNT_TIME) {
+      intervalId.current = setInterval(() => {
+        counterIncrease();
+      }, [20]);
+    } else if (count >= COUNT_TIME) {
+      checkForSubmitQAndA();
+    }
+    return () => clearInterval(intervalId.current)
+  }, [count]);
+  React.useEffect(() => {
+    checkForSubmitQAndA();
+  }, [storedOptions]);
   return <section className={classes.Step5StudyUI}>
     <Container component="div" className={classes.Top}>
       <Typography
         color="textSecondary"
         variant="subtitle2" >
-        {number < 0 ? 0 : number}/21
+        {number < 0 ? 1 : number + 1}/{total}
       </Typography>
       <CSSTransition
         in={Boolean(QAndA.id)}
+        onEntered={() => startQAndA()}
+        onExited={() => getNewQAndA()}
         timeout={animationDuration}
         classNames="QAndA" >
         <Box style={{
@@ -160,7 +222,7 @@ export default function Step5StudyUI({ QAndA, QandAOptions, submitQAndA, getNewQ
       }} color="primary" />
       <CircularProgress
         variant="determinate"
-        value={60}
+        value={-(100 - count * 100 / COUNT_TIME)}
         style={{
           position: "absolute",
           width: "100%",
@@ -178,19 +240,20 @@ export default function Step5StudyUI({ QAndA, QandAOptions, submitQAndA, getNewQ
     >
       <Container component="div" className={classes.Bottom}>
         {storedOptions.map((el, i) => {
+          const isTrueElement = QAndA[keyName] === el['value'];
           return <Chip
             key={i}
-            label={el}
+            label={el.value}
             size="medium"
             clickable
             color="primary"
             style={{ marginBottom: theme.spacing(1) }}
-            onDelete={() => { }}
-            onClick={() => { }}
-            deleteIcon={i % 2 === 0 ? <DoneIcon /> : <HighlightOffIcon />}
+            onDelete={el.selected ? () => { } : null}
+            onClick={() => selectOptions(el)}
+            deleteIcon={isTrueElement ? <DoneIcon /> : <HighlightOffIcon />}
           />
         })}
       </Container>
     </CSSTransition>
   </section >
-}
+};

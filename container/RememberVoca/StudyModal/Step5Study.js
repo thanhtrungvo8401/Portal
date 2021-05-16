@@ -38,11 +38,19 @@ export default function Step5Study({ study }) {
   const submitQAndA_Answer = (answer) => {
     setQandA({});
     setQandAOptionsList([]);
-    setListQAndA(listQAndA.map((el, i) => i === position ? el : answer));
+    setListQAndA(listQAndA.map((el, i) => i === position ? answer : el));
   }
   // go to new Q and A:
   // emit from UI
   const getNewQAndA = () => {
+    if (position === listQAndA.length - 1) {
+      console.log(listQAndA.filter(el => el.type === QA_TYPE.JP)
+        .map(el => el.voca + "_" + el.time + "_" + el.isExact));
+      console.log(listQAndA.filter(el => el.type === QA_TYPE.MEANING)
+        .map(el => el.voca + "_" + el.time + "_" + el.isExact));
+      return console.log(listQAndA.filter(el => el.type === QA_TYPE.SOUND)
+        .map(el => el.voca + "_" + el.time + "_" + el.isExact));
+    }
     const nextQandA = listQAndA[position + 1];
     // generate answer-options:
     const key = (nextQandA.type === QA_TYPE.MEANING)
@@ -80,6 +88,7 @@ export default function Step5Study({ study }) {
         submitQAndA={submitQAndA_Answer}
         getNewQAndA={getNewQAndA}
         number={position}
+        total={listQAndA.length}
       />
     </div>
   )
