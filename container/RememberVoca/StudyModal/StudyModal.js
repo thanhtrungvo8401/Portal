@@ -25,7 +25,7 @@ const initState = {
   step: 1,
 };
 const initBg = { step: 0 };
-export default function StudyModal({}) {
+export default function StudyModal({ }) {
   const { list } = useSelector((state) => state.vocas);
 
   const [study, setStudy] = React.useState({ ...initState });
@@ -84,7 +84,7 @@ export default function StudyModal({}) {
         <Step4Study study={study} actionUpdateBg={setBgAni} />
       )}
 
-      {study.step === 5 && <Step5Study />}
+      {study.step === 5 && <Step5Study study={study} />}
 
       <StudyBg
         bgAni={bgAni}
