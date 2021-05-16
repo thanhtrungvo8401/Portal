@@ -18,6 +18,7 @@ export default function Step5Study({ study }) {
   const [QandA, setQandA] = React.useState({});
   const [QandAOptionsList, setQandAOptionsList] = React.useState([]);
   const [position, setPosition] = React.useState(-1);
+  const [isFinish, setIsFinish] = React.useState(false);
   // 00: Run onetime to generate list QandA from vocas:
   const generateListQandA = () => {
     const list1 = [...study.vocas].map(el => ({ ...el, type: QA_TYPE.JP, isExact: false, time: 0 }));
@@ -44,12 +45,7 @@ export default function Step5Study({ study }) {
   // emit from UI
   const getNewQAndA = () => {
     if (position === listQAndA.length - 1) {
-      console.log(listQAndA.filter(el => el.type === QA_TYPE.JP)
-        .map(el => el.voca + "_" + el.time + "_" + el.isExact));
-      console.log(listQAndA.filter(el => el.type === QA_TYPE.MEANING)
-        .map(el => el.voca + "_" + el.time + "_" + el.isExact));
-      return console.log(listQAndA.filter(el => el.type === QA_TYPE.SOUND)
-        .map(el => el.voca + "_" + el.time + "_" + el.isExact));
+      return setIsFinish(true);
     }
     const nextQandA = listQAndA[position + 1];
     // generate answer-options:
@@ -57,14 +53,17 @@ export default function Step5Study({ study }) {
       ? "voca"
       : "meaning";
     const answerSet = new Set();
-    answerSet.add(nextQandA[key]);
     while (answerSet.size < 8) {
       const randIn = getRandom(0, study.randVocas.length - 1);
-      answerSet.add(study.randVocas[randIn][key]);
+      if (study.randVocas[randIn][key] !== nextQandA[key]) {
+        answerSet.add(study.randVocas[randIn][key]);
+      }
     }
+    const options = Array.from(answerSet);
+    options[getRandom(0, options.length - 1)] = nextQandA[key];
     // ---
     setQandA(nextQandA);
-    setQandAOptionsList(Array.from(answerSet));
+    setQandAOptionsList(options);
     setPosition(position + 1);
   }
   // 00: generate list Q&A:
@@ -89,6 +88,8 @@ export default function Step5Study({ study }) {
         getNewQAndA={getNewQAndA}
         number={position}
         total={listQAndA.length}
+        isFinish={isFinish}
+        listQAndA={listQAndA}
       />
     </div>
   )

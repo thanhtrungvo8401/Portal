@@ -1,5 +1,7 @@
 import {
   Box,
+  Button,
+  ButtonGroup,
   Chip,
   CircularProgress,
   Container,
@@ -18,6 +20,8 @@ import { QA_TYPE } from "./Step5Study";
 import React from "react";
 import { CSSTransition } from "react-transition-group";
 import { jpSpeak } from "../../../utils/textToSpeech";
+import { navigate } from "../../../utils/Helper";
+import { appUrl } from "../../../utils/APP_URL";
 const useStyles = makeStyles(theme => ({
   Step5StudyUI: styleStep_X_StudyUI,
   Top: {
@@ -54,7 +58,7 @@ const useStyles = makeStyles(theme => ({
     margin: "0 auto"
   },
   Bottom: {
-    marginTop: theme.spacing(6),
+    marginTop: theme.spacing(1),
     display: "flex",
     justifyContent: "space",
     width: "100%",
@@ -83,15 +87,20 @@ const useStyles = makeStyles(theme => ({
       transition: `all ${animationDuration}ms ease-in`,
     }
   },
+  Summary: {
+    textAlign: "center",
+    marginTop: theme.spacing(2)
+  }
 }));
 
-const COUNT_TIME = 4000;
-export default function Step5StudyUI({ QAndA, QandAOptions, submitQAndA, getNewQAndA, number, total }) {
+const COUNT_TIME = 3000;
+export default function Step5StudyUI({ QAndA, QandAOptions, submitQAndA, getNewQAndA, number, total, isFinish, listQAndA }) {
   const classes = useStyles();
   const [isSpeaking, setIsSpeaking] = React.useState(false);
   const [storedQAndA, setStoreQAndA] = React.useState({});
   const [storedOptions, setStoredOptions] = React.useState([]);
   const [count, setCount] = React.useState(0);
+  const [summary, setSummary] = React.useState({ percent: 0, timeAvarage: 0 });
   const keyName = QAndA.type === QA_TYPE.MEANING
     ? "voca"
     : "meaning";
@@ -189,6 +198,48 @@ export default function Step5StudyUI({ QAndA, QandAOptions, submitQAndA, getNewQ
   React.useEffect(() => {
     checkForSubmitQAndA();
   }, [storedOptions]);
+  React.useEffect(() => {
+    if (isFinish) {
+      const totalRight = listQAndA.reduce((acc, current) => current.isExact ? acc + 1 : acc, 0);
+      const totalTime = listQAndA.reduce((acc, current) => acc + current.time, 0);
+      setSummary({
+        percent: totalRight / total,
+        timeAvarage: totalTime / total
+      })
+    }
+  }, [isFinish]);
+  if (isFinish) {
+    return <section className={`${classes.Step5StudyUI}`} >
+      <Container className={`${classes.Summary}`}>
+        <Typography variant="h6" color="textSecondary" >Kết quả</Typography>
+        <Typography variant="h4" color="primary">
+          {Number(summary.percent * 100).toFixed(2)} %
+        </Typography>
+
+        <Typography
+          variant="h6" color="textSecondary"
+          style={{ marginTop: theme.spacing(1) }}
+        >
+          Thời gian trung bình
+        </Typography>
+        <Typography variant="h4" color="primary">
+          {Number(summary.timeAvarage / 1000).toFixed(2)} s/câu
+        </Typography>
+        <ButtonGroup variant="outlined" color="primary">
+          <Button
+            onClick={() => navigate(appUrl.rememberVoca())}
+            style={{ marginTop: theme.spacing(5) }} >
+            Kết thúc
+        </Button>
+          <Button
+            onClick={() => alert("Handle later")}
+            style={{ marginTop: theme.spacing(5) }} >
+            Thử lại
+        </Button>
+        </ButtonGroup>
+      </Container>
+    </section >
+  }
   return <section className={classes.Step5StudyUI}>
     <Container component="div" className={classes.Top}>
       <Typography
@@ -233,6 +284,13 @@ export default function Step5StudyUI({ QAndA, QandAOptions, submitQAndA, getNewQ
         }}
       />
     </Box>
+    <Container style={{ marginTop: theme.spacing(6) }}>
+      <Typography color="textSecondary"
+        style={{ fontWeight: "bolder", textAlign: "center" }}
+        variant="subtitle1" >
+        Click vào đáp án đúng
+    </Typography>
+    </Container>
     <CSSTransition
       in={Boolean(QandAOptions.length)}
       timeout={animationDuration}
