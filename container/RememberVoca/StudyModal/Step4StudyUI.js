@@ -296,7 +296,7 @@ export default function Step4StudyUI({ study, actionUpdateBg }) {
               className="check-pronouce"
               style={{
                 position: "absolute",
-                top: `100%`,
+                top: `calc(100% + 16px)`,
                 left: "50%",
                 transform: "translateX(-50%)",
                 textAlign: "center",
@@ -322,7 +322,7 @@ export default function Step4StudyUI({ study, actionUpdateBg }) {
               className="check-pronouce"
               style={{
                 position: "absolute",
-                top: `100%`,
+                top: `calc(100% + 16px)`,
                 left: "50%",
                 transform: "translateX(-50%)",
                 textAlign: "center",
