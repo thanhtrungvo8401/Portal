@@ -283,7 +283,7 @@ export default function Step3StudyUI({ study, actionUpdateBg }) {
           <Typography
             variant="h6"
             color="primary"
-            style={{ margin: `${theme.spacing(2)}px 0px` }}
+            style={{ marginTop: theme.spacing(2), marginBottom: theme.spacing(4) }}
           >
             Nhìn lại những từ vừa học
           </Typography>

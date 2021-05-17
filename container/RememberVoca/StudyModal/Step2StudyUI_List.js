@@ -27,6 +27,7 @@ const useStyles2 = makeStyles((theme) => ({
     position: "relative",
     width: "100%",
     textAlign: "center",
+    marginTop: theme.spacing(2),
     "& .one-voca": {
       transition: `all ${animationDuration}ms ease-in`,
       backgroundColor: theme.palette.background.paper,
