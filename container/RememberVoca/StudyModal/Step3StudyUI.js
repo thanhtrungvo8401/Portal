@@ -35,7 +35,6 @@ const RESULT_EMOTION = { TRUE: "TRUE", FALSE: "FALSE" };
 const useStyles = makeStyles((theme) => ({
   Step3StudyUI: styleStep_X_StudyUI,
   Step3Animation: {
-    position: "relative",
     // Q-A-voca ENTER
     "& .Q-A-voca-enter": {
       opacity: 0,
@@ -97,14 +96,14 @@ const useStyles = makeStyles((theme) => ({
     },
     // FINISH STEP
     "& .finish-step": {
-      position: "absolute",
-      top: "120%",
+      position: "relative",
+      top: "100vh",
       left: 0,
       opacity: 0,
     },
     "& .finish-step-enter": {
       opacity: 0,
-      top: "120%",
+      top: "100vh",
     },
     "& .finish-step-enter-active": {
       opacity: 1,
@@ -334,10 +333,8 @@ export default function Step3StudyUI({ study, actionUpdateBg }) {
       {isFinish && (
         <Box
           style={{
-            position: "absolute",
-            bottom: "10%",
-            left: "50%",
-            transform: "translateX(-50%)",
+            margin: `${theme.spacing(3)}px auto`,
+            position: "relative",
             height: "3rem",
             width: "3rem",
             display: "flex",
