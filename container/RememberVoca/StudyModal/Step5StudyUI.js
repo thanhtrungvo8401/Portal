@@ -89,7 +89,7 @@ const useStyles = makeStyles(theme => ({
   },
   Summary: {
     textAlign: "center",
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(6)
   }
 }));
 
@@ -243,6 +243,7 @@ export default function Step5StudyUI({ QAndA, QandAOptions, submitQAndA, getNewQ
   return <section className={classes.Step5StudyUI}>
     <Container component="div" className={classes.Top}>
       <Typography
+        style={{ textAlign: "center", marginBottom: theme.spacing(1) }}
         color="textSecondary"
         variant="subtitle2" >
         {number < 0 ? 1 : number + 1}/{total}
@@ -254,10 +255,8 @@ export default function Step5StudyUI({ QAndA, QandAOptions, submitQAndA, getNewQ
         timeout={animationDuration}
         classNames="QAndA" >
         <Box style={{
-          position: "absolute",
-          left: "50%",
-          top: "0",
-          transform: "translateX(-50%)"
+          textAlign: "center",
+          minHeight: '6rem'
         }} >
           {renderQuestion()}
         </Box>
