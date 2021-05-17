@@ -12,7 +12,6 @@ import {
 } from "@material-ui/core";
 import { CSSTransition } from "react-transition-group";
 import MicNoneIcon from "@material-ui/icons/MicNone";
-import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import CheckIcon from "@material-ui/icons/Check";
 import MoodBadIcon from "@material-ui/icons/MoodBad";
 import SubdirectoryArrowRightIcon from "@material-ui/icons/SubdirectoryArrowRight";
@@ -36,6 +35,7 @@ const useStyles = makeStyles((theme) => {
     Step4StudyUI: styleStep_X_StudyUI,
     Step4StudyUI_2: {
       paddingTop: theme.spacing(2),
+      position: "relative",
       // Check Pronouce:
       "& .check-pronouce": {
         opacity: 0,
@@ -296,7 +296,7 @@ export default function Step4StudyUI({ study, actionUpdateBg }) {
               className="check-pronouce"
               style={{
                 position: "absolute",
-                bottom: "10%",
+                top: `100%`,
                 left: "50%",
                 transform: "translateX(-50%)",
                 textAlign: "center",
@@ -322,7 +322,7 @@ export default function Step4StudyUI({ study, actionUpdateBg }) {
               className="check-pronouce"
               style={{
                 position: "absolute",
-                bottom: "10%",
+                top: `100%`,
                 left: "50%",
                 transform: "translateX(-50%)",
                 textAlign: "center",
@@ -440,11 +440,7 @@ export default function Step4StudyUI({ study, actionUpdateBg }) {
         <Container
           style={{
             textAlign: "center",
-            position: "absolute",
-            top: `calc(50% - ${theme.spacing(2)}px)`,
-            left: 0,
-            transform: "translateY(-50%)",
-            width: "100%",
+            marginTop: theme.spacing(5)
           }}
         >
           <Typography
