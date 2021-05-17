@@ -4,14 +4,7 @@ import Step1Study from "./Step1Study";
 import Step2Study from "./Step2Study";
 import StudyBg from "./StudyBg";
 import Step3Study from "./Step3Study";
-import BreadcrumbsCustom from "../../../components/Breadcrumbs/Breadcrumbs";
-import PageTitle from "../../../components/PageComponent/PageTitle";
-
-import HomeIcon from "@material-ui/icons/Home";
-import MenuBookIcon from "@material-ui/icons/MenuBook";
-import { appUrl } from "../../../utils/APP_URL";
 import Step4Study from "./Step4Study";
-import theme from "../../../components/theme";
 import Step5Study from "./Step5Study";
 import { localStorageHelper } from "../../../utils/storageHelper";
 import { storageKey } from "../../../utils/Constant";
@@ -51,22 +44,6 @@ export default function StudyModal({ }) {
   }, []);
   return (
     <React.Fragment>
-      <BreadcrumbsCustom
-        parents={[
-          {
-            Icon: HomeIcon,
-            label: "Study room",
-            url: appUrl.studyRoom(),
-          },
-          {
-            Icon: MenuBookIcon,
-            label: "Remember group",
-            url: appUrl.rememberVoca(),
-          },
-        ]}
-        label="Danh sach tu vung"
-      />
-      <PageTitle>Try to remember all the words</PageTitle>
       {study.step === 1 && (
         <Step1Study
           study={study}
@@ -99,25 +76,12 @@ export default function StudyModal({ }) {
   );
 }
 
-export const bgStep_X_Study = {
-  width: "100%",
-  height: "100%",
-  top: 0,
-  left: 0,
-  margin: "0 auto",
-  zIndex: 500,
-  position: "fixed",
-  backgroundColor: theme.palette.info.light,
-};
+export const bgStep_X_Study = {};
 
 export const styleStep_X_StudyUI = {
   width: "100%",
   maxWidth: 600,
-  position: "absolute",
-  top: 0,
-  left: "50%",
-  transform: "translateX(-50%)",
-  height: "100%",
+  margin: "0 auto"
 };
 
 export const animationDuration = 500;

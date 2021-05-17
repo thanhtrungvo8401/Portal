@@ -1,4 +1,4 @@
-import { Button, Container, makeStyles, Typography } from "@material-ui/core";
+import { Box, Button, Container, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 import { CSSTransition } from "react-transition-group";
 import { theme } from "../../../components/theme";
@@ -48,35 +48,29 @@ export default function Step2StudyUI({ study, actionUpdateBg }) {
 
   return (
     <div className={classes.Step2StudyUI}>
-      {isFinishIntro && (
-        <Container style={{ paddingTop: theme.spacing(1) }}>
-          <Button color="default" >
-            <HelpOutlineIcon style={{ fontSize: "2.5rem", marginRight: theme.spacing(1) }} />
-            <Typography
-              color="textSecondary"
-            >
-              Click để nghe hướng dẫn
+      <Container style={{ paddingTop: theme.spacing(1), opacity: isFinishIntro ? 1 : 0 }}>
+        <Button color="default" >
+          <HelpOutlineIcon style={{ fontSize: "2.5rem", marginRight: theme.spacing(1) }} />
+          <Typography
+            color="textSecondary"
+          >
+            Click để nghe hướng dẫn
             </Typography>
-          </Button>
-        </Container>
-      )}
-      <DisplayVocas vocas={listIntroduced} />
+        </Button>
+      </Container>
+      <DisplayVocas vocas={listIntroduced} isFinishIntro={isFinishIntro} />
       {/* BG_DIV */}
       {isActiveIntroVoca && (
         <div
           style={{
             backgroundColor: "rgba(0, 0, 0, 0.87)",
             opacity: 0.3,
-            position: "absolute",
-            width: "200vw",
+            position: "fixed",
+            width: "100vw",
             height: "100vh",
             left: 0,
             top: 0,
-            transform:
-              getWidth > 600
-                ? "translateX(calc(200px - 50%))"
-                : "translateX(0)",
-            zIndex: 1,
+            zIndex: 0,
           }}
         ></div>
       )}
@@ -95,12 +89,9 @@ export default function Step2StudyUI({ study, actionUpdateBg }) {
       </CSSTransition>
 
       {isFinishIntro && (
-        <div
+        <Box
           style={{
-            position: "absolute",
-            width: "100%",
-            left: 0,
-            bottom: theme.spacing(3),
+            marginTop: theme.spacing(5),
             display: "flex",
             justifyContent: "center",
           }}
@@ -113,7 +104,7 @@ export default function Step2StudyUI({ study, actionUpdateBg }) {
             Qua bước tiếp theo
             <DoubleArrowIcon />
           </Button>
-        </div>
+        </Box>
       )}
     </div>
   );

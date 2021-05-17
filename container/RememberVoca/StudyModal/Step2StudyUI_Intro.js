@@ -28,7 +28,7 @@ const useStyles1 = makeStyles((theme) => ({
     display: "inline-block",
     minWidth: "300px",
     padding: `${theme.spacing(2)}px ${theme.spacing(1)}px`,
-    position: "absolute",
+    position: "fixed",
     zIndex: 2,
     textAlign: "Center",
     top: "50%",

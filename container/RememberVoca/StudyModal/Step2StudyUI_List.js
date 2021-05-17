@@ -24,11 +24,7 @@ import theme from "../../../components/theme";
 // LIST COMPONENT
 const useStyles2 = makeStyles((theme) => ({
   DisplayVocas: {
-    position: "absolute",
-    zIndex: 0,
-    top: "50%",
-    left: "50%",
-    transform: "translateY(-50%) translateX(-50%)",
+    position: "relative",
     width: "100%",
     textAlign: "center",
     "& .one-voca": {
@@ -39,6 +35,7 @@ const useStyles2 = makeStyles((theme) => ({
       cursor: "pointer",
       position: "relative",
       overflow: "hidden",
+      zIndex: 0,
       "&:hover": {
         boxShadow:
           "0px 3px 3px -2px rgb(0 0 0 / 20%), 0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%)",
@@ -111,11 +108,10 @@ const useStyles2 = makeStyles((theme) => ({
     height: "100%",
     minHeight: "200px",
     opacity: 0.96,
-    top: "50%",
+    top: "0",
     left: "100vw",
     opacity: 0,
     zIndex: 3,
-    transform: "translateY(-50%)",
     cursor: "pointer",
     "&.random-speak-enter": {
       left: "100%!important",
@@ -164,7 +160,7 @@ const useStyles2 = makeStyles((theme) => ({
     },
   }
 }));
-export default function DisplayVocas({ vocas = [] }) {
+export default function DisplayVocas({ vocas = [], isFinishIntro }) {
   const classes = useStyles2();
   const [vocasRender, setVocasRender] = React.useState([]);
   const [vocasRandomSpeak, setVocasRandomSpeak] = React.useState([]);
@@ -271,7 +267,7 @@ export default function DisplayVocas({ vocas = [] }) {
           })}
         </TransitionGroup>
       </List>
-      <ButtonGroup
+      {isFinishIntro && <ButtonGroup
         className={classes.BtnGroup}
         color="primary"
         aria-label="outlined primary button group"
@@ -285,7 +281,7 @@ export default function DisplayVocas({ vocas = [] }) {
           <DataUsageIcon style={{ marginRight: theme.spacing(1) }} />
           Random Speak
         </Button>
-      </ButtonGroup>
+      </ButtonGroup>}
       <CSSTransition
         in={isRandomSpeak}
         timeout={animationDuration}
