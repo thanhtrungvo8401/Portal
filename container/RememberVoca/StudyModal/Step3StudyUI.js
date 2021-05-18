@@ -168,7 +168,7 @@ export default function Step3StudyUI({ study, actionUpdateBg }) {
   return (
     <section className={`${classes.Step3StudyUI} ${classes.Step3Animation}`}>
       {!isFinish && (
-        <Container style={{ paddingTop: theme.spacing(1) }}>
+        <Container style={{ paddingTop: theme.spacing(1), position: "relative" }}>
           <Typography color="primary">Chọn nghĩa cho từ bên dưới</Typography>
           {/* Voca*/}
           <CSSTransition
@@ -229,7 +229,7 @@ export default function Step3StudyUI({ study, actionUpdateBg }) {
             }}
           >
             <div
-              style={{ textAlign: "center", marginTop: theme.spacing(6) }}
+              style={{ textAlign: "center", position: "absolute", width: "100%", left: 0, top: `calc(100% + 32px)` }}
               className="result-emotion"
             >
               <InsertEmoticonIcon
@@ -258,7 +258,7 @@ export default function Step3StudyUI({ study, actionUpdateBg }) {
             }}
           >
             <div
-              style={{ textAlign: "center", marginTop: theme.spacing(6) }}
+              style={{ textAlign: "center", position: "absolute", width: "100%", left: 0, top: `calc(100% + 32px)` }}
               className="result-emotion"
             >
               <SentimentVeryDissatisfiedIcon
