@@ -133,7 +133,7 @@ export default function Step1Study({
           style={{ display: "flex", justifyContent: "center", marginTop: "2rem" }}
         >
           <Button
-            onClick={() => actionUpdateBg({ step: 3 })} // step = 2 XXX
+            onClick={() => actionUpdateBg({ step: 6 })} // step = 2 XXX
             className={styles.flashEffect}
             variant="contained"
             color="primary"

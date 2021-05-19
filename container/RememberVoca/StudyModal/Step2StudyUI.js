@@ -2,7 +2,7 @@ import { Box, Button, Container, makeStyles, Typography } from "@material-ui/cor
 import React from "react";
 import { CSSTransition } from "react-transition-group";
 import { theme } from "../../../components/theme";
-import { getRandom, getWidth } from "../../../utils/Helper";
+import { getRandom } from "../../../utils/Helper";
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
 import { animationDuration, styleStep_X_StudyUI } from "./StudyModal";
