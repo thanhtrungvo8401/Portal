@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
       left: '150%',
       opacity: 0,
     },
-    "& .step-result.step-result-enter-done": {
+    "& .step-result.step-result-enter-active": {
       left: '50%',
       opacity: 1,
       transition: `all ${animationDuration}ms ease-in`,
@@ -52,7 +52,7 @@ const useStyles = makeStyles(theme => ({
       left: '50%',
       opacity: 1,
     },
-    "& .step-result.step-result-exit-done": {
+    "& .step-result.step-result-exit-active": {
       left: '150%',
       opacity: 0,
       transition: `all ${animationDuration}ms ease-in`,
