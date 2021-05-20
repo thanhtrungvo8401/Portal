@@ -33,8 +33,8 @@ const generateMeaningOptions = (listStudy, listRandom) => {
 const RESULT_EMOTION = { TRUE: "TRUE", FALSE: "FALSE" };
 // MAIN UI
 const useStyles = makeStyles((theme) => ({
-  Step3StudyUI: styleStep_X_StudyUI,
-  Step3Animation: {
+  Step4StudyUI: styleStep_X_StudyUI,
+  Step4Animation: {
     // Q-A-voca ENTER
     "& .Q-A-voca-enter": {
       opacity: 0,
@@ -119,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Step3StudyUI({ study, actionUpdateBg }) {
+export default function Step4StudyUI({ study, actionUpdateBg }) {
   const classes = useStyles();
   const [isFinish, setIsFinish] = React.useState(false);
   const [list, setList] = React.useState([...study.vocas]);
@@ -143,7 +143,7 @@ export default function Step3StudyUI({ study, actionUpdateBg }) {
       setIsFinish(true);
     }
   };
-  // 01: Start step 3
+  // 01: Start step 4
   React.useEffect(() => {
     nextQandA();
   }, []);
@@ -166,7 +166,7 @@ export default function Step3StudyUI({ study, actionUpdateBg }) {
     }
   }, [isFinish, countDown]);
   return (
-    <section className={`${classes.Step3StudyUI} ${classes.Step3Animation}`}>
+    <section className={`${classes.Step4StudyUI} ${classes.Step4Animation}`}>
       {!isFinish && (
         <Container style={{ paddingTop: theme.spacing(1), position: "relative" }}>
           <Typography color="primary">Chọn nghĩa cho từ bên dưới</Typography>
