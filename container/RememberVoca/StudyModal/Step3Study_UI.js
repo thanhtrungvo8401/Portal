@@ -204,7 +204,7 @@ export default function Step3StudyUI({ vocas, actionUpdateBg }) {
                 if (!result.isTrue) {
                   setResult({ isChecked: false, isTrue: false })
                 } else {
-                  actionUpdateBg({ step: 3 })
+                  actionUpdateBg({ step: 4 })
                 }
 
               }}

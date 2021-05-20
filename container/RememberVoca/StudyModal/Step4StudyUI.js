@@ -162,7 +162,7 @@ export default function Step4StudyUI({ study, actionUpdateBg }) {
     if (isFinish && countDown > 0) {
       setTimeout(() => setCountDown(countDown - 0.1), 100);
     } else if (isFinish) {
-      actionUpdateBg({ step: 4 });
+      actionUpdateBg({ step: 5 });
     }
   }, [isFinish, countDown]);
   return (

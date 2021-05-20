@@ -176,7 +176,7 @@ export default function Step5StudyUI({ study, actionUpdateBg }) {
   React.useEffect(() => {
     if (isFinish) {
       setTimeout(() => {
-        actionUpdateBg({ step: 5 });
+        actionUpdateBg({ step: 6 });
       }, animationDuration * 4);
     }
   }, [isFinish]);
