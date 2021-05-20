@@ -34,7 +34,8 @@ export const theme = createMuiTheme({
   },
   opacity: {
     '2': "0.2",
-    '5': "0.5"
+    '5': "0.5",
+    '8': "0.8",
   }
 });
 
