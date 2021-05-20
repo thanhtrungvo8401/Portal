@@ -5,7 +5,7 @@ import Step2Study from "./Step2Study";
 import StudyBg from "./StudyBg";
 import Step3Study from "./Step3Study";
 import Step4Study from "./Step4Study";
-import Step5Study from "./Step5Study";
+import Step5Study from "./Step6Study";
 import { localStorageHelper } from "../../../utils/storageHelper";
 import { storageKey } from "../../../utils/Constant";
 import { serviceFetVocaRandomByLevel } from "../../../service/vocaService";
@@ -62,9 +62,9 @@ export default function StudyModal({ }) {
         <Step4Study study={study} actionUpdateBg={setBgAni} />
       )}
 
-      {study.step === 5 && <Step5Study study={study} />}
+      {study.step === 6 && <Step5Study study={study} />}
 
-      {study.step === 6 && <Step_X_Study study={study} actionUpdateBg={setBgAni} />}
+      {/* {study.step === 6 && <Step_X_Study study={study} actionUpdateBg={setBgAni} />} */}
 
       <StudyBg
         bgAni={bgAni}
