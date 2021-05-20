@@ -126,7 +126,7 @@ const getListStyle = isDraggingOver => ({
   zIndex: 1
 });
 
-export default function Step_X_StudyUI({ vocas, actionUpdateBg }) {
+export default function Step3StudyUI({ vocas, actionUpdateBg }) {
   const classes = useStyles();
   const [items, setItems] = React.useState([]);
   const [result, setResult] = React.useState({ isChecked: false, isTrue: false });

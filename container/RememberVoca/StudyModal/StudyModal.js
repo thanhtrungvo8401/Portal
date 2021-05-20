@@ -10,7 +10,7 @@ import { localStorageHelper } from "../../../utils/storageHelper";
 import { storageKey } from "../../../utils/Constant";
 import { serviceFetVocaRandomByLevel } from "../../../service/vocaService";
 import { handleErrorAPI } from "../../../utils/Helper";
-import Step_X_Study from "./Step_X_Study";
+import Step3Study from "./Step3Study";
 
 const initState = {
   vocas: [],
@@ -54,6 +54,11 @@ export default function StudyModal({ }) {
       {study.step === 2 && (
         <Step2Study study={study} actionUpdateBg={setBgAni} />
       )}
+
+      {study.step === 3 && (
+        <Step3Study study={study} actionUpdateBg={setBgAni} />
+      )}
+
       {study.step === 4 && (
         <Step4Study study={study} actionUpdateBg={setBgAni} />
       )}
@@ -63,8 +68,6 @@ export default function StudyModal({ }) {
       )}
 
       {study.step === 6 && <Step6Study study={study} />}
-
-      {/* {study.step === 6 && <Step_X_Study study={study} actionUpdateBg={setBgAni} />} */}
 
       <StudyBg
         bgAni={bgAni}
