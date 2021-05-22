@@ -5,6 +5,7 @@ import { loadingReducer } from "./loadingReducer";
 import { loginReducer } from "./loginReducer";
 import { rememberGroupReducer } from "./rememberGroupReducer";
 import { setVocasReducer } from "./setVocasReducer";
+import { testVocaReducer } from "./testVocaReducer";
 import { toastReducer } from "./toastReducer";
 import { userReducer } from "./userReducer";
 import { vocaReducer } from "./vocaReducer";
@@ -19,6 +20,7 @@ const reducers = {
   setVocas: setVocasReducer,
   vocas: vocaReducer,
   rememberGroups: rememberGroupReducer,
+  testVoca: testVocaReducer
 };
 
 export default combineReducers(reducers);

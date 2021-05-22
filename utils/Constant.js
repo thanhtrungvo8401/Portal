@@ -39,6 +39,7 @@ export const LEVEL = {
   N3: "N3",
   N2: "N2",
   N1: "N1",
+  MY_VOCA: "MY_VOCA"
 };
 
 export const ROLE_NAME = {

@@ -6,6 +6,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import { constantApp } from "../../utils/Constant";
 import React from "react";
 import TestVocaModal from "../TestVocaModal/TestVocaModal";
+import { useDispatch } from "react-redux";
+import { actionSetIsShowModal } from "../../redux/actions/testVocaActions";
 
 const destopWidth = "10rem";
 const animationDuration = constantApp.animationDuration;
@@ -90,7 +92,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function TestVocaBox({ }) {
   const classes = useStyles();
-  const [isEditing, setIsEditing] = React.useState(false);
+  const dispatch = useDispatch();
   return <React.Fragment>
     <Card className={classes.Card} >
       <Box className={classes.LeftPart} >
@@ -157,7 +159,7 @@ export default function TestVocaBox({ }) {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => setIsEditing(true)}
+              onClick={() => dispatch(actionSetIsShowModal(true))}
             >
               <EditIcon
                 style={{ fontSize: "1.5rem", marginRight: theme.spacing(1) }}
@@ -165,18 +167,6 @@ export default function TestVocaBox({ }) {
               <Typography>Edit</Typography>
             </Button>
           </div>
-          <CSSTransition
-            in={isEditing}
-            timeout={animationDuration}
-            classNames="edit-group"
-          >
-            <div className="edit-group">
-              Hello world
-            <Button onClick={() => setIsEditing(false)}>
-                close
-            </Button>
-            </div>
-          </CSSTransition>
         </Box>
       </Box>
     </Card >

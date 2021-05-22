@@ -1,13 +1,14 @@
 import { Dialog, DialogContent, DialogTitle, Slide } from "@material-ui/core";
 import React from "react";
+import { useSelector } from "react-redux";
 
 const Transition = React.forwardRef((props, ref) => {
   return <Slide direction="down" ref={ref} {...props} />
 })
 
-const isShowModal = true;
 
 export default function TestVocaModal({ }) {
+  const { isShowModal } = useSelector(state => state.testVoca);
   return <Dialog
     open={isShowModal}
     TransitionComponent={Transition}
