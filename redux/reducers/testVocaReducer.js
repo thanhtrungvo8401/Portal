@@ -2,15 +2,15 @@ import { TEST_VOCA } from "../types";
 
 const initState = {
   isShowModal: false,
-  number: 0,
+  number: 50,
   resources:
   {
-    N5: { active: false, value: [] },
-    N4: { active: false, value: [] },
+    MY_VOCA: { active: false, value: [] },
+    N5: { active: true, value: [] },
+    N4: { active: true, value: [] },
     N3: { active: false, value: [] },
     N2: { active: false, value: [] },
     N1: { active: false, value: [] },
-    MY_VOCA: { active: false, value: [] }
   }
 }
 
