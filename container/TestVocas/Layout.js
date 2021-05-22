@@ -5,6 +5,7 @@ import ParagraphTitle from "../../components/ParagraphTitle";
 import { appUrl } from "../../utils/APP_URL";
 import HomeIcon from "@material-ui/icons/Home";
 import ParagraphBody from "../../components/ParagraphBody/ParagraphBody";
+import TestVocaBox from "../../components/TestVocaBox/TestVocaBox";
 
 function TestVocasLayout(props) {
   return (
@@ -27,7 +28,8 @@ function TestVocasLayout(props) {
         </ParagraphBody>
       </Container>
       <ParagraphTitle>Learning vocabularies group</ParagraphTitle>
-      <Container>STUDY</Container>
+      {/* TEST VOCA BOX */}
+      <TestVocaBox />
     </div>
   );
 }

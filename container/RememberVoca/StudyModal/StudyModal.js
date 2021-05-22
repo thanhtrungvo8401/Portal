@@ -7,7 +7,7 @@ import Step4Study from "./Step4Study";
 import Step5Study from "./Step5Study";
 import Step6Study from "./Step6Study";
 import { localStorageHelper } from "../../../utils/storageHelper";
-import { storageKey } from "../../../utils/Constant";
+import { constantApp, storageKey } from "../../../utils/Constant";
 import { serviceFetVocaRandomByLevel } from "../../../service/vocaService";
 import { handleErrorAPI } from "../../../utils/Helper";
 import Step3Study from "./Step3Study";
@@ -87,4 +87,4 @@ export const styleStep_X_StudyUI = {
   margin: "0 auto"
 };
 
-export const animationDuration = 500;
+export const animationDuration = constantApp.animationDuration;
