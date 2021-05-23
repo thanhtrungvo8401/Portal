@@ -5,12 +5,12 @@ const initState = {
   number: 50,
   resources:
   {
-    MY_VOCA: { active: false, value: [] },
-    N5: { active: true, value: [] },
-    N4: { active: true, value: [] },
-    N3: { active: false, value: [] },
-    N2: { active: false, value: [] },
-    N1: { active: false, value: [] },
+    MY_VOCA: { active: false, value: [], selectAll: false },
+    N5: { active: true, value: [], selectAll: false },
+    N4: { active: true, value: [], selectAll: false },
+    N3: { active: false, value: [], selectAll: false },
+    N2: { active: false, value: [], selectAll: false },
+    N1: { active: false, value: [], selectAll: false },
   }
 }
 
@@ -27,12 +27,12 @@ export const testVocaReducer = (state = { ...initState }, { type, payload }) => 
         number: payload
       }
     case TEST_VOCA.UPDATE_RESOURCES:
-      const { key, value } = payload;
+      const { key, object } = payload;
       return {
         ...state,
         resources: {
           ...state.resources,
-          [key]: value
+          [key]: object
         }
       }
     default:

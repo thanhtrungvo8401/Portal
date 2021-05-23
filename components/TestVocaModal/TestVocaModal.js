@@ -1,27 +1,27 @@
 import {
   Avatar,
   Box,
+  Card,
   Checkbox,
   Dialog,
   DialogContent,
   DialogTitle,
   Divider,
-  FormControl,
   FormControlLabel,
   FormGroup,
-  IconButton,
   makeStyles,
   Slide,
   TextField,
   Typography
 } from "@material-ui/core";
+import AddToPhotosIcon from '@material-ui/icons/AddToPhotos';
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Autocomplete } from "@material-ui/lab";
 import { LEVEL_OPTION } from "../../utils/Constant";
 import { theme } from "../../components/theme";
-import SelectAllIcon from '@material-ui/icons/SelectAll';
 import { CheckBox } from "@material-ui/icons";
+import { actionUpdateResources } from "../../redux/actions/testVocaActions";
 
 const Transition = React.forwardRef((props, ref) => {
   return <Slide direction="down" ref={ref} {...props} />
@@ -36,9 +36,11 @@ const useStyles = makeStyles(theme => ({
     "& .list-item": {
       marginBottom: theme.spacing(4),
       display: "flex",
-      justifyContent: "center",
+      justifyContent: "space-between",
       alignItems: "center",
       flexWrap: "wrap",
+      padding: theme.spacing(1),
+      border: `1px solid ${theme.palette.primary.main}`,
       "& .avatar": {},
       "& .action-group": {
         display: "block",
@@ -54,8 +56,32 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function TestVocaModal({ }) {
-  const { isShowModal, number, resources } = useSelector(state => state.testVoca);
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const {
+    isShowModal,
+    number,
+    resources
+  } = useSelector(state => state.testVoca);
+  const handleToggleActiveLevel = (e) => {
+    const { name, checked } = e.target;
+    dispatch(actionUpdateResources({
+      key: name,
+      object: {
+        ...resources[name],
+        active: checked,
+      }
+    }))
+  }
+  const handleOnChangeLessonForLevel = (key, values) => {
+    dispatch(actionUpdateResources({
+      key,
+      object: {
+        ...resources[key],
+        value: values
+      }
+    }))
+  }
   return <Dialog
     open={isShowModal}
     TransitionComponent={Transition}
@@ -100,7 +126,7 @@ export default function TestVocaModal({ }) {
               <Checkbox
                 checked={resources[key]["active"]}
                 name={key}
-                onChange={() => { }}
+                onChange={handleToggleActiveLevel}
                 color="primary"
               />
             }
@@ -114,12 +140,14 @@ export default function TestVocaModal({ }) {
         {Object.keys(resources).map(key => {
           const { active, value } = resources[key];
           if (!active) return null;
-          return <div
+          return <Card
             className="list-item"
             key={key}
           >
             <div className="avatar" >
-              <Avatar style={{ backgroundColor: theme.palette.primary.main }} >{key}</Avatar>
+              <Avatar style={{ backgroundColor: theme.palette.primary.main }} >
+                {key === "MY_VOCA" ? <AddToPhotosIcon /> : key}
+              </Avatar>
             </div>
             <div className="action-group">
               <FormControlLabel
@@ -140,7 +168,8 @@ export default function TestVocaModal({ }) {
                 multiple
                 id={"autocomplete_" + key}
                 options={LEVEL_OPTION[key]}
-                getOptionLabel={option => option}
+                value={resources[key].value}
+                getOptionLabel={option => "B-" + option}
                 filterSelectedOptions
                 renderInput={params => {
                   return <TextField
@@ -150,9 +179,10 @@ export default function TestVocaModal({ }) {
                     placeholder=""
                   />
                 }}
+                onChange={(e, values, reason) => handleOnChangeLessonForLevel(key, values)}
               />
             </div>
-          </div>
+          </Card>
         })}
       </Box>
     </DialogContent>
