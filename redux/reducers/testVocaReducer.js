@@ -5,12 +5,12 @@ const initState = {
   number: 50,
   resources:
   {
-    MY_VOCA: { active: false, value: [], selectAll: false },
-    N5: { active: true, value: [], selectAll: false },
-    N4: { active: true, value: [], selectAll: false },
-    N3: { active: false, value: [], selectAll: false },
-    N2: { active: false, value: [], selectAll: false },
-    N1: { active: false, value: [], selectAll: false },
+    MY_VOCA: { active: false, value: [], isSelectAll: false },
+    N5: { active: true, value: [], isSelectAll: false },
+    N4: { active: true, value: [], isSelectAll: false },
+    N3: { active: false, value: [], isSelectAll: false },
+    N2: { active: false, value: [], isSelectAll: false },
+    N1: { active: false, value: [], isSelectAll: false },
   }
 }
 

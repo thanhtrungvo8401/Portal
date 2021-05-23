@@ -20,8 +20,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Autocomplete } from "@material-ui/lab";
 import { LEVEL_OPTION } from "../../utils/Constant";
 import { theme } from "../../components/theme";
-import { CheckBox } from "@material-ui/icons";
 import { actionUpdateResources } from "../../redux/actions/testVocaActions";
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+import Favorite from '@material-ui/icons/Favorite';
+
 
 const Transition = React.forwardRef((props, ref) => {
   return <Slide direction="down" ref={ref} {...props} />
@@ -82,6 +84,13 @@ export default function TestVocaModal({ }) {
       }
     }))
   }
+  const handleSelectToggleCheckAll = (e) => {
+    const { checked, name } = e.target;
+    const newObject = checked
+      ? { key: name, object: { ...resources[name], isSelectAll: checked, value: LEVEL_OPTION[name] } }
+      : { key: name, object: { ...resources[name], isSelectAll: checked, value: [] } };
+    dispatch(actionUpdateResources(newObject));
+  }
   return <Dialog
     open={isShowModal}
     TransitionComponent={Transition}
@@ -124,6 +133,8 @@ export default function TestVocaModal({ }) {
           return <FormControlLabel key={key}
             control={
               <Checkbox
+                icon={<FavoriteBorder />}
+                checkedIcon={<Favorite />}
                 checked={resources[key]["active"]}
                 name={key}
                 onChange={handleToggleActiveLevel}
@@ -138,7 +149,7 @@ export default function TestVocaModal({ }) {
       <Divider className={classes.Divider} />
       <Box className={classes.List} >
         {Object.keys(resources).map(key => {
-          const { active, value } = resources[key];
+          const { active, value, isSelectAll } = resources[key];
           if (!active) return null;
           return <Card
             className="list-item"
@@ -149,26 +160,27 @@ export default function TestVocaModal({ }) {
                 {key === "MY_VOCA" ? <AddToPhotosIcon /> : key}
               </Avatar>
             </div>
-            <div className="action-group">
+            <FormGroup className="action-group">
               <FormControlLabel
                 value="bottom"
                 control={
-                  <CheckBox
-                    checked={true}
+                  <Checkbox
+                    checked={isSelectAll}
                     name={key}
-                    onChange={() => { }}
+                    onChange={handleSelectToggleCheckAll}
                     color="primary"
-                  />}
+                  />
+                }
                 label="Select all"
               />
 
-            </div>
+            </FormGroup>
             <div className="select-group" >
               <Autocomplete
                 multiple
                 id={"autocomplete_" + key}
                 options={LEVEL_OPTION[key]}
-                value={resources[key].value}
+                value={value}
                 getOptionLabel={option => "B-" + option}
                 filterSelectedOptions
                 renderInput={params => {
