@@ -1,9 +1,11 @@
 import {
   Avatar,
   Box,
+  Button,
   Card,
   Checkbox,
   Dialog,
+  DialogActions,
   DialogContent,
   DialogTitle,
   Divider,
@@ -14,7 +16,6 @@ import {
   TextField,
   Typography
 } from "@material-ui/core";
-import AddToPhotosIcon from '@material-ui/icons/AddToPhotos';
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Autocomplete } from "@material-ui/lab";
@@ -36,13 +37,16 @@ const useStyles = makeStyles(theme => ({
   },
   List: {
     "& .list-item": {
-      marginBottom: theme.spacing(4),
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
       flexWrap: "wrap",
       padding: theme.spacing(1),
       border: `1px solid ${theme.palette.primary.main}`,
+      marginBottom: theme.spacing(4),
+      "&:last-child": {
+        marginBottom: 0
+      },
       "& .avatar": {},
       "& .action-group": {
         display: "block",
@@ -154,7 +158,7 @@ export default function TestVocaModal({ }) {
           >
             <div className="avatar" >
               <Avatar style={{ backgroundColor: theme.palette.primary.main }} >
-                {key === "MY_VOCA" ? <AddToPhotosIcon /> : key}
+                {key === "MY_VOCA" ? "Me" : key}
               </Avatar>
             </div>
             <FormGroup className="action-group">
@@ -195,5 +199,8 @@ export default function TestVocaModal({ }) {
         })}
       </Box>
     </DialogContent>
+    <DialogActions style={{ display: "flex", justifyContent: "center" }} >
+      <Button color="primary" variant="contained" >Close</Button>
+    </DialogActions>
   </Dialog>
 }
