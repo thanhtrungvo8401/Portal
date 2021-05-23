@@ -76,20 +76,17 @@ export default function TestVocaModal({ }) {
     }))
   }
   const handleOnChangeLessonForLevel = (key, values) => {
-    dispatch(actionUpdateResources({
-      key,
-      object: {
-        ...resources[key],
-        value: values
-      }
-    }))
+    const newObject = values.length !== LEVEL_OPTION[key].length
+      ? { ...resources[key], value: values, isSelectAll: false }
+      : { ...resources[key], value: values, isSelectAll: true };
+    dispatch(actionUpdateResources({ key, object: newObject }));
   }
   const handleSelectToggleCheckAll = (e) => {
     const { checked, name } = e.target;
     const newObject = checked
-      ? { key: name, object: { ...resources[name], isSelectAll: checked, value: LEVEL_OPTION[name] } }
-      : { key: name, object: { ...resources[name], isSelectAll: checked, value: [] } };
-    dispatch(actionUpdateResources(newObject));
+      ? { ...resources[name], isSelectAll: checked, value: LEVEL_OPTION[name] }
+      : { ...resources[name], isSelectAll: checked, value: [] };
+    dispatch(actionUpdateResources({ key: name, object: newObject }));
   }
   return <Dialog
     open={isShowModal}
