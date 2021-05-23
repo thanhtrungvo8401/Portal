@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Autocomplete } from "@material-ui/lab";
 import { LEVEL_OPTION } from "../../utils/Constant";
 import { theme } from "../../components/theme";
-import { actionUpdateResources } from "../../redux/actions/testVocaActions";
+import { actionSetIsShowModal, actionSetNumber, actionUpdateResources } from "../../redux/actions/testVocaActions";
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import Favorite from '@material-ui/icons/Favorite';
 
@@ -64,11 +64,15 @@ const useStyles = makeStyles(theme => ({
 export default function TestVocaModal({ }) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const {
-    isShowModal,
-    number,
-    resources
-  } = useSelector(state => state.testVoca);
+  const { isShowModal, number, resources } = useSelector(state => state.testVoca);
+  const handleOnChangeNumberOfVocas = (e) => {
+    const { value } = e.target;
+    if (value === "") {
+      dispatch(actionSetNumber(value));
+    } else {
+      dispatch(actionSetNumber(Math.abs(Math.round(value))))
+    }
+  }
   const handleToggleActiveLevel = (e) => {
     const { name, checked } = e.target;
     dispatch(actionUpdateResources({
@@ -92,6 +96,9 @@ export default function TestVocaModal({ }) {
       : { ...resources[name], isSelectAll: checked, value: [] };
     dispatch(actionUpdateResources({ key: name, object: newObject }));
   }
+  const handleCloseModal = () => {
+    dispatch(actionSetIsShowModal(false));
+  }
   return <Dialog
     open={isShowModal}
     TransitionComponent={Transition}
@@ -113,8 +120,9 @@ export default function TestVocaModal({ }) {
           name="number"
           value={number}
           label="Số lượng"
-          variant="filled"
+          variant="outlined"
           style={{ width: "100%" }}
+          onChange={handleOnChangeNumberOfVocas}
         />
         <Typography
           variant="caption"
@@ -200,7 +208,12 @@ export default function TestVocaModal({ }) {
       </Box>
     </DialogContent>
     <DialogActions style={{ display: "flex", justifyContent: "center" }} >
-      <Button color="primary" variant="contained" >Close</Button>
+      <Button
+        disabled={!number}
+        color="primary"
+        variant="contained"
+        onClick={handleCloseModal}
+      >Close</Button>
     </DialogActions>
   </Dialog>
 }
