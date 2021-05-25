@@ -19,7 +19,7 @@ import {
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Autocomplete } from "@material-ui/lab";
-import { LEVEL_OPTION } from "../../utils/Constant";
+import { LEVEL, LEVEL_OPTION } from "../../utils/Constant";
 import { theme } from "../../components/theme";
 import { actionSetIsShowModal, actionSetNumber, actionUpdateResources } from "../../redux/actions/testVocaActions";
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
@@ -150,7 +150,7 @@ export default function TestVocaModal({ }) {
                 color="primary"
               />
             }
-            label={key}
+            label={key !== LEVEL.MV ? key : "Của tôi"}
           />
         })}
       </FormGroup>
@@ -166,7 +166,7 @@ export default function TestVocaModal({ }) {
           >
             <div className="avatar" >
               <Avatar style={{ backgroundColor: theme.palette.primary.main }} >
-                {key === "MY_VOCA" ? "Me" : key}
+                {key === LEVEL.MV ? "Me" : key}
               </Avatar>
             </div>
             <FormGroup className="action-group">

@@ -39,7 +39,7 @@ export const LEVEL = {
   N3: "N3",
   N2: "N2",
   N1: "N1",
-  MY_VOCA: "MY_VOCA"
+  MV: "MV"
 };
 
 export const LEVEL_OPTION = {
@@ -48,7 +48,7 @@ export const LEVEL_OPTION = {
   N3: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
   N2: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
   N1: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-  MY_VOCA: ['1', '2', '3']
+  MV: ['1', '2', '3']
 }
 
 export const ROLE_NAME = {

@@ -1,7 +1,7 @@
 import { Avatar, Box, Button, Card, Divider, List, ListItem, ListItemAvatar, ListItemText, makeStyles, Typography } from "@material-ui/core";
 import { theme } from "../../components/theme";
 import EditIcon from '@material-ui/icons/Edit';
-import { constantApp, storageKey } from "../../utils/Constant";
+import { constantApp, LEVEL, storageKey } from "../../utils/Constant";
 import React from "react";
 import TestVocaModal from "../TestVocaModal/TestVocaModal";
 import { useDispatch, useSelector } from "react-redux";
@@ -89,6 +89,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const renderContentTestBox = (key, listValue = []) => {
+  if (key !== LEVEL.MV) {
+    return listValue.map(el => (
+      <Typography key={el}
+        className="lesson-name">
+        {"Bai-" + el}
+      </Typography>)
+    )
+  } else {
+    return null;
+  }
+}
+
 export default function TestVocaBox({ }) {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -98,6 +111,7 @@ export default function TestVocaBox({ }) {
     // get new my-set-vocas:
     user.id && dispatch(serviceGetSetVocas(user.id));
   }, []);
+
   let hideDivider = null;
   return <React.Fragment>
     <Card className={classes.Card} >
@@ -145,15 +159,10 @@ export default function TestVocaBox({ }) {
                   {hideDivider !== key && <Divider className='divider' />}
                   <ListItem className="list-item" >
                     <ListItemAvatar>
-                      <Avatar className="avatar" >{key !== "MY_VOCA" ? key : "Me"}</Avatar>
+                      <Avatar className="avatar" >{key !== LEVEL.MV ? key : "Me"}</Avatar>
                     </ListItemAvatar>
                     <ListItemText>
-                      {value.map(el => {
-                        return <Typography key={el}
-                          className="lesson-name">
-                          {"Bai-" + el}
-                        </Typography>
-                      })}
+                      {renderContentTestBox(key, value)}
                     </ListItemText>
                   </ListItem>
                 </React.Fragment>

@@ -5,7 +5,7 @@ const initState = {
   number: 50,
   resources:
   {
-    MY_VOCA: { active: false, value: [], isSelectAll: false },
+    MV: { active: false, value: [], isSelectAll: false },
     N5: { active: true, value: [], isSelectAll: false },
     N4: { active: true, value: [], isSelectAll: false },
     N3: { active: false, value: [], isSelectAll: false },
