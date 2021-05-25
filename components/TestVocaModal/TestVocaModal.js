@@ -228,7 +228,7 @@ export default function TestVocaModal({ }) {
         color="primary"
         variant="contained"
         onClick={handleCloseModal}
-      >Close</Button>
+      >Update</Button>
     </DialogActions>
   </Dialog>
 }

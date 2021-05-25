@@ -1,7 +1,7 @@
 import { Avatar, Box, Button, Card, Divider, List, ListItem, ListItemAvatar, ListItemText, makeStyles, Typography } from "@material-ui/core";
 import { theme } from "../../components/theme";
 import EditIcon from '@material-ui/icons/Edit';
-import { constantApp, LEVEL, storageKey } from "../../utils/Constant";
+import { LEVEL, storageKey } from "../../utils/Constant";
 import React from "react";
 import TestVocaModal from "../TestVocaModal/TestVocaModal";
 import { useDispatch, useSelector } from "react-redux";
@@ -95,6 +95,7 @@ export default function TestVocaBox({ }) {
   const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
   const { number, resources } = useSelector(state => state.testVoca);
   const { list } = useSelector(state => state.setVocas);
+  
   React.useEffect(() => {
     // get new my-set-vocas:
     user.id && dispatch(serviceGetSetVocas(user.id));
