@@ -65,6 +65,8 @@ export default function TestVocaModal({ }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { isShowModal, number, resources } = useSelector(state => state.testVoca);
+  const { list } = useSelector(state => state.setVocas);
+  const MVOptions = list.map(el => el.id);
   const handleOnChangeNumberOfVocas = (e) => {
     const { value } = e.target;
     if (value === "") {
@@ -91,10 +93,19 @@ export default function TestVocaModal({ }) {
   }
   const handleSelectToggleCheckAll = (e) => {
     const { checked, name } = e.target;
-    const newObject = checked
-      ? { ...resources[name], isSelectAll: checked, value: LEVEL_OPTION[name] }
-      : { ...resources[name], isSelectAll: checked, value: [] };
-    dispatch(actionUpdateResources({ key: name, object: newObject }));
+
+    if (!checked) {
+      dispatch(actionUpdateResources({
+        key: name,
+        object: { ...resources[name], isSelectAll: checked, value: [] }
+      }));
+    } else {
+      const value = name !== LEVEL.MV ? LEVEL_OPTION[name] : MVOptions;
+      dispatch(actionUpdateResources({
+        key: name,
+        object: { ...resources[name], isSelectAll: checked, value }
+      }));
+    }
   }
   const handleCloseModal = () => {
     dispatch(actionSetIsShowModal(false));
@@ -188,9 +199,13 @@ export default function TestVocaModal({ }) {
               <Autocomplete
                 multiple
                 id={"autocomplete_" + key}
-                options={LEVEL_OPTION[key]}
+                options={key !== LEVEL.MV ? LEVEL_OPTION[key] : MVOptions}
                 value={value}
-                getOptionLabel={option => "B-" + option}
+                getOptionLabel={
+                  key !== LEVEL.MV
+                    ? option => "B-" + option
+                    : option => list.find(el => el.id === option)?.setName
+                }
                 filterSelectedOptions
                 renderInput={params => {
                   return <TextField

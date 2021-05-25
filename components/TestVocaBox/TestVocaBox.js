@@ -89,28 +89,34 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const renderContentTestBox = (key, listValue = []) => {
-  if (key !== LEVEL.MV) {
-    return listValue.map(el => (
-      <Typography key={el}
-        className="lesson-name">
-        {"Bai-" + el}
-      </Typography>)
-    )
-  } else {
-    return null;
-  }
-}
-
 export default function TestVocaBox({ }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
   const { number, resources } = useSelector(state => state.testVoca);
+  const { list } = useSelector(state => state.setVocas);
   React.useEffect(() => {
     // get new my-set-vocas:
     user.id && dispatch(serviceGetSetVocas(user.id));
   }, []);
+
+  const renderContentTestBox = (key, listValue = []) => {
+    if (key !== LEVEL.MV) {
+      return listValue.map(el => (
+        <Typography key={el}
+          className="lesson-name">
+          {"Bai-" + el}
+        </Typography>)
+      )
+    } else {
+      return listValue.map(el => (
+        <Typography key={el}
+          className="lesson-name">
+          {list.find(voca => voca.id === el)?.setName}
+        </Typography>)
+      )
+    }
+  }
 
   let hideDivider = null;
   return <React.Fragment>
