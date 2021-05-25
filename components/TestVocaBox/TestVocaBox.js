@@ -1,11 +1,13 @@
 import { Avatar, Box, Button, Card, Divider, List, ListItem, ListItemAvatar, ListItemText, makeStyles, Typography } from "@material-ui/core";
 import { theme } from "../../components/theme";
 import EditIcon from '@material-ui/icons/Edit';
-import { constantApp } from "../../utils/Constant";
+import { constantApp, storageKey } from "../../utils/Constant";
 import React from "react";
 import TestVocaModal from "../TestVocaModal/TestVocaModal";
 import { useDispatch, useSelector } from "react-redux";
 import { actionSetIsShowModal } from "../../redux/actions/testVocaActions";
+import { serviceGetSetVocas } from "../../service/setVocaService";
+import { localStorageHelper } from "../../utils/storageHelper";
 
 const destopWidth = "10rem";
 
@@ -90,7 +92,12 @@ const useStyles = makeStyles(theme => ({
 export default function TestVocaBox({ }) {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
   const { number, resources } = useSelector(state => state.testVoca);
+  React.useEffect(() => {
+    // get new my-set-vocas:
+    user.id && dispatch(serviceGetSetVocas(user.id));
+  }, []);
   let hideDivider = null;
   return <React.Fragment>
     <Card className={classes.Card} >

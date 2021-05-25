@@ -1,4 +1,6 @@
 import { SET_VOCA } from "../types";
+// NOTE: This set-voca-list is just used for user's set-vocas
+// If we want to get common set-vocas like N5, N4, ... => Please create a new one to avoid bugs:
 const initState = {
   list: [],
   setVoca: {},
