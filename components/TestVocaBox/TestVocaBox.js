@@ -7,6 +7,7 @@ import TestVocaModal from "../TestVocaModal/TestVocaModal";
 import { useDispatch, useSelector } from "react-redux";
 import { actionSetIsShowModal } from "../../redux/actions/testVocaActions";
 import { serviceGetSetVocas } from "../../service/setVocaService";
+import { serviceGetTestVocaByOwnerId } from "../../service/testVocaService";
 import { localStorageHelper } from "../../utils/storageHelper";
 
 const destopWidth = "10rem";
@@ -95,10 +96,11 @@ export default function TestVocaBox({ }) {
   const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
   const { number, resources } = useSelector(state => state.testVoca);
   const { list } = useSelector(state => state.setVocas);
-  
+
   React.useEffect(() => {
     // get new my-set-vocas:
     user.id && dispatch(serviceGetSetVocas(user.id));
+    user.id && dispatch(serviceGetTestVocaByOwnerId(user.id));
   }, []);
 
   const renderContentTestBox = (key, listValue = []) => {

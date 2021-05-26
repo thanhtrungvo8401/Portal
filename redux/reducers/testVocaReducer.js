@@ -35,6 +35,8 @@ export const testVocaReducer = (state = { ...initState }, { type, payload }) => 
           [key]: object
         }
       }
+    case TEST_VOCA.UPDATE_TEST_VOCA:
+      return { ...payload };
     default:
       return state;
   }

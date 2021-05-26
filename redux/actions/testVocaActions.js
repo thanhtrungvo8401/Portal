@@ -14,3 +14,8 @@ export const actionUpdateResources = (payload = {}) => ({
   type: TEST_VOCA.UPDATE_RESOURCES,
   payload
 })
+
+export const actionUpdateTestVoca = (payload = {}) => ({
+  type: TEST_VOCA.UPDATE_TEST_VOCA,
+  payload
+})

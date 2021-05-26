@@ -26,6 +26,10 @@ export const enpoint_voca = {
   delete: (id) => `${BASE_API_COMMON}/vocas/${id}`,
 };
 
+export const enpoint_test_voca = {
+  fetchTestVoca: (ownerId) => `${BASE_API_COMMON}/owners/${ownerId}/test-group`
+}
+
 export const enpoint_remember = {
   create: () => `${BASE_API_COMMON}/remember-groups`,
   fetRememberByOwnerId: (ownerId) =>
