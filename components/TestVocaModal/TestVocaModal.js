@@ -21,9 +21,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Autocomplete } from "@material-ui/lab";
 import { LEVEL, LEVEL_OPTION } from "../../utils/Constant";
 import { theme } from "../../components/theme";
-import { actionSetIsShowModal, actionSetNumber, actionUpdateResources } from "../../redux/actions/testVocaActions";
+import { actionSetNumber, actionUpdateResources } from "../../redux/actions/testVocaActions";
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import Favorite from '@material-ui/icons/Favorite';
+import { serviceUpdateTestVoca } from "../../service/testVocaService";
 
 
 const Transition = React.forwardRef((props, ref) => {
@@ -107,8 +108,8 @@ export default function TestVocaModal({ }) {
       }));
     }
   }
-  const handleCloseModal = () => {
-    dispatch(actionSetIsShowModal(false));
+  const handleUpdateTestVocas = () => {
+    dispatch(serviceUpdateTestVoca())
   }
   return <Dialog
     open={isShowModal}
@@ -227,7 +228,7 @@ export default function TestVocaModal({ }) {
         disabled={!number}
         color="primary"
         variant="contained"
-        onClick={handleCloseModal}
+        onClick={handleUpdateTestVocas}
       >Update</Button>
     </DialogActions>
   </Dialog>

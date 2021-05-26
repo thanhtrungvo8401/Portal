@@ -1,6 +1,7 @@
 import { TEST_VOCA } from "../types";
 
 const initState = {
+  id: "",
   isShowModal: false,
   number: 50,
   resources:

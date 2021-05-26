@@ -27,7 +27,8 @@ export const enpoint_voca = {
 };
 
 export const enpoint_test_voca = {
-  fetchTestVoca: (ownerId) => `${BASE_API_COMMON}/owners/${ownerId}/test-group`
+  fetchTestVoca: (ownerId) => `${BASE_API_COMMON}/owners/${ownerId}/test-group`,
+  updateTestVoca: id => `${BASE_API_COMMON}/test-group/${id}`
 }
 
 export const enpoint_remember = {
