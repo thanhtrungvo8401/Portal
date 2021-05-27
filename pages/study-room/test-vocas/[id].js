@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { withPrivateLayout } from "../../../components/Layouts/PrivateLayout";
+import TestGroupUI from "../../../container/RememberVoca/TestGroup/TestGroupUI";
 import { serviceGetVocasByTestGroup } from "../../../service/vocaService";
 
 function TestYourKnowLege(props) {
@@ -9,9 +10,7 @@ function TestYourKnowLege(props) {
   React.useEffect(() => {
     dispatch(serviceGetVocasByTestGroup());
   }, []);
-  return <div>
-    TEST YOUR KNOWLEGE
-  </div>;
+  return <TestGroupUI />
 }
 
 export default withPrivateLayout(TestYourKnowLege, {

@@ -23,7 +23,6 @@ import { serviceGetRememberOfOwnerId } from "../../service/rememberService";
 import Remember from "./Remember";
 import theme from "../../components/theme";
 import UpdateRememberGroupModal from "./UpdateModal/UpdateModal";
-import StudyModal from "./StudyModal/StudyModal";
 
 function RememberVocasLayout({
   submitCreateRemember,
