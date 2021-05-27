@@ -15,19 +15,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function StudyBg({
-  actionUpdate,
-  study,
-  bgAni,
+  valuesObj,
+  bgObj,
   actionUpdateBg,
+  actionUpdate,
 }) {
   const classes = useStyles();
   const [animation, setAnimation] = React.useState("");
   React.useEffect(() => {
-    if (bgAni.step !== 0 && !animation) {
+    if (bgObj.step !== 0 && !animation) {
       setAnimation("animation");
 
       setTimeout(() => {
-        actionUpdate({ ...study, step: bgAni.step });
+        actionUpdate({ ...valuesObj, step: bgObj.step });
       }, 1000);
 
       setTimeout(() => {
@@ -35,7 +35,7 @@ export default function StudyBg({
         actionUpdateBg({ step: 0 });
       }, 2000);
     }
-  }, [bgAni.step]);
+  }, [bgObj.step]);
 
   return (
     <div

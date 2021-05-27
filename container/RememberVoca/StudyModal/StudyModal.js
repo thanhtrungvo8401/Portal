@@ -23,7 +23,7 @@ export default function StudyModal({ }) {
   const { list } = useSelector((state) => state.vocas);
 
   const [study, setStudy] = React.useState({ ...initState });
-  const [bgAni, setBgAni] = React.useState({ ...initBg });
+  const [bgObj, setBgAni] = React.useState({ ...initBg });
 
   // update data after fetch vocas:
   React.useEffect(() => {
@@ -70,10 +70,10 @@ export default function StudyModal({ }) {
       {study.step === 6 && <Step6Study study={study} />}
 
       <StudyBg
-        bgAni={bgAni}
-        actionUpdateBg={setBgAni}
-        study={study}
+        bgObj={bgObj}
+        valuesObj={study}
         actionUpdate={setStudy}
+        actionUpdateBg={setBgAni}
       />
     </React.Fragment>
   );
