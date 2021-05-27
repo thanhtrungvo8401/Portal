@@ -2,7 +2,7 @@ import { Button, Typography } from "@material-ui/core";
 import { useSelector } from "react-redux"
 import theme from "../../../components/theme";
 
-export default function TestGroupStep1({ }) {
+export default function TestGroupStep1({ actionUpdateBg }) {
   const { list } = useSelector(state => state.vocas);
   const totalQuestion = list.length * 2;
   return <div style={{
@@ -30,7 +30,11 @@ export default function TestGroupStep1({ }) {
     }} >
       <Button
         color="primary"
-        variant="contained" >I am Ready</Button>
+        variant="contained"
+        onClick={() => actionUpdateBg({ step: 2 })}
+      >
+        I am Ready
+      </Button>
     </div>
   </div>
 }
