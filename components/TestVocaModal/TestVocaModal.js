@@ -162,7 +162,7 @@ export default function TestVocaModal({ }) {
                 color="primary"
               />
             }
-            label={key !== LEVEL.MV ? key : "Của tôi"}
+            label={key !== LEVEL.MV ? key : "自分で"}
           />
         })}
       </FormGroup>
@@ -178,7 +178,7 @@ export default function TestVocaModal({ }) {
           >
             <div className="avatar" >
               <Avatar style={{ backgroundColor: theme.palette.primary.main }} >
-                {key === LEVEL.MV ? "Me" : key}
+                {key === LEVEL.MV ? "自" : key}
               </Avatar>
             </div>
             <FormGroup className="action-group">
@@ -212,8 +212,8 @@ export default function TestVocaModal({ }) {
                   return <TextField
                     {...params}
                     variant="outlined"
-                    label="Danh sách đang rỗng"
-                    placeholder=""
+                    label=""
+                    // placeholder="Danh sách đang rỗng"
                   />
                 }}
                 onChange={(e, values, reason) => handleOnChangeLessonForLevel(key, values)}

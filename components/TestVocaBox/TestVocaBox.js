@@ -78,6 +78,10 @@ const useStyles = makeStyles(theme => ({
     },
     "& .divider": {
       margin: `${theme.spacing(2)}px 0px`,
+      height: '3px'
+    },
+    "& .divider-small": {
+      margin: `${theme.spacing(1)}px 0px`,
     },
     "& .edit-line": {
       display: "flex",
@@ -106,14 +110,14 @@ export default function TestVocaBox({ }) {
   const renderContentTestBox = (key, listValue = []) => {
     if (key !== LEVEL.MV) {
       return listValue.map(el => (
-        <Typography key={el}
+        <Typography key={el} color="textSecondary"
           className="lesson-name">
           {"Bai-" + el}
         </Typography>)
       )
     } else {
       return listValue.map(el => (
-        <Typography key={el}
+        <Typography key={el} color="textSecondary"
           className="lesson-name">
           {list.find(voca => voca.id === el)?.setName}
         </Typography>)
@@ -146,31 +150,42 @@ export default function TestVocaBox({ }) {
         <Box className={classes.MainContentBox} >
           <List className="list">
             {/* SO LUONG */}
-            <Typography variant="h6" style={{ textAlign: "center" }} >Số lượng</Typography>
+            <ListItem className="list-item" >
+              <ListItemAvatar><div></div></ListItemAvatar>
+              <ListItemText>
+                <Typography variant="h6" style={{ textAlign: "center" }} color="textSecondary" >Số lượng</Typography>
+              </ListItemText>
+            </ListItem>
             <ListItem className="list-item" >
               <ListItemAvatar>
                 <Avatar className="avatar" >数</Avatar>
               </ListItemAvatar>
               <ListItemText>
-                <Typography style={{ display: "inline-block" }} variant="h6" color="primary" >
+                <Typography style={{ textAlign: "center" }} variant="h6" color="primary" >
                   {number}
                 </Typography>
               </ListItemText>
             </ListItem>
+            <Divider className='divider' />
             {/* RESOURCES */}
-            <Typography variant="h6" style={{ textAlign: "center" }} >Nội dung</Typography>
+            <ListItem className="list-item" >
+              <ListItemAvatar><div></div></ListItemAvatar>
+              <ListItemText style={{ textAlign: "center" }} >
+                <Typography variant="h6" style={{ textAlign: "center" }} color="textSecondary" >Nội dung</Typography>
+              </ListItemText>
+            </ListItem>
             {
               Object.keys(resources).map((key) => {
                 const { active, value } = resources[key];
                 if (!active || value.length === 0) return null;
                 if (hideDivider === null) hideDivider = key;
                 return <React.Fragment key={key} >
-                  {hideDivider !== key && <Divider className='divider' />}
+                  {hideDivider !== key && <Divider className='divider-small' />}
                   <ListItem className="list-item" >
                     <ListItemAvatar>
-                      <Avatar className="avatar" >{key !== LEVEL.MV ? key : "Me"}</Avatar>
+                      <Avatar className="avatar" >{key !== LEVEL.MV ? key : "自"}</Avatar>
                     </ListItemAvatar>
-                    <ListItemText>
+                    <ListItemText style={{ textAlign: "center" }} >
                       {renderContentTestBox(key, value)}
                     </ListItemText>
                   </ListItem>
