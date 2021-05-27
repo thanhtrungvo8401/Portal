@@ -9,6 +9,8 @@ import { actionSetIsShowModal } from "../../redux/actions/testVocaActions";
 import { serviceGetSetVocas } from "../../service/setVocaService";
 import { serviceGetTestVocaByOwnerId } from "../../service/testVocaService";
 import { localStorageHelper } from "../../utils/storageHelper";
+import { navigate } from "../../utils/Helper";
+import { appUrl } from "../../utils/APP_URL";
 
 const destopWidth = "10rem";
 
@@ -98,7 +100,7 @@ export default function TestVocaBox({ }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
-  const { number, resources } = useSelector(state => state.testVoca);
+  const { id, number, resources } = useSelector(state => state.testVoca);
   const { list } = useSelector(state => state.setVocas);
 
   React.useEffect(() => {
@@ -124,6 +126,9 @@ export default function TestVocaBox({ }) {
       )
     }
   }
+  const handleGoToCheckVoca = () => {
+    navigate(appUrl.testVoca() + "/" + id);
+  }
 
   let hideDivider = null;
   return <React.Fragment>
@@ -142,6 +147,17 @@ export default function TestVocaBox({ }) {
           className="left-caption">
           Học là quá trình nhớ và quên...
       </Typography>
+        <div style={{ display: "flex", justifyContent: "center" }} >
+          <Button style={{
+            marginTop: theme.spacing(2),
+            marginLeft: "auto",
+            marginRight: "auto"
+          }}
+            onClick={() => handleGoToCheckVoca()}
+            color="primary" variant="contained" >
+            Start Testing
+        </Button>
+        </div>
       </Box>
       <Box className={classes.RightPart} >
         <Typography variant="h4" component="label" className="right-title" >
