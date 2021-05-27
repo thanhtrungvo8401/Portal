@@ -22,6 +22,7 @@ export const enpoint_voca = {
   fetVocasRandom: (level) => `${BASE_API_COMMON}/vocas/random/${level}`,
   create: () => `${BASE_API_COMMON}/vocas`,
   getByCodes: () => `${BASE_API_COMMON}/vocas`,
+  getByTestGroup: () => `${BASE_API_COMMON}/test-vocas/vocas`,
   update: (id) => `${BASE_API_COMMON}/vocas/${id}`,
   delete: (id) => `${BASE_API_COMMON}/vocas/${id}`,
 };

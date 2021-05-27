@@ -102,6 +102,21 @@ export const serviceGetVocasByCodes = (codes = "") => {
       })
       .catch((err) => {
         console.log(err);
+        handleErrorAPI(err, "toast");
       });
   };
 };
+
+
+export const serviceGetVocasByTestGroup = () => {
+  return dispatch => {
+    API.get(enpoint_voca.getByTestGroup())
+      .then(res => {
+        dispatch(actionSetVocabularyList(res.data))
+      })
+      .catch(err => {
+        console.log(err);
+        handleErrorAPI(err, "toast");
+      })
+  }
+}
