@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Step1Study from "./Step1Study";
 import Step2Study from "./Step2Study";
-import StudyBg from "./StudyBg";
+import StudyBg from "../../../components/ChangeStepBg/StudyBg";
 import Step4Study from "./Step4Study";
 import Step5Study from "./Step5Study";
 import Step6Study from "./Step6Study";
