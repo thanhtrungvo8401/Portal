@@ -51,14 +51,6 @@ function RememberVocasLayout({
         ]}
         label="Remember-groups list"
       /> */}
-      <PageTitle>Let's learn vocabularies</PageTitle>
-      {/* intro */}
-      <ParagraphTitle>Instruction</ParagraphTitle>
-      <Container>
-        <ParagraphBody>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-        </ParagraphBody>
-      </Container>
       {/* main */}
       <ParagraphTitle>Learning vocabularies group</ParagraphTitle>
       <Container>
