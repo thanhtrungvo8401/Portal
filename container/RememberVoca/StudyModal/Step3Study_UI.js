@@ -13,6 +13,7 @@ const useStyles = makeStyles(theme => ({
   OneColumn: {
     position: "relative",
     overflow: "hidden",
+    minHeight: '20rem',
     width: '100%',
     "& .react-dnd-element:nth-child(2n + 1)": {
       borderTopLeftRadius: theme.shape.borderRadius,
