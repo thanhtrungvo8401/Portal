@@ -4,18 +4,23 @@ import TitleBody from "components/atoms/title-body";
 import InstructionItem from "components/atoms/instruction-item";
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import BgWhiteTransparent from "components/atoms/bg-white-transparent"
 import { theme } from "components/theme";
-import { relativeTimeRounding } from "moment";
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: theme.spacing(3),
-    "& .list-instruction": {},
+    "& .list-instruction": {
+      "&.close-expand": {
+        maxHeight: "10rem",
+        overflow: "hidden",
+        position: "relative"
+      },
+    },
     "& .load-more": {
       display: "flex",
       justifyContent: "center",
-      marginTop: theme.spacing(2),
+      marginTop: theme.spacing(3),
       "& .MuiTypography-root": {
-        fontWeight: "bolder",
         cursor: "pointer",
         position: "relative",
         "& .icon": {
@@ -35,12 +40,14 @@ const useStyles = makeStyles(theme => ({
  * listInstructions = [{text, imageUrl, alt}]
  */
 
-export default function InstructionItemsGroup({ title, listInstructions }) {
+export default function InstructionItemsGroup({ title, listInstructions, isOpen, total, actionShowMore, actionClose }) {
   const classes = useStyles();
+  const isShowMore = total > listInstructions.length || !isOpen;
+  const isShowClose = isOpen;
   return <BodyContainer>
-    <div className={classes.root}>
+    <div className={`${classes.root}`} >
       <TitleBody>{title}</TitleBody>
-      <div className="list-instruction" >
+      <div className={`list-instruction  ${!isOpen ? 'close-expand' : ''}`} >
         {listInstructions.map((el, index) => {
           return <InstructionItem
             key={index}
@@ -50,16 +57,23 @@ export default function InstructionItemsGroup({ title, listInstructions }) {
             alt={el.alt}
           />
         })}
+        <BgWhiteTransparent isActive={!isOpen} />
       </div>
       <div className="load-more" >
-        <Typography component="span" varient="body1" color="textSecondary" style={{ marginRight: theme.spacing(2) }} >
-          <ExpandMoreIcon class="icon" />
-          Thêm
-        </Typography>
-        <Typography component="span" varient="body1" color="textSecondary" >
-          <ExpandLessIcon class="icon" />
-          Đóng
-        </Typography>
+        {isShowMore &&
+          <Typography
+            component="span" varient="body1" color="textSecondary" style={{ marginRight: theme.spacing(2) }}
+            onClick={() => actionShowMore && actionShowMore()}
+          >
+            <ExpandMoreIcon class="icon" />Thêm
+        </Typography>}
+        {isShowClose &&
+          <Typography
+            component="span" varient="body1" color="textSecondary"
+            onClick={() => actionClose && actionClose()}
+          >
+            <ExpandLessIcon class="icon" />Đóng
+          </Typography>}
       </div>
     </div>
   </BodyContainer>
