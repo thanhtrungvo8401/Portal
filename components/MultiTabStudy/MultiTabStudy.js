@@ -12,7 +12,7 @@ export const listTabItem = [
   {
     Icon: CastForEducationIcon,
     label: "Kiểm tra kiến thức",
-    url: appUrl.testVoca(),
+    url: appUrl.testVoca().url,
   },
 ];
 

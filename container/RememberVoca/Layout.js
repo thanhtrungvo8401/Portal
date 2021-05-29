@@ -46,7 +46,7 @@ function RememberVocasLayout({
           {
             Icon: HomeIcon,
             label: "Study room",
-            url: `${appUrl.studyRoom()}?activeTab=0`,
+            url: `${appUrl.studyRoom().url}?activeTab=0`,
           },
         ]}
         label="Remember-groups list"

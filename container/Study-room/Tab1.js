@@ -25,7 +25,7 @@ function Tab1({ hidden }) {
           style={{ display: "flex", justifyContent: "center" }}
         >
           <Button
-            onClick={() => navigate(appUrl.rememberVoca())}
+            onClick={() => navigate(appUrl.rememberVoca().url)}
             variant="contained"
             color="primary"
           >

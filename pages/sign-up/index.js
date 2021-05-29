@@ -39,7 +39,7 @@ function SignUp(props) {
   // life cycle hook:
   useEffect(() => {
     if (isLogined) {
-      navigate(appUrl.studyRoom());
+      navigate(appUrl.studyRoom().url);
     }
   }, [isLogined]);
   return (

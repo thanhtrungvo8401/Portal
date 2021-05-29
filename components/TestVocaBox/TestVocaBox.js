@@ -127,7 +127,7 @@ export default function TestVocaBox({ }) {
     }
   }
   const handleGoToCheckVoca = () => {
-    navigate(appUrl.testVoca() + "/" + id);
+    navigate(appUrl.testVoca().url + "/" + id);
   }
 
   let hideDivider = null;

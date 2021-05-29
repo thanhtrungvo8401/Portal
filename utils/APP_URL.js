@@ -1,10 +1,10 @@
 export const appUrl = {
-  studyRoom: () => "/study-room",
-  rememberVoca: () => `/study-room/remember-vocas`,
-  rememberVocaWithId: (id) => `/study-room/remember-vocas/${id}`,
-  myVoca: () => `/study-room/my-vocas`,
-  setVocaDetail: (setId) => `/study-room/my-vocas/${setId}`,
-  testVoca: () => `/study-room/test-vocas`,
-  dashboard: () => "/",
-  signUp: () => "/sign-up",
+  studyRoom: () => ({ url: "/study-room", title: "Study now" }),
+  rememberVoca: () => ({ url: "/remember-vocas", title: "Ghi nhớ từ vựng" }),
+  rememberVocaWithId: (id) => ({ url: `/remember-vocas/${id}`, title: '' }),
+  myVoca: () => ({ url: `/my-vocas`, title: "Từ vựng của tôi" }),
+  setVocaDetail: (setId) => ({ url: `/my-vocas/${setId}`, title: "" }),
+  testVoca: () => ({ url: `/test-vocas`, title: "Kiểm tra kiến thức" }),
+  dashboard: () => ({ url: "/", title: "Trang chủ" }),
+  signUp: () => ({ url: "/sign-up", title: "Đăng kí" }),
 };

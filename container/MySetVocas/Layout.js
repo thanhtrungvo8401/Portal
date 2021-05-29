@@ -31,7 +31,7 @@ function MySetVocasLayout({ handleOnRemoveSetVocaById, handleOnSubmitModal }) {
           {
             Icon: HomeIcon,
             label: "Study room",
-            url: `${appUrl.studyRoom()}?activeTab=1`,
+            url: `${appUrl.studyRoom().url}?activeTab=1`,
           },
         ]}
         label="Danh sach nhom tu"

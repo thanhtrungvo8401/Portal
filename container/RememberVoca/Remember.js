@@ -86,7 +86,7 @@ export default function Remember({ remember = {}, actionDelete }) {
           onClick={() => {
             // Important note: => always reset REMEMBER = {} before navigate to remember-group-detail
             dispatch(actionSetRememberGroup({}));
-            navigate(appUrl.rememberVocaWithId(remember.id));
+            navigate(appUrl.rememberVocaWithId(remember.id).url);
           }}
         >
           Study now

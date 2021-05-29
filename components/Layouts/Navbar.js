@@ -132,7 +132,7 @@ function Navbar(props) {
                 src="/image/cat.png"
                 className={classes.title}
                 onClick={() => {
-                  navigate(appUrl.dashboard());
+                  navigate(appUrl.dashboard().url);
                 }}
               />
 
@@ -176,7 +176,7 @@ function Navbar(props) {
 
               <MyLink
                 isNav={true}
-                url={appUrl.studyRoom()}
+                url={appUrl.studyRoom().url}
                 className={styles.flashEffect}
               >
                 STUDY NOW

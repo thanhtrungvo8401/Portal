@@ -227,7 +227,7 @@ export default function Step6StudyUI({ QAndA, QandAOptions, submitQAndA, getNewQ
         </Typography>
         <ButtonGroup variant="outlined" color="primary">
           <Button
-            onClick={() => navigate(appUrl.rememberVoca())}
+            onClick={() => navigate(appUrl.rememberVoca().url)}
             style={{ marginTop: theme.spacing(5) }} >
             Kết thúc
         </Button>

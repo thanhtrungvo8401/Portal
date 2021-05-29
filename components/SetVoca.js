@@ -41,7 +41,7 @@ function SetVoca({ setVoca, onSelectSetVocaIdToDelete }) {
   const dispatch = useDispatch();
   // UI INTERACT:
   const handleGoToSetVocas = () => {
-    navigate(appUrl.setVocaDetail(setVoca.id));
+    navigate(appUrl.setVocaDetail(setVoca.id).url);
   };
   return (
     <Card className={classes.root} variant="outlined">

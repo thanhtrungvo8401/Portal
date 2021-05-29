@@ -15,7 +15,7 @@ function TestVocasLayout(props) {
           {
             Icon: HomeIcon,
             label: "Study room",
-            url: `${appUrl.studyRoom()}?activeTab=2`,
+            url: `${appUrl.studyRoom().url}?activeTab=2`,
           },
         ]}
         label="Test-groups list"

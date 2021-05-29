@@ -86,7 +86,7 @@ export const MobileMenuPopup = (props) => {
       <MenuItem
         className={classes.avatarLink}
         onClick={() => {
-          navigate(appUrl.dashboard());
+          navigate(appUrl.dashboard().url);
           props.handleMobileMenuClose();
         }}
       >
@@ -95,7 +95,7 @@ export const MobileMenuPopup = (props) => {
       <MenuItem onClick={props.handleMobileMenuClose}>
         <MyLink
           isNav={true}
-          url={appUrl.dashboard()}
+          url={appUrl.dashboard().url}
           className={`${classes.myLink}`}
         >
           <span>Meomeo-kun</span>

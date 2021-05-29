@@ -50,9 +50,9 @@ function Layout({
           {
             Icon: HomeIcon,
             label: "Study room",
-            url: appUrl.studyRoom(),
+            url: appUrl.studyRoom().url,
           },
-          { Icon: FiberNewIcon, label: "Tạo thêm từ", url: appUrl.myVoca() },
+          { Icon: FiberNewIcon, label: "Tạo thêm từ", url: appUrl.myVoca().url },
         ]}
         label="Danh sach tu vung"
       />

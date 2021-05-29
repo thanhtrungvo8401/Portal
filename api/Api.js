@@ -36,7 +36,7 @@ API.interceptors.response.use(
     const status = handleErrorAPI(err).status;
     if (status === 401) {
       removeCookie(constAuth.JWT);
-      navigate(appUrl.studyRoom());
+      navigate(appUrl.studyRoom().url);
       storeClient.dispatch(actionSetIsLogined(false));
     }
     throw err;

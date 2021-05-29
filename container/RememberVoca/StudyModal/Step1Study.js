@@ -55,12 +55,12 @@ export default function Step1Study({
           {
             Icon: HomeIcon,
             label: "Study room",
-            url: appUrl.studyRoom(),
+            url: appUrl.studyRoom().url,
           },
           {
             Icon: MenuBookIcon,
             label: "Remember group",
-            url: appUrl.rememberVoca(),
+            url: appUrl.rememberVoca().url,
           },
         ]}
         label="Danh sach tu vung"
