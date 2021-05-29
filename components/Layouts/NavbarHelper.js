@@ -98,22 +98,22 @@ export const MobileMenuPopup = (props) => {
           url={appUrl.dashboard().url}
           className={`${classes.myLink}`}
         >
-          <span>Meomeo-kun</span>
+          <span>{appUrl.dashboard().title}</span>
         </MyLink>
       </MenuItem>
       <MenuItem onClick={props.handleMobileMenuClose}>
-        <MyLink isNav={true} url="/top-student" className={classes.myLink}>
-          Top Student
+        <MyLink isNav={true} url={appUrl.rememberVoca().url} className={classes.myLink}>
+          {appUrl.rememberVoca().title}
         </MyLink>
       </MenuItem>
       <MenuItem onClick={props.handleMobileMenuClose}>
-        <MyLink isNav={true} url="/top-student" className={classes.myLink}>
-          News
+        <MyLink isNav={true} url={appUrl.testVoca().url} className={classes.myLink}>
+          {appUrl.testVoca().title}
         </MyLink>
       </MenuItem>
       <MenuItem onClick={props.handleMobileMenuClose}>
-        <MyLink isNav={true} url="/top-student" className={classes.myLink}>
-          About Neko
+        <MyLink isNav={true} url={appUrl.myVoca().url} className={classes.myLink}>
+          {appUrl.myVoca().title}
         </MyLink>
       </MenuItem>
       <MenuItem className="close-btn">

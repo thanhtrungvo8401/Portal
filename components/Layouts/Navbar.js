@@ -152,23 +152,23 @@ function Navbar(props) {
                 <MyLink
                   isNav={true}
                   className={classes.navItem}
-                  url="/top-student"
+                  url={appUrl.rememberVoca().url}
                 >
-                  Top Student
+                  {appUrl.rememberVoca().title}
                 </MyLink>
                 <MyLink
                   isNav={true}
                   className={classes.navItem}
-                  url="/top-student"
+                  url={appUrl.testVoca().url}
                 >
-                  News
+                  {appUrl.testVoca().title}
                 </MyLink>
                 <MyLink
                   isNav={true}
                   className={classes.navItem}
-                  url="/top-student"
+                  url={appUrl.myVoca().url}
                 >
-                  About Neko
+                  {appUrl.myVoca().title}
                 </MyLink>
               </div>
 
