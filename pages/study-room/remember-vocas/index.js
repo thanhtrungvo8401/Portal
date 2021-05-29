@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
-import { withPrivateLayout } from "../../../components/Layouts/PrivateLayout";
-import RememberVocasLayout from "../../../container/RememberVoca/Layout";
+import { withPrivateLayout } from "components/Layouts/PrivateLayout";
+import RememberVocasLayout from "container/RememberVoca/Layout";
 import {
   serviceCreateRemember,
   serviceDeleteRememberById,
   serviceUpdateRemember,
-} from "../../../service/rememberService";
-import { CREATE_REMEMBER_TYPE, storageKey } from "../../../utils/Constant";
-import { localStorageHelper } from "../../../utils/storageHelper";
+} from "service/rememberService";
+import { CREATE_REMEMBER_TYPE, storageKey } from "utils/Constant";
+import { localStorageHelper } from "utils/storageHelper";
 
 function RememberVocas(props) {
   const dispatch = useDispatch();

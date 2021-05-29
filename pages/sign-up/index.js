@@ -1,16 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
-import { withLayout } from "../../components/Layouts/Layout";
-import SignUpLayout from "../../container/SignUp/Layout";
-import {
-  actionSetError,
-  actionResetError,
-} from "../../redux/actions/errorActions";
-import { constCODE } from "../../utils/CodeToMessages";
-import { serviceSignUp } from "../../service/authenticate";
-import { actionSetUserSignup } from "../../redux/actions/loginActions";
+import { withLayout } from "components/Layouts/Layout";
+import SignUpLayout from "container/SignUp/Layout";
+import { actionSetError, actionResetError } from "redux/actions/errorActions";
+import { constCODE } from "utils/CodeToMessages";
+import { serviceSignUp } from "service/authenticate";
+import { actionSetUserSignup } from "redux/actions/loginActions";
 import { useEffect } from "react";
-import { navigate } from "../../utils/Helper";
-import { appUrl } from "../../utils/APP_URL";
+import { navigate } from "utils/Helper";
+import { appUrl } from "utils/APP_URL";
 
 function SignUp(props) {
   const user = useSelector((state) => state.login.userSignUp);

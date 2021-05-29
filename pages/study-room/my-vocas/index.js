@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { withPrivateLayout } from "../../../components/Layouts/PrivateLayout";
-import MyVocasLayout from "../../../container/MySetVocas/Layout";
+import { withPrivateLayout } from "components/Layouts/PrivateLayout";
+import MyVocasLayout from "container/MySetVocas/Layout";
 import {
   serviceCreateSetVoca,
   serviceDeleteSetVocas,
   serviceGetSetVocas,
   serviceUpdateSetVoca,
-} from "../../../service/setVocaService";
-import { storageKey } from "../../../utils/Constant";
-import { localStorageHelper } from "../../../utils/storageHelper";
+} from "service/setVocaService";
+import { storageKey } from "utils/Constant";
+import { localStorageHelper } from "utils/storageHelper";
 function MySetVocas(props) {
   // Variables:
   const { setVoca } = useSelector((state) => state.setVocas);

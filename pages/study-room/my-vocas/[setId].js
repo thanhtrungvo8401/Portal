@@ -1,18 +1,16 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { withPrivateLayout } from "../../../components/Layouts/PrivateLayout";
-import Layout from "../../../container/SetVocas/Layout";
-import { actionResetError } from "../../../redux/actions/errorActions";
-import {
-  actionSetVocabularyObject,
-} from "../../../redux/actions/vocaActions";
+import { withPrivateLayout } from "components/Layouts/PrivateLayout";
+import Layout from "container/SetVocas/Layout";
+import { actionResetError } from "redux/actions/errorActions";
+import { actionSetVocabularyObject } from "redux/actions/vocaActions";
 import {
   serviceCreateVoca,
   serviceDeleteVocaById,
   serviceFetVocaBySetId,
   serviceUpdateVoca,
-} from "../../../service/vocaService";
+} from "service/vocaService";
 
 function SetVocasDetail(props) {
   const router = useRouter();

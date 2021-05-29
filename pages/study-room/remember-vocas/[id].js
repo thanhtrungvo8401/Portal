@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { withPrivateLayout } from "../../../components/Layouts/PrivateLayout";
-import StudyModal from "../../../container/RememberVoca/StudyModal/StudyModal";
-import { serviceGetRememberById } from "../../../service/rememberService";
-import { serviceGetVocasByCodes } from "../../../service/vocaService";
+import { withPrivateLayout } from "components/Layouts/PrivateLayout";
+import StudyModal from "container/RememberVoca/StudyModal/StudyModal";
+import { serviceGetRememberById } from "service/rememberService";
+import { serviceGetVocasByCodes } from "service/vocaService";
 
 function StudyRememberGroupById() {
   const { id } = useRouter().query;

@@ -1,11 +1,11 @@
 import { makeStyles } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import StudyBg from "../../../components/ChangeStepBg/StudyBg";
-import { withPrivateLayout } from "../../../components/Layouts/PrivateLayout";
-import TestGroupStep1 from "../../../container/RememberVoca/TestGroup/TestGroupStep1";
-import { TestGroupStep2 } from "../../../container/RememberVoca/TestGroup/TestGroupStep2";
-import { serviceGetVocasByTestGroup } from "../../../service/vocaService";
+import StudyBg from "components/ChangeStepBg/StudyBg";
+import { withPrivateLayout } from "components/Layouts/PrivateLayout";
+import TestGroupStep1 from "container/RememberVoca/TestGroup/TestGroupStep1";
+import { TestGroupStep2 } from "container/RememberVoca/TestGroup/TestGroupStep2";
+import { serviceGetVocasByTestGroup } from "service/vocaService";
 
 const useStyles = makeStyles(theme => ({
   root: {
