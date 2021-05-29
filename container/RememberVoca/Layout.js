@@ -41,7 +41,7 @@ function RememberVocasLayout({
   }, [user.id]);
   return (
     <div className="remember-vocas-layout">
-      <BreadcrumbsCustom
+      {/* <BreadcrumbsCustom
         parents={[
           {
             Icon: HomeIcon,
@@ -50,7 +50,7 @@ function RememberVocasLayout({
           },
         ]}
         label="Remember-groups list"
-      />
+      /> */}
       <PageTitle>Let's learn vocabularies</PageTitle>
       {/* intro */}
       <ParagraphTitle>Instruction</ParagraphTitle>

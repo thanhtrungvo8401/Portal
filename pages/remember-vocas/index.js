@@ -1,6 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import { withPrivateLayout } from "components/Layouts/PrivateLayout";
+import RememberVocasInstruction from "components/organisms/remember-vocas/instruction";
 import RememberVocasLayout from "container/RememberVoca/Layout";
+import TitlePage from "components/atoms/title-page";
+
 import {
   serviceCreateRemember,
   serviceDeleteRememberById,
@@ -46,11 +50,16 @@ function RememberVocas(props) {
     dispatch(serviceDeleteRememberById(rememberId));
   };
   return (
-    <RememberVocasLayout
-      actionDelete={actionDeleteRemember}
-      submitCreateRemember={submitCreateRemember}
-      submitUpdateRemember={submitUpdateRemember}
-    />
+    <React.Fragment>
+      <TitlePage>Ghi nhớ từ vựng mới</TitlePage>
+      <RememberVocasInstruction />
+    </React.Fragment>
+
+    // <RememberVocasLayout
+    //   actionDelete={actionDeleteRemember}
+    //   submitCreateRemember={submitCreateRemember}
+    //   submitUpdateRemember={submitUpdateRemember}
+    // />
   );
 }
 
