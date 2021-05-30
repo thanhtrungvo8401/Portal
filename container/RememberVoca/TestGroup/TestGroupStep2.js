@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { randomList } from "../../../utils/Helper";
 import TestGroupStep2UI from "./TestGroupStep2UI";
 
-export function TestGroupStep2() {
+export function TestGroupStep2({ actionChangeStep }) {
   const { list } = useSelector(state => state.vocas);
   const optionsMeaning = React.useMemo(() => list.map(el => el.meaning).sort((a, b) => a > b ? 1 : -1), [list]);
   const [vocasForTest, setVocasForTest] = React.useState([]);

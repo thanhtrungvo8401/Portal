@@ -1,9 +1,9 @@
 import { makeStyles } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import StudyBg from "components/ChangeStepBg/StudyBg";
 import { withPrivateLayout } from "components/Layouts/PrivateLayout";
 import TestGroupStep1 from "container/RememberVoca/TestGroup/TestGroupStep1";
+import ChangeStepBg from "components/atoms/change-step-bg";
 import { TestGroupStep2 } from "container/RememberVoca/TestGroup/TestGroupStep2";
 import { serviceGetVocasByTestGroup } from "service/vocaService";
 
@@ -24,21 +24,20 @@ function TestYourKnowLege(props) {
   const { list } = useSelector(state => state.vocas);
   // const [result, setResult] = React.useState([]);
   const [testObj, setTestObj] = React.useState({ ...initTestObj });
-  const [bgObj, setBgObj] = React.useState({ step: 0 });
+  const [bgStep, setBgStep] = React.useState(0);
 
   React.useEffect(() => {
     dispatch(serviceGetVocasByTestGroup());
   }, []);
 
   return <div className={classes.root} >
-    {testObj.step === 1 && <TestGroupStep1 actionUpdateBg={setBgObj} />}
-    {testObj.step === 2 && <TestGroupStep2 actionUpdateBg={setBgObj} />}
+    {testObj.step === 1 && <TestGroupStep1 actionChangeStep={setBgStep} />}
+    {testObj.step === 2 && <TestGroupStep2 actionChangeStep={setBgStep} />}
 
-    <StudyBg
-      bgObj={bgObj}
-      valuesObj={testObj}
-      actionUpdate={setTestObj}
-      actionUpdateBg={setBgObj}
+    <ChangeStepBg
+      step={bgStep}
+      reset={() => setBgStep(0)}
+      actionChangeStep={(step) => setTestObj({ ...testObj, step })}
     />
   </div>
 }
