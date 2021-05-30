@@ -9,9 +9,10 @@ import ConfirmPopup from "components/molecules/confirm-popup";
 import { serviceDeleteSetVocas, serviceGetSetVocas } from "service/setVocaService";
 import { localStorageHelper } from "utils/storageHelper";
 import { storageKey } from "utils/Constant";
-import theme from "components/theme";
 import { navigate } from "utils/Helper";
 import { appUrl } from "utils/APP_URL";
+import { actionSetIsShowSetVocaModal, actionSet_SetVocaObject } from "redux/actions/setVocasActions";
+import theme from "components/theme";
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -25,7 +26,7 @@ export default function MyVocasBody() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
-  const { list, setVoca } = useSelector((state) => state.setVocas);
+  const { list } = useSelector((state) => state.setVocas);
   const [deleteId, setDeleteId] = React.useState();
   const isEmptyPage = Boolean(!list.length);
 
@@ -36,6 +37,8 @@ export default function MyVocasBody() {
     setDeleteId(set.id)
   }
   const onEdit = (set) => {
+    dispatch(actionSet_SetVocaObject({ ...set }));
+    dispatch(actionSetIsShowSetVocaModal(true));
   }
   // API:
   const apiRemoveSetVoca = (id) => {
@@ -65,7 +68,7 @@ export default function MyVocasBody() {
                   onClick={() => onConfirmDelete(el)}>
                   Xóa
                 </Button>
-                <Button color="secondary" >
+                <Button color="secondary" onClick={() => onEdit(el)} >
                   Edit
                 </Button>
                 <Button color="primary" onClick={() => onGoToDetail(el)} >
