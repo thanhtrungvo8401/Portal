@@ -1,16 +1,26 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TitleBody from "components/atoms/title-body";
-import CardName from "components/atoms/card-name";
 import { BodyTop } from "components/atoms/body-wrapper";
-import { Box, Button, makeStyles } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 import EmptyList from "components/atoms/empty-list";
+import ConfirmPopup from "components/molecules/confirm-popup";
+import CardName from "components/molecules/card-name";
 import theme from "components/theme";
 import { localStorageHelper } from "utils/storageHelper";
 import { storageKey } from "utils/Constant";
 import { serviceGetRememberOfOwnerId } from "service/rememberService";
-import { actionSetIshowUpdateModal, actionSetRememberGroup } from "redux/actions/rememberGroupAction";
+import {
+  actionSetIshowUpdateModal,
+  actionSetRememberGroup
+} from "redux/actions/rememberGroupAction";
+import {
+  serviceCreateRemember,
+  serviceDeleteRememberById,
+  serviceUpdateRemember,
+} from "service/rememberService";
 import { appUrl } from "utils/APP_URL";
+import { navigate } from "utils/Helper";
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -25,10 +35,11 @@ export default function RememberVocasBody() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
-  const { list } = useSelector(state => state.rememberGroups);
+  const { list, rememberGroup } = useSelector(state => state.rememberGroups);
   const [deleteId, setDeleteId] = React.useState();
-
+  // CardName Actions:
   const onGoToStudy = (remember) => {
+    // IMPORTANT!: reset remember-group before go to detail page:
     dispatch(actionSetRememberGroup({}));
     navigate(appUrl.rememberVocaWithId(remember.id).url);
   }
@@ -39,6 +50,13 @@ export default function RememberVocasBody() {
     dispatch(actionSetRememberGroup(remember));
     dispatch(actionSetIshowUpdateModal(true));
   }
+  // API:
+  const apiDeleteRemember = (rememberId) => {
+    dispatch(serviceDeleteRememberById(rememberId));
+  }
+  const apiUpdateRemember = () => {
+    dispatch(serviceUpdateRemember(rememberGroup));
+  };
 
 
 
@@ -54,25 +72,43 @@ export default function RememberVocasBody() {
 
       <EmptyList isActive={list.length === 0} />
 
-      <Box hidden={list.length === 0} className={classes.listItems} component='div' >
-        {/* RENDER LIST REMEMBER */}
+      {/* RENDER LIST REMEMBER */}
+      <div hidden={list.length === 0} className={classes.listItems}>
         {list.map((el) => {
           const total = el.vocaCodes.split(",").length;
           return <CardName
             key={el.id}
             object={{ name: el.name, total: total, date: el.createdDate }}
             bgImage="/image/learning-cat.png"
-            onClick={() => { }}
             actions={
               <React.Fragment>
-                <Button style={{ color: theme.palette.error.main }} >Remove</Button>
-                <Button color="secondary" >Edit</Button>
-                <Button variant="contained" color="primary" >Study</Button>
+                <Button
+                  style={{ color: theme.palette.error.main }}
+                  onClick={() => onConfirmDelete(el)}
+                >Xóa</Button>
+                <Button color="secondary" onClick={() => onEdit(el)}>
+                  Edit
+                </Button>
+                <Button variant="contained" color="primary" onClick={() => onGoToStudy(el)}>
+                  Học ngay
+                </Button>
               </React.Fragment>
             }
           />
         })}
-      </Box>
+      </div>
+      {/* DELETE CONFIRM POPUP */}
+      <ConfirmPopup
+        isOpen={Boolean(deleteId)}
+        title="Xác nhận"
+        description="Bạn có chắc rằng mình muốn xóa nhóm từ vựng này không?"
+        cancleAction={() => setDeleteId(null)}
+        confirmAction={() => {
+          apiDeleteRemember(deleteId);
+          setDeleteId(null);
+        }}
+        closeAction={() => setDeleteId(null)}
+      />
     </div>
   </BodyTop>
 }

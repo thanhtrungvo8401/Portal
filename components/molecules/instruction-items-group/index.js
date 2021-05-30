@@ -1,6 +1,6 @@
 import { makeStyles, Typography } from "@material-ui/core"
 import TitleBody from "components/atoms/title-body";
-import InstructionItem from "components/atoms/instruction-item";
+import InstructionItem from "components/molecules/instruction-item";
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import BgWhiteTransparent from "components/atoms/bg-white-transparent"

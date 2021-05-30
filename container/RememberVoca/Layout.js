@@ -100,7 +100,7 @@ function RememberVocasLayout({
         </DialogContent>
         <DialogActions>
           <Button size="small" onClick={() => setDeleteId(null)}>
-            Cancel
+            Hủy bỏ
           </Button>
           <Button
             size="small"
@@ -111,7 +111,7 @@ function RememberVocasLayout({
             style={{ color: theme.palette.error.main }}
             size="small"
           >
-            Remove
+            Chắc chắn
           </Button>
         </DialogActions>
       </Dialog>
