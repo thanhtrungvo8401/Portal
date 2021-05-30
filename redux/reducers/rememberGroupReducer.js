@@ -5,7 +5,6 @@ const initState = {
   rememberGroup: {},
   isShowCreateModal: false,
   isShowUpdateModal: false,
-  IS_STUDY: false,
 };
 
 export const rememberGroupReducer = (
@@ -48,11 +47,6 @@ export const rememberGroupReducer = (
       return {
         ...state,
         isShowUpdateModal: payload,
-      };
-    case REMEMBER_GROUP.SET_IS_STUDY:
-      return {
-        ...state,
-        IS_STUDY: payload,
       };
     default:
       return state;

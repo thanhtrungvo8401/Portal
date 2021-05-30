@@ -74,25 +74,14 @@ export default function Remember({ remember = {}, actionDelete }) {
       </CardContent>
       <CardActions style={{ justifyContent: "flex-end" }}>
         <Button
-          onClick={() => {
-            dispatch(actionSetRememberGroup(remember));
-            dispatch(actionSetIshowUpdateModal(true));
-          }}
         >
           Edit
         </Button>
         <Button
-          color="primary"
-          onClick={() => {
-            // Important note: => always reset REMEMBER = {} before navigate to remember-group-detail
-            dispatch(actionSetRememberGroup({}));
-            navigate(appUrl.rememberVocaWithId(remember.id).url);
-          }}
         >
           Study now
         </Button>
         <Button
-          onClick={() => actionDelete(remember.id)}
           style={{ color: theme.palette.error.main }}
         >
           Remove

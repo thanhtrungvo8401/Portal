@@ -38,6 +38,5 @@ export const actionSetIshowUpdateModal = (payload = false) => ({
 });
 
 export const actionSetIsStudy = (payload = false) => ({
-  type: REMEMBER_GROUP.SET_IS_STUDY,
   payload,
 });

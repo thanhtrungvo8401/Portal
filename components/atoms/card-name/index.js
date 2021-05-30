@@ -1,4 +1,6 @@
 import { Card, CardActions, CardContent, makeStyles, Typography } from "@material-ui/core";
+import { formatDate } from "utils/DateHelper";
+
 const useStyles = (props) => makeStyles((theme) => {
   return {
     root: {
@@ -22,7 +24,7 @@ const useStyles = (props) => makeStyles((theme) => {
       zIndex: 1,
       "& .main-title": {
         padding: '1rem',
-        backgroundColor: props.color,
+        backgroundColor: theme.palette.primary.main,
         color: "white",
         width: "calc(100% + 2rem)",
         transform: 'translate(-1rem, -1rem)',
@@ -37,22 +39,27 @@ const useStyles = (props) => makeStyles((theme) => {
       position: "relative",
       zIndex: 1
     },
-    bgText: {
+    bg: {
       position: "absolute",
       width: "100%",
-      top: '50%',
-      transform: "translateY(-50%)",
+      height: "100%",
+      top: 0,
+      left: 0,
       zIndex: 0,
-      fontSize: "7rem",
-      opacity: 0.2,
-      textAlign: "center",
-      color: props.color,
-      userSelect: 'none'
+      opacity: 0.6,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
     }
   };
 });
-export default function CardName({ actions, object = {}, bgText = { content: "", color: "" }, onClick }) {
-  const classes = useStyles({ ...bgText, onClick })();
+/**
+ * @param object {name, total, date}
+ * @param bgImage '/url/...
+ * @param action HtmlDom
+ */
+export default function CardName({ actions, object = {}, bgImage, onClick }) {
+  const classes = useStyles({ onClick, bgImage })();
   return <Card className={classes.root} variant="elevation" onClick={() => onClick && onClick()}>
     <CardContent className={classes.cardContent} >
       <Typography variant="h5" component="h2" className="main-title" >
@@ -69,13 +76,15 @@ export default function CardName({ actions, object = {}, bgText = { content: "",
           color="textSecondary"
           gutterBottom
         >
-          {object.date}
+          {formatDate(object.date)}
         </Typography>
       </div>
     </CardContent>
     <CardActions className={classes.cardActions} >
       {actions}
     </CardActions>
-    <div className={classes.bgText} >{bgText.content}</div>
+    <div className={classes.bg}>
+      <img alt="icon" src={bgImage} />
+    </div>
   </Card>
 }
