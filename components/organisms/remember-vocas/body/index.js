@@ -54,7 +54,6 @@ export default function RememberVocasBody() {
     dispatch(serviceDeleteRememberById(rememberId));
   }
 
-
   React.useEffect(() => {
     if (user.id) {
       dispatch(serviceGetRememberOfOwnerId(user.id));
@@ -68,7 +67,7 @@ export default function RememberVocasBody() {
       <EmptyListMsg isActive={isEmptyPage} />
 
       {/* RENDER LIST REMEMBER */}
-      <div hidden={!isEmptyPage} className={classes.listItems}>
+      <div hidden={isEmptyPage} className={classes.listItems}>
         {list.map((el) => {
           const total = el.vocaCodes.split(",").length;
           return <CardName

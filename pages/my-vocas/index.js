@@ -3,6 +3,8 @@
 import { withPrivateLayout } from "components/Layouts/PrivateLayout";
 import TitlePage from "components/atoms/title-page";
 import { BodyContainer } from "components/atoms/body-wrapper";
+import MyVocasInstruction from "components/organisms/my-vocas/instruction";
+import MyVocasBody from "components/organisms/my-vocas/body";
 import React from "react";
 // import {
 //   serviceCreateSetVoca,
@@ -13,10 +15,6 @@ import React from "react";
 // import { storageKey } from "utils/Constant";
 // import { localStorageHelper } from "utils/storageHelper";
 function MySetVocas(props) {
-  // Variables:
-  // const { setVoca } = useSelector((state) => state.setVocas);
-  // const dispatch = useDispatch();
-  // const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
 
   // const handleOnSubmitModal = () => {
   //   if (!setVoca.id) {
@@ -29,16 +27,12 @@ function MySetVocas(props) {
   // const handleOnRemoveSetVocaById = (setVocaId) => {
   //   dispatch(serviceDeleteSetVocas(setVocaId));
   // };
-
-  // useEffect(() => {
-  //   if (user.id) {
-  //     // fetch set-vocas by authorId:
-  //     dispatch(serviceGetSetVocas(user.id));
-  //   }
-  // }, [user.id]);
   return <React.Fragment>
     <TitlePage>Tạo nhóm từ vựng của riêng bạn</TitlePage>
-    <BodyContainer>Hello</BodyContainer>
+    <BodyContainer>
+      <MyVocasInstruction />
+      <MyVocasBody />
+    </BodyContainer>
   </React.Fragment>
 }
 
