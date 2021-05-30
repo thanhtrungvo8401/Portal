@@ -59,7 +59,7 @@ export default function UpdateRememberGroupModal({ onSubmit }) {
           size="medium"
           onClick={() => dispatch(actionSetIshowUpdateModal(false))}
         >
-          Cancel
+          Hủy
         </Button>
         <Button
           disabled={!isValidModal}
@@ -67,7 +67,7 @@ export default function UpdateRememberGroupModal({ onSubmit }) {
           size="medium"
           color="primary"
         >
-          Save
+          Lưu
         </Button>
       </DialogActions>
     </Dialog>

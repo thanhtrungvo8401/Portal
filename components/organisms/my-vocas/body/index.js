@@ -6,6 +6,7 @@ import TitleBody from "components/atoms/title-body";
 import EmptyListMsg from "components/atoms/empty-list-msg";
 import CardName from "components/molecules/card-name";
 import ConfirmPopup from "components/molecules/confirm-popup";
+import ActionsBtnGroup from "components/atoms/action-btns-group";
 import { serviceDeleteSetVocas, serviceGetSetVocas } from "service/setVocaService";
 import { localStorageHelper } from "utils/storageHelper";
 import { storageKey } from "utils/Constant";
@@ -80,6 +81,15 @@ export default function MyVocasBody() {
         })}
       </div>
 
+      <ActionsBtnGroup>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={() => dispatch(actionSetIsShowSetVocaModal(true))}
+        >
+          Tạo mới (+)
+        </Button>
+      </ActionsBtnGroup>
       {/* DELETE CONFIRM POPUP */}
       <ConfirmPopup
         isOpen={Boolean(deleteId)}

@@ -36,15 +36,12 @@ export default function SetVocaModal({ onSubmit }) {
       aria-labelledby="alert-dialog-slide-title"
       style={{ zIndex: 500 }}
     >
-      <DialogTitle id="alert-dialog-slide-title"
-        style={{
-          width: "100%", maxWidth: "600px"
-        }}>
+      <DialogTitle id="alert-dialog-slide-title">
         {!Boolean(setVoca.id)
           ? "Đặt tên cho bài học bạn muốn tạo!"
           : "Chỉnh sửa lại tên bài học của bạn!"}
       </DialogTitle>
-      <DialogContent>
+      <DialogContent style={{ overflow: 'hidden' }} >
         {isShowModal && (
           <InputGroup
             object={setVoca}

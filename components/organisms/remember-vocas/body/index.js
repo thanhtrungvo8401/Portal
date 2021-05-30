@@ -96,7 +96,7 @@ export default function RememberVocasBody() {
           color="primary" variant="contained"
           onClick={() => dispatch(actionSetIshowCreateModal(true))}
         >
-          Tạo thêm (+)
+          Tạo mới (+)
         </Button>
       </ActionsBtnGroup>
 
