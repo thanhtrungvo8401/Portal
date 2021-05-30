@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function EmptyList({ isActive }) {
+export default function EmptyListMsg({ isActive }) {
   const classes = useStyles();
   return isActive
     ? <div className={classes.root} >

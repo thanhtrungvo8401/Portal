@@ -1,5 +1,10 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
+import React from "react";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Slide } from "@material-ui/core";
 import theme from "components/theme";
+
+const Transition = React.forwardRef((props, ref) => {
+  return <Slide direction="down" ref={ref} {...props} />;
+});
 
 export default function ConfirmPopup({
   isOpen, title, description, cancleAction, confirmAction, closeAction
@@ -8,6 +13,7 @@ export default function ConfirmPopup({
     open={isOpen}
     aria-labelledby="form-dialog-title"
     onClose={closeAction}
+    TransitionComponent={Transition}
   >
     <DialogTitle id="form-dialog-title">{title}</DialogTitle>
     <DialogContent style={{ color: theme.palette.error.main }}>{description}</DialogContent>

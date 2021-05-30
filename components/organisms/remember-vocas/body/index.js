@@ -2,10 +2,12 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TitleBody from "components/atoms/title-body";
 import { BodyTop } from "components/atoms/body-wrapper";
+import ActionsBtnGroup from "components/atoms/action-btns-group";
 import { Button, makeStyles } from "@material-ui/core";
-import EmptyList from "components/atoms/empty-list";
+import EmptyListMsg from "components/atoms/empty-list-msg";
 import ConfirmPopup from "components/molecules/confirm-popup";
 import CardName from "components/molecules/card-name";
+import UpdateModal from "components/organisms/remember-vocas/update-modal";
 import theme from "components/theme";
 import { localStorageHelper } from "utils/storageHelper";
 import { storageKey } from "utils/Constant";
@@ -37,6 +39,7 @@ export default function RememberVocasBody() {
   const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
   const { list, rememberGroup } = useSelector(state => state.rememberGroups);
   const [deleteId, setDeleteId] = React.useState();
+  const isEmptyPage = Boolean(!list.length);
   // CardName Actions:
   const onGoToStudy = (remember) => {
     // IMPORTANT!: reset remember-group before go to detail page:
@@ -70,10 +73,10 @@ export default function RememberVocasBody() {
     <div className={classes.root}>
       <TitleBody>Nhóm từ vựng sẽ học</TitleBody>
 
-      <EmptyList isActive={list.length === 0} />
+      <EmptyListMsg isActive={isEmptyPage} />
 
       {/* RENDER LIST REMEMBER */}
-      <div hidden={list.length === 0} className={classes.listItems}>
+      <div hidden={!isEmptyPage} className={classes.listItems}>
         {list.map((el) => {
           const total = el.vocaCodes.split(",").length;
           return <CardName
@@ -89,7 +92,7 @@ export default function RememberVocasBody() {
                 <Button color="secondary" onClick={() => onEdit(el)}>
                   Edit
                 </Button>
-                <Button variant="contained" color="primary" onClick={() => onGoToStudy(el)}>
+                <Button variant="outlined" color="primary" onClick={() => onGoToStudy(el)}>
                   Học ngay
                 </Button>
               </React.Fragment>
@@ -97,6 +100,12 @@ export default function RememberVocasBody() {
           />
         })}
       </div>
+      <ActionsBtnGroup>
+        <Button color="primary" variant="contained" >
+          Tạo thêm (+)
+        </Button>
+      </ActionsBtnGroup>
+
       {/* DELETE CONFIRM POPUP */}
       <ConfirmPopup
         isOpen={Boolean(deleteId)}
@@ -109,6 +118,8 @@ export default function RememberVocasBody() {
         }}
         closeAction={() => setDeleteId(null)}
       />
+      {/* UPDATE MODAL */}
+      <UpdateModal onSubmit={apiUpdateRemember} />
     </div>
   </BodyTop>
 }
