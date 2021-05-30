@@ -7,22 +7,16 @@ import { Button, makeStyles } from "@material-ui/core";
 import EmptyListMsg from "components/atoms/empty-list-msg";
 import ConfirmPopup from "components/molecules/confirm-popup";
 import CardName from "components/molecules/card-name";
-import UpdateModal from "components/organisms/remember-vocas/update-modal";
-import CreateModal from "components/organisms/remember-vocas/create-modal";
 import theme from "components/theme";
 import { localStorageHelper } from "utils/storageHelper";
-import { CREATE_REMEMBER_TYPE, storageKey } from "utils/Constant";
+import { storageKey } from "utils/Constant";
 import { serviceGetRememberOfOwnerId } from "service/rememberService";
 import {
   actionSetIshowCreateModal,
   actionSetIshowUpdateModal,
   actionSetRememberGroup
 } from "redux/actions/rememberGroupAction";
-import {
-  serviceCreateRemember,
-  serviceDeleteRememberById,
-  serviceUpdateRemember,
-} from "service/rememberService";
+import { serviceDeleteRememberById} from "service/rememberService";
 import { appUrl } from "utils/APP_URL";
 import { navigate } from "utils/Helper";
 
@@ -39,7 +33,7 @@ export default function RememberVocasBody() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
-  const { list, rememberGroup } = useSelector(state => state.rememberGroups);
+  const { list } = useSelector(state => state.rememberGroups);
   const [deleteId, setDeleteId] = React.useState();
   const isEmptyPage = Boolean(!list.length);
   // CardName Actions:
@@ -55,38 +49,10 @@ export default function RememberVocasBody() {
     dispatch(actionSetRememberGroup(remember));
     dispatch(actionSetIshowUpdateModal(true));
   }
-  const onSubmitCreateRemember = (object) => {
-    const { vocas, name, type, multiRemember } = object;
-    if (type === CREATE_REMEMBER_TYPE.TYPE_OWN_SET) {
-      apiCreateRememberGroup(name, vocas);
-    } else {
-      Object.keys(multiRemember)
-        .forEach((key, index) => {
-          apiCreateRememberGroup(
-            `${name}-${index + 1}`,
-            multiRemember[key]
-          );
-        });
-    }
-  };
   // API:
   const apiDeleteRemember = (rememberId) => {
     dispatch(serviceDeleteRememberById(rememberId));
   }
-  const apiUpdateRemember = () => {
-    dispatch(serviceUpdateRemember(rememberGroup));
-  };
-  const apiCreateRememberGroup = (name, vocas) => {
-    const codes = vocas.map((el) => el.code);
-    const user =
-      JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
-    const remember = {
-      name,
-      ownerId: user.id,
-      vocaCodes: codes.join(","),
-    };
-    dispatch(serviceCreateRemember(remember));
-  };
 
 
   React.useEffect(() => {
@@ -147,10 +113,6 @@ export default function RememberVocasBody() {
         }}
         closeAction={() => setDeleteId(null)}
       />
-      {/* UPDATE MODAL */}
-      <UpdateModal onSubmit={apiUpdateRemember} />
-      {/* CREATE MODAL */}
-      <CreateModal onSubmit={onSubmitCreateRemember} />
     </div>
   </BodyTop>
 }
