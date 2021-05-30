@@ -5,9 +5,13 @@ import { BodyTop } from "components/atoms/body-wrapper";
 import TitleBody from "components/atoms/title-body";
 import EmptyListMsg from "components/atoms/empty-list-msg";
 import CardName from "components/molecules/card-name";
-import { serviceGetSetVocas } from "service/setVocaService";
+import ConfirmPopup from "components/molecules/confirm-popup";
+import { serviceDeleteSetVocas, serviceGetSetVocas } from "service/setVocaService";
 import { localStorageHelper } from "utils/storageHelper";
 import { storageKey } from "utils/Constant";
+import theme from "components/theme";
+import { navigate } from "utils/Helper";
+import { appUrl } from "utils/APP_URL";
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -22,8 +26,21 @@ export default function MyVocasBody() {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
   const { list, setVoca } = useSelector((state) => state.setVocas);
+  const [deleteId, setDeleteId] = React.useState();
   const isEmptyPage = Boolean(!list.length);
 
+  const onGoToDetail = (set) => {
+    navigate(appUrl.setVocaDetail(set.id).url);
+  }
+  const onConfirmDelete = (set) => {
+    setDeleteId(set.id)
+  }
+  const onEdit = (set) => {
+  }
+  // API:
+  const apiRemoveSetVoca = (id) => {
+    dispatch(serviceDeleteSetVocas(id));
+  };
   React.useEffect(() => {
     if (user.id) {
       dispatch(serviceGetSetVocas(user.id));
@@ -40,17 +57,38 @@ export default function MyVocasBody() {
           return <CardName
             key={el.id}
             object={{ name: el.setName, total: el.totalVocas, date: el.createdDate }}
-            bgImage=""
+            bgImage="/image/create-vocas.png"
             actions={
               <React.Fragment>
-                <Button>VIEW</Button>
-                <Button>VIEW</Button>
-                <Button>VIEW</Button>
+                <Button
+                  style={{ color: theme.palette.error.main }}
+                  onClick={() => onConfirmDelete(el)}>
+                  Xóa
+                </Button>
+                <Button color="secondary" >
+                  Edit
+                </Button>
+                <Button color="primary" onClick={() => onGoToDetail(el)} >
+                  Chi tiết
+                </Button>
               </React.Fragment>
             }
           />
         })}
       </div>
+
+      {/* DELETE CONFIRM POPUP */}
+      <ConfirmPopup
+        isOpen={Boolean(deleteId)}
+        title="Xác nhận"
+        description="Bạn có chắc rằng mình muốn xóa bài học mình đã tạo không?"
+        cancleAction={() => setDeleteId(null)}
+        confirmAction={() => {
+          apiRemoveSetVoca(deleteId);
+          setDeleteId(null);
+        }}
+        closeAction={() => setDeleteId(null)}
+      />
     </div>
   </BodyTop>
 }
