@@ -8,11 +8,13 @@ import EmptyListMsg from "components/atoms/empty-list-msg";
 import ConfirmPopup from "components/molecules/confirm-popup";
 import CardName from "components/molecules/card-name";
 import UpdateModal from "components/organisms/remember-vocas/update-modal";
+import CreateModal from "components/organisms/remember-vocas/create-modal";
 import theme from "components/theme";
 import { localStorageHelper } from "utils/storageHelper";
-import { storageKey } from "utils/Constant";
+import { CREATE_REMEMBER_TYPE, storageKey } from "utils/Constant";
 import { serviceGetRememberOfOwnerId } from "service/rememberService";
 import {
+  actionSetIshowCreateModal,
   actionSetIshowUpdateModal,
   actionSetRememberGroup
 } from "redux/actions/rememberGroupAction";
@@ -53,6 +55,20 @@ export default function RememberVocasBody() {
     dispatch(actionSetRememberGroup(remember));
     dispatch(actionSetIshowUpdateModal(true));
   }
+  const onSubmitCreateRemember = (object) => {
+    const { vocas, name, type, multiRemember } = object;
+    if (type === CREATE_REMEMBER_TYPE.TYPE_OWN_SET) {
+      apiCreateRememberGroup(name, vocas);
+    } else {
+      Object.keys(multiRemember)
+        .forEach((key, index) => {
+          apiCreateRememberGroup(
+            `${name}-${index + 1}`,
+            multiRemember[key]
+          );
+        });
+    }
+  };
   // API:
   const apiDeleteRemember = (rememberId) => {
     dispatch(serviceDeleteRememberById(rememberId));
@@ -60,7 +76,17 @@ export default function RememberVocasBody() {
   const apiUpdateRemember = () => {
     dispatch(serviceUpdateRemember(rememberGroup));
   };
-
+  const apiCreateRememberGroup = (name, vocas) => {
+    const codes = vocas.map((el) => el.code);
+    const user =
+      JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE)) || {};
+    const remember = {
+      name,
+      ownerId: user.id,
+      vocaCodes: codes.join(","),
+    };
+    dispatch(serviceCreateRemember(remember));
+  };
 
 
   React.useEffect(() => {
@@ -101,7 +127,10 @@ export default function RememberVocasBody() {
         })}
       </div>
       <ActionsBtnGroup>
-        <Button color="primary" variant="contained" >
+        <Button
+          color="primary" variant="contained"
+          onClick={() => dispatch(actionSetIshowCreateModal(true))}
+        >
           Tạo thêm (+)
         </Button>
       </ActionsBtnGroup>
@@ -120,6 +149,8 @@ export default function RememberVocasBody() {
       />
       {/* UPDATE MODAL */}
       <UpdateModal onSubmit={apiUpdateRemember} />
+      {/* CREATE MODAL */}
+      <CreateModal onSubmit={onSubmitCreateRemember} />
     </div>
   </BodyTop>
 }
