@@ -1,20 +1,35 @@
 import { makeStyles, Typography } from "@material-ui/core";
 import React from "react";
-import theme from "components/theme";
+
 const useStyles = makeStyles((theme) => ({
-  bgAnimation: {
+  root: {
     position: "fixed",
+    padding: theme.spacing(2),
     left: 0,
     bottom: "120%",
     zIndex: 501,
     height: "120%",
     width: "100%",
     background: `linear-gradient(0deg, transparent 0%, #fff 30%, #fff 100%)`,
-    "&.bgStudyAnimation": {
-      animation: "$bg-study-animation 2s"
+    "&.animation": {
+      animation: "$bg-change-step-animation 2s"
     }
   },
-  '@keyframes bg-study-animation': {
+  contentCover: {
+    width: "100%",
+    maxWidth: 600,
+    position: "absolute",
+    top: "40%",
+    transform: "translate(-50%, -50%)",
+    padding: "1rem",
+    left: "50%",
+    boxSizing: "border-box"
+  },
+  text: {
+    textAlign: "center",
+    marginBottom: theme.spacing(4)
+  },
+  '@keyframes bg-change-step-animation': {
     '0%': {
       bottom: '120%'
     },
@@ -27,16 +42,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function ChangeStepBg({
-  step,
-  reset,
-  actionChangeStep,
-}) {
+export default function ChangeStepBg({ step, reset, actionChangeStep }) {
   const classes = useStyles();
   const [animation, setAnimation] = React.useState("");
+
   React.useEffect(() => {
     if (step !== 0 && !animation) {
-      setAnimation("bgStudyAnimation");
+      setAnimation("animation");
 
       setTimeout(() => {
         actionChangeStep(step);
@@ -50,27 +62,9 @@ export default function ChangeStepBg({
   }, [step]);
 
   return (
-    <div
-      style={{ padding: theme.spacing(2) }}
-      className={`${classes.bgAnimation} ${animation}`}
-    >
-      <div
-        style={{
-          width: "100%",
-          maxWidth: 600,
-          position: "absolute",
-          top: "40%",
-          transform: "translate(-50%, -50%)",
-          padding: "1rem",
-          left: "50%",
-          boxSizing: "border-box",
-        }}
-      >
-        <Typography
-          variant="h2"
-          style={{ textAlign: "center", marginBottom: theme.spacing(4) }}
-          color="primary"
-        >
+    <div className={`${classes.root} ${animation}`}>
+      <div className={classes.contentCover} >
+        <Typography variant="h2" color="primary" className={classes.text}>
           MeoMeo-kun.com
         </Typography>
       </div>
