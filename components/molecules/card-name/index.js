@@ -29,13 +29,16 @@ const useStyles = (props) => makeStyles((theme) => {
         width: "calc(100% + 2rem)",
         transform: 'translate(-1rem, -1rem)',
         overflow: "hidden",
-        whiteSpace: 'nowrap'
+        // whiteSpace: 'nowrap'
       }
     },
     cardActions: {
       display: "flex",
       justifyContent: "flex-end",
-      paddingTop: "45%",
+      paddingTop: "60%",
+      [theme.breakpoints.up("md")]: {
+        paddingTop: "50%",
+      },
       position: "relative",
       zIndex: 1
     },
