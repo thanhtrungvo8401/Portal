@@ -7,17 +7,18 @@ const useStyles = makeStyles((theme) => ({
     width: "100%"
   },
   typo: {
-    fontWeight: "400",
+    fontWeight: "600",
+    fontSize: "1rem"
   },
 }));
-export default function TitleBody({ children, hidden }) {
+export default function TitleItem({ children, hidden }) {
   const classes = useStyles();
   return (
     <div hidden={hidden} className={classes.root}>
       <Typography
         className={classes.typo}
-        variant="h6"
-        component="h2"
+        component="h3"
+        variant="subtitle2"
         color="textSecondary"
       >
         {children}

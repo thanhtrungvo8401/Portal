@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core"
 
 const useStyles = (center) => makeStyles(theme => ({
   root: {
+    width: "100%",
     marginTop: theme.spacing(3),
     display: "flex",
     justifyContent: center ? "center" : "flex-end"

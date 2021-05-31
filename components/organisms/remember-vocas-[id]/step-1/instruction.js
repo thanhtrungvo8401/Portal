@@ -17,7 +17,7 @@ const hardCode = [
   }
 ]
 
-export default function Remember_Id_Instruction() {
+export default function Instruction_Step1() {
   const [listInstructions, setListInstructions] = React.useState([hardCode[0]]);
   const [isOpen, setIsOpen] = React.useState(false);
   const actionShowMore = () => {

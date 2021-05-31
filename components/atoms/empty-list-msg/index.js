@@ -3,6 +3,7 @@ import { makeStyles, Typography } from "@material-ui/core"
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
+    width: "100%",
     justifyContent: "center",
     flexWrap: "wrap",
     [theme.breakpoints.up("md")]: {

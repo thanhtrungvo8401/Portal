@@ -2,7 +2,8 @@ import { makeStyles, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginBottom: 0
+    marginBottom: 0,
+    width: "100%"
   },
 }));
 
