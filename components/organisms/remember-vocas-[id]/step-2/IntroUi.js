@@ -21,6 +21,7 @@ import { jpRecognition } from "utils/speechToText";
 import { jpPronouceCompair } from "utils/kanjiConverter";
 import theme from "components/theme";
 import { constantApp } from "utils/Constant";
+import { cssAnimationHelper } from "utils/AnimationHelper";
 
 // INTRO VOCA COMPONENT
 const useStyles1 = makeStyles((theme) => ({
@@ -37,49 +38,29 @@ const useStyles1 = makeStyles((theme) => ({
     top: 0,
     opacity: 0,
     // intro-voca-animation
-    "&.voca-intro-enter": {
-      opacity: 0,
-      top: 0,
-      transform: "translateY(-100%) translateX(-50%)",
-    },
-    "&.voca-intro-enter-active": {
-      opacity: 1,
-      top: "50%",
-      transform: "translateY(-50%) translateX(-50%)",
-      transition: `all ${animationDuration}ms ease-in`,
-    },
-    "&.voca-intro-enter-done": {
-      opacity: 1,
-      top: "50%",
-      transform: "translateY(-50%) translateX(-50%)",
-      transition: `all ${animationDuration}ms ease-in`,
-    },
-    "&.voca-intro-exit": {
-      opacity: 1,
-      top: "50%",
-      transform: "translateY(-50%) translateX(-50%)",
-    },
-    "&.voca-intro-exit-active": {
-      opacity: 0,
-      top: 0,
-      transform: "translateY(-100%) translateX(-50%)",
-      transition: `all ${animationDuration}ms ease-in`,
-    },
+    ...cssAnimationHelper("voca-intro",
+      {
+        opacity: 0,
+        top: 0,
+        transform: "translateY(-100%) translateX(-50%)",
+        transition: `all ${animationDuration}ms ease-in`,
+      },
+      {
+        opacity: 1,
+        top: "50%",
+        transform: "translateY(-50%) translateX(-50%)",
+        transition: `all ${animationDuration}ms ease-in`,
+      },
+      true
+    ),
     // voca in intro-voca:
-    "& .jp-enter": {
-      opacity: 0,
-    },
-    "& .jp-enter-active": {
-      opacity: 1,
-      transition: `opacity ${animationDuration}ms ease-in`,
-    },
-    "& .jp-exit": {
-      opacity: 1,
-    },
-    "& .jp-exit-active": {
+    ...cssAnimationHelper("jp", {
       opacity: 0,
       transition: `opacity ${animationDuration}ms ease-in`,
-    },
+    }, {
+      opacity: 1,
+      transition: `opacity ${animationDuration}ms ease-in`,
+    }, false),
   },
   Divider: {
     marginTop: theme.spacing(1),
