@@ -22,7 +22,9 @@ const useStyles = makeStyles((theme) => ({
   card: {
     padding: theme.spacing(2),
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
+    maxWidth: "100%",
+    flexWrap: "wrap"
   },
   chip: {
     marginRight: theme.spacing(1),
