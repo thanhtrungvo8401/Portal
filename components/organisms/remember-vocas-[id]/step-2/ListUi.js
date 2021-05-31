@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   ButtonGroup,
-  Container,
   List,
   ListItem,
   ListItemSecondaryAction,
@@ -21,6 +20,7 @@ import { jpSpeak } from "utils/textToSpeech";
 import theme from "components/theme";
 import { constantApp } from "utils/Constant";
 import { cssAnimationHelper } from "utils/AnimationHelper";
+import ListItemOutline from "components/atoms/list-item-outline";
 
 // LIST COMPONENT
 const { animationDuration } = constantApp;
@@ -29,21 +29,6 @@ const useStyles2 = makeStyles((theme) => ({
     position: "relative",
     width: "100%",
     textAlign: "center",
-    marginTop: theme.spacing(2),
-    "& .one-voca": {
-      transition: `all ${animationDuration}ms ease-in`,
-      backgroundColor: theme.palette.background.paper,
-      borderRadius: theme.spacing(1),
-      marginBottom: theme.spacing(1),
-      cursor: "pointer",
-      position: "relative",
-      overflow: "hidden",
-      zIndex: 0,
-      "&:hover": {
-        boxShadow:
-          "0px 3px 3px -2px rgb(0 0 0 / 20%), 0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%)",
-      },
-    },
     ...cssAnimationHelper("one-voca",
       {
         opacity: 0,
@@ -177,18 +162,14 @@ export default function DisplayVocas({ vocas = [], isFinishIntro }) {
   const currentRandVoca = vocasRandomSpeak[vocasRandomSpeak.length - 1] || {};
   if (!vocas.length) return null;
   return (
-    <Container className={classes.DisplayVocas}>
+    <div className={classes.DisplayVocas}>
       <List>
         <TransitionGroup className="vocas-group">
           {vocasRender.map((voca) => {
             return (
-              <CSSTransition
-                key={voca.id}
-                classNames="one-voca"
-                timeout={animationDuration}
-              >
-                <ListItem
-                  className="one-voca"
+              <CSSTransition key={voca.id} classNames="one-voca" timeout={animationDuration}>
+                <ListItemOutline
+                  styles={{ cursor: "pointer", position: "relative", zIndex: 0 }}
                   onClick={() => jpSpeak({ content: voca.voca })}
                 >
                   {/* JP */}
@@ -219,7 +200,7 @@ export default function DisplayVocas({ vocas = [], isFinishIntro }) {
                       color="primary"
                     />
                   </ListItemSecondaryAction>
-                </ListItem>
+                </ListItemOutline>
               </CSSTransition>
             );
           })}
@@ -274,6 +255,6 @@ export default function DisplayVocas({ vocas = [], isFinishIntro }) {
           </CSSTransition>
         </Paper>
       </CSSTransition>
-    </Container >
+    </div >
   );
 }

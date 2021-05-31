@@ -12,3 +12,13 @@ export function BodyTop({ children }) {
     {children}
   </div>
 }
+
+export function BodyMaxWidth({ maxWidth = 600, children }) {
+  return <div style={{
+    width: "100%",
+    maxWidth: `${maxWidth}px`,
+    margin: '0 auto'
+  }} >
+    {children}
+  </div>
+}

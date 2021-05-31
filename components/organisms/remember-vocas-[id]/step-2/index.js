@@ -8,15 +8,11 @@ import IntroVoca from "components/organisms/remember-vocas-[id]/step-2/IntroUi";
 import DisplayVocas from "components/organisms/remember-vocas-[id]/step-2/ListUi";
 import BgBlackOpacity from "components/atoms/bg-black-opacity";
 import ActionsBtnGroup from "components/atoms/action-btns-group";
-// MAIN UI
-const useStyles = makeStyles(() => ({
-  Step2StudyUI: {},
-}));
+import { BodyMaxWidth } from "components/atoms/body-wrapper";
 
 const animationDuration = constantApp.animationDuration;
 
 export default function Step2StudyUI({ study, actionChangeStep }) {
-  const classes = useStyles();
   const [list, setList] = React.useState([...study.vocas]);
   const [listIntroduced, setListIntroduced] = React.useState([]);
   // Animation for Intro Voca:listIntroduced
@@ -47,7 +43,7 @@ export default function Step2StudyUI({ study, actionChangeStep }) {
     }, animationDuration);
   }, []);
   return (
-    <div className={classes.Step2StudyUI}>
+    <BodyMaxWidth>
       <DisplayVocas vocas={listIntroduced} isFinishIntro={isFinishIntro} />
       <BgBlackOpacity isActive={isActiveIntroVoca} />
       <CSSTransition
@@ -69,6 +65,6 @@ export default function Step2StudyUI({ study, actionChangeStep }) {
           Qua bước tiếp theo <DoubleArrowIcon />
         </Button>
       </ActionsBtnGroup>
-    </div>
+    </BodyMaxWidth>
   );
 }
