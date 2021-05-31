@@ -20,6 +20,7 @@ import { getRandom } from "utils/Helper";
 import { jpSpeak } from "utils/textToSpeech";
 import theme from "components/theme";
 import { constantApp } from "utils/Constant";
+import { cssAnimationHelper } from "utils/AnimationHelper";
 
 // LIST COMPONENT
 const { animationDuration } = constantApp;
@@ -43,20 +44,17 @@ const useStyles2 = makeStyles((theme) => ({
           "0px 3px 3px -2px rgb(0 0 0 / 20%), 0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%)",
       },
     },
-    "& .one-voca-enter": {
-      opacity: 0,
-    },
-    "& .one-voca-enter-active": {
-      opacity: 1,
-      transition: `all ${animationDuration}ms ease-in`,
-    },
-    "& .one-voca-exit": {
-      opacity: 1,
-    },
-    "& .one-voca-exit-active": {
-      opacity: 0,
-      transition: `all ${animationDuration}ms ease-in`,
-    },
+    ...cssAnimationHelper("one-voca",
+      {
+        opacity: 0,
+        transition: `all ${animationDuration}ms ease-in`,
+      },
+      {
+        opacity: 1,
+        transition: `all ${animationDuration}ms ease-in`,
+      },
+      false
+    ),
     // Voca Meaning
     "& .voca-meaning": {
       position: "absolute",
@@ -71,32 +69,16 @@ const useStyles2 = makeStyles((theme) => ({
       transform: "translateX(-100%)",
       opacity: 0,
     },
-    "& .voca-meaning-enter": {
-      transform: "translateX(100%)",
+    ...cssAnimationHelper('voca-meaning', {
+      transform: "translateX(-100%)",
       opacity: 0,
-    },
-    "& .voca-meaning-enter-active": {
+      transition: `all ${animationDuration}ms ease-in`,
+    }, {
       transform: "translateX(0%)",
       opacity: 1,
       transition: `all ${animationDuration}ms ease-in`,
     },
-    "& .voca-meaning-enter-done": {
-      transform: "translateX(0%)",
-      opacity: 1,
-    },
-    "& .voca-meaning-exit": {
-      transform: "translateX(0%)",
-      opacity: 1,
-    },
-    "& .voca-meaning-exit-active": {
-      transform: "translateX(-100%)",
-      opacity: 0,
-      transition: `all ${animationDuration}ms ease-in`,
-    },
-    "& .voca-meaning-exit-done": {
-      transform: "translateX(-100%)",
-      opacity: 0,
-    },
+      false),
   },
   BtnGroup: {
     marginTop: theme.spacing(1),
@@ -115,51 +97,29 @@ const useStyles2 = makeStyles((theme) => ({
     opacity: 0,
     zIndex: 3,
     cursor: "pointer",
-    "&.random-speak-enter": {
-      left: "100%!important",
-      opacity: '0!important',
-    },
-    "&.random-speak-enter-active": {
-      left: "0%!important",
-      opacity: '1!important',
-      transition: `all ${animationDuration}ms ease-in`,
-    },
-    "&.random-speak-enter-done": {
-      left: "0%",
-      opacity: '1!important',
-      transition: `all ${animationDuration}ms ease-in`,
-    },
-    "&.random-speak-exit": {
-      opacity: '1!important',
-      left: "0%!important",
-    },
-    "&.random-speak-exit-active": {
+    ...cssAnimationHelper('random-speak', {
       left: "100vw!important",
       opacity: '0!important',
       transition: `all ${animationDuration}ms ease-in`,
-    },
-    "&.random-speak-exit-done": {
-      left: "100vw!important",
-      opacity: '0!important',
+    }, {
+      left: "0%!important",
+      opacity: '1!important',
       transition: `all ${animationDuration}ms ease-in`,
-    },
-    "& .meaning": {
+    }, true),
+    ...cssAnimationHelper('meaning', {
       opacity: 0,
-    },
-    "& .meaning-enter": {
-      opacity: 0,
-    },
-    "& .meaning-enter-active": {
+      transition: `all ${animationDuration}ms ease-in`,
+    }, {
       opacity: 1,
       transition: `all ${animationDuration}ms ease-in`,
     },
-    "& .meaning-exit": {
-      opacity: 1,
-    },
-    "& .meaning-exit-active": {
-      opacity: 0,
-      transition: `all ${animationDuration}ms ease-in`,
-    },
+      false),
+  },
+  absoluteBlock: {
+    position: "absolute",
+    left: "50%",
+    top: "50%",
+    transform: "translate(-50%, -50%)"
   }
 }));
 export default function DisplayVocas({ vocas = [], isFinishIntro }) {
@@ -229,9 +189,7 @@ export default function DisplayVocas({ vocas = [], isFinishIntro }) {
               >
                 <ListItem
                   className="one-voca"
-                  onClick={() => {
-                    jpSpeak({ content: voca.voca });
-                  }}
+                  onClick={() => jpSpeak({ content: voca.voca })}
                 >
                   {/* JP */}
                   <Typography color="primary" variant="h6">
@@ -256,9 +214,7 @@ export default function DisplayVocas({ vocas = [], isFinishIntro }) {
                     style={{ display: "flex", alignItems: "center", zIndex: 2 }}
                   >
                     <GTranslateIcon
-                      onClick={() => {
-                        handleToggleShowMeaning(voca.id)
-                      }}
+                      onClick={() => handleToggleShowMeaning(voca.id)}
                       style={{ cursor: "pointer" }}
                       color="primary"
                     />
@@ -295,21 +251,9 @@ export default function DisplayVocas({ vocas = [], isFinishIntro }) {
           onClick={() => setShowAnswer(true)}
         >
           {!isShowAnswer &&
-            <Box
-              style={{
-                position: "absolute",
-                left: "50%",
-                top: "50%",
-                transform: "translate(-50%, -50%)",
-              }}
-            >
-              <Typography
-                variant="h1"
-                component="label"
-              >?</Typography>
-              <Typography>
-                Click nếu bạn đã nhớ ra câu trả lời
-            </Typography>
+            <Box className={classes.absoluteBlock} >
+              <Typography variant="h1" component="label" >?</Typography>
+              <Typography>Click nếu bạn đã nhớ ra câu trả lời</Typography>
             </Box>
           }
           <CSSTransition
@@ -323,13 +267,7 @@ export default function DisplayVocas({ vocas = [], isFinishIntro }) {
             <Typography
               variant="h6"
               component="label"
-              className="meaning"
-              style={{
-                position: "absolute",
-                left: "50%",
-                top: "50%",
-                transform: "translate(-50%, -50%)"
-              }}
+              className={`${classes.absoluteBlock} meaning`}
             >
               {currentRandVoca.meaning}
             </Typography>
