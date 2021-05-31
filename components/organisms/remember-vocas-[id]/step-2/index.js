@@ -8,20 +8,10 @@ import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
 import { constantApp } from "utils/Constant";
 import IntroVoca from "components/organisms/remember-vocas-[id]/step-2/IntroUi";
 import DisplayVocas from "components/organisms/remember-vocas-[id]/step-2/ListUi";
-
+import BgBlackOpacity from "components/atoms/bg-black-opacity";
 // MAIN UI
 const useStyles = makeStyles(() => ({
   Step2StudyUI: {},
-  bgForIntroVoca: {
-    backgroundColor: "rgba(0, 0, 0, 0.87)",
-    opacity: 0.3,
-    position: "fixed",
-    width: "100vw",
-    height: "100vh",
-    left: 0,
-    top: 0,
-    zIndex: 0,
-  }
 }));
 
 const animationDuration = constantApp.animationDuration;
@@ -29,11 +19,11 @@ const animationDuration = constantApp.animationDuration;
 export default function Step2StudyUI({ study, actionUpdateBg }) {
   const classes = useStyles();
   const [list, setList] = React.useState([...study.vocas]);
-  const [listIntroduced, setListIntroduced] = React.useState([...study.vocas]);
+  const [listIntroduced, setListIntroduced] = React.useState([]);
   // Animation for Intro Voca:listIntroduced
   const [voca, setVoca] = React.useState({});
   const [isActiveIntroVoca, setIsActiveIntroVoca] = React.useState(false);
-  const [isFinishIntro, setIsFinishIntro] = React.useState(true);
+  const [isFinishIntro, setIsFinishIntro] = React.useState(false);
   // 01: Animation for in
   const introAnimationIn = () => setIsActiveIntroVoca(true);
   // 02: After animation-in is complete => start to read voca:
@@ -54,7 +44,7 @@ export default function Step2StudyUI({ study, actionUpdateBg }) {
   };
   React.useEffect(() => {
     setTimeout(() => {
-      // introAnimationIn();
+      introAnimationIn();
     }, animationDuration);
   }, []);
   return (
@@ -71,9 +61,7 @@ export default function Step2StudyUI({ study, actionUpdateBg }) {
       </Container>
       <DisplayVocas vocas={listIntroduced} isFinishIntro={isFinishIntro} />
       {/* BG_DIV */}
-      {isActiveIntroVoca && (
-        <div className={classes.bgForIntroVoca} ></div>
-      )}
+      <BgBlackOpacity isActive={isActiveIntroVoca} />
       <CSSTransition
         in={Boolean(isActiveIntroVoca)}
         timeout={animationDuration}
