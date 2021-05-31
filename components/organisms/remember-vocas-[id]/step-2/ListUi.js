@@ -3,7 +3,6 @@ import {
   Button,
   ButtonGroup,
   List,
-  ListItem,
   ListItemSecondaryAction,
   makeStyles,
   Paper,
@@ -13,11 +12,10 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import SyncRoundedIcon from "@material-ui/icons/SyncRounded";
 import GTranslateIcon from '@material-ui/icons/GTranslate';
 import DataUsageIcon from '@material-ui/icons/DataUsage';
-
+import ActionsBtnGroup from "components/atoms/action-btns-group";
 import React from "react";
 import { getRandom } from "utils/Helper";
 import { jpSpeak } from "utils/textToSpeech";
-import theme from "components/theme";
 import { constantApp } from "utils/Constant";
 import { cssAnimationHelper } from "utils/AnimationHelper";
 import ListItemOutline from "components/atoms/list-item-outline";
@@ -30,14 +28,8 @@ const useStyles2 = makeStyles((theme) => ({
     width: "100%",
     textAlign: "center",
     ...cssAnimationHelper("one-voca",
-      {
-        opacity: 0,
-        transition: `all ${animationDuration}ms ease-in`,
-      },
-      {
-        opacity: 1,
-        transition: `all ${animationDuration}ms ease-in`,
-      },
+      { opacity: 0, transition: `all ${animationDuration}ms ease-in` },
+      { opacity: 1, transition: `all ${animationDuration}ms ease-in` },
       false
     ),
     // Voca Meaning
@@ -65,12 +57,6 @@ const useStyles2 = makeStyles((theme) => ({
     },
       false),
   },
-  BtnGroup: {
-    marginTop: theme.spacing(1),
-    [theme.breakpoints.up("md")]: {
-      marginTop: theme.spacing(4),
-    }
-  },
   RandomVocaQuestion: {
     position: "absolute",
     width: "100%",
@@ -91,13 +77,9 @@ const useStyles2 = makeStyles((theme) => ({
       opacity: '1!important',
       transition: `all ${animationDuration}ms ease-in`,
     }, true),
-    ...cssAnimationHelper('meaning', {
-      opacity: 0,
-      transition: `all ${animationDuration}ms ease-in`,
-    }, {
-      opacity: 1,
-      transition: `all ${animationDuration}ms ease-in`,
-    },
+    ...cssAnimationHelper('meaning',
+      { opacity: 0, transition: `all ${animationDuration}ms ease-in` },
+      { opacity: 1, transition: `all ${animationDuration}ms ease-in` },
       false),
   },
   absoluteBlock: {
@@ -105,6 +87,9 @@ const useStyles2 = makeStyles((theme) => ({
     left: "50%",
     top: "50%",
     transform: "translate(-50%, -50%)"
+  },
+  mr1: {
+    marginRight: theme.spacing(1)
   }
 }));
 export default function DisplayVocas({ vocas = [], isFinishIntro }) {
@@ -206,21 +191,23 @@ export default function DisplayVocas({ vocas = [], isFinishIntro }) {
           })}
         </TransitionGroup>
       </List>
-      {isFinishIntro && <ButtonGroup
-        className={classes.BtnGroup}
-        color="primary"
-        aria-label="outlined primary button group"
-        variant="outlined"
-      >
-        <Button onClick={() => handleRandomVoca()}>
-          <SyncRoundedIcon style={{ marginRight: theme.spacing(1) }} />
-          Trộn từ
-        </Button>
-        <Button onClick={() => handleSpeakRandom()}>
-          <DataUsageIcon style={{ marginRight: theme.spacing(1) }} />
-          Random Speak
-        </Button>
-      </ButtonGroup>}
+      {isFinishIntro &&
+        <ActionsBtnGroup center={true} >
+          <ButtonGroup
+            color="primary"
+            aria-label="outlined primary button group"
+            variant="outlined"
+          >
+            <Button onClick={() => handleRandomVoca()}>
+              <SyncRoundedIcon className={classes.mr1} />Trộn từ
+            </Button>
+            <Button onClick={() => handleSpeakRandom()}>
+              <DataUsageIcon className={classes.mr1} />Random Speak
+            </Button>
+          </ButtonGroup>
+        </ActionsBtnGroup>
+      }
+
       <CSSTransition
         in={isRandomSpeak}
         timeout={animationDuration}
