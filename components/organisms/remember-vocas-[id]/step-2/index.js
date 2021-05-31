@@ -12,6 +12,16 @@ import DisplayVocas from "components/organisms/remember-vocas-[id]/step-2/ListUi
 // MAIN UI
 const useStyles = makeStyles(() => ({
   Step2StudyUI: {},
+  bgForIntroVoca: {
+    backgroundColor: "rgba(0, 0, 0, 0.87)",
+    opacity: 0.3,
+    position: "fixed",
+    width: "100vw",
+    height: "100vh",
+    left: 0,
+    top: 0,
+    zIndex: 0,
+  }
 }));
 
 const animationDuration = constantApp.animationDuration;
@@ -19,11 +29,11 @@ const animationDuration = constantApp.animationDuration;
 export default function Step2StudyUI({ study, actionUpdateBg }) {
   const classes = useStyles();
   const [list, setList] = React.useState([...study.vocas]);
-  const [listIntroduced, setListIntroduced] = React.useState([]);
+  const [listIntroduced, setListIntroduced] = React.useState([...study.vocas]);
   // Animation for Intro Voca:listIntroduced
   const [voca, setVoca] = React.useState({});
   const [isActiveIntroVoca, setIsActiveIntroVoca] = React.useState(false);
-  const [isFinishIntro, setIsFinishIntro] = React.useState(false);
+  const [isFinishIntro, setIsFinishIntro] = React.useState(true);
   // 01: Animation for in
   const introAnimationIn = () => setIsActiveIntroVoca(true);
   // 02: After animation-in is complete => start to read voca:
@@ -44,10 +54,9 @@ export default function Step2StudyUI({ study, actionUpdateBg }) {
   };
   React.useEffect(() => {
     setTimeout(() => {
-      introAnimationIn();
+      // introAnimationIn();
     }, animationDuration);
   }, []);
-
   return (
     <div className={classes.Step2StudyUI}>
       <Container style={{ paddingTop: theme.spacing(1), opacity: isFinishIntro ? 1 : 0 }}>
@@ -63,18 +72,7 @@ export default function Step2StudyUI({ study, actionUpdateBg }) {
       <DisplayVocas vocas={listIntroduced} isFinishIntro={isFinishIntro} />
       {/* BG_DIV */}
       {isActiveIntroVoca && (
-        <div
-          style={{
-            backgroundColor: "rgba(0, 0, 0, 0.87)",
-            opacity: 0.3,
-            position: "fixed",
-            width: "100vw",
-            height: "100vh",
-            left: 0,
-            top: 0,
-            zIndex: 0,
-          }}
-        ></div>
+        <div className={classes.bgForIntroVoca} ></div>
       )}
       <CSSTransition
         in={Boolean(isActiveIntroVoca)}

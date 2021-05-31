@@ -3,7 +3,7 @@ import TitleBody from "components/atoms/title-body";
 import InstructionItem from "components/molecules/instruction-item";
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import BgWhiteTransparent from "components/atoms/bg-white-transparent"
+import BgWhiteGradient from "components/atoms/bg-white-gradient"
 import { theme } from "components/theme";
 import { BodyTop } from "components/atoms/body-wrapper";
 const useStyles = makeStyles(theme => ({
@@ -56,7 +56,7 @@ export default function InstructionItemsGroup({ title, listInstructions, isOpen,
             alt={el.alt}
           />
         })}
-        <BgWhiteTransparent isActive={!isOpen} />
+        <BgWhiteGradient isActive={!isOpen} />
       </div>
       <div className="load-more" >
         {isShowMore &&
