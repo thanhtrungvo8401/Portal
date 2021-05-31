@@ -4,6 +4,7 @@ import { withPrivateLayout } from "components/Layouts/PrivateLayout";
 import { BodyContainer } from "components/atoms/body-wrapper";
 import TitlePage from "components/atoms/title-page";
 import Remember_Id_Step1 from "components/organisms/remember-vocas-[id]/step-1";
+import Remember_Id_Step2 from "components/organisms/remember-vocas-[id]/step-2";
 import ChangeStepBg from "components/atoms/change-step-bg";
 import { serviceGetRememberById } from "service/rememberService";
 import { serviceFetVocaRandomByLevel, serviceGetVocasByCodes } from "service/vocaService";
@@ -63,6 +64,13 @@ function StudyRememberGroup_Id() {
           actionUpdate={setStudy}
           actionChangeStep={setBgStep}
         />}
+
+      {study.step === 2 &&
+        <Remember_Id_Step2
+          study={study}
+          actionChangeStep={setBgStep}
+        />}
+        
     </BodyContainer>
     {/* BG Change Step */}
     <ChangeStepBg
