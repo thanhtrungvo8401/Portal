@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Divider,
   FormControl,
   IconButton,
   Input,
@@ -20,6 +19,7 @@ import TypingGif from "components/SpeakerAnimation/TypingGif";
 import { jpRecognition } from "utils/speechToText";
 import { jpPronouceCompair } from "utils/kanjiConverter";
 import theme from "components/theme";
+import DividerItem from "components/atoms/devider-item";
 import { constantApp } from "utils/Constant";
 import { cssAnimationHelper } from "utils/AnimationHelper";
 
@@ -62,10 +62,6 @@ const useStyles1 = makeStyles((theme) => ({
       transition: `opacity ${animationDuration}ms ease-in`,
     }, false),
   },
-  Divider: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
   RenshiuItem: {
     "& .MuiInput-underline:before": {
       borderBottom: "none",
@@ -79,6 +75,12 @@ const useStyles1 = makeStyles((theme) => ({
         color: theme.palette.error.main
       },
     }
+  },
+  typingGifPosition: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-100%, -50%)",
   }
 }));
 const { animationDuration } = constantApp
@@ -122,6 +124,20 @@ export default function IntroVoca({
     } else {
       setIsRenShiuFinish(true);
     }
+  }
+  const speakJp = () => {
+    jpSpeak({ content: voca["voca"] })
+      .then(() => {
+        nextRun1();
+      })
+      .catch((err) => console.log(err));
+  }
+  const speakOther = () => {
+    otherSpeack({ content: voca["meaning"] })
+      .then(() => {
+        nextRun1();
+      })
+      .catch((err) => console.log(err));
   }
   // 01: render UI and speak voca, meaning one by one time 1:
   const nextRun1 = () => {
@@ -211,13 +227,7 @@ export default function IntroVoca({
             classNames="jp"
             key={1}
             timeout={animationDuration}
-            onEntered={() => {
-              jpSpeak({ content: voca["voca"] })
-                .then(() => {
-                  nextRun1();
-                })
-                .catch((err) => console.log(err));
-            }}
+            onEntered={speakJp}
           >
             <Box component="div">
               <Typography variant="h5">{voca.voca}</Typography>
@@ -237,16 +247,10 @@ export default function IntroVoca({
             classNames="jp"
             key={2}
             timeout={animationDuration}
-            onEntered={() => {
-              otherSpeack({ content: voca["meaning"] })
-                .then(() => {
-                  nextRun1();
-                })
-                .catch((err) => console.log(err));
-            }}
+            onEntered={speakOther}
           >
             <Box component="div">
-              <Divider className={classes.Divider} />
+              <DividerItem isHasLine={true} />
               <Typography variant="body2">{voca.meaning}</Typography>
             </Box>
           </CSSTransition>
@@ -259,14 +263,16 @@ export default function IntroVoca({
           return (
             <CSSTransition classNames="jp" key={renshiu.id} timeout={animationDuration}>
               <Box component="div" className={classes.RenshiuItem}>
-                <Divider className={classes.Divider} />
+                <DividerItem isHasLine={true} />
                 {/* JP Speech */}
-                {!_isRenshiuFinish && <Typography
-                  style={{ textAlign: "left", display: "block" }}
-                  variant={"caption"}
-                >
-                  Click vào micro và đọc lại từ vựng trên
-                </Typography>}
+                {!_isRenshiuFinish &&
+                  <Typography
+                    style={{ textAlign: "left", display: "block" }}
+                    variant={"caption"}
+                  >
+                    Click vào micro và đọc lại từ vựng trên
+                  </Typography>
+                }
                 <FormControl className={!isValidVoca ? 'error-color' : ''} style={{ width: "100%", position: "relative" }}>
                   <Input
                     type="text"
@@ -295,12 +301,7 @@ export default function IntroVoca({
                         </ListeningAnimation>
                         <Box
                           hidden={!isSpeaking}
-                          style={{
-                            position: "absolute",
-                            top: "50%",
-                            left: "50%",
-                            transform: "translate(-100%, -50%)",
-                          }}
+                          className={classes.typingGifPosition}
                         >
                           <TypingGif
                             size="0.5rem"
