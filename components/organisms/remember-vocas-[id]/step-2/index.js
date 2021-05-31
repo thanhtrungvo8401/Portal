@@ -1,14 +1,13 @@
-import { Box, Button, Container, makeStyles, Typography } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 import React from "react";
 import { CSSTransition } from "react-transition-group";
-import { theme } from "components/theme";
 import { getRandom } from "utils/Helper";
-import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
 import { constantApp } from "utils/Constant";
 import IntroVoca from "components/organisms/remember-vocas-[id]/step-2/IntroUi";
 import DisplayVocas from "components/organisms/remember-vocas-[id]/step-2/ListUi";
 import BgBlackOpacity from "components/atoms/bg-black-opacity";
+import ActionsBtnGroup from "components/atoms/action-btns-group";
 // MAIN UI
 const useStyles = makeStyles(() => ({
   Step2StudyUI: {},
@@ -16,7 +15,7 @@ const useStyles = makeStyles(() => ({
 
 const animationDuration = constantApp.animationDuration;
 
-export default function Step2StudyUI({ study, actionUpdateBg }) {
+export default function Step2StudyUI({ study, actionChangeStep }) {
   const classes = useStyles();
   const [list, setList] = React.useState([...study.vocas]);
   const [listIntroduced, setListIntroduced] = React.useState([]);
@@ -49,18 +48,7 @@ export default function Step2StudyUI({ study, actionUpdateBg }) {
   }, []);
   return (
     <div className={classes.Step2StudyUI}>
-      <Container style={{ paddingTop: theme.spacing(1), opacity: isFinishIntro ? 1 : 0 }}>
-        <Button color="default" >
-          <HelpOutlineIcon style={{ fontSize: "2.5rem", marginRight: theme.spacing(1) }} />
-          <Typography
-            color="textSecondary"
-          >
-            Click để nghe hướng dẫn
-            </Typography>
-        </Button>
-      </Container>
       <DisplayVocas vocas={listIntroduced} isFinishIntro={isFinishIntro} />
-      {/* BG_DIV */}
       <BgBlackOpacity isActive={isActiveIntroVoca} />
       <CSSTransition
         in={Boolean(isActiveIntroVoca)}
@@ -76,24 +64,11 @@ export default function Step2StudyUI({ study, actionUpdateBg }) {
         />
       </CSSTransition>
 
-      {isFinishIntro && (
-        <Box
-          style={{
-            marginTop: theme.spacing(5),
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Button
-            onClick={() => actionUpdateBg({ step: 3 })}
-            variant="contained"
-            color="primary"
-          >
-            Qua bước tiếp theo
-            <DoubleArrowIcon />
-          </Button>
-        </Box>
-      )}
+      <ActionsBtnGroup center={true} hidden={!isFinishIntro} >
+        <Button onClick={() => actionChangeStep(3)} variant="contained" color="primary">
+          Qua bước tiếp theo <DoubleArrowIcon />
+        </Button>
+      </ActionsBtnGroup>
     </div>
   );
 }
