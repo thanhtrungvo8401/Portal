@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Remember_Id_Step1({ study, actionUpdate, actionUpdateBg }) {
+export default function Remember_Id_Step1({ study, actionUpdate, actionChangeStep }) {
   const classes = useStyles();
   const [detailList, setDetailList] = React.useState([]);
   const { vocas, inActiveVocas } = study;
@@ -106,7 +106,7 @@ export default function Remember_Id_Step1({ study, actionUpdate, actionUpdateBg 
 
           <ActionsBtnGroup center={true} >
             <Button
-              onClick={() => actionUpdateBg({ step: 2 })} // step = 2 XXX
+              onClick={() => actionChangeStep(2)} // step = 2 XXX
               className={styles.flashEffect}
               variant="contained"
               color="primary"

@@ -55,10 +55,21 @@ function StudyRememberGroup_Id() {
   }, [list]);
 
   return <React.Fragment>
-    <TitlePage>Cố gắng nhớ tất cả từ vựng bên dưới</TitlePage>
+    <TitlePage>Meomeo-kun sẽ giúp bạn nhớ tất cả từ vựng bên dưới</TitlePage>
     <BodyContainer>
-      {study.step === 1 && <Remember_Id_Step1 study={study} actionUpdate={setStudy} />}
+      {study.step === 1 &&
+        <Remember_Id_Step1
+          study={study}
+          actionUpdate={setStudy}
+          actionChangeStep={setBgStep}
+        />}
     </BodyContainer>
+    {/* BG Change Step */}
+    <ChangeStepBg
+      step={bgStep}
+      actionChangeStep={(step) => setStudy({ ...study, step })}
+      reset={() => setBgStep(0)}
+    />
   </React.Fragment>
 }
 
