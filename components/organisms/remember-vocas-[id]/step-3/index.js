@@ -15,17 +15,17 @@ const useStyles = makeStyles(theme => ({
   OneColumn: {
     position: "relative",
     overflow: "hidden",
-    minHeight: '20rem',
     width: '100%',
     "& .react-dnd-element:nth-child(2n + 1)": {
       borderTopLeftRadius: theme.shape.borderRadius,
       borderTopRightRadius: theme.shape.borderRadius,
+      borderBottom: "none!important"
     },
     "& .react-dnd-element:nth-child(2n)": {
       borderBottomLeftRadius: theme.shape.borderRadius,
       borderBottomRightRadius: theme.shape.borderRadius,
+      borderTop: "none!important",
       marginBottom: theme.spacing(1),
-      boxShadow: 'rgb(0 0 0 / 0%) 0px 3px 3px -2px, rgb(0 0 0 / 14%) 0px 3px 4px 0px, rgb(0 0 0 / 0%) 0px 1px 8px 0px',
     },
   },
   CatImg: {
@@ -45,20 +45,19 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   padding: theme.spacing(1),
   fontSize: "1rem",
   lineHeight: "1.5rem",
-  background: isDragging
-    ? `rgba(255,255,255,${theme.opacity[5]})`
-    : `rgba(255,255,255,${theme.opacity[2]})`,
+  transition: `all ${constantApp.animationDuration}ms ease-in`,
+  border: !isDragging ? `1px solid ${theme.palette.primary.light}` : `1px solid ${theme.palette.primary.main}`,
+  overflow: "hidden",
+  width: "100%",
+  boxShadow: isDragging ? constantApp.BOXSHADOW : "",
+  backgroundColor: isDragging ? constantApp.COLOR.WHITE : "",
   textAlign: "center",
   ...draggableStyle
 });
 
 const getListStyle = isDraggingOver => ({
   borderRadius: theme.shape.borderRadius,
-  boxShadow: isDraggingOver
-    ? theme.shadows[5]
-    : theme.shadows[3],
   width: "100%",
-  padding: theme.spacing(1),
   position: "relative",
   zIndex: 1
 });

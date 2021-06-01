@@ -7,7 +7,8 @@ export const constantApp = {
   COLOR: {
     WHITE: "rgba(255, 255, 255, 0.8)",
     BLACK: "rgba(0, 0, 0, 0.87)"
-  }
+  },
+  BOXSHADOW: "0px 3px 3px -2px rgb(0 0 0 / 20%), 0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%)"
 };
 
 export const constEnv = {
