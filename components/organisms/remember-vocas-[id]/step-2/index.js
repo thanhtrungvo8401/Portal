@@ -1,14 +1,17 @@
-import { Button, makeStyles } from "@material-ui/core";
 import React from "react";
+import { Button } from "@material-ui/core";
 import { CSSTransition } from "react-transition-group";
 import { getRandom } from "utils/Helper";
 import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
 import { constantApp } from "utils/Constant";
 import IntroVoca from "components/organisms/remember-vocas-[id]/step-2/IntroUi";
 import DisplayVocas from "components/organisms/remember-vocas-[id]/step-2/ListUi";
+import Instruction_Step2 from "components/organisms/remember-vocas-[id]/step-2/instruction";
 import BgBlackOpacity from "components/atoms/bg-black-opacity";
 import ActionsBtnGroup from "components/atoms/action-btns-group";
-import { BodyMaxWidth } from "components/atoms/body-wrapper";
+import FollowCatBtn from "components/molecules/follow-cat-btn";
+import { BodyMaxWidth, BodyTop } from "components/atoms/body-wrapper";
+
 
 const animationDuration = constantApp.animationDuration;
 
@@ -19,6 +22,7 @@ export default function Step2StudyUI({ study, actionChangeStep }) {
   const [voca, setVoca] = React.useState({});
   const [isActiveIntroVoca, setIsActiveIntroVoca] = React.useState(false);
   const [isFinishIntro, setIsFinishIntro] = React.useState(false);
+  const [readyObj, setReady] = React.useState({ isIn: false, ready: false });
   // 01: Animation for in
   const introAnimationIn = () => setIsActiveIntroVoca(true);
   // 02: After animation-in is complete => start to read voca:
@@ -39,32 +43,51 @@ export default function Step2StudyUI({ study, actionChangeStep }) {
   };
   React.useEffect(() => {
     setTimeout(() => {
-      introAnimationIn();
+      setReady({ ...readyObj, isIn: true });
     }, animationDuration);
   }, []);
-  return (
-    <BodyMaxWidth>
-      <DisplayVocas vocas={listIntroduced} isFinishIntro={isFinishIntro} />
-      <BgBlackOpacity isActive={isActiveIntroVoca} />
-      <CSSTransition
-        in={Boolean(isActiveIntroVoca)}
-        timeout={animationDuration}
-        classNames="voca-intro"
-        onEntered={handleAfterEnter}
-        onExited={handleAfterExit}
-      >
-        <IntroVoca
-          callback={introAnimationOut}
-          isActive={isActiveIntroVoca}
-          voca={voca}
-        />
-      </CSSTransition>
 
-      <ActionsBtnGroup center={true} hidden={!isFinishIntro} >
-        <Button onClick={() => actionChangeStep(3)} variant="contained" color="primary">
-          Qua bước tiếp theo <DoubleArrowIcon />
-        </Button>
-      </ActionsBtnGroup>
-    </BodyMaxWidth>
+  React.useEffect(() => {
+    if (readyObj.ready) introAnimationIn();
+  }, [readyObj.ready])
+
+  return (
+    <React.Fragment>
+      <Instruction_Step2 />
+
+      <BodyTop>
+        <BodyMaxWidth hidden={!readyObj.ready} >
+          <DisplayVocas vocas={listIntroduced} isFinishIntro={isFinishIntro} />
+          <BgBlackOpacity isActive={isActiveIntroVoca} />
+          <CSSTransition
+            in={Boolean(isActiveIntroVoca)}
+            timeout={animationDuration}
+            classNames="voca-intro"
+            onEntered={handleAfterEnter}
+            onExited={handleAfterExit}
+          >
+            <IntroVoca
+              callback={introAnimationOut}
+              isActive={isActiveIntroVoca}
+              voca={voca}
+            />
+          </CSSTransition>
+          <ActionsBtnGroup center={true} hidden={!isFinishIntro} >
+            <Button onClick={() => actionChangeStep(3)} variant="contained" color="primary">
+              Qua bước tiếp theo <DoubleArrowIcon />
+            </Button>
+          </ActionsBtnGroup>
+        </BodyMaxWidth>
+
+        <FollowCatBtn
+          hidden={readyObj.ready}
+          isIn={readyObj.isIn}
+          onClick={() => setReady({ ...readyObj, isIn: false })}
+          onExited={() => {
+            setReady({ ...readyObj, ready: true });
+          }}
+          description="Đi theo meomeo nếu đã đọc hướng dẫn và sẵn sàng" />
+      </BodyTop>
+    </React.Fragment>
   );
 }
