@@ -111,8 +111,10 @@ export default function Remember_Id_Step3({ study, actionChangeStep }) {
           bg={<BgColorOpacity isActive={result.isChecked} color={constantApp.COLOR.WHITE} opacity={1} />}
         >
           <div className={classes.CatImg} >
-            {result.isTrue && <img src="/image/congrats-cat.png" alt="congrats" />}
-            {!result.isTrue && <img src="/image/thinking-cat.png" alt="try again" />}
+            <img
+              src={result.isTrue ? "/image/congrats-cat.png" : "/image/thinking-cat.png"}
+              alt={result.isTrue ? "congrats" : "try again"}
+            />
           </div>
 
           <Typography
