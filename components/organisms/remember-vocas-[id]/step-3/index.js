@@ -1,6 +1,6 @@
 import { Box, Button, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
-import DragDropComponent from "components/DragDropComponent";
+import DragDropComponent from "components/molecules/drag-drop-component";
 import theme from "components/theme";
 import Instruction_Step3 from "components/organisms/remember-vocas-[id]/step-3/instruction";
 import ActionsBtnGroup from "components/atoms/action-btns-group";
