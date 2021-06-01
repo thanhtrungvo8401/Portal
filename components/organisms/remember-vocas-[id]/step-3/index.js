@@ -91,47 +91,46 @@ export default function Remember_Id_Step3({ study, actionChangeStep }) {
             itemsStyle={getItemStyle}
             listStyle={getListStyle}
           />
-          <VerticalMoveCover
-            isActive={result.isChecked}
-            bg={<BgColorOpacity isActive={result.isChecked} color={constantApp.COLOR.WHITE} opacity={1} />}
-          >
-            <div style={{ textAlign: "center" }} >
-              {result.isTrue && <VerifiedUserIcon
-                style={{ color: theme.palette.success.main, fontSize: "5rem" }} />
-              }
-              {!result.isTrue && <SentimentVeryDissatisfiedIcon
-                style={{ color: theme.palette.error.main, fontSize: "5rem" }} />
-              }
-            </div>
-
-            <Typography variant="h6"
-              style={{
-                color: result.isTrue
-                  ? theme.palette.success.main
-                  : theme.palette.error.main
-                , textAlign: "center"
-              }}
-              component="label" >
-              {result.isTrue ? 'Hoàn toàn chính xác' : 'Kết quả chưa chính xác !'}
-            </Typography>
-
-            <div style={{ textAlign: "center" }} >
-              <Button color="primary" variant="contained"
-                onClick={() => {
-                  if (!result.isTrue) {
-                    setResult({ isChecked: false, isTrue: false })
-                  } else {
-                    actionChangeStep(4);
-                  }
-
-                }}
-                style={{ marginTop: theme.spacing(4) }} >
-                {result.isTrue ? "Next" : "Thử lại"}
-              </Button>
-            </div>
-          </VerticalMoveCover>
         </Box>
-        {/* Check btn */}
+        <VerticalMoveCover
+          isActive={result.isChecked}
+          bg={<BgColorOpacity isActive={result.isChecked} color={constantApp.COLOR.WHITE} opacity={1} />}
+        >
+          <div style={{ textAlign: "center" }} >
+            {result.isTrue && <VerifiedUserIcon
+              style={{ color: theme.palette.success.main, fontSize: "5rem" }} />
+            }
+            {!result.isTrue && <SentimentVeryDissatisfiedIcon
+              style={{ color: theme.palette.error.main, fontSize: "5rem" }} />
+            }
+          </div>
+
+          <Typography variant="h6"
+            style={{
+              color: result.isTrue
+                ? theme.palette.success.main
+                : theme.palette.error.main
+              , textAlign: "center"
+            }}
+            component="label" >
+            {result.isTrue ? 'Hoàn toàn chính xác' : 'Kết quả chưa chính xác !'}
+          </Typography>
+
+          <div style={{ textAlign: "center" }} >
+            <Button color="primary" variant="contained"
+              onClick={() => {
+                if (!result.isTrue) {
+                  setResult({ isChecked: false, isTrue: false })
+                } else {
+                  actionChangeStep(4);
+                }
+
+              }}
+              style={{ marginTop: theme.spacing(4) }} >
+              {result.isTrue ? "Next" : "Thử lại"}
+            </Button>
+          </div>
+        </VerticalMoveCover>
         <ActionsBtnGroup center={true} >
           <Button
             color="primary"
