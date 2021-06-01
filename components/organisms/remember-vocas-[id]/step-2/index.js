@@ -86,7 +86,8 @@ export default function Step2StudyUI({ study, actionChangeStep }) {
           onExited={() => {
             setReady({ ...readyObj, ready: true });
           }}
-          description="Đi theo meomeo nếu đã đọc hướng dẫn và sẵn sàng" />
+          description="Đi theo meomeo nếu đã đọc hướng dẫn và sẵn sàng" >
+        </FollowCatBtn>
       </BodyTop>
     </React.Fragment>
   );
