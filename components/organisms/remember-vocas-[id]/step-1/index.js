@@ -108,7 +108,7 @@ export default function Remember_Id_Step1({ study, actionUpdate, actionChangeSte
 
           <ActionsBtnGroup center={true} >
             <Button
-              onClick={() => actionChangeStep(2)} // step = 2 XXX
+              onClick={() => actionChangeStep(3)} // step = 2 XXX
               className={styles.flashEffect}
               variant="contained"
               color="primary"

@@ -9,6 +9,7 @@ import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissa
 import { BodyMaxWidth, BodyTop } from "components/atoms/body-wrapper";
 import BgColorOpacity from "components/atoms/bg-color-opacity";
 import VerticalMoveCover from "components/atoms/vertical-move-cover";
+import TitleBody from "components/atoms/title-body";
 import { constantApp } from "../../../../utils/Constant";
 
 
@@ -82,6 +83,7 @@ export default function Remember_Id_Step3({ study, actionChangeStep }) {
   return <React.Fragment>
     <Instruction_Step3 />
     <BodyTop>
+      <TitleBody>Kéo thả từ vựng</TitleBody>
       <BodyMaxWidth>
         <Box className={classes.OneColumn} >
           {/* DragDropComponent */}
