@@ -8,7 +8,7 @@ import { BodyMaxWidth, BodyTop } from "components/atoms/body-wrapper";
 import BgColorOpacity from "components/atoms/bg-color-opacity";
 import VerticalMoveCover from "components/atoms/vertical-move-cover";
 import TitleBody from "components/atoms/title-body";
-import { constantApp } from "../../../../utils/Constant";
+import { constantApp } from "utils/Constant";
 
 
 const useStyles = makeStyles(theme => ({
