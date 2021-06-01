@@ -7,7 +7,7 @@ import { constantApp } from "utils/Constant";
 import IntroVoca from "components/organisms/remember-vocas-[id]/step-2/IntroUi";
 import DisplayVocas from "components/organisms/remember-vocas-[id]/step-2/ListUi";
 import Instruction_Step2 from "components/organisms/remember-vocas-[id]/step-2/instruction";
-import BgBlackOpacity from "components/atoms/bg-black-opacity";
+import BgColorOpacity from "components/atoms/bg-color-opacity";
 import ActionsBtnGroup from "components/atoms/action-btns-group";
 import FollowCatBtn from "components/molecules/follow-cat-btn";
 import { BodyMaxWidth, BodyTop } from "components/atoms/body-wrapper";
@@ -58,7 +58,7 @@ export default function Step2StudyUI({ study, actionChangeStep }) {
       <BodyTop>
         <BodyMaxWidth hidden={!readyObj.ready} >
           <DisplayVocas vocas={listIntroduced} isFinishIntro={isFinishIntro} />
-          <BgBlackOpacity isActive={isActiveIntroVoca} />
+          <BgColorOpacity isActive={isActiveIntroVoca} />
           <CSSTransition
             in={Boolean(isActiveIntroVoca)}
             timeout={animationDuration}

@@ -8,7 +8,7 @@ import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import Instruction_Step3 from "components/organisms/remember-vocas-[id]/step-3/instruction";
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import { BodyMaxWidth, BodyTop } from "components/atoms/body-wrapper";
-
+import BgColorOpacity from "components/atoms/bg-color-opacity";
 const { animationDuration } = constantApp;
 
 const useStyles = makeStyles(theme => ({
@@ -210,9 +210,7 @@ export default function Remember_Id_Step3({ study, actionChangeStep }) {
             </div>
           </CSSTransition>
           {/* bg div */}
-          <CSSTransition timeout={animationDuration} classNames="bg-div" in={result.isChecked}>
-            <div className={`${classes.BgDiv}`} ></div>
-          </CSSTransition>
+          <BgColorOpacity isActive={result.isChecked} color={'rgba(255, 255, 255, 0.8)'} opacity={1} />
         </Box>
         {/* Check btn */}
         <Box
