@@ -4,6 +4,7 @@ import DragDropComponent from "components/DragDropComponent";
 import theme from "components/theme";
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import Instruction_Step3 from "components/organisms/remember-vocas-[id]/step-3/instruction";
+import ActionsBtnGroup from "components/atoms/action-btns-group";
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import { BodyMaxWidth, BodyTop } from "components/atoms/body-wrapper";
 import BgColorOpacity from "components/atoms/bg-color-opacity";
@@ -90,7 +91,6 @@ export default function Remember_Id_Step3({ study, actionChangeStep }) {
             itemsStyle={getItemStyle}
             listStyle={getListStyle}
           />
-          {/* result div */}
           <VerticalMoveCover
             isActive={result.isChecked}
             bg={<BgColorOpacity isActive={result.isChecked} color={constantApp.COLOR.WHITE} opacity={1} />}
@@ -132,17 +132,14 @@ export default function Remember_Id_Step3({ study, actionChangeStep }) {
           </VerticalMoveCover>
         </Box>
         {/* Check btn */}
-        <Box
-          hidden={result.isChecked}
-          component="div"
-          style={{ textAlign: "center", marginTop: theme.spacing(5) }} >
+        <ActionsBtnGroup center={true} >
           <Button
             color="primary"
             variant="contained"
             onClick={() => checkResult()} >
             Kiểm tra kết quả
-      </Button>
-        </Box>
+          </Button>
+        </ActionsBtnGroup>
       </BodyMaxWidth>
     </BodyTop>
   </React.Fragment>
