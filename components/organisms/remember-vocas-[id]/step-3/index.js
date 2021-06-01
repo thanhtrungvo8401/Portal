@@ -2,10 +2,8 @@ import { Box, Button, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 import DragDropComponent from "components/DragDropComponent";
 import theme from "components/theme";
-import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import Instruction_Step3 from "components/organisms/remember-vocas-[id]/step-3/instruction";
 import ActionsBtnGroup from "components/atoms/action-btns-group";
-import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import { BodyMaxWidth, BodyTop } from "components/atoms/body-wrapper";
 import BgColorOpacity from "components/atoms/bg-color-opacity";
 import VerticalMoveCover from "components/atoms/vertical-move-cover";
@@ -30,6 +28,16 @@ const useStyles = makeStyles(theme => ({
       boxShadow: 'rgb(0 0 0 / 0%) 0px 3px 3px -2px, rgb(0 0 0 / 14%) 0px 3px 4px 0px, rgb(0 0 0 / 0%) 0px 1px 8px 0px',
     },
   },
+  CatImg: {
+    display: "flex",
+    justifyContent: "center"
+  },
+  RightText: {
+    color: theme.palette.success.main, textAlign: "center"
+  },
+  WrongText: {
+    color: theme.palette.error.main, textAlign: "center"
+  }
 }))
 
 const getItemStyle = (isDragging, draggableStyle) => ({
@@ -71,6 +79,10 @@ export default function Remember_Id_Step3({ study, actionChangeStep }) {
     }
     return setResult({ isChecked: true, isTrue: true })
   }
+  const onNextOrTryAgainClick = () => {
+    if (!result.isTrue) setResult({ isChecked: false, isTrue: false })
+    else actionChangeStep(4);
+  }
 
   React.useEffect(() => {
     if (vocas.length > 0) {
@@ -98,40 +110,22 @@ export default function Remember_Id_Step3({ study, actionChangeStep }) {
           isActive={result.isChecked}
           bg={<BgColorOpacity isActive={result.isChecked} color={constantApp.COLOR.WHITE} opacity={1} />}
         >
-          <div style={{ textAlign: "center" }} >
-            {result.isTrue && <VerifiedUserIcon
-              style={{ color: theme.palette.success.main, fontSize: "5rem" }} />
-            }
-            {!result.isTrue && <SentimentVeryDissatisfiedIcon
-              style={{ color: theme.palette.error.main, fontSize: "5rem" }} />
-            }
+          <div className={classes.CatImg} >
+            {result.isTrue && <img src="/image/congrats-cat.png" alt="congrats" />}
+            {!result.isTrue && <img src="/image/thinking-cat.png" alt="try again" />}
           </div>
 
-          <Typography variant="h6"
-            style={{
-              color: result.isTrue
-                ? theme.palette.success.main
-                : theme.palette.error.main
-              , textAlign: "center"
-            }}
-            component="label" >
-            {result.isTrue ? 'Hoàn toàn chính xác' : 'Kết quả chưa chính xác !'}
+          <Typography
+            className={result.isTrue ? classes.RightText : classes.WrongText} variant="h6" component="label" >
+            {result.isTrue ? 'Hoàn toàn chính xác' : 'Kết quả chưa chính xác'}
           </Typography>
 
-          <div style={{ textAlign: "center" }} >
+          <ActionsBtnGroup center={true} >
             <Button color="primary" variant="contained"
-              onClick={() => {
-                if (!result.isTrue) {
-                  setResult({ isChecked: false, isTrue: false })
-                } else {
-                  actionChangeStep(4);
-                }
-
-              }}
-              style={{ marginTop: theme.spacing(4) }} >
+              onClick={onNextOrTryAgainClick}>
               {result.isTrue ? "Next" : "Thử lại"}
             </Button>
-          </div>
+          </ActionsBtnGroup>
         </VerticalMoveCover>
         <ActionsBtnGroup center={true} >
           <Button
