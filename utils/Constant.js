@@ -3,7 +3,11 @@ export const constantApp = {
   setVocaLimit: 10,
   timeout: 1000,
   timeOutUseEffect: 500,
-  animationDuration: 500
+  animationDuration: 500,
+  COLOR: {
+    WHITE: "rgba(255, 255, 255, 0.8)",
+    BLACK: "rgba(0, 0, 0, 0.87)"
+  }
 };
 
 export const constEnv = {

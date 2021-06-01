@@ -2,15 +2,14 @@ import { Box, Button, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 import DragDropComponent from "components/DragDropComponent";
 import theme from "components/theme";
-import { constantApp } from "utils/Constant";
-import { CSSTransition } from "react-transition-group";
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import Instruction_Step3 from "components/organisms/remember-vocas-[id]/step-3/instruction";
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import { BodyMaxWidth, BodyTop } from "components/atoms/body-wrapper";
 import BgColorOpacity from "components/atoms/bg-color-opacity";
-import { cssAnimationHelper } from "utils/AnimationHelper";
-const { animationDuration } = constantApp;
+import VerticalMoveCover from "components/atoms/vertical-move-cover";
+import { constantApp } from "../../../../utils/Constant";
+
 
 const useStyles = makeStyles(theme => ({
   OneColumn: {
@@ -28,58 +27,6 @@ const useStyles = makeStyles(theme => ({
       marginBottom: theme.spacing(1),
       boxShadow: 'rgb(0 0 0 / 0%) 0px 3px 3px -2px, rgb(0 0 0 / 14%) 0px 3px 4px 0px, rgb(0 0 0 / 0%) 0px 1px 8px 0px',
     },
-    "& .step-result": {
-      position: "fixed",
-      top: 0,
-      left: "50%",
-      transform: "translateY(-100%) translateX(-50%)",
-      zIndex: 2,
-      textAlign: "center",
-      opacity: 0,
-    },
-    // "& .step-result.step-result-enter": {
-    //   left: '150%',
-    //   opacity: 0,
-    // },
-    // "& .step-result.step-result-enter-active": {
-    //   left: '50%',
-    //   opacity: 1,
-    //   transition: `all ${animationDuration}ms ease-in`,
-    // },
-    // "& .step-result.step-result-enter-done": {
-    //   left: '50%',
-    //   opacity: 1,
-    //   transition: `all ${animationDuration}ms ease-in`,
-    // },
-    // "& .step-result.step-result-exit": {
-    //   left: '50%',
-    //   opacity: 1,
-    // },
-    // "& .step-result.step-result-exit-active": {
-    //   left: '150%',
-    //   opacity: 0,
-    //   transition: `all ${animationDuration}ms ease-in`,
-    // },
-    // "& .step-result.step-result-exit-done": {
-    //   left: '150%',
-    //   opacity: 0,
-    //   transition: `all ${animationDuration}ms ease-in`,
-    // },
-    ...cssAnimationHelper("step-result",
-      {
-        opacity: 0,
-        top: 0,
-        transform: "translateY(-100%) translateX(-50%)",
-        transition: `all ${animationDuration}ms ease-in`,
-      },
-      {
-        opacity: 1,
-        top: "50%",
-        transform: "translateY(-50%) translateX(-50%)",
-        transition: `all ${animationDuration}ms ease-in`,
-      },
-      false
-    ),
   },
 }))
 
@@ -144,50 +91,45 @@ export default function Remember_Id_Step3({ study, actionChangeStep }) {
             listStyle={getListStyle}
           />
           {/* result div */}
-          <CSSTransition
-            timeout={animationDuration}
-            classNames="step-result"
-            in={result.isChecked}
+          <VerticalMoveCover
+            isActive={result.isChecked}
+            bg={<BgColorOpacity isActive={result.isChecked} color={constantApp.COLOR.WHITE} opacity={1} />}
           >
-            <div className="step-result">
-              <div style={{ textAlign: "center" }} >
-                {result.isTrue && <VerifiedUserIcon
-                  style={{ color: theme.palette.success.main, fontSize: "5rem" }} />
-                }
-                {!result.isTrue && <SentimentVeryDissatisfiedIcon
-                  style={{ color: theme.palette.error.main, fontSize: "5rem" }} />
-                }
-              </div>
-
-              <Typography variant="h6"
-                style={{
-                  color: result.isTrue
-                    ? theme.palette.success.main
-                    : theme.palette.error.main
-                  , textAlign: "center"
-                }}
-                component="label" >
-                {result.isTrue ? 'Hoàn toàn chính xác' : 'Kết quả chưa chính xác !'}
-              </Typography>
-
-              <div style={{ textAlign: "center" }} >
-                <Button color="primary" variant="contained"
-                  onClick={() => {
-                    if (!result.isTrue) {
-                      setResult({ isChecked: false, isTrue: false })
-                    } else {
-                      actionChangeStep(4);
-                    }
-
-                  }}
-                  style={{ marginTop: theme.spacing(4) }} >
-                  {result.isTrue ? "Next" : "Thử lại"}
-                </Button>
-              </div>
+            <div style={{ textAlign: "center" }} >
+              {result.isTrue && <VerifiedUserIcon
+                style={{ color: theme.palette.success.main, fontSize: "5rem" }} />
+              }
+              {!result.isTrue && <SentimentVeryDissatisfiedIcon
+                style={{ color: theme.palette.error.main, fontSize: "5rem" }} />
+              }
             </div>
-          </CSSTransition>
-          {/* bg div */}
-          <BgColorOpacity isActive={result.isChecked} color={'rgba(255, 255, 255, 0.8)'} opacity={1} />
+
+            <Typography variant="h6"
+              style={{
+                color: result.isTrue
+                  ? theme.palette.success.main
+                  : theme.palette.error.main
+                , textAlign: "center"
+              }}
+              component="label" >
+              {result.isTrue ? 'Hoàn toàn chính xác' : 'Kết quả chưa chính xác !'}
+            </Typography>
+
+            <div style={{ textAlign: "center" }} >
+              <Button color="primary" variant="contained"
+                onClick={() => {
+                  if (!result.isTrue) {
+                    setResult({ isChecked: false, isTrue: false })
+                  } else {
+                    actionChangeStep(4);
+                  }
+
+                }}
+                style={{ marginTop: theme.spacing(4) }} >
+                {result.isTrue ? "Next" : "Thử lại"}
+              </Button>
+            </div>
+          </VerticalMoveCover>
         </Box>
         {/* Check btn */}
         <Box

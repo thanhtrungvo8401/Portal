@@ -1,4 +1,10 @@
-export default function BgColorOpacity({ isActive, color = "rgba(0, 0, 0, 0.87)", opacity = 0.3 }) {
+import { constantApp } from "../../../utils/Constant";
+
+export default function BgColorOpacity({
+  isActive,
+  color = constantApp.COLOR.BLACK,
+  opacity = 0.3
+}) {
   return isActive
     ? <div style={{
       backgroundColor: color,
