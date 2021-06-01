@@ -69,7 +69,7 @@ const useStyles2 = makeStyles((theme) => ({
       opacity: '1!important',
       transition: `all ${animationDuration}ms ease-in`,
     }, true),
-    '&. meaning': {
+    '& .meaning': {
       opacity: 0,
       transition: `all ${animationDuration}ms ease-in`
     },
@@ -143,7 +143,7 @@ export default function DisplayVocas({ vocas = [], isFinishIntro }) {
   const currentRandVoca = vocasRandomSpeak[vocasRandomSpeak.length - 1] || {};
   if (!vocas.length) return null;
   return (
-    <div className={classes.DisplayVocas}>
+    <div className={classes.DisplayVocas} style={{ overflow: !isRandomSpeak ? "hidden" : "" }} >
       <List>
         <TransitionGroup className="vocas-group">
           {vocasRender.map((voca) => {
@@ -151,7 +151,7 @@ export default function DisplayVocas({ vocas = [], isFinishIntro }) {
               <CSSTransition key={voca.id} classNames="one-voca" timeout={animationDuration}>
                 <ListItemOutline
                   styles={{ cursor: "pointer", position: "relative", zIndex: 0 }}
-                  onClick={() => { jpSpeak({ content: voca.voca }); console.log("SPEAK"); }}
+                  onClick={() => jpSpeak({ content: voca.voca })}
                 >
                   {/* JP */}
                   <Typography color="primary" variant="h6">

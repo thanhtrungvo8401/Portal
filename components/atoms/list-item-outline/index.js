@@ -15,9 +15,9 @@ const useStyles = makeStyles(theme => ({
     },
   }
 }))
-export default function ListItemOutline({ children, styles }) {
+export default function ListItemOutline({ children, styles, onClick }) {
   const classes = useStyles();
-  return <ListItem style={styles} className={classes.root}>
+  return <ListItem style={styles} className={classes.root} onClick={onClick} >
     {children}
   </ListItem>
 }
