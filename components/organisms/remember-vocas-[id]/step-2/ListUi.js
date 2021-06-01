@@ -58,16 +58,8 @@ const useStyles2 = makeStyles((theme) => ({
       false),
   },
   RandomVocaQuestion: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    minHeight: "200px",
-    opacity: 0.96,
-    top: "0",
-    left: "100vw",
-    opacity: 0,
-    zIndex: 3,
-    cursor: "pointer",
+    position: "absolute", width: "100%", minHeight: "200px", height: "100%", top: "0", left: "100vw",
+    opacity: 0, zIndex: 3, cursor: "pointer",
     ...cssAnimationHelper('random-speak', {
       left: "100vw!important",
       opacity: '0!important',
@@ -77,6 +69,10 @@ const useStyles2 = makeStyles((theme) => ({
       opacity: '1!important',
       transition: `all ${animationDuration}ms ease-in`,
     }, true),
+    '&. meaning': {
+      opacity: 0,
+      transition: `all ${animationDuration}ms ease-in`
+    },
     ...cssAnimationHelper('meaning',
       { opacity: 0, transition: `all ${animationDuration}ms ease-in` },
       { opacity: 1, transition: `all ${animationDuration}ms ease-in` },
@@ -155,7 +151,7 @@ export default function DisplayVocas({ vocas = [], isFinishIntro }) {
               <CSSTransition key={voca.id} classNames="one-voca" timeout={animationDuration}>
                 <ListItemOutline
                   styles={{ cursor: "pointer", position: "relative", zIndex: 0 }}
-                  onClick={() => jpSpeak({ content: voca.voca })}
+                  onClick={() => { jpSpeak({ content: voca.voca }); console.log("SPEAK"); }}
                 >
                   {/* JP */}
                   <Typography color="primary" variant="h6">
@@ -191,22 +187,16 @@ export default function DisplayVocas({ vocas = [], isFinishIntro }) {
           })}
         </TransitionGroup>
       </List>
-      {isFinishIntro &&
-        <ActionsBtnGroup center={true} >
-          <ButtonGroup
-            color="primary"
-            aria-label="outlined primary button group"
-            variant="outlined"
-          >
-            <Button onClick={() => handleRandomVoca()}>
-              <SyncRoundedIcon className={classes.mr1} />Trộn từ
+      <ActionsBtnGroup hidden={!isFinishIntro} center={true} >
+        <ButtonGroup color="primary" aria-label="outlined primary button group" variant="outlined">
+          <Button onClick={() => handleRandomVoca()}>
+            <SyncRoundedIcon className={classes.mr1} />Trộn từ
+          </Button>
+          <Button onClick={() => handleSpeakRandom()}>
+            <DataUsageIcon className={classes.mr1} />Random Speak
             </Button>
-            <Button onClick={() => handleSpeakRandom()}>
-              <DataUsageIcon className={classes.mr1} />Random Speak
-            </Button>
-          </ButtonGroup>
-        </ActionsBtnGroup>
-      }
+        </ButtonGroup>
+      </ActionsBtnGroup>
 
       <CSSTransition
         in={isRandomSpeak}

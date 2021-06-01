@@ -11,8 +11,7 @@ const useStyles = (center) => makeStyles(theme => ({
 
 export default function ActionsBtnGroup({ children, center, hidden }) {
   const classes = useStyles(center)();
-  if (hidden) return null;
-  return <div className={classes.root} >
+  return <div className={`${classes.root} ${hidden ? 'hide' : ''}`} >
     {children}
   </div>
 }
