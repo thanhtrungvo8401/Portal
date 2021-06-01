@@ -9,6 +9,7 @@ import Instruction_Step2 from "components/organisms/remember-vocas-[id]/step-2/i
 import ActionsBtnGroup from "components/atoms/action-btns-group";
 import FollowCatBtn from "components/molecules/follow-cat-btn";
 import VerticalMoveCover from "components/atoms/vertical-move-cover";
+import TitleBody from "components/atoms/title-body";
 import { BodyMaxWidth, BodyTop } from "components/atoms/body-wrapper";
 
 
@@ -55,6 +56,7 @@ export default function Step2StudyUI({ study, actionChangeStep }) {
       <Instruction_Step2 />
 
       <BodyTop>
+        <TitleBody>Kết hợp nghe và lặp lại để bắt làm quen với từ</TitleBody>
         <BodyMaxWidth hidden={!readyObj.ready} >
           <DisplayVocas vocas={listIntroduced} isFinishIntro={isFinishIntro} />
           <VerticalMoveCover
@@ -68,15 +70,12 @@ export default function Step2StudyUI({ study, actionChangeStep }) {
               voca={voca}
             />
           </VerticalMoveCover>
-
-
           <ActionsBtnGroup center={true} hidden={!isFinishIntro} >
             <Button onClick={() => actionChangeStep(3)} variant="contained" color="primary">
               Qua bước tiếp theo <DoubleArrowIcon />
             </Button>
           </ActionsBtnGroup>
         </BodyMaxWidth>
-
         <FollowCatBtn
           hidden={readyObj.ready}
           isIn={readyObj.isIn}
