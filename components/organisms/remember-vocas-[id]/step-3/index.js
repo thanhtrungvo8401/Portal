@@ -9,6 +9,7 @@ import Instruction_Step3 from "components/organisms/remember-vocas-[id]/step-3/i
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import { BodyMaxWidth, BodyTop } from "components/atoms/body-wrapper";
 import BgColorOpacity from "components/atoms/bg-color-opacity";
+import { cssAnimationHelper } from "utils/AnimationHelper";
 const { animationDuration } = constantApp;
 
 const useStyles = makeStyles(theme => ({
@@ -28,82 +29,58 @@ const useStyles = makeStyles(theme => ({
       boxShadow: 'rgb(0 0 0 / 0%) 0px 3px 3px -2px, rgb(0 0 0 / 14%) 0px 3px 4px 0px, rgb(0 0 0 / 0%) 0px 1px 8px 0px',
     },
     "& .step-result": {
-      position: "absolute",
-      top: "50%",
+      position: "fixed",
+      top: 0,
       left: "50%",
-      transform: "translate(-50%, -50%)",
-      zIndex: 3,
+      transform: "translateY(-100%) translateX(-50%)",
+      zIndex: 2,
       textAlign: "center",
-      left: '150%',
       opacity: 0,
     },
-    "& .step-result.step-result-enter": {
-      left: '150%',
-      opacity: 0,
-    },
-    "& .step-result.step-result-enter-active": {
-      left: '50%',
-      opacity: 1,
-      transition: `all ${animationDuration}ms ease-in`,
-    },
-    "& .step-result.step-result-enter-done": {
-      left: '50%',
-      opacity: 1,
-      transition: `all ${animationDuration}ms ease-in`,
-    },
-    "& .step-result.step-result-exit": {
-      left: '50%',
-      opacity: 1,
-    },
-    "& .step-result.step-result-exit-active": {
-      left: '150%',
-      opacity: 0,
-      transition: `all ${animationDuration}ms ease-in`,
-    },
-    "& .step-result.step-result-exit-done": {
-      left: '150%',
-      opacity: 0,
-      transition: `all ${animationDuration}ms ease-in`,
-    }
+    // "& .step-result.step-result-enter": {
+    //   left: '150%',
+    //   opacity: 0,
+    // },
+    // "& .step-result.step-result-enter-active": {
+    //   left: '50%',
+    //   opacity: 1,
+    //   transition: `all ${animationDuration}ms ease-in`,
+    // },
+    // "& .step-result.step-result-enter-done": {
+    //   left: '50%',
+    //   opacity: 1,
+    //   transition: `all ${animationDuration}ms ease-in`,
+    // },
+    // "& .step-result.step-result-exit": {
+    //   left: '50%',
+    //   opacity: 1,
+    // },
+    // "& .step-result.step-result-exit-active": {
+    //   left: '150%',
+    //   opacity: 0,
+    //   transition: `all ${animationDuration}ms ease-in`,
+    // },
+    // "& .step-result.step-result-exit-done": {
+    //   left: '150%',
+    //   opacity: 0,
+    //   transition: `all ${animationDuration}ms ease-in`,
+    // },
+    ...cssAnimationHelper("step-result",
+      {
+        opacity: 0,
+        top: 0,
+        transform: "translateY(-100%) translateX(-50%)",
+        transition: `all ${animationDuration}ms ease-in`,
+      },
+      {
+        opacity: 1,
+        top: "50%",
+        transform: "translateY(-50%) translateX(-50%)",
+        transition: `all ${animationDuration}ms ease-in`,
+      },
+      false
+    ),
   },
-  BgDiv: {
-    backgroundColor: `rgba(255, 255, 255, ${theme.opacity['8']})`,
-    width: "100%",
-    height: "100%",
-    position: "absolute",
-    zIndex: 0,
-    left: 0,
-    top: 0,
-    opacity: 0,
-    "&.bg-div-enter": {
-      zIndex: 2,
-      opacity: 0
-    },
-    "&.bg-div-enter-active": {
-      zIndex: 2,
-      opacity: 1,
-      transition: `all ${animationDuration}ms ease-in`,
-    },
-    "&.bg-div-enter-done": {
-      zIndex: 2,
-      opacity: 1,
-      transition: `all ${animationDuration}ms ease-in`,
-    },
-    "&.bg-div-exit": {
-      zIndex: 2,
-      opacity: 1
-    },
-    "&.bg-div-exit-active": {
-      zIndex: 2,
-      opacity: 0,
-      transition: `all ${animationDuration}ms ease-in`,
-    },
-    "&.bg-div-exit-done": {
-      zIndex: 0,
-      opacity: 0,
-      transition: `all ${animationDuration}ms ease-in`,
-    },
-  }
 }))
 
 const getItemStyle = (isDragging, draggableStyle) => ({

@@ -1,15 +1,14 @@
 import React from "react";
 import { Button } from "@material-ui/core";
-import { CSSTransition } from "react-transition-group";
 import { getRandom } from "utils/Helper";
 import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
 import { constantApp } from "utils/Constant";
 import IntroVoca from "components/organisms/remember-vocas-[id]/step-2/IntroUi";
 import DisplayVocas from "components/organisms/remember-vocas-[id]/step-2/ListUi";
 import Instruction_Step2 from "components/organisms/remember-vocas-[id]/step-2/instruction";
-import BgColorOpacity from "components/atoms/bg-color-opacity";
 import ActionsBtnGroup from "components/atoms/action-btns-group";
 import FollowCatBtn from "components/molecules/follow-cat-btn";
+import VerticalMoveCover from "components/atoms/vertical-move-cover";
 import { BodyMaxWidth, BodyTop } from "components/atoms/body-wrapper";
 
 
@@ -58,11 +57,8 @@ export default function Step2StudyUI({ study, actionChangeStep }) {
       <BodyTop>
         <BodyMaxWidth hidden={!readyObj.ready} >
           <DisplayVocas vocas={listIntroduced} isFinishIntro={isFinishIntro} />
-          <BgColorOpacity isActive={isActiveIntroVoca} />
-          <CSSTransition
-            in={Boolean(isActiveIntroVoca)}
-            timeout={animationDuration}
-            classNames="voca-intro"
+          <VerticalMoveCover
+            isActive={Boolean(isActiveIntroVoca)}
             onEntered={handleAfterEnter}
             onExited={handleAfterExit}
           >
@@ -71,7 +67,9 @@ export default function Step2StudyUI({ study, actionChangeStep }) {
               isActive={isActiveIntroVoca}
               voca={voca}
             />
-          </CSSTransition>
+          </VerticalMoveCover>
+
+
           <ActionsBtnGroup center={true} hidden={!isFinishIntro} >
             <Button onClick={() => actionChangeStep(3)} variant="contained" color="primary">
               Qua bước tiếp theo <DoubleArrowIcon />

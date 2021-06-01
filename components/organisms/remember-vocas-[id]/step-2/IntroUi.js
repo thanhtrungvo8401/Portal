@@ -26,34 +26,9 @@ import { cssAnimationHelper } from "utils/AnimationHelper";
 // INTRO VOCA COMPONENT
 const useStyles1 = makeStyles((theme) => ({
   VocaIntro: {
-    display: "inline-block",
     minWidth: "300px",
     padding: `${theme.spacing(2)}px ${theme.spacing(1)}px`,
-    position: "fixed",
-    zIndex: 2,
-    textAlign: "Center",
-    top: "50%",
-    left: "50%",
-    transform: "translateY(-100%) translateX(-50%)",
-    top: 0,
-    opacity: 0,
-    // intro-voca-animation
-    ...cssAnimationHelper("voca-intro",
-      {
-        opacity: 0,
-        top: 0,
-        transform: "translateY(-100%) translateX(-50%)",
-        transition: `all ${animationDuration}ms ease-in`,
-      },
-      {
-        opacity: 1,
-        top: "50%",
-        transform: "translateY(-50%) translateX(-50%)",
-        transition: `all ${animationDuration}ms ease-in`,
-      },
-      true
-    ),
-    // voca in intro-voca:
+    textAlign: "center",
     ...cssAnimationHelper("jp", {
       opacity: 0,
       transition: `opacity ${animationDuration}ms ease-in`,
@@ -267,7 +242,7 @@ export default function IntroVoca({
                 {/* JP Speech */}
                 {!_isRenshiuFinish &&
                   <Typography
-                    style={{ textAlign: "left", display: "block" }}
+                    style={{ textAlign: "center", display: "block" }}
                     variant={"caption"}
                   >
                     Click vào micro và đọc lại từ vựng trên
