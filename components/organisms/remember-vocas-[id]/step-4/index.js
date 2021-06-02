@@ -1,8 +1,5 @@
 import {
-  Box,
   Button,
-  CircularProgress,
-  Container,
   makeStyles,
   Paper,
   TextField,
@@ -14,7 +11,7 @@ import React from "react";
 import theme from "components/theme";
 import { VOCA_RANDOM_LIMIT } from "utils/Constant";
 import { cssAnimationHelper } from "utils/AnimationHelper";
-import { getRandom } from "utils/Helper";
+import { getRandom, isEmptyArr } from "utils/Helper";
 import { jpSpeak } from "utils/textToSpeech";
 import { constantApp } from "utils/Constant";
 import Instruction_Step4 from "components/organisms/remember-vocas-[id]/step-4/instruction";
@@ -56,38 +53,15 @@ const useStyles = makeStyles((theme) => ({
         transition: `all ${animationDuration}ms ease-in`,
       },
       false),
-    // FINISH STEP
-    "& .finish-step": {
-      position: "relative",
-      top: "100vh",
-      left: 0,
-      opacity: 0,
-    },
-    "& .finish-step-enter": {
-      opacity: 0,
-      top: "100vh",
-    },
-    "& .finish-step-enter-active": {
-      opacity: 1,
-      top: "0",
-      transition: `all ${animationDuration}ms ease-in`,
-    },
-    "& .finish-step-enter-done": {
-      opacity: 1,
-      top: "0",
-      left: 0,
-      transition: `all ${animationDuration}ms ease-in`,
-    },
   },
 }));
 
 export default function Remember_Id_Step4({ study, actionChangeStep }) {
   const classes = useStyles();
-  const [isFinish, setIsFinish] = React.useState(false);
   const [list, setList] = React.useState([...study.vocas]);
-  const timeCoutDown = 1 * [...study.vocas].length;
-  const [countDown, setCountDown] = React.useState(timeCoutDown);
   const [listAnswered, setListAnswered] = React.useState([]);
+  const [listRightAnswered, setListRightAnswer] = React.useState([]);
+  const [isFinish, setIsFinish] = React.useState(false);
   const [voca, setVoca] = React.useState({});
   const [selectMeaning, setSelectMeaning] = React.useState("");
   const [resultEmotion, setResultEmotion] = React.useState("");
@@ -98,10 +72,12 @@ export default function Remember_Id_Step4({ study, actionChangeStep }) {
     if (list.length > 0) {
       const random = getRandom(0, list.length - 1);
       const vocaQA = { ...list[random], isIn: true };
-      setVoca(vocaQA);
       setListAnswered([...listAnswered, vocaQA]);
+      if (voca.id) setListRightAnswer([...listRightAnswered, voca]);
+      setVoca(vocaQA);
       setList(list.filter((v) => v.id !== vocaQA.id));
     } else {
+      setListRightAnswer([...listRightAnswered, voca]);
       setIsFinish(true);
     }
   };
@@ -119,14 +95,7 @@ export default function Remember_Id_Step4({ study, actionChangeStep }) {
       }
     }
   }, [selectMeaning]);
-  // Count-down function use for review-voca-bularies
-  React.useEffect(() => {
-    if (isFinish && countDown > 0) {
-      setTimeout(() => setCountDown(countDown - 0.1), 100);
-    } else if (isFinish) {
-      actionChangeStep(5);
-    }
-  }, [isFinish, countDown]);
+
   return (
     <React.Fragment>
       <Instruction_Step4 />
@@ -134,81 +103,75 @@ export default function Remember_Id_Step4({ study, actionChangeStep }) {
         <TitleBody>Tìm nghĩa chính xác cho từ</TitleBody>
         <BodyMaxWidth>
           <section className={`${classes.root}`}>
-            <div hidden={isFinish} >
-              {/* Voca*/}
-              <TitleItem>Từ vựng</TitleItem>
-              <CSSTransition
-                classNames="Q-A-voca"
-                in={voca.isIn}
-                timeout={animationDuration}
-                onEntering={() => jpSpeak({ content: voca.voca })}
-                onExited={() => nextQandA()}
-              >
-                <ItemOutline>
-                  <Typography style={{ textAlign: "center", width: "100%" }} variant="h5" color="primary" component="label">
-                    {voca.voca}
-                  </Typography>
-                  <Typography style={{ textAlign: "center", width: "100%" }} variant="caption" color="textSecondary" component="label">
-                    {voca.note}
-                  </Typography>
-                </ItemOutline>
-              </CSSTransition>
-              <DeviderItem />
-              {/* Select result */}
-              <TitleItem>Hãy nhập đáp án của bạn vào đây</TitleItem>
-              <Autocomplete
-                id="select-result"
-                freeSolo
-                options={meaningOptions}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Nghĩa của từ"
-                    margin="normal"
-                    variant="outlined"
-                    style={{ margin: 0 }}
-                  />
-                )}
-                onChange={(e, value, reason) => setSelectMeaning(value)}
-                value={selectMeaning}
-              />
-              {/* Show Result */}
-              <CatAnnoucement
-                isActive={resultEmotion === RESULT_EMOTION.TRUE}
-                type={1}
-                onEntered={() => {
-                  setTimeout(() => {
-                    setResultEmotion("");
-                    setSelectMeaning("");
-                    setVoca({ ...voca, isIn: false });
-                  }, 2 * animationDuration);
-                }}
-              />
-              <CatAnnoucement
-                isActive={resultEmotion === RESULT_EMOTION.FALSE}
-                type={0}
-                onEntered={() => {
-                  setTimeout(() => {
-                    setResultEmotion("");
-                    setSelectMeaning("");
-                  }, 2 * animationDuration);
-                }}
-              />
-            </div>
-            {/* <CSSTransition
-              in={isFinish}
-              classNames="finish-step"
-              timeout={animationDuration}
-            >
-              <Container className="finish-step">
-                <Typography
-                  variant="h6"
-                  color="primary"
-                  style={{ marginTop: theme.spacing(2), marginBottom: theme.spacing(4) }}
+            {!isFinish &&
+              <React.Fragment>
+                <TitleItem> Từ vựng</TitleItem>
+                <CSSTransition
+                  classNames="Q-A-voca"
+                  in={voca.isIn}
+                  timeout={animationDuration}
+                  onEntering={() => jpSpeak({ content: voca.voca })}
+                  onExited={() => nextQandA()}
                 >
-                  Nhìn lại những từ vừa học
-                </Typography>
-                {listAnswered.map((voca) => {
+                  <ItemOutline>
+                    <Typography style={{ textAlign: "center", width: "100%" }} variant="h5" color="primary" component="label">
+                      {voca.voca}
+                    </Typography>
+                    <Typography style={{ textAlign: "center", width: "100%" }} variant="caption" color="textSecondary" component="label">
+                      {voca.note}
+                    </Typography>
+                  </ItemOutline>
+                </CSSTransition>
+                <DeviderItem />
+                <TitleItem>Hãy nhập đáp án của bạn vào đây</TitleItem>
+                <Autocomplete
+                  id="select-result"
+                  freeSolo
+                  options={meaningOptions}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Nghĩa của từ"
+                      margin="normal"
+                      variant="outlined"
+                      style={{ margin: 0 }}
+                    />
+                  )}
+                  onChange={(e, value, reason) => setSelectMeaning(value)}
+                  value={selectMeaning}
+                />
+              </React.Fragment>
+            }
+
+            <CatAnnoucement
+              isActive={resultEmotion === RESULT_EMOTION.TRUE}
+              type={1}
+              onEntered={() => {
+                setTimeout(() => {
+                  setResultEmotion("");
+                  setSelectMeaning("");
+                  setVoca({ ...voca, isIn: false });
+                }, 2 * animationDuration);
+              }}
+            />
+            <CatAnnoucement
+              isActive={resultEmotion === RESULT_EMOTION.FALSE}
+              type={0}
+              onEntered={() => {
+                setTimeout(() => {
+                  setResultEmotion("");
+                  setSelectMeaning("");
+                }, 2 * animationDuration);
+              }}
+            />
+
+            <React.Fragment>
+              <DeviderItem />
+              <TitleItem hidden={isEmptyArr(listRightAnswered)} >
+                Những câu trả lời đúng
+              </TitleItem>
+              {listRightAnswered
+                .map((voca) => {
                   return (
                     <Button
                       key={voca.id}
@@ -249,38 +212,10 @@ export default function Remember_Id_Step4({ study, actionChangeStep }) {
                     </Button>
                   );
                 })}
-              </Container>
-            </CSSTransition> */}
-
-            {/* <div hidden={!isFinish}
-              style={{
-                margin: `${theme.spacing(3)}px auto`,
-                position: "relative",
-                height: "3rem",
-                width: "3rem",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <CircularProgress
-                variant="determinate"
-                value={(1 - countDown / timeCoutDown) * 100}
-                style={{
-                  position: "absolute",
-                  width: "100%",
-                  height: "100%",
-                  left: 0,
-                  top: 0,
-                }}
-              />
-              <Typography variant="caption" color="textSecondary">
-                {Math.round((1 - countDown / timeCoutDown) * 100)}
-              </Typography>
-            </div> */}
+            </React.Fragment>
           </section>
         </BodyMaxWidth>
       </BodyTop>
-    </React.Fragment>
+    </React.Fragment >
   );
 }

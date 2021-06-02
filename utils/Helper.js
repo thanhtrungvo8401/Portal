@@ -82,4 +82,6 @@ export const isPro = process.env.NEXT_PUBLIC_ENV === "PRODUCTION";
 
 export const getRandom = (min, max) => Math.round(Math.random() * (max - min));
 
+export const isEmptyArr = array => array.length === 0;
+
 export const getWidth = (!isServer && window.innerWidth) || 0;
