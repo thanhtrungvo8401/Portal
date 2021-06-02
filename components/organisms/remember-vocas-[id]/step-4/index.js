@@ -260,7 +260,7 @@ export default function Remember_Id_Step4({ study, actionChangeStep }) {
                 </div>
               </CSSTransition>
             </div>
-            <CSSTransition
+            {/* <CSSTransition
               in={isFinish}
               classNames="finish-step"
               timeout={animationDuration}
@@ -272,7 +272,7 @@ export default function Remember_Id_Step4({ study, actionChangeStep }) {
                   style={{ marginTop: theme.spacing(2), marginBottom: theme.spacing(4) }}
                 >
                   Nhìn lại những từ vừa học
-          </Typography>
+                </Typography>
                 {listAnswered.map((voca) => {
                   return (
                     <Button
@@ -315,8 +315,9 @@ export default function Remember_Id_Step4({ study, actionChangeStep }) {
                   );
                 })}
               </Container>
-            </CSSTransition>
-            <div hidden={!isFinish}
+            </CSSTransition> */}
+
+            {/* <div hidden={!isFinish}
               style={{
                 margin: `${theme.spacing(3)}px auto`,
                 position: "relative",
@@ -341,7 +342,7 @@ export default function Remember_Id_Step4({ study, actionChangeStep }) {
               <Typography variant="caption" color="textSecondary">
                 {Math.round((1 - countDown / timeCoutDown) * 100)}
               </Typography>
-            </div>
+            </div> */}
           </section>
         </BodyMaxWidth>
       </BodyTop>
