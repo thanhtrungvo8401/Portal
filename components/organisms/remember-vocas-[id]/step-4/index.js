@@ -22,6 +22,7 @@ import SentimentVeryDissatisfiedIcon from "@material-ui/icons/SentimentVeryDissa
 import Instruction_Step4 from "components/organisms/remember-vocas-[id]/step-4/instruction";
 import { BodyMaxWidth, BodyTop } from "components/atoms/body-wrapper";
 import TitleBody from "components/atoms/title-body";
+import ItemOutline from "components/atoms/item-outline";
 
 const generateMeaningOptions = (listStudy, listRandom) => {
   if (listRandom.length !== VOCA_RANDOM_LIMIT) return [];
@@ -170,25 +171,14 @@ export default function Remember_Id_Step4({ study, actionChangeStep }) {
                 onEntering={() => jpSpeak({ content: voca.voca })}
                 onExited={() => nextQandA()}
               >
-                <Paper
-                  elevation={3}
-                  style={{
-                    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
-                    marginTop: theme.spacing(2),
-                    textAlign: "center",
-                  }}
-                >
-                  <Typography
-                    style={{ textAlign: "center" }}
-                    variant="h5"
-                    color="primary"
-                  >
+                <ItemOutline>
+                  <Typography style={{ textAlign: "center", width: "100%" }} variant="h5" color="primary" component="label">
                     {voca.voca}
                   </Typography>
-                  <Typography variant="caption" color="textSecondary">
+                  <Typography style={{ textAlign: "center", width: "100%" }} variant="caption" color="textSecondary" component="label">
                     {voca.note}
                   </Typography>
-                </Paper>
+                </ItemOutline>
               </CSSTransition>
               {/* Select result */}
               <Autocomplete
