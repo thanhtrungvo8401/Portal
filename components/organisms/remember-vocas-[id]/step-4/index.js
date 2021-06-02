@@ -22,7 +22,9 @@ import SentimentVeryDissatisfiedIcon from "@material-ui/icons/SentimentVeryDissa
 import Instruction_Step4 from "components/organisms/remember-vocas-[id]/step-4/instruction";
 import { BodyMaxWidth, BodyTop } from "components/atoms/body-wrapper";
 import TitleBody from "components/atoms/title-body";
+import TitleItem from "components/atoms/title-item";
 import ItemOutline from "components/atoms/item-outline";
+import DeviderItem from "components/atoms/devider-item";
 
 const generateMeaningOptions = (listStudy, listRandom) => {
   if (listRandom.length !== VOCA_RANDOM_LIMIT) return [];
@@ -164,6 +166,7 @@ export default function Remember_Id_Step4({ study, actionChangeStep }) {
           <section className={`${classes.root}`}>
             <div hidden={isFinish} >
               {/* Voca*/}
+              <TitleItem>Từ vựng</TitleItem>
               <CSSTransition
                 classNames="Q-A-voca"
                 in={voca.isIn}
@@ -180,9 +183,10 @@ export default function Remember_Id_Step4({ study, actionChangeStep }) {
                   </Typography>
                 </ItemOutline>
               </CSSTransition>
+              <DeviderItem />
               {/* Select result */}
+              <TitleItem>Hãy nhập đáp án của bạn vào đây</TitleItem>
               <Autocomplete
-                style={{ marginTop: theme.spacing(2) }}
                 id="select-result"
                 freeSolo
                 options={meaningOptions}
@@ -192,6 +196,7 @@ export default function Remember_Id_Step4({ study, actionChangeStep }) {
                     label="Nghĩa của từ"
                     margin="normal"
                     variant="outlined"
+                    style={{ margin: 0 }}
                   />
                 )}
                 onChange={(e, value, reason) => setSelectMeaning(value)}
