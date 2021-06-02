@@ -20,6 +20,7 @@ import TitleItem from "components/atoms/title-item";
 import ItemOutline from "components/atoms/item-outline";
 import DeviderItem from "components/atoms/devider-item";
 import ListItemOutline from "components/atoms/list-item-outline";
+import FollowCatBtn from "components/molecules/follow-cat-btn";
 
 const generateMeaningOptions = (listStudy, listRandom) => {
   if (listRandom.length !== VOCA_RANDOM_LIMIT) return [];
@@ -64,6 +65,7 @@ export default function Remember_Id_Step4({ study, actionChangeStep }) {
   const [voca, setVoca] = React.useState({});
   const [selectMeaning, setSelectMeaning] = React.useState("");
   const [resultEmotion, setResultEmotion] = React.useState("");
+  const [readyToGo, setReadyToGo] = React.useState({ isIn: false })
   const meaningOptions = React.useMemo(() => {
     return generateMeaningOptions(list, study.randVocas);
   }, [study.randVocas]);
@@ -94,6 +96,10 @@ export default function Remember_Id_Step4({ study, actionChangeStep }) {
       }
     }
   }, [selectMeaning]);
+
+  React.useEffect(() => {
+    if (isFinish) setReadyToGo({ isIn: true })
+  }, [isFinish]);
 
   return (
     <React.Fragment>
@@ -197,6 +203,14 @@ export default function Remember_Id_Step4({ study, actionChangeStep }) {
               })}
           </List>
         </BodyMaxWidth>
+
+        <FollowCatBtn
+          hidden={!isFinish}
+          isIn={readyToGo.isIn}
+          onExited={() => { actionChangeStep(5) }}
+          onClick={() => { setReadyToGo({ isIn: false }) }}
+          description="Qua bước kế tiếp"
+        />
       </BodyTop>
     </React.Fragment >
   );
