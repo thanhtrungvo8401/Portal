@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Chip, makeStyles, Paper } from "@material-ui/core";
+import { Button, Chip, makeStyles } from "@material-ui/core";
 import ActionsBtnGroup from "components/atoms/action-btns-group";
 import PublishIcon from "@material-ui/icons/Publish";
 import Instruction from "components/organisms/remember-vocas-[id]/step-1/instruction";
@@ -108,7 +108,7 @@ export default function Remember_Id_Step1({ study, actionUpdate, actionChangeSte
 
           <ActionsBtnGroup center={true} >
             <Button
-              onClick={() => actionChangeStep(4)} // step = 2 XXX
+              onClick={() => actionChangeStep(5)} // step = 2 XXX
               className={styles.flashEffect}
               variant="contained"
               color="primary"

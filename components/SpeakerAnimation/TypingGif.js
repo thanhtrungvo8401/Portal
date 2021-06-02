@@ -20,8 +20,9 @@ const useStyles = ({ jumpHeight, spacing }) =>
     },
   }));
 
-export default function TypingGif({ size, jumpHeight, spacing }) {
+export default function TypingGif({ size, jumpHeight, spacing, isActive }) {
   const classes = useStyles({ jumpHeight, spacing })();
+  if (!isActive) return null;
   return (
     <Box component="div">
       {[0, 0.05, 0.1].map((el) => {
