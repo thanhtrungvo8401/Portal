@@ -17,10 +17,9 @@ import { cssAnimationHelper } from "utils/AnimationHelper";
 import { getRandom } from "utils/Helper";
 import { jpSpeak } from "utils/textToSpeech";
 import { constantApp } from "utils/Constant";
-import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
-import SentimentVeryDissatisfiedIcon from "@material-ui/icons/SentimentVeryDissatisfied";
 import Instruction_Step4 from "components/organisms/remember-vocas-[id]/step-4/instruction";
 import { BodyMaxWidth, BodyTop } from "components/atoms/body-wrapper";
+import CatAnnoucement from "components/molecules/cat-announcement";
 import TitleBody from "components/atoms/title-body";
 import TitleItem from "components/atoms/title-item";
 import ItemOutline from "components/atoms/item-outline";
@@ -57,35 +56,6 @@ const useStyles = makeStyles((theme) => ({
         transition: `all ${animationDuration}ms ease-in`,
       },
       false),
-    // result-emotion ENTER:
-    "& .result-emotion": {
-      opacity: 0,
-    },
-    "& .result-emotion-enter": {
-      opacity: 0,
-    },
-    "& .result-emotion-enter-active": {
-      opacity: 1,
-      transition: `all ${animationDuration}ms ease-in`,
-    },
-    "& .result-emotion-enter-done": {
-      opacity: 1,
-      transition: `all ${animationDuration}ms ease-in`,
-    },
-    "& .result-emotion-exit": {
-      opacity: 1,
-      transform: "translateY(0)",
-    },
-    "& .result-emotion-exit-active": {
-      opacity: 0,
-      transform: "translateY(50px)",
-      transition: `all ${animationDuration}ms ease-in`,
-    },
-    "& .result-emotion-exit-done": {
-      opacity: 0,
-      transform: "translateY(50px)",
-      transition: `all ${animationDuration}ms ease-in`,
-    },
     // FINISH STEP
     "& .finish-step": {
       position: "relative",
@@ -203,10 +173,9 @@ export default function Remember_Id_Step4({ study, actionChangeStep }) {
                 value={selectMeaning}
               />
               {/* Show Result */}
-              <CSSTransition
-                timeout={animationDuration}
-                classNames="result-emotion"
-                in={resultEmotion === RESULT_EMOTION.TRUE}
+              <CatAnnoucement
+                isActive={resultEmotion === RESULT_EMOTION.TRUE}
+                type={1}
                 onEntered={() => {
                   setTimeout(() => {
                     setResultEmotion("");
@@ -214,51 +183,17 @@ export default function Remember_Id_Step4({ study, actionChangeStep }) {
                     setVoca({ ...voca, isIn: false });
                   }, 2 * animationDuration);
                 }}
-              >
-                <div
-                  style={{ textAlign: "center", position: "absolute", width: "100%", left: 0, top: `calc(100% + 32px)` }}
-                  className="result-emotion"
-                >
-                  <InsertEmoticonIcon
-                    style={{
-                      color: theme.palette.success.main,
-                      fontSize: "5rem",
-                    }}
-                  />
-                  <Typography
-                    variant="h6"
-                    style={{ color: theme.palette.success.main }}
-                  >
-                    Đúng rồi !!!
-              </Typography>
-                </div>
-              </CSSTransition>
-              <CSSTransition
-                timeout={animationDuration}
-                classNames="result-emotion"
-                in={resultEmotion === RESULT_EMOTION.FALSE}
+              />
+              <CatAnnoucement
+                isActive={resultEmotion === RESULT_EMOTION.FALSE}
+                type={0}
                 onEntered={() => {
                   setTimeout(() => {
                     setResultEmotion("");
                     setSelectMeaning("");
                   }, 2 * animationDuration);
                 }}
-              >
-                <div
-                  style={{ textAlign: "center", position: "absolute", width: "100%", left: 0, top: `calc(100% + 32px)` }}
-                  className="result-emotion"
-                >
-                  <SentimentVeryDissatisfiedIcon
-                    style={{ color: theme.palette.error.main, fontSize: "5rem" }}
-                  />
-                  <Typography
-                    variant="h6"
-                    style={{ color: theme.palette.error.main }}
-                  >
-                    Thử lại xem nào !!!
-              </Typography>
-                </div>
-              </CSSTransition>
+              />
             </div>
             {/* <CSSTransition
               in={isFinish}
