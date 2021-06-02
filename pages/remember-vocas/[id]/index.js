@@ -6,6 +6,7 @@ import TitlePage from "components/atoms/title-page";
 import Remember_Id_Step1 from "components/organisms/remember-vocas-[id]/step-1";
 import Remember_Id_Step2 from "components/organisms/remember-vocas-[id]/step-2";
 import Remember_Id_Step3 from "components/organisms/remember-vocas-[id]/step-3";
+import Remember_Id_Step4 from "components/organisms/remember-vocas-[id]/step-4";
 import ChangeStepBg from "components/atoms/change-step-bg";
 import { serviceGetRememberById } from "service/rememberService";
 import { serviceFetVocaRandomByLevel, serviceGetVocasByCodes } from "service/vocaService";
@@ -76,6 +77,13 @@ function StudyRememberGroup_Id() {
 
       {study.step === 3 &&
         <Remember_Id_Step3
+          study={study}
+          actionChangeStep={setBgStep}
+        />
+      }
+
+      {study.step === 4 &&
+        <Remember_Id_Step4
           study={study}
           actionChangeStep={setBgStep}
         />
