@@ -16,7 +16,11 @@ const useStyles = makeStyles(theme => ({
 }))
 export default function ListItemOutline({ children, styles, onClick }) {
   const classes = useStyles();
-  return <ListItem style={styles} className={classes.root} onClick={onClick} >
+  return <ListItem
+    style={styles}
+    className={classes.root}
+    onClick={() => onClick && onClick()}
+  >
     {children}
   </ListItem>
 }

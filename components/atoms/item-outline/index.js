@@ -19,8 +19,11 @@ const useStyles = (center) => makeStyles(theme => ({
   }
 }))
 
-export default function ItemOutline({ center, children }) {
-  return <div className={useStyles(center)().root} >
+export default function ItemOutline({ center, children, onClick }) {
+  return <div
+    className={useStyles(center)().root}
+    onClick={() => onClick && onClick()}
+  >
     {children}
   </div>
 }

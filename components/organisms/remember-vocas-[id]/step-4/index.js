@@ -1,14 +1,12 @@
 import {
-  Button,
+  List,
   makeStyles,
-  Paper,
   TextField,
   Typography,
 } from "@material-ui/core";
 import { CSSTransition } from "react-transition-group";
 import { Autocomplete } from "@material-ui/lab";
 import React from "react";
-import theme from "components/theme";
 import { VOCA_RANDOM_LIMIT } from "utils/Constant";
 import { cssAnimationHelper } from "utils/AnimationHelper";
 import { getRandom, isEmptyArr } from "utils/Helper";
@@ -21,6 +19,7 @@ import TitleBody from "components/atoms/title-body";
 import TitleItem from "components/atoms/title-item";
 import ItemOutline from "components/atoms/item-outline";
 import DeviderItem from "components/atoms/devider-item";
+import ListItemOutline from "components/atoms/list-item-outline";
 
 const generateMeaningOptions = (listStudy, listRandom) => {
   if (listRandom.length !== VOCA_RANDOM_LIMIT) return [];
@@ -100,120 +99,103 @@ export default function Remember_Id_Step4({ study, actionChangeStep }) {
     <React.Fragment>
       <Instruction_Step4 />
       <BodyTop>
-        <TitleBody>Tìm nghĩa chính xác cho từ</TitleBody>
-        <BodyMaxWidth>
-          <section className={`${classes.root}`}>
-            {!isFinish &&
-              <React.Fragment>
-                <TitleItem> Từ vựng</TitleItem>
-                <CSSTransition
-                  classNames="Q-A-voca"
-                  in={voca.isIn}
-                  timeout={animationDuration}
-                  onEntering={() => jpSpeak({ content: voca.voca })}
-                  onExited={() => nextQandA()}
-                >
-                  <ItemOutline>
-                    <Typography style={{ textAlign: "center", width: "100%" }} variant="h5" color="primary" component="label">
+        <TitleBody>
+          {!isFinish ? 'Tìm nghĩa chính xác cho từ' : 'Hãy nhìn lại những từ bạn đã trả lời đúng'}
+        </TitleBody>
+        <BodyMaxWidth className={`${classes.root}`}>
+          {!isFinish &&
+            <React.Fragment>
+              <TitleItem> Từ vựng</TitleItem>
+              <CSSTransition
+                classNames="Q-A-voca"
+                in={voca.isIn}
+                timeout={animationDuration}
+                onEntering={() => jpSpeak({ content: voca.voca })}
+                onExited={() => nextQandA()}
+              >
+                <ItemOutline>
+                  <Typography style={{ textAlign: "center", width: "100%" }} variant="h5" color="primary" component="label">
+                    {voca.voca}
+                  </Typography>
+                  <Typography style={{ textAlign: "center", width: "100%" }} variant="caption" color="textSecondary" component="label">
+                    {voca.note}
+                  </Typography>
+                </ItemOutline>
+              </CSSTransition>
+              <DeviderItem />
+              <TitleItem>Hãy nhập đáp án của bạn vào đây</TitleItem>
+              <Autocomplete
+                id="select-result"
+                freeSolo
+                options={meaningOptions}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Nghĩa của từ"
+                    margin="normal"
+                    variant="outlined"
+                    style={{ margin: 0 }}
+                  />
+                )}
+                onChange={(e, value, reason) => setSelectMeaning(value)}
+                value={selectMeaning}
+              />
+            </React.Fragment>
+          }
+
+          <CatAnnoucement
+            isActive={resultEmotion === RESULT_EMOTION.TRUE}
+            type={1}
+            onEntered={() => {
+              setTimeout(() => {
+                setResultEmotion("");
+                setSelectMeaning("");
+                setVoca({ ...voca, isIn: false });
+              }, 2 * animationDuration);
+            }}
+          />
+          <CatAnnoucement
+            isActive={resultEmotion === RESULT_EMOTION.FALSE}
+            type={0}
+            onEntered={() => {
+              setTimeout(() => {
+                setResultEmotion("");
+                setSelectMeaning("");
+              }, 2 * animationDuration);
+            }}
+          />
+
+          <DeviderItem />
+          <TitleItem hidden={isEmptyArr(listRightAnswered)} >
+            {!isFinish ? 'Những câu trả lời đúng' : 'Click vào từ để nghe lại cách đoc'}
+          </TitleItem>
+          <List>
+            {listRightAnswered
+              .map((voca) => {
+                return (
+                  <ListItemOutline
+                    key={voca.id}
+                    onClick={() => jpSpeak({ content: voca.voca })}
+                    styles={{ display: "flex", justifyContent: "space-between", cursor: "pointer" }}
+                  >
+                    <Typography
+                      variant="subtitle1"
+                      style={{ fontWeight: "lighter" }}
+                      color="textSecondary"
+                    >
                       {voca.voca}
                     </Typography>
-                    <Typography style={{ textAlign: "center", width: "100%" }} variant="caption" color="textSecondary" component="label">
-                      {voca.note}
-                    </Typography>
-                  </ItemOutline>
-                </CSSTransition>
-                <DeviderItem />
-                <TitleItem>Hãy nhập đáp án của bạn vào đây</TitleItem>
-                <Autocomplete
-                  id="select-result"
-                  freeSolo
-                  options={meaningOptions}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Nghĩa của từ"
-                      margin="normal"
-                      variant="outlined"
-                      style={{ margin: 0 }}
-                    />
-                  )}
-                  onChange={(e, value, reason) => setSelectMeaning(value)}
-                  value={selectMeaning}
-                />
-              </React.Fragment>
-            }
-
-            <CatAnnoucement
-              isActive={resultEmotion === RESULT_EMOTION.TRUE}
-              type={1}
-              onEntered={() => {
-                setTimeout(() => {
-                  setResultEmotion("");
-                  setSelectMeaning("");
-                  setVoca({ ...voca, isIn: false });
-                }, 2 * animationDuration);
-              }}
-            />
-            <CatAnnoucement
-              isActive={resultEmotion === RESULT_EMOTION.FALSE}
-              type={0}
-              onEntered={() => {
-                setTimeout(() => {
-                  setResultEmotion("");
-                  setSelectMeaning("");
-                }, 2 * animationDuration);
-              }}
-            />
-
-            <React.Fragment>
-              <DeviderItem />
-              <TitleItem hidden={isEmptyArr(listRightAnswered)} >
-                Những câu trả lời đúng
-              </TitleItem>
-              {listRightAnswered
-                .map((voca) => {
-                  return (
-                    <Button
-                      key={voca.id}
-                      style={{
-                        display: "block",
-                        width: "100%",
-                        padding: 0,
-                        marginBottom: theme.spacing(1),
-                      }}
-                      onClick={() => jpSpeak({ content: voca.voca })}
+                    <Typography
+                      style={{ textTransform: "none" }}
+                      variant="subtitle1"
+                      color="textSecondary"
                     >
-                      <Paper
-                        style={{
-                          padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          backgroundColor: "transparent",
-                        }}
-                        className={`review-voca`}
-                        elevation={3}
-                      >
-                        <Typography
-                          variant="h5"
-                          style={{ fontWeight: "lighter" }}
-                          color="primary"
-                        >
-                          {voca.voca}
-                        </Typography>
-                        <Typography
-                          style={{ fontWeight: "lighter", textTransform: "none" }}
-                          variant="body1"
-                          color="textSecondary"
-                        >
-                          {voca.meaning}
-                        </Typography>
-                      </Paper>
-                    </Button>
-                  );
-                })}
-            </React.Fragment>
-          </section>
+                      {voca.meaning}
+                    </Typography>
+                  </ListItemOutline>
+                );
+              })}
+          </List>
         </BodyMaxWidth>
       </BodyTop>
     </React.Fragment >
