@@ -1,18 +1,17 @@
-import { Box, Button, makeStyles, Typography } from "@material-ui/core";
+import { Box, Button, makeStyles } from "@material-ui/core";
 import React from "react";
 import DragDropComponent from "components/molecules/drag-drop-component";
 import theme from "components/theme";
 import Instruction_Step3 from "components/organisms/remember-vocas-[id]/step-3/instruction";
 import ActionsBtnGroup from "components/atoms/action-btns-group";
 import { BodyMaxWidth, BodyTop } from "components/atoms/body-wrapper";
-import BgColorOpacity from "components/atoms/bg-color-opacity";
-import VerticalMoveCover from "components/atoms/vertical-move-cover";
 import TitleBody from "components/atoms/title-body";
+import CatAnnoucement from "components/molecules/cat-announcement";
 import { constantApp } from "utils/Constant";
 
 
 const useStyles = makeStyles(theme => ({
-  OneColumn: {
+  DragDropCover: {
     position: "relative",
     overflow: "hidden",
     width: '100%',
@@ -27,16 +26,6 @@ const useStyles = makeStyles(theme => ({
       borderTop: "none!important",
       marginBottom: theme.spacing(1),
     },
-  },
-  CatImg: {
-    display: "flex",
-    justifyContent: "center"
-  },
-  RightText: {
-    color: theme.palette.success.main, textAlign: "center"
-  },
-  WrongText: {
-    color: theme.palette.error.main, textAlign: "center"
   }
 }))
 
@@ -96,7 +85,7 @@ export default function Remember_Id_Step3({ study, actionChangeStep }) {
     <BodyTop>
       <TitleBody>Kéo thả từ vựng</TitleBody>
       <BodyMaxWidth>
-        <Box className={classes.OneColumn} >
+        <Box className={classes.DragDropCover} >
           {/* DragDropComponent */}
           <DragDropComponent
             items={items}
@@ -105,29 +94,15 @@ export default function Remember_Id_Step3({ study, actionChangeStep }) {
             listStyle={getListStyle}
           />
         </Box>
-        <VerticalMoveCover
+
+        <CatAnnoucement
+          type={result.isTrue ? 1 : 0}
           isActive={result.isChecked}
-          bg={<BgColorOpacity isActive={result.isChecked} color={constantApp.COLOR.WHITE} opacity={1} />}
-        >
-          <div className={classes.CatImg} >
-            <img
-              src={result.isTrue ? "/image/congrats-cat.png" : "/image/thinking-cat.png"}
-              alt={result.isTrue ? "congrats" : "try again"}
-            />
-          </div>
-
-          <Typography
-            className={result.isTrue ? classes.RightText : classes.WrongText} variant="h6" component="label" >
-            {result.isTrue ? 'Hoàn toàn chính xác' : 'Kết quả chưa chính xác'}
-          </Typography>
-
-          <ActionsBtnGroup center={true} >
-            <Button color="primary" variant="contained"
-              onClick={onNextOrTryAgainClick}>
-              {result.isTrue ? "Next" : "Thử lại"}
-            </Button>
-          </ActionsBtnGroup>
-        </VerticalMoveCover>
+          actions={<Button color="primary" variant="contained"
+            onClick={onNextOrTryAgainClick}>
+            {result.isTrue ? "Next" : "Thử lại"}
+          </Button>}
+        />
         <ActionsBtnGroup center={true} >
           <Button
             color="primary"
