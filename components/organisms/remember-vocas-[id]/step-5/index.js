@@ -1,9 +1,7 @@
 import React from "react";
-import { Box, Button, ButtonGroup, Divider, IconButton, InputBase, makeStyles, Paper, Typography } from "@material-ui/core";
+import { Button, ButtonGroup, Divider, IconButton, InputBase, makeStyles, Paper, Typography } from "@material-ui/core";
 import { CSSTransition } from "react-transition-group";
 import MicNoneIcon from "@material-ui/icons/MicNone";
-import CheckIcon from "@material-ui/icons/Check";
-import MoodBadIcon from "@material-ui/icons/MoodBad";
 import SubdirectoryArrowRightIcon from "@material-ui/icons/SubdirectoryArrowRight";
 import { constantApp } from "utils/Constant";
 
@@ -19,8 +17,10 @@ import Instruction_Step5 from "components/organisms/remember-vocas-[id]/step-5/i
 import ItemOutline from "components/atoms/item-outline";
 import { BodyMaxWidth, BodyTop } from "components/atoms/body-wrapper";
 import TitleBody from "components/atoms/title-body";
-import TitleItem from "components/atoms/title-item";
+// import TitleItem from "components/atoms/title-item";
 import DividerItem from "components/atoms/devider-item";
+import CatAnnoucement from "components/molecules/cat-announcement";
+import { cssAnimationHelper } from "utils/AnimationHelper";
 
 const CHECK_PRONOUCE = {
   TRUE: "TRUE",
@@ -31,32 +31,18 @@ const useStyles = makeStyles((theme) => {
   return {
     root: {
       position: "relative",
-      // Check Pronouce:
-      "& .check-pronouce": {
-        opacity: 0,
-      },
-      "& .check-pronouce-enter": {
-        opacity: 0,
-      },
-      "& .check-pronouce-enter-active": {
-        opacity: 1,
-        transition: `all ${animationDuration}ms ease-in`,
-      },
-      "& .check-pronouce-enter-done": {
-        opacity: 1,
-        transition: `all ${animationDuration}ms ease-in`,
-      },
-      "& .check-pronouce-exit": {
-        opacity: 1,
-      },
-      "& .check-pronouce-exit-active": {
-        opacity: 0,
-        transition: `all ${animationDuration}ms ease-in`,
-      },
-      "& .check-pronouce-exit-done": {
-        opacity: 0,
-        transition: `all ${animationDuration}ms ease-in`,
-      },
+      ...cssAnimationHelper('Q-A-meaning',
+        {
+          opacity: 0,
+          transform: "translateX(-100%)",
+          transition: `all ${animationDuration}ms ease-in`,
+        },
+        {
+          opacity: 1,
+          transform: "translateX(0)",
+          transition: `all ${animationDuration}ms ease-in`,
+        },
+        false),
     },
     MicroIcon: {
       textAlign: "center",
@@ -76,19 +62,15 @@ const useStyles = makeStyles((theme) => {
     },
     ResultGroup: {
       textAlign: "center"
-    }
+    },
   };
 });
 
 export default function Step5StudyUI({ study, actionUpdateBg }) {
   const classes = useStyles();
-  const [list, setList] = React.useState(
-    study.vocas.map((el) => ({ ...el, count: 0 }))
-  );
-  // const [list, setList] = React.useState([...study.vocas]);
-  // const [listAnswered, setListAnswered] = React.useState([]);
-  // const [listRightAnswered, setListRightAnswer] = React.useState([]);
-  
+  const [list, setList] = React.useState([...study.vocas]);
+  const [listAnswered, setListAnswered] = React.useState([]);
+
   const [voca, setVoca] = React.useState({});
   const [resultRecog, setResultRecog] = React.useState("");
   const [resultConvert, setResultConvert] = React.useState("");
@@ -99,6 +81,7 @@ export default function Step5StudyUI({ study, actionUpdateBg }) {
   const [isUseKeyBoard, setIsUseKeyBoard] = React.useState(false);
   const [isShowHint, setIsShowHint] = React.useState(false);
   const [isFinish, setIsFinish] = React.useState(false);
+
 
   // event
   const onStart = (e) => {
@@ -134,15 +117,11 @@ export default function Step5StudyUI({ study, actionUpdateBg }) {
   const nextVoca = () => {
     if (list.length > 0) {
       const randVoca = list[getRandom(0, list.length - 1)];
-      setVoca(randVoca);
-      randVoca.count++;
-      if (randVoca.count < 1) { // so lan doc:
-        setList(list.map((el) => (el.id === randVoca.id ? randVoca : el)));
-      } else {
-        setList(list.filter((el) => el.id !== randVoca.id));
-      }
+      if (voca.id) setListAnswered([...listAnswered, voca]);
+      setVoca({ ...randVoca, isIn: true });
+      setList(list.filter(v => v.id !== randVoca.id));
     } else {
-      setVoca({});
+      setListAnswered([...listAnswered, voca]);
       setIsFinish(true);
     }
   };
@@ -151,19 +130,26 @@ export default function Step5StudyUI({ study, actionUpdateBg }) {
     setResultConvert("");
     setIsListening(false);
     setIsSpeaking(false);
-    setErrorMsg("");
+    // setErrorMsg("");
     setCheckPronouce("");
     setIsUseKeyBoard(false);
   };
+  const onShowHint = () => {
+    resetData();
+    setIsShowHint(true);
+    jpSpeak({ content: voca.voca })
+      .then((result) => setIsShowHint(false))
+      .catch((err) => { console.log(err); setIsShowHint(false); });
+  }
 
-  React.useEffect(() => {
-    nextVoca();
-  }, []);
+  React.useEffect(() => nextVoca(), []);
+
   React.useEffect(() => {
     jpConverter(resultRecog)
       .then((result) => setResultConvert(result))
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
   }, [resultRecog]);
+
   React.useEffect(() => {
     if (resultConvert) {
       jpConverter(voca.voca)
@@ -177,13 +163,7 @@ export default function Step5StudyUI({ study, actionUpdateBg }) {
         .catch((err) => console.log(err));
     }
   }, [resultConvert]);
-  React.useEffect(() => {
-    if (isFinish) {
-      setTimeout(() => {
-        actionUpdateBg({ step: 6 });
-      }, animationDuration * 4);
-    }
-  }, [isFinish]);
+
   return (
     <React.Fragment>
       <Instruction_Step5 />
@@ -194,13 +174,13 @@ export default function Step5StudyUI({ study, actionUpdateBg }) {
             {/* not finish group */}
             <div hidden={isFinish}>
               {/* Vietnamese Meaning */}
-              {/* <CSSTransition classNames="Q-A-meaning" > */}
+              <CSSTransition classNames="Q-A-meaning" in={voca.isIn} timeout={animationDuration} onExited={nextVoca}>
                 <ItemOutline center={true} >
                   <Typography variant="h6" component="label" color="primary">
                     {voca.meaning}
                   </Typography>
                 </ItemOutline>
-              {/* </CSSTransition> */}
+              </CSSTransition>
               {/* Micro Icon */}
               <DividerItem />
               <div className={classes.MicroIcon} >
@@ -227,103 +207,23 @@ export default function Step5StudyUI({ study, actionUpdateBg }) {
                   {errorMsg}
                 </Typography>
               </div>
-              {/* check Pronouce */}
-              <CSSTransition
-                classNames="check-pronouce"
-                timeout={2 * animationDuration}
-                in={checkPronouce === CHECK_PRONOUCE.TRUE}
-                onEntered={() => {
-                  setCheckPronouce("");
-                }}
-                onExited={() => {
-                  resetData();
-                  nextVoca();
-                }}
-              >
-                <Box
-                  className="check-pronouce"
-                  style={{
-                    position: "absolute",
-                    top: `calc(100% + 16px)`,
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    textAlign: "center",
-                  }}
-                >
-                  <CheckIcon
-                    style={{ fontSize: "7rem", color: theme.palette.success.main }}
-                  />
-                  <Typography
-                    style={{ color: theme.palette.success.main }}
-                    variant="h6"
-                  >
-                    Chúc mừng bạn !!!
-              </Typography>
-                </Box>
-              </CSSTransition>
-              <CSSTransition
-                classNames="check-pronouce"
-                timeout={2 * animationDuration}
-                in={checkPronouce === CHECK_PRONOUCE.FALSE}
-              >
-                <Box
-                  className="check-pronouce"
-                  style={{
-                    position: "absolute",
-                    top: `calc(100% + 16px)`,
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    textAlign: "center",
-                  }}
-                >
-                  <MoodBadIcon
-                    style={{ fontSize: "7rem", color: theme.palette.error.main }}
-                  />
-                  <ButtonGroup
-                    color="primary"
-                    aria-label="outlined primary button group"
-                    variant="text"
-                  >
-                    <Button
-                      onClick={() => {
-                        resetData();
-                        startRecognition();
-                      }}
-                    >
-                      Thử lại
-                </Button>
-                    <Button
-                      onClick={() => {
-                        resetData();
-                        setIsUseKeyBoard(true);
-                      }}
-                    >
-                      Dùng bàn phím
-                </Button>
-                    <Button
-                      onClick={() => {
-                        resetData();
-                        setIsShowHint(true);
-                        setList(
-                          list.map((el) =>
-                            el.id !== voca.id ? el : { ...el, count: el.count - 1 }
-                          )
-                        );
-                        jpSpeak({ content: voca.voca })
-                          .then((result) => {
-                            setIsShowHint(false);
-                          })
-                          .catch((err) => {
-                            console.log(err);
-                            setIsShowHint(false);
-                          });
-                      }}
-                    >
-                      Gợi ý
-                </Button>
+              {/* RESULT */}
+              <CatAnnoucement
+                isActive={checkPronouce === CHECK_PRONOUCE.TRUE}
+                type={1}
+                onEntered={() => setTimeout(() => { resetData(); setVoca({ ...voca, isIn: false }) }, 2 * animationDuration)}
+              />
+              <CatAnnoucement
+                isActive={checkPronouce === CHECK_PRONOUCE.FALSE}
+                type={0}
+                actions={
+                  <ButtonGroup color="primary" aria-label="outlined primary button group" variant="text">
+                    <Button onClick={() => { resetData(); startRecognition(); }}>Thử lại</Button>
+                    <Button onClick={() => { resetData(); setIsUseKeyBoard(true); }}>Dùng bàn phím</Button>
+                    <Button onClick={onShowHint}>Gợi ý</Button>
                   </ButtonGroup>
-                </Box>
-              </CSSTransition>
+                }
+              />
               {/* KeyBoard Input */}
               {isUseKeyBoard && (
                 <Paper
