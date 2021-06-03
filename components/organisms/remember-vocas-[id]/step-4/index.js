@@ -59,8 +59,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Remember_Id_Step4({ study, actionChangeStep }) {
   const classes = useStyles();
   const [list, setList] = React.useState([...study.vocas]);
-  const [listAnswered, setListAnswered] = React.useState([]);
-  const [listRightAnswered, setListRightAnswer] = React.useState([]);
+  const [listAnswered, setListAnswer] = React.useState([]);
   const [isFinish, setIsFinish] = React.useState(false);
   const [voca, setVoca] = React.useState({});
   const [selectMeaning, setSelectMeaning] = React.useState("");
@@ -73,12 +72,11 @@ export default function Remember_Id_Step4({ study, actionChangeStep }) {
     if (list.length > 0) {
       const random = getRandom(0, list.length - 1);
       const vocaQA = { ...list[random], isIn: true };
-      setListAnswered([...listAnswered, vocaQA]);
-      if (voca.id) setListRightAnswer([...listRightAnswered, voca]);
+      if (voca.id) setListAnswer([...listAnswered, voca]);
       setVoca(vocaQA);
       setList(list.filter((v) => v.id !== vocaQA.id));
     } else {
-      setListRightAnswer([...listRightAnswered, voca]);
+      setListAnswer([...listAnswered, voca]);
       setIsFinish(true);
     }
   };
@@ -173,11 +171,11 @@ export default function Remember_Id_Step4({ study, actionChangeStep }) {
             />
 
             <DeviderItem />
-            <TitleItem hidden={isEmptyArr(listRightAnswered)} >
+            <TitleItem hidden={isEmptyArr(listAnswered)} >
               {!isFinish ? 'Những câu trả lời đúng' : 'Click vào từ để nghe lại cách đoc'}
             </TitleItem>
             <List>
-              {listRightAnswered
+              {listAnswered
                 .map((voca) => {
                   return (
                     <ListItemOutline
