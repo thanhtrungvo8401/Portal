@@ -17,7 +17,6 @@ import Instruction_Step5 from "components/organisms/remember-vocas-[id]/step-5/i
 import ItemOutline from "components/atoms/item-outline";
 import { BodyMaxWidth, BodyTop } from "components/atoms/body-wrapper";
 import TitleBody from "components/atoms/title-body";
-// import TitleItem from "components/atoms/title-item";
 import DividerItem from "components/atoms/devider-item";
 import CatAnnoucement from "components/molecules/cat-announcement";
 import VocaMeaningSummaryListItem from "components/molecules/voca-meaning-summary-list-item";
@@ -79,6 +78,9 @@ const useStyles = makeStyles((theme) => {
       "& .icon-btn": {
         padding: 10
       }
+    },
+    Hint: {
+      textAlign: "center"
     }
   };
 });
@@ -125,9 +127,11 @@ export default function Step5StudyUI({ study, actionUpdateBg }) {
       const { error, message } = e;
       console.log("onError", error, message);
       if (error === "no-speech") {
+        resetData("not-reset-err-msg");
         setErrorMsg("Meomeo-kun không thể nghe được âm thanh từ bạn !!!");
+      } else {
+        resetData();
       }
-      resetData();
     }
   };
   // ---
@@ -142,12 +146,12 @@ export default function Step5StudyUI({ study, actionUpdateBg }) {
       setIsFinish(true);
     }
   };
-  const resetData = () => {
+  const resetData = (notResetErrMsg) => {
     setResultRecog("");
     setResultConvert("");
     setIsListening(false);
     setIsSpeaking(false);
-    // setErrorMsg("");
+    !notResetErrMsg && setErrorMsg("");
     setCheckPronouce("");
     setIsUseKeyBoard(false);
   };
@@ -155,7 +159,7 @@ export default function Step5StudyUI({ study, actionUpdateBg }) {
     resetData();
     setIsShowHint(true);
     jpSpeak({ content: voca.voca })
-      .then((result) => setIsShowHint(false))
+      .then((result) => setTimeout(() => setIsShowHint(false), animationDuration))
       .catch((err) => { console.log(err); setIsShowHint(false); });
   }
   const onSubmitInput = (e) => {
@@ -163,6 +167,7 @@ export default function Step5StudyUI({ study, actionUpdateBg }) {
     const input = document.getElementById("result-from-key-board");
     setResultRecog(input.value);
     setIsUseKeyBoard(false);
+    input.value = '';
   }
 
   React.useEffect(() => nextVoca(), []);
@@ -209,6 +214,7 @@ export default function Step5StudyUI({ study, actionUpdateBg }) {
               </CSSTransition>
               {/* Micro Icon */}
               <DividerItem />
+              <DividerItem />
               <div className={classes.MicroIcon} >
                 <IconButton onClick={startRecognition} style={{ position: "relative" }} disabled={Boolean(resultRecog)} >
                   <ListeningAnimation isActive={isListening}>
@@ -221,9 +227,10 @@ export default function Step5StudyUI({ study, actionUpdateBg }) {
               </div>
               {/* Result */}
               <DividerItem />
+              <DividerItem />
               <div className={classes.ResultGroup} >
                 <TypingGif isActive={isSpeaking} size="1rem" jumpHeight="10px" spacing="5px" />
-                <Typography hidden={!resultRecog} variant="h3" component="label" style={{ display: "block" }} color="textSecondary">
+                <Typography hidden={!resultRecog} variant="h4" component="label" style={{ display: "block" }} color="textSecondary">
                   {resultRecog}
                 </Typography>
                 <Typography hidden={!resultConvert} variant="h6" component="label" style={{ display: "block" }} color="textSecondary">
@@ -240,29 +247,32 @@ export default function Step5StudyUI({ study, actionUpdateBg }) {
               <CatAnnoucement isActive={checkPronouce === CHECK_PRONOUCE.FALSE} type={0}
                 actions={
                   <ButtonGroup color="primary" aria-label="outlined primary button group" variant="text">
-                    <Button onClick={() => { resetData(); startRecognition(); }}>Thử lại</Button>
+                    <Button onClick={() => { resetData(); setTimeout(() => startRecognition(), animationDuration); }}>Thử lại</Button>
                     <Button onClick={() => { resetData(); setIsUseKeyBoard(true); }}>Dùng bàn phím</Button>
                     <Button onClick={onShowHint}>Gợi ý</Button>
                   </ButtonGroup>
                 }
               />
               {/* KeyBoard Input */}
-              <Paper component="form"
-                hidden={!isUseKeyBoard}
-                onSubmit={onSubmitInput}
-                className={classes.Keyboard}
-              >
-                <InputBase placeholder="Điền vào kết quả của bạn"
-                  inputProps={{ "aria-label": "japanese vocabulary" }}
-                  className="input" id="result-from-key-board"
-                />
-                <DividerItem isHasLine={true} isVertical={true} />
-                <IconButton aria-label="enter-result" className="icon-btn" onClick={onSubmitInput}>
-                  <SubdirectoryArrowRightIcon color="primary" />
-                </IconButton>
-              </Paper>
+              <DividerItem />
+              <div hidden={!isUseKeyBoard}>
+                <Paper component="form"
+                  onSubmit={onSubmitInput}
+                  className={classes.Keyboard}
+                >
+                  <InputBase placeholder="Điền vào kết quả của bạn"
+                    inputProps={{ "aria-label": "japanese vocabulary" }}
+                    className="input" id="result-from-key-board"
+                  />
+                  <DividerItem isHasLine={true} isVertical={true} />
+                  <IconButton aria-label="enter-result" className="icon-btn" onClick={onSubmitInput}>
+                    <SubdirectoryArrowRightIcon color="primary" />
+                  </IconButton>
+                </Paper>
+              </div>
               {/* Show Hint */}
-              <Typography hidden={!isShowHint} variant="h4" color="textSecondary">
+              <DividerItem />
+              <Typography className={classes.Hint} hidden={!isShowHint} variant="h4" color="textSecondary">
                 {voca.voca}
               </Typography>
             </div>
