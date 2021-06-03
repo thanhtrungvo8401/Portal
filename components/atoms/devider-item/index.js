@@ -9,12 +9,19 @@ const useStyles = makeStyles(theme => ({
   div: {
     height: `${theme.spacing(2)}px`,
     width: "100%"
+  },
+  dividerVertical: {
+    height: 32,
+    margin: "0 4px",
+    transform: "translateY(6px)",
   }
-}))
+}));
 
-export default function DividerItem({ isHasLine }) {
+export default function DividerItem({ isHasLine, isVertical = false }) {
   const classes = useStyles();
   return isHasLine
-    ? <Divider className={classes.divider} />
+    ? !isVertical
+      ? <Divider className={classes.divider} />
+      : <Divider className={classes.dividerVertical} orientation="vertical" />
     : <div className={classes.div} ></div>
 }

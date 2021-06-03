@@ -40,6 +40,7 @@ const speakHelper = (content, lang, speed) => {
 };
 
 export const jpSpeak = ({ content, speed = 1 }) => {
+  console.log("Content", content);
   return speakHelper(content, "ja-JP", speed);
 };
 

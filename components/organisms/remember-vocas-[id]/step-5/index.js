@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, ButtonGroup, Divider, IconButton, InputBase, makeStyles, Paper, Typography } from "@material-ui/core";
+import { Button, ButtonGroup, IconButton, InputBase, List, makeStyles, Paper, Typography } from "@material-ui/core";
 import { CSSTransition } from "react-transition-group";
 import MicNoneIcon from "@material-ui/icons/MicNone";
 import SubdirectoryArrowRightIcon from "@material-ui/icons/SubdirectoryArrowRight";
@@ -20,7 +20,9 @@ import TitleBody from "components/atoms/title-body";
 // import TitleItem from "components/atoms/title-item";
 import DividerItem from "components/atoms/devider-item";
 import CatAnnoucement from "components/molecules/cat-announcement";
+import VocaMeaningSummaryListItem from "components/molecules/voca-meaning-summary-list-item";
 import { cssAnimationHelper } from "utils/AnimationHelper";
+import TitleItem from "components/atoms/title-item";
 
 const CHECK_PRONOUCE = {
   TRUE: "TRUE",
@@ -63,6 +65,21 @@ const useStyles = makeStyles((theme) => {
     ResultGroup: {
       textAlign: "center"
     },
+    Keyboard: {
+      padding: "2px 4px",
+      display: "flex",
+      alignContent: "center",
+      maxWidth: "350px",
+      width: "100%",
+      margin: "0 auto",
+      "& .input": {
+        marginLeft: theme.spacing(2),
+        flex: 1,
+      },
+      "& .icon-btn": {
+        padding: 10
+      }
+    }
   };
 });
 
@@ -141,6 +158,12 @@ export default function Step5StudyUI({ study, actionUpdateBg }) {
       .then((result) => setIsShowHint(false))
       .catch((err) => { console.log(err); setIsShowHint(false); });
   }
+  const onSubmitInput = (e) => {
+    e.preventDefault && e.preventDefault();
+    const input = document.getElementById("result-from-key-board");
+    setResultRecog(input.value);
+    setIsUseKeyBoard(false);
+  }
 
   React.useEffect(() => nextVoca(), []);
 
@@ -168,7 +191,10 @@ export default function Step5StudyUI({ study, actionUpdateBg }) {
     <React.Fragment>
       <Instruction_Step5 />
       <BodyTop>
-        <TitleBody>Nhìn nghĩa tiếng việt phát âm từ</TitleBody>
+        <TitleBody>
+          {!isFinish ? 'Nhìn nghĩa tiếng việt phát âm từ' : 'Hãy nhìn lại những từ bạn đã trả lời đúng'}
+        </TitleBody>
+
         <BodyMaxWidth>
           <section className={classes.root}>
             {/* not finish group */}
@@ -208,14 +234,10 @@ export default function Step5StudyUI({ study, actionUpdateBg }) {
                 </Typography>
               </div>
               {/* RESULT */}
-              <CatAnnoucement
-                isActive={checkPronouce === CHECK_PRONOUCE.TRUE}
-                type={1}
+              <CatAnnoucement isActive={checkPronouce === CHECK_PRONOUCE.TRUE} type={1}
                 onEntered={() => setTimeout(() => { resetData(); setVoca({ ...voca, isIn: false }) }, 2 * animationDuration)}
               />
-              <CatAnnoucement
-                isActive={checkPronouce === CHECK_PRONOUCE.FALSE}
-                type={0}
+              <CatAnnoucement isActive={checkPronouce === CHECK_PRONOUCE.FALSE} type={0}
                 actions={
                   <ButtonGroup color="primary" aria-label="outlined primary button group" variant="text">
                     <Button onClick={() => { resetData(); startRecognition(); }}>Thử lại</Button>
@@ -225,69 +247,34 @@ export default function Step5StudyUI({ study, actionUpdateBg }) {
                 }
               />
               {/* KeyBoard Input */}
-              {isUseKeyBoard && (
-                <Paper
-                  component="form"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    const input = document.getElementById("result-from-key-board");
-                    setResultRecog(input.value);
-                    setIsUseKeyBoard(false);
-                  }}
-                  style={{
-                    padding: "2px 4px",
-                    display: "flex",
-                    alignContent: "center",
-                    maxWidth: "350px",
-                    width: "100%",
-                    margin: "0 auto",
-                  }}
-                >
-                  <InputBase
-                    placeholder="Điền vào kết quả của bạn"
-                    inputProps={{ "aria-label": "japanese vocabulary" }}
-                    style={{
-                      marginLeft: theme.spacing(2),
-                      flex: 1,
-                    }}
-                    id="result-from-key-board"
-                  />
-                  <Divider
-                    style={{
-                      height: 32,
-                      margin: "0 4px",
-                      transform: "translateY(6px)",
-                    }}
-                    orientation="vertical"
-                  />
-                  <IconButton
-                    aria-label="enter-result"
-                    color="primary"
-                    style={{ padding: 10 }}
-                    onClick={() => {
-                      const input = document.getElementById(
-                        "result-from-key-board"
-                      );
-                      setResultRecog(input.value);
-                      setIsUseKeyBoard(false);
-                    }}
-                  >
-                    <SubdirectoryArrowRightIcon />
-                  </IconButton>
-                </Paper>
-              )}
+              <Paper component="form"
+                hidden={!isUseKeyBoard}
+                onSubmit={onSubmitInput}
+                className={classes.Keyboard}
+              >
+                <InputBase placeholder="Điền vào kết quả của bạn"
+                  inputProps={{ "aria-label": "japanese vocabulary" }}
+                  className="input" id="result-from-key-board"
+                />
+                <DividerItem isHasLine={true} isVertical={true} />
+                <IconButton aria-label="enter-result" className="icon-btn" onClick={onSubmitInput}>
+                  <SubdirectoryArrowRightIcon color="primary" />
+                </IconButton>
+              </Paper>
               {/* Show Hint */}
-              {isShowHint && (
-                <Typography variant="h4" color="textSecondary">
-                  {voca.voca}
-                </Typography>
-              )}
+              <Typography hidden={!isShowHint} variant="h4" color="textSecondary">
+                {voca.voca}
+              </Typography>
             </div>
 
-
-            {isFinish && (
-              <Typography>FINISH</Typography>
-            )}
+            <div hidden={!isFinish} >
+              <TitleItem>Click vào từ để nghe lại cách đoc</TitleItem>
+              <List>
+                {listAnswered.map(voca => (
+                  <VocaMeaningSummaryListItem voca={voca} key={voca.id} onClick={() => jpSpeak({ content: voca.voca })} />
+                ))}
+              </List>
+            </div>
           </section>
         </BodyMaxWidth>
       </BodyTop>
