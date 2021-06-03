@@ -22,6 +22,7 @@ import CatAnnoucement from "components/molecules/cat-announcement";
 import VocaMeaningSummaryListItem from "components/molecules/voca-meaning-summary-list-item";
 import { cssAnimationHelper } from "utils/AnimationHelper";
 import TitleItem from "components/atoms/title-item";
+import FollowCatBtn from "components/molecules/follow-cat-btn";
 
 const CHECK_PRONOUCE = {
   TRUE: "TRUE",
@@ -85,7 +86,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function Step5StudyUI({ study, actionUpdateBg }) {
+export default function Step5StudyUI({ study, actionChangeStep }) {
   const classes = useStyles();
   const [list, setList] = React.useState([...study.vocas]);
   const [listAnswered, setListAnswered] = React.useState([]);
@@ -100,6 +101,7 @@ export default function Step5StudyUI({ study, actionUpdateBg }) {
   const [isUseKeyBoard, setIsUseKeyBoard] = React.useState(false);
   const [isShowHint, setIsShowHint] = React.useState(false);
   const [isFinish, setIsFinish] = React.useState(false);
+  const [readyToGo, setReadyToGo] = React.useState({ isIn: false })
 
 
   // event
@@ -191,6 +193,8 @@ export default function Step5StudyUI({ study, actionUpdateBg }) {
         .catch((err) => console.log(err));
     }
   }, [resultConvert]);
+
+  React.useEffect(() => setReadyToGo({ isIn: true }), [isFinish]);
 
   return (
     <React.Fragment>
@@ -284,6 +288,13 @@ export default function Step5StudyUI({ study, actionUpdateBg }) {
                   <VocaMeaningSummaryListItem voca={voca} key={voca.id} onClick={() => jpSpeak({ content: voca.voca })} />
                 ))}
               </List>
+              <FollowCatBtn
+                hidden={!isFinish}
+                isIn={readyToGo.isIn}
+                onExited={() => { actionChangeStep(6) }}
+                onClick={() => { setReadyToGo({ isIn: false }) }}
+                description="Qua bước kế tiếp"
+              />
             </div>
           </section>
         </BodyMaxWidth>
