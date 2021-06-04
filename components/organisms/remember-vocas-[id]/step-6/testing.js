@@ -13,6 +13,7 @@ import { constantApp } from "utils/Constant";
 import { getRandom, isMobile, randomList } from "utils/Helper";
 import FollowCatBtn from "components/molecules/follow-cat-btn";
 import ActionsBtnGroup from "components/atoms/action-btns-group";
+import { jpSpeak } from "utils/textToSpeech";
 
 
 const useStyles = makeStyles(theme => ({
@@ -38,6 +39,42 @@ export const QA_TYPE = {
   JP: "JP",
   MEANING: "MEANING",
   SOUND: "SOUND"
+}
+
+function RenderQuestion({ voca }) {
+  switch (voca.type) {
+    case QA_TYPE.JP:
+      return <ItemOutline center={true} >
+        <Typography variant="h6" color="textSecondary">
+          {voca["voca"]}
+        </Typography>
+      </ItemOutline>
+    case QA_TYPE.MEANING:
+      return <ItemOutline center={true}>
+        <Typography variant="h6" color="textSecondary">
+          {voca["meaning"]}
+        </Typography>
+      </ItemOutline>
+    case QA_TYPE.SOUND:
+      return <ItemOutline center={true}>
+        <HearingIcon color="primary" style={{ fontSize: '2rem' }} />
+      </ItemOutline>
+    default:
+      return null;
+  }
+}
+
+const renderTitleQA = (voca) => {
+  switch (voca.type) {
+    case QA_TYPE.JP:
+      return { exercise: "Đọc từ vựng tiếng Nhật", answer: "Chọn nghĩa tiếng Việt" }
+    case QA_TYPE.MEANING:
+      return { exercise: "Đọc nghĩa tiếng Việt", answer: "Chọn từ vựng tiếng Nhật" }
+    case QA_TYPE.SOUND:
+      return { exercise: "Nghe từ vựng tiếng Nhật", answer: "Chọn nghĩa tiếng Việt" }
+    default:
+      return {};
+  }
 }
 
 export default function Testing({ study, onFinishTesting }) {
@@ -69,7 +106,9 @@ export default function Testing({ study, onFinishTesting }) {
       onFinishTesting && onFinishTesting();
     }
   }
-  const afterRenderNewQA = () => { }
+  const afterRenderNewQA = () => {
+    if (QandA.type === QA_TYPE.SOUND) jpSpeak({ content: QandA.voca }).then().catch(err => log(err));
+  }
   const selectAnswer = (value) => {
     setQandA({ ...QandA, result: value })
   }
@@ -92,10 +131,10 @@ export default function Testing({ study, onFinishTesting }) {
 
   return <section className={classes.root} >
     <BodyTop>
-      <TitleBody>Bước cuối: Tổng kiểm tra</TitleBody>
+      <TitleBody>Bài kiểm tra cuối buổi học</TitleBody>
       <BodyMaxWidth>
         <div className={classes.root} hidden={!readyForTesting.ready} >
-          <TitleItem>Đề bài</TitleItem>
+          <TitleItem>{renderTitleQA(QandA).exercise}</TitleItem>
           <CSSTransition
             classNames="Q-and-A" in={QandA.isIn}
             onEntered={afterRenderNewQA}
@@ -107,7 +146,7 @@ export default function Testing({ study, onFinishTesting }) {
 
           <DividerItem />
 
-          <TitleItem>Chọn đáp án</TitleItem>
+          <TitleItem>{renderTitleQA(QandA).answer}</TitleItem>
           <GridGroupsItem
             items={
               answerOptions.map((option, index) => ({
@@ -143,27 +182,4 @@ export default function Testing({ study, onFinishTesting }) {
       </BodyMaxWidth>
     </BodyTop>
   </section>
-}
-
-function RenderQuestion({ voca }) {
-  switch (voca.type) {
-    case QA_TYPE.JP:
-      return <ItemOutline center={true} >
-        <Typography variant="h6" color="textSecondary">
-          {voca["voca"]}
-        </Typography>
-      </ItemOutline>
-    case QA_TYPE.MEANING:
-      return <ItemOutline center={true}>
-        <Typography variant="h6" color="textSecondary">
-          {voca["meaning"]}
-        </Typography>
-      </ItemOutline>
-    case QA_TYPE.SOUND:
-      return <ItemOutline center={true}>
-        <HearingIcon color="primary" style={{ fontSize: '2rem' }} />
-      </ItemOutline>
-    default:
-      return null;
-  }
 }
