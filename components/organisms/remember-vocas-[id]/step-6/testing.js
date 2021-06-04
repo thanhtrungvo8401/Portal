@@ -3,11 +3,15 @@ import { BodyMaxWidth, BodyTop } from "components/atoms/body-wrapper";
 import TitleBody from "components/atoms/title-body";
 import TitleItem from "components/atoms/title-item";
 import DividerItem from "components/atoms/devider-item";
+import GridGroupsItem from "components/molecules/grid-groups-items";
+import ItemOutline from "components/atoms/item-outline";
 import { makeStyles, Typography } from "@material-ui/core";
 import { CSSTransition } from "react-transition-group";
 import { cssAnimationHelper } from "utils/AnimationHelper";
 import { constantApp } from "utils/Constant";
-import { randomList } from "utils/Helper";
+import { getRandom, randomList } from "utils/Helper";
+import FollowCatBtn from "components/molecules/follow-cat-btn";
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -27,6 +31,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TOTAL_ANSWER_OPTIONS = 8;
+const LONG_STRING_LENGTH = 10;
 export const QA_TYPE = {
   JP: "JP",
   MEANING: "MEANING",
@@ -39,6 +44,7 @@ export default function Testing({ study, onFinishTesting }) {
   const [listQAndA, setListQAndA] = React.useState([]);
   const [answerOptions, setAnswerOptions] = React.useState([]);
   const [position, setPosition] = React.useState(-1);
+  const [readyForTesting, setReadyForTesting] = React.useState({ isIn: false, ready: false })
 
   const generateNewQAndA = () => {
     if (position !== listQAndA.length - 1) {
@@ -54,7 +60,7 @@ export default function Testing({ study, onFinishTesting }) {
         }
       }
       // ---
-      setQandA({ ...nextQandA, isIn: true });
+      setQandA({ ...nextQandA, isIn: true, result: '' });
       setAnswerOptions(Array.from(answerSet).sort());
       setPosition(position + 1);
     } else {
@@ -62,6 +68,9 @@ export default function Testing({ study, onFinishTesting }) {
     }
   }
   const startQAndA = () => { }
+  const selectAnswer = (value) => {
+    setQandA({ ...QandA, result: value })
+  }
   const finishAndSaveQAndAResult = () => { }
 
   // 00: generate list Q&A:
@@ -71,45 +80,75 @@ export default function Testing({ study, onFinishTesting }) {
     const list3 = [...study.vocas].map(el => ({ ...el, type: QA_TYPE.SOUND, isExact: false, time: 0 }));
     const listQAndA_Random = randomList([...list1, ...list2, ...list3]);
     setListQAndA(listQAndA_Random);
+    setReadyForTesting({ ...readyForTesting, isIn: true })
   }, []);
 
   return <section className={classes.root} >
     <BodyTop>
       <TitleBody>Bước cuối: Tổng kiểm tra</TitleBody>
       <BodyMaxWidth>
-        <TitleItem>Đề bài</TitleItem>
-        <CSSTransition
-          classNames="Q-and-A" in={QandA.isIn}
-          onEntered={startQAndA}
-          onExited={finishAndSaveQAndAResult}
-          timeout={constantApp.animationDuration}
-        >
-          <RenderQuestion voca={QandA} />
-        </CSSTransition>
+        <div className={classes.root} hidden={!readyForTesting.ready} >
+          <TitleItem>Đề bài</TitleItem>
+          <CSSTransition
+            classNames="Q-and-A" in={QandA.isIn}
+            onEntered={startQAndA}
+            onExited={finishAndSaveQAndAResult}
+            timeout={constantApp.animationDuration}
+          >
+            <RenderQuestion voca={QandA} />
+          </CSSTransition>
 
-        <DividerItem />
+          <DividerItem />
 
-        <TitleItem>Chọn đáp án</TitleItem>
-        {/* Render Options */}
+          <TitleItem>Chọn đáp án</TitleItem>
+          <GridGroupsItem
+            items={
+              answerOptions.map((option, index) => ({
+                el: <ItemOutline
+                  center={true}
+                  styles={{ cursor: "pointer" }}
+                  isActive={option === QandA.result}
+                  onClick={() => selectAnswer(option)}
+                >
+                  {option}
+                </ItemOutline>,
+                isLarge: option.length >= LONG_STRING_LENGTH
+              }))
+            }
+          />
+        </div>
+        <FollowCatBtn
+          hidden={readyForTesting.ready}
+          isIn={readyForTesting.isIn}
+          onExited={() => { setReadyForTesting({ ...readyForTesting, ready: true }); generateNewQAndA(); }}
+          onClick={() => { setReadyForTesting({ ...readyForTesting, isIn: false }) }}
+          description="Tôi đã sẵn sàng"
+        />
       </BodyMaxWidth>
     </BodyTop>
   </section>
 }
 
 function RenderQuestion({ voca }) {
-  switch (QAndA.type) {
+  switch (voca.type) {
     case QA_TYPE.JP:
-      return <Typography variant="h6" color="primary">
-        {voca["voca"]}
-      </Typography>
+      return <ItemOutline center={true} >
+        <Typography variant="h6" color="primary">
+          {voca["voca"]}
+        </Typography>
+      </ItemOutline>
     case QA_TYPE.MEANING:
-      return <Typography variant="h6" color="textSecondary">
-        {voca["meaning"]}
-      </Typography>
+      return <ItemOutline center={true}>
+        <Typography variant="h6" color="textSecondary">
+          {voca["meaning"]}
+        </Typography>
+      </ItemOutline>
     case QA_TYPE.SOUND:
-      return <Typography variant="h6" color="textSecondary">
-        Lắng nghe đề bài <HearingIcon color="primary" />
-      </Typography>
+      return <ItemOutline center={true}>
+        <Typography variant="h6" color="textSecondary">
+          Lắng nghe đề bài <HearingIcon color="primary" />
+        </Typography>
+      </ItemOutline>
     default:
       return null;
   }

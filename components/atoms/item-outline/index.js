@@ -16,12 +16,18 @@ const useStyles = (center) => makeStyles(theme => ({
       boxShadow: constantApp.BOXSHADOW,
       border: `1px solid ${theme.palette.primary.main}`,
     },
+    "&.active-item": {
+      backgroundColor: theme.palette.primary.main,
+      color: "white",
+      transition: `all ${constantApp.animationDuration}ms ease-in`,
+    }
   }
 }))
 
-export default function ItemOutline({ center, children, onClick }) {
+export default function ItemOutline({ center, children, onClick, styles, isActive }) {
   return <div
-    className={useStyles(center)().root}
+    style={styles}
+    className={`${useStyles(center)().root} ${isActive ? 'active-item' : null}`}
     onClick={() => onClick && onClick()}
   >
     {children}
