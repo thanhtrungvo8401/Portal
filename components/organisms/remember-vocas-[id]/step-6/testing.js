@@ -10,7 +10,7 @@ import { Button, makeStyles, Typography } from "@material-ui/core";
 import { CSSTransition } from "react-transition-group";
 import { cssAnimationHelper } from "utils/AnimationHelper";
 import { constantApp } from "utils/Constant";
-import { getRandom, randomList } from "utils/Helper";
+import { getRandom, isMobile, randomList } from "utils/Helper";
 import FollowCatBtn from "components/molecules/follow-cat-btn";
 import ActionsBtnGroup from "components/atoms/action-btns-group";
 
@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TOTAL_ANSWER_OPTIONS = 8;
-const LONG_STRING_LENGTH = 18;
+const LONG_STRING_LENGTH = isMobile ? 15 : 25;
 export const QA_TYPE = {
   JP: "JP",
   MEANING: "MEANING",

@@ -85,3 +85,5 @@ export const getRandom = (min, max) => Math.round(Math.random() * (max - min));
 export const isEmptyArr = array => array.length === 0;
 
 export const getWidth = (!isServer && window.innerWidth) || 0;
+
+export const isMobile = !isServer && window.innerWidth < 960;
