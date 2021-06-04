@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function Step5StudyUI({ study, actionChangeStep }) {
+export default function Remember_Id_Step5({ study, actionChangeStep }) {
   const classes = useStyles();
   const [list, setList] = React.useState([...study.vocas]);
   const [listAnswered, setListAnswered] = React.useState([]);
