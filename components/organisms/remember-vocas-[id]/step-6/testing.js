@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TOTAL_ANSWER_OPTIONS = 8;
-const LONG_STRING_LENGTH = isMobile ? 15 : 25;
+const LONG_STRING_LENGTH = isMobile ? 15 : 30;
 export const QA_TYPE = {
   JP: "JP",
   MEANING: "MEANING",
@@ -73,7 +73,12 @@ export default function Testing({ study, onFinishTesting }) {
   const selectAnswer = (value) => {
     setQandA({ ...QandA, result: value })
   }
-  const finishAnswerOneQA = () => { }
+  const finishAnswerOneQA = () => {
+    const newList = [...listQAndA];
+    newList[position] = QandA;
+    setListQAndA(newList);
+    generateNewQAndA();
+  }
 
   // 00: generate list Q&A:
   React.useEffect(() => {
@@ -122,7 +127,9 @@ export default function Testing({ study, onFinishTesting }) {
           <DividerItem />
 
           <ActionsBtnGroup center >
-            <Button color="primary" variant="contained" disabled={!QandA.result} >Tiếp theo</Button>
+            <Button color="primary" variant="contained" disabled={!QandA.result} onClick={() => setQandA({ ...QandA, isIn: false })}>
+              Tiếp theo
+            </Button>
           </ActionsBtnGroup>
 
         </div>
@@ -142,7 +149,7 @@ function RenderQuestion({ voca }) {
   switch (voca.type) {
     case QA_TYPE.JP:
       return <ItemOutline center={true} >
-        <Typography variant="h6" color="primary">
+        <Typography variant="h6" color="textSecondary">
           {voca["voca"]}
         </Typography>
       </ItemOutline>
@@ -154,9 +161,7 @@ function RenderQuestion({ voca }) {
       </ItemOutline>
     case QA_TYPE.SOUND:
       return <ItemOutline center={true}>
-        <Typography variant="h6" color="textSecondary">
-          Lắng nghe đề bài <HearingIcon color="primary" />
-        </Typography>
+        <HearingIcon color="primary" style={{ fontSize: '2rem' }} />
       </ItemOutline>
     default:
       return null;
