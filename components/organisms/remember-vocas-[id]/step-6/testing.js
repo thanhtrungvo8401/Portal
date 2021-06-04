@@ -5,12 +5,14 @@ import TitleItem from "components/atoms/title-item";
 import DividerItem from "components/atoms/devider-item";
 import GridGroupsItem from "components/molecules/grid-groups-items";
 import ItemOutline from "components/atoms/item-outline";
-import { makeStyles, Typography } from "@material-ui/core";
+import HearingIcon from '@material-ui/icons/Hearing';
+import { Button, makeStyles, Typography } from "@material-ui/core";
 import { CSSTransition } from "react-transition-group";
 import { cssAnimationHelper } from "utils/AnimationHelper";
 import { constantApp } from "utils/Constant";
 import { getRandom, randomList } from "utils/Helper";
 import FollowCatBtn from "components/molecules/follow-cat-btn";
+import ActionsBtnGroup from "components/atoms/action-btns-group";
 
 
 const useStyles = makeStyles(theme => ({
@@ -31,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TOTAL_ANSWER_OPTIONS = 8;
-const LONG_STRING_LENGTH = 10;
+const LONG_STRING_LENGTH = 18;
 export const QA_TYPE = {
   JP: "JP",
   MEANING: "MEANING",
@@ -61,17 +63,17 @@ export default function Testing({ study, onFinishTesting }) {
       }
       // ---
       setQandA({ ...nextQandA, isIn: true, result: '' });
-      setAnswerOptions(Array.from(answerSet).sort());
+      setAnswerOptions(Array.from(answerSet).sort((a, b) => b.length - a.length));
       setPosition(position + 1);
     } else {
       onFinishTesting && onFinishTesting();
     }
   }
-  const startQAndA = () => { }
+  const afterRenderNewQA = () => { }
   const selectAnswer = (value) => {
     setQandA({ ...QandA, result: value })
   }
-  const finishAndSaveQAndAResult = () => { }
+  const finishAnswerOneQA = () => { }
 
   // 00: generate list Q&A:
   React.useEffect(() => {
@@ -91,8 +93,8 @@ export default function Testing({ study, onFinishTesting }) {
           <TitleItem>Đề bài</TitleItem>
           <CSSTransition
             classNames="Q-and-A" in={QandA.isIn}
-            onEntered={startQAndA}
-            onExited={finishAndSaveQAndAResult}
+            onEntered={afterRenderNewQA}
+            onExited={finishAnswerOneQA}
             timeout={constantApp.animationDuration}
           >
             <RenderQuestion voca={QandA} />
@@ -116,6 +118,13 @@ export default function Testing({ study, onFinishTesting }) {
               }))
             }
           />
+
+          <DividerItem />
+
+          <ActionsBtnGroup center >
+            <Button color="primary" variant="contained" disabled={!QandA.result} >Tiếp theo</Button>
+          </ActionsBtnGroup>
+
         </div>
         <FollowCatBtn
           hidden={readyForTesting.ready}
