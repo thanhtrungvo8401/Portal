@@ -14,6 +14,7 @@ import { getRandom, isMobile, randomList } from "utils/Helper";
 import FollowCatBtn from "components/molecules/follow-cat-btn";
 import ActionsBtnGroup from "components/atoms/action-btns-group";
 import { jpSpeak } from "utils/textToSpeech";
+import { QA_TYPE } from "components/organisms/remember-vocas-[id]/step-6";
 
 
 const useStyles = makeStyles(theme => ({
@@ -35,11 +36,6 @@ const useStyles = makeStyles(theme => ({
 
 const TOTAL_ANSWER_OPTIONS = 8;
 const LONG_STRING_LENGTH = isMobile ? 15 : 30;
-export const QA_TYPE = {
-  JP: "JP",
-  MEANING: "MEANING",
-  SOUND: "SOUND"
-}
 
 function RenderQuestion({ voca }) {
   switch (voca.type) {

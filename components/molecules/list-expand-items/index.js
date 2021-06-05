@@ -13,7 +13,7 @@ export default function ListExpandItem({ items = [] }) {
   }
   return <div className={useStyles().root} >
     {items.map((item, i) => {
-      return <Accordion expanded={expanded === i} onChange={handleChange(i)} >
+      return <Accordion key={i} expanded={expanded === i} onChange={handleChange(i)} >
         <AccordionSummary aria-controls={`panel${i}bh-content`} id={`panel${i}bh-header`} >
           {item.summaryEl}
         </AccordionSummary>

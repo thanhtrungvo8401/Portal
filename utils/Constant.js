@@ -69,3 +69,7 @@ export const VOCA_RANDOM_LIMIT = 30;
 export const UNDER_LINE = "_";
 
 export const COMMA = ",";
+
+export const SECONDS_TO_MILISECONDS = 1000;
+
+export const TO_PERCENT = 100;
