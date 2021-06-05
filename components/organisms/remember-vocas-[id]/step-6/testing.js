@@ -77,7 +77,7 @@ const renderTitleQA = (voca) => {
   }
 }
 
-export default function Testing({ study, onFinishTesting }) {
+export default function Testing({ study, onFinishTesting, hidden }) {
   const classes = useStyles();
   const [QandA, setQandA] = React.useState({});
   const [listQAndA, setListQAndA] = React.useState([]);
@@ -87,7 +87,7 @@ export default function Testing({ study, onFinishTesting }) {
   const [startTime, setStartTime] = React.useState(Date.now());
 
   const generateNewQAndA = () => {
-    if (position !== listQAndA.length - 1) {
+    if (position + 1 < listQAndA.length) {
       const nextQandA = listQAndA[position + 1];
       // generate answer-options from randVocas of study:
       const key = (nextQandA.type === QA_TYPE.MEANING) ? "voca" : "meaning";
@@ -103,8 +103,6 @@ export default function Testing({ study, onFinishTesting }) {
       setQandA({ ...nextQandA, isIn: true, result: '', time: 0 });
       setAnswerOptions(Array.from(answerSet).sort((a, b) => b.length - a.length));
       setPosition(position + 1);
-    } else {
-      onFinishTesting && onFinishTesting();
     }
   }
   const afterRenderNewQA = () => {
@@ -123,8 +121,12 @@ export default function Testing({ study, onFinishTesting }) {
   const finishAnswerOneQA = () => {
     const newList = [...listQAndA];
     newList[position] = { ...QandA, time: Date.now() - startTime - constantApp.animationDuration };
-    setListQAndA(newList);
-    generateNewQAndA();
+    if (position + 1 < listQAndA.length) {
+      setListQAndA(newList);
+      generateNewQAndA();
+    } else {
+      onFinishTesting(newList);
+    }
   }
 
   // 00: generate list Q&A:
@@ -137,7 +139,7 @@ export default function Testing({ study, onFinishTesting }) {
     setReadyForTesting({ ...readyForTesting, isIn: true })
   }, []);
 
-  return <section className={classes.root} >
+  return <section className={classes.root} hidden={hidden}>
     <BodyTop>
       <TitleBody>Bài kiểm tra cuối buổi học</TitleBody>
       <BodyMaxWidth>
