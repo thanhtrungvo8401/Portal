@@ -100,7 +100,7 @@ export default function Testing({ study, onFinishTesting }) {
         }
       }
       // ---
-      setQandA({ ...nextQandA, isIn: true, result: '', time: 0 });
+      setQandA({ ...nextQandA, isIn: true });
       setAnswerOptions(Array.from(answerSet).sort((a, b) => b.length - a.length));
       setPosition(position + 1);
     }
@@ -131,9 +131,9 @@ export default function Testing({ study, onFinishTesting }) {
 
   // 00: generate list Q&A:
   React.useEffect(() => {
-    const list1 = [...study.vocas].map(el => ({ ...el, type: QA_TYPE.JP, isExact: false, time: 0 }));
-    const list2 = [...study.vocas].map(el => ({ ...el, type: QA_TYPE.MEANING, isExact: false, time: 0 }));
-    const list3 = [...study.vocas].map(el => ({ ...el, type: QA_TYPE.SOUND, isExact: false, time: 0 }));
+    const list1 = [...study.vocas].map(el => ({ ...el, type: QA_TYPE.JP }));
+    const list2 = [...study.vocas].map(el => ({ ...el, type: QA_TYPE.MEANING }));
+    const list3 = [...study.vocas].map(el => ({ ...el, type: QA_TYPE.SOUND }));
     const listQAndA_Random = randomList([...list1, ...list2, ...list3]);
     setListQAndA(listQAndA_Random);
     setReadyForTesting({ ...readyForTesting, isIn: true })
