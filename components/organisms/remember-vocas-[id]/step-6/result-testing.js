@@ -73,7 +73,7 @@ const getDisplay = type => {
 }
 
 
-export default function ResultsTesting({ results, time, exactNum }) {
+export default function ResultsTesting({ results, time, exactNum, onFinish, onTryAgain }) {
   const classes = useStyles();
   const total = results.length * QUESTION_PER_VOCA;
   const listFields = [QA_TYPE.JP, QA_TYPE.MEANING, QA_TYPE.SOUND];
@@ -119,8 +119,8 @@ export default function ResultsTesting({ results, time, exactNum }) {
         </Typography>
         <ActionsBtnGroup center={true} >
           <ButtonGroup color="primary" >
-            <Button>Thử lại</Button>
-            <Button>Kết thúc</Button>
+            <Button onClick={onTryAgain} >Thử lại</Button>
+            <Button onClick={onFinish} >Kết thúc</Button>
           </ButtonGroup>
         </ActionsBtnGroup>
         <DividerItem />

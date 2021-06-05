@@ -58,6 +58,15 @@ export default function Remember_Id_Step6({ study, actionChangeStep }) {
     setTime(_time);
     setExactNum(_exactNum);
   }
+  const handleResetStep6 = () => {
+    setIsFinish(false);
+    setResults([]);
+    setTime(0);
+    setExactNum(0);
+  }
+  const handleGoToStep7 = () => {
+    actionChangeStep(7);
+  }
   return <React.Fragment>
     <Instruction_Step6 />
     {!isFinish && <Testing
@@ -68,6 +77,8 @@ export default function Remember_Id_Step6({ study, actionChangeStep }) {
       results={results}
       exactNum={exactNum}
       time={time}
+      onTryAgain={handleResetStep6}
+      onFinish={handleGoToStep7}
     />}
   </React.Fragment>
 }
