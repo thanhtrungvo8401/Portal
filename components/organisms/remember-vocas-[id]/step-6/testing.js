@@ -83,7 +83,8 @@ export default function Testing({ study, onFinishTesting }) {
   const [listQAndA, setListQAndA] = React.useState([]);
   const [answerOptions, setAnswerOptions] = React.useState([]);
   const [position, setPosition] = React.useState(-1);
-  const [readyForTesting, setReadyForTesting] = React.useState({ isIn: false, ready: false })
+  const [readyForTesting, setReadyForTesting] = React.useState({ isIn: false, ready: false });
+  const [startTime, setStartTime] = React.useState(Date.now());
 
   const generateNewQAndA = () => {
     if (position !== listQAndA.length - 1) {
@@ -99,7 +100,7 @@ export default function Testing({ study, onFinishTesting }) {
         }
       }
       // ---
-      setQandA({ ...nextQandA, isIn: true, result: '' });
+      setQandA({ ...nextQandA, isIn: true, result: '', time: 0 });
       setAnswerOptions(Array.from(answerSet).sort((a, b) => b.length - a.length));
       setPosition(position + 1);
     } else {
@@ -107,14 +108,21 @@ export default function Testing({ study, onFinishTesting }) {
     }
   }
   const afterRenderNewQA = () => {
-    if (QandA.type === QA_TYPE.SOUND) jpSpeak({ content: QandA.voca }).then().catch(err => log(err));
+    if (QandA.type === QA_TYPE.SOUND) {
+      jpSpeak({ content: QandA.voca })
+        .then(res => setStartTime(Date.now()))
+        .catch(err => log(err));
+    }
+    else {
+      setStartTime(Date.now());
+    }
   }
   const selectAnswer = (value) => {
     setQandA({ ...QandA, result: value })
   }
   const finishAnswerOneQA = () => {
     const newList = [...listQAndA];
-    newList[position] = QandA;
+    newList[position] = { ...QandA, time: Date.now() - startTime - constantApp.animationDuration };
     setListQAndA(newList);
     generateNewQAndA();
   }
