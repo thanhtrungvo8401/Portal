@@ -23,7 +23,7 @@ const getCompairField = type => {
 }
 
 export default function Remember_Id_Step6({ study, actionChangeStep }) {
-  const { vocas } = study;
+  const listVocas = [...study.vocas].sort((a, b) => a.id > b.id ? 1 : -1)
   const [isFinish, setIsFinish] = React.useState(false);
   const [results, setResults] = React.useState([]);
   const [time, setTime] = React.useState(0);
@@ -31,29 +31,34 @@ export default function Remember_Id_Step6({ study, actionChangeStep }) {
 
   const handleFinishTesting = (values) => {
     setIsFinish(true);
+    // sort values result base on id:
+    // to we can sure that: 
+    // the "values" (3n, 3n+1, 3n+2) the same id with "listVocas" (n);
     values.sort((a, b) => a.id > b.id ? 1 : -1);
     let _time = 0;
     let _exactNum = 0;
     const _results =
-      vocas.map(v => {
-        // from {id, JP, ...}, {id, SOUND, ...}, {id, MEANING, ...}
-        // => {id, voca, meaning, JP:_, SOUND: _, MEANING: _}
-        const { id, voca, meaning } = v;
-        const obj = { id, voca, meaning };
-        for (let i = 0; i < QUESTION_PER_VOCA; i++) {
-          const _voca = values[i];
-          obj[_voca.type] = {
-            result: _voca.result,
-            isExact: _voca.result === _voca[getCompairField(_voca.type)]
-          };
-          if (_voca.result === _voca[getCompairField(_voca.type)]) {
-            _exactNum += 1;
+      listVocas
+        .map(v => {
+          // from {id, JP, ...}, {id, SOUND, ...}, {id, MEANING, ...}
+          // => {id, voca, meaning, JP:_, SOUND: _, MEANING: _}
+          const { id, voca, meaning } = v;
+          const obj = { id, voca, meaning };
+
+          for (let i = 0; i < QUESTION_PER_VOCA; i++) {
+            const _voca = values[i];
+            obj[_voca.type] = {
+              result: _voca.result,
+              isExact: _voca.result === obj[getCompairField(_voca.type)]
+            };
+            if (_voca.result === obj[getCompairField(_voca.type)]) {
+              _exactNum += 1;
+            }
+            _time += _voca.time
           }
-          _time += _voca.time
-        }
-        values.splice(0, 3);
-        return obj;
-      })
+          values.splice(0, 3);
+          return obj;
+        })
     setResults(_results);
     setTime(_time);
     setExactNum(_exactNum);
