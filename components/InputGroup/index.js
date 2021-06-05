@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => {
       width: "100%", // Fix IE 11 issue.
       marginTop: theme.spacing(3),
     },
+    formInModal: {
+      width: "100%", // Fix IE 11 issue.
+    },
     submit: {
       margin: theme.spacing(3, 0, 2),
     },
@@ -33,6 +36,7 @@ function InputGroup(props) {
     object,
     submitTitle,
     ERROR,
+    isUsedInModal,
   } = props;
   const { handleOnChange, handleOnSubmit } = props;
   const [INTERACT, setINTERACT] = useState({});
@@ -47,15 +51,30 @@ function InputGroup(props) {
     });
     handleOnChange(e);
   };
+  const handleOnBlur = (e) => {
+    setINTERACT({
+      ...INTERACT,
+      [e.target.name]: true,
+    });
+  };
 
   // Life Cycle Hook:
   useEffect(() => {
     // reset Error when new InputGroup is Loaded! => Change page!
     dispatch(actionResetError());
+    return () => {
+      setINTERACT({});
+    };
   }, []);
 
   return (
-    <form className={classes.form} onSubmit={handleOnSubmit}>
+    <form
+      className={!isUsedInModal ? classes.form : classes.formInModal}
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleOnSubmit();
+      }}
+    >
       {inputFields.map((key) => {
         const value = object[key] || "";
         const isShowRequiredMsg =
@@ -69,7 +88,7 @@ function InputGroup(props) {
             return (
               <React.Fragment key={key}>
                 <TextField
-                  color="secondary"
+                  color="primary"
                   variant="outlined"
                   margin="normal"
                   fullWidth
@@ -80,6 +99,7 @@ function InputGroup(props) {
                   label={inputLabels[key]}
                   required={inputRequired.includes(key)}
                   type={isPassword ? "password" : "text"}
+                  onBlur={(e) => handleOnBlur(e)}
                 />
                 {isShowRequiredMsg && (
                   <Alert severity="error">

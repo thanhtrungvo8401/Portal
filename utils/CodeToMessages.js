@@ -22,13 +22,17 @@ const codeToMessagesObject = {
   NOT_DELETE_YOURSELF: "You are deleting yourself, It's prohibited",
   NOT_BELOW_8_LETTER: "Valid data must have length greater than 8!",
   INVALID_TOKEN: "You must login to access this resources!",
-  OVER_RANGE_EXCEPTION: "Your SetVocas-Num is reached the limit, please contact the admin, or remove to create a new one!!!",
+  OVER_RANGE_EXCEPTION:
+    "Your SetVocas-Num is reached the limit, please contact the admin, or remove to create a new one!!!",
   CREATE_VOCA_SUCCESS: "Created vocabulary successfully!",
   UPDATE_VOCA_SUCCESS: "Updated vocabulary successfully!",
   DELETE_VOCA_SUCCESS: "Deleted Vocabulary successfully",
   CREATE_SET_VOCAS_SUCCESS: "Created vocabularies group successfully",
   UPDATE_SET_VOCAS_SUCCESS: "Updated vocabularies group successfully",
-  DELETE_SET_VOCAS_SUCCESS: "Deleted vocabularies group successfully"
+  DELETE_SET_VOCAS_SUCCESS: "Deleted vocabularies group successfully",
+  CREATE_REMEMBER_SUCCESS: "CREATE_REMEMBER_SUCCESS",
+  UPDATE_REMEMBER_SUCCESS: "UPDATE_REMEMBER_SUCCESS",
+  DELETE_REMEMBER_SUCCESS: "DELETE_REMEMBER_SUCCESS",
 };
 
 export const constCODE = {
@@ -42,7 +46,10 @@ export const constCODE = {
   DELETE_VOCA_SUCCESS: "DELETE_VOCA_SUCCESS",
   CREATE_SET_VOCAS_SUCCESS: "CREATE_SET_VOCAS_SUCCESS",
   DELETE_SET_VOCAS_SUCCESS: "DELETE_SET_VOCAS_SUCCESS",
-  UPDATE_SET_VOCAS_SUCCESS: "UPDATE_SET_VOCAS_SUCCESS"
+  UPDATE_SET_VOCAS_SUCCESS: "UPDATE_SET_VOCAS_SUCCESS",
+  CREATE_REMEMBER_SUCCESS: "CREATE_REMEMBER_SUCCESS",
+  UPDATE_REMEMBER_SUCCESS: "UPDATE_REMEMBER_SUCCESS",
+  DELETE_REMEMBER_SUCCESS: "DELETE_REMEMBER_SUCCESS",
 };
 
 export const codeToMessages = (code, isUsedForField) => {

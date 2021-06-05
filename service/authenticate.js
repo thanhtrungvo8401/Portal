@@ -5,21 +5,18 @@ import { enpoint_auth } from "../utils/API_URL";
 import { actionSetError } from "../redux/actions/errorActions";
 import { toast } from "../components/Toast";
 import { codeToMessages, constCODE } from "../utils/CodeToMessages";
-import {
-  actionCloseLogin,
-  actionSetIsLogined,
-  actionSetUserLogin,
-} from "../redux/actions/loginActions";
+import { actionSetIsLogined } from "../redux/actions/loginActions";
 import { removeCookie, setCookie } from "../utils/Cookies";
 import { appUrl } from "../utils/APP_URL";
 import { actionSetUser } from "../redux/actions/userActions";
+import { serviceGetProfile } from "./userService";
 
 export const serviceSignUp = (user) => {
   return (dispatch) => {
     API.post(enpoint_auth.sign_up(), user)
       .then((res) => {
         toast.success(codeToMessages(constCODE.SIGN_UP_SUCCESS));
-        navigate(appUrl.studyRoom());
+        navigate(appUrl.studyRoom().url);
       })
       .catch((err) => {
         const object = handleErrorAPI(err, "toast");
@@ -35,9 +32,7 @@ export const serviceLogin = (user) => {
         const data = res.data;
         const jwt = data.token;
         setCookie(constAuth.JWT, jwt, 30);
-        dispatch(actionSetIsLogined(true));
-        dispatch(actionCloseLogin());
-        dispatch(actionSetUserLogin({}));
+        dispatch(serviceGetProfile());
       })
       .catch((err) => {
         const object = handleErrorAPI(err, "toast");
@@ -56,7 +51,7 @@ export const serviceLogout = (actionAfterLogout) => {
         dispatch(actionSetIsLogined(false));
         dispatch(actionSetUser({}));
         removeCookie(constAuth.JWT);
-        navigate(appUrl.dashboard());
+        navigate(appUrl.dashboard().url);
       })
       .catch((err) => {
         const object = handleErrorAPI(err, "toast");

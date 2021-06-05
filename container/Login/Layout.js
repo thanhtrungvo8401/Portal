@@ -16,6 +16,7 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { useSelector } from "react-redux";
 import InputGroup, { validForm } from "../../components/InputGroup";
 import MyLink from "../../components/MyLink";
+import theme from "../../components/theme";
 const useStyles = makeStyles((theme) => ({
   zindex500: {
     zIndex: "500!important",
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
       },
     },
     "& .MuiPaper-root.MuiDialog-paper.MuiDialog-paperScrollPaper": {
-      backgroundColor: theme.palette.primary.main,
+      // backgroundColor: theme.palette.info.light,
     },
   },
   closeBtn: {
@@ -56,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
+    backgroundColor: theme.palette.info.main,
   },
 }));
 const inputFields = ["email", "password"];
@@ -75,17 +77,18 @@ function LoginLayout(props) {
   const isValidSubmit = validForm(user, inputRequired, ERROR);
   return (
     <Dialog
+      style={{ zIndex: 500 }}
       open={showLogin}
       // onClose={props.handleCloseLogin}
       className={`${classes.dialog} ${isLoading ? classes.zindex500 : ""}`}
     >
       <IconButton className={classes.closeBtn} onClick={props.handleCloseLogin}>
-        <HighlightOffIcon color="secondary" fontSize="large" />
+        <HighlightOffIcon color="primary" fontSize="large" />
       </IconButton>
       <Container className={classes.container} component="main" maxWidth="xs">
         <DialogContent>
           <Avatar className={classes.avatar}>
-            <VpnKeyOutlinedIcon color="primary" />
+            <VpnKeyOutlinedIcon style={{ color: theme.palette.white.main }} />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in

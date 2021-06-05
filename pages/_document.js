@@ -1,12 +1,12 @@
 import { ServerStyleSheets } from "@material-ui/core/styles";
 import React from "react";
 import Document, { Head, Html, Main, NextScript } from "next/document";
-import theme from "../components/theme";
+import theme from "components/theme";
 
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang="en" style={{height: "100%"}}>
+      <Html lang="en" style={{ height: "100%" }}>
         <Head>
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
@@ -18,10 +18,10 @@ export default class MyDocument extends Document {
             rel="shortcut icon"
             href="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
           />
-          <script src="/js/wanakana.min.js"></script>
-          {/* https://wanakana.com/docs/global.html#toHiragana */}
+          <script src="/library/kuroshiro.min.js"></script>
+          <script src="/library/kuroshiro-analyzer-kuromoji.min.js"></script>
         </Head>
-        <body id="next-body" style={{height: "100%"}}>
+        <body id="next-body" style={{ height: "100%" }}>
           <Main />
           <NextScript />
         </body>

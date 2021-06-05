@@ -1,6 +1,7 @@
 import { Avatar, Container, makeStyles, Typography } from "@material-ui/core";
 import GroupAddOutlinedIcon from "@material-ui/icons/GroupAddOutlined";
 import InputGroup from "../../components/InputGroup";
+import theme from "../../components/theme";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -10,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
+    backgroundColor: theme.palette.info.main,
   },
 }));
 
@@ -35,7 +37,7 @@ function SignUpLayout(props) {
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <GroupAddOutlinedIcon color="primary" />
+          <GroupAddOutlinedIcon style={{ color: theme.palette.white.main }} />
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign up

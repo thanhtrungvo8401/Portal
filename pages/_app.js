@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import "../styles/animation.scss";
-import "../styles/common.scss";
+import "styles/animation.scss";
+import "styles/common.scss";
 import { Provider } from "react-redux";
-import { useStore } from "../redux/store";
+import { useStore } from "redux/store";
 import Head from "next/head";
 import { ThemeProvider } from "@material-ui/core/styles";
-import theme from "../components/theme";
+import theme from "components/theme";
 import { CssBaseline } from "@material-ui/core";
 
 export default function MyApp({ Component, pageProps }) {

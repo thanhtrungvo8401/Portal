@@ -12,60 +12,10 @@ import PropTypes from "prop-types";
 import MyLink from "../MyLink";
 import { navigate, removeGmailTag } from "../../utils/Helper";
 import { appUrl } from "../../utils/APP_URL";
+import theme from "../theme";
 
 export const useStyles = makeStyles((theme) => {
   return {
-    grow: {
-      flexGrow: 1,
-    },
-    title: {
-      display: "none",
-      cursor: "pointer",
-      marginRight: theme.spacing(4),
-      [theme.breakpoints.up("sm")]: {
-        display: "block",
-      },
-    },
-    navItem: {
-      cursor: "pointer",
-      marginRight: theme.spacing(2),
-    },
-    sectionDesktop: {
-      display: "none",
-      [theme.breakpoints.up("md")]: {
-        display: "flex",
-      },
-    },
-    sectionMobile: {
-      display: "flex",
-      marginLeft: "-12px",
-      [theme.breakpoints.up("md")]: {
-        display: "none",
-      },
-    },
-    mobileMenu: {
-      backgroundColor: theme.palette.primary.main,
-      "& .MuiPaper-root.MuiMenu-paper.MuiPopover-paper.MuiPaper-rounded": {
-        width: "100%",
-        height: "100%",
-        maxHeight: "calc(100% - 32px)",
-      },
-      "& ul.MuiList-root.MuiMenu-list.MuiList-padding": {
-        position: "relative",
-        height: "100%",
-        backgroundColor: theme.palette.primary.main,
-      },
-      "& .MuiButtonBase-root.MuiListItem-root.MuiMenuItem-root.close-btn.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button": {
-        justifyContent: "center",
-        position: "absolute",
-        width: "100%",
-        left: 0,
-        bottom: theme.spacing(4),
-      },
-    },
-    loginBtn: {
-      marginLeft: theme.spacing(2)
-    },
     myLink: {
       width: "100%",
     },
@@ -75,13 +25,6 @@ export const useStyles = makeStyles((theme) => {
     responsiveUserInfo: {
       [theme.breakpoints.up("md")]: {
         display: "none",
-      },
-    },
-    responsiveUserInfoDesktop: {
-      marginRight: theme.spacing(1),
-      [theme.breakpoints.down("sm")]: {
-        display: "none",
-        marginRight: 0,
       },
     },
   };
@@ -143,35 +86,42 @@ export const MobileMenuPopup = (props) => {
       <MenuItem
         className={classes.avatarLink}
         onClick={() => {
-          navigate(appUrl.dashboard());
+          navigate(appUrl.dashboard().url);
           props.handleMobileMenuClose();
         }}
       >
         <Avatar alt="avatar" src="/image/cat.png" />
       </MenuItem>
       <MenuItem onClick={props.handleMobileMenuClose}>
-        <MyLink url={appUrl.dashboard()} className={`${classes.myLink}`}>
-          <span>Meomeo-kun</span>
+        <MyLink
+          isNav={true}
+          url={appUrl.dashboard().url}
+          className={`${classes.myLink}`}
+        >
+          <span>{appUrl.dashboard().title}</span>
         </MyLink>
       </MenuItem>
       <MenuItem onClick={props.handleMobileMenuClose}>
-        <MyLink url="/top-student" className={classes.myLink}>
-          Top Student
+        <MyLink isNav={true} url={appUrl.rememberVoca().url} className={classes.myLink}>
+          {appUrl.rememberVoca().title}
         </MyLink>
       </MenuItem>
       <MenuItem onClick={props.handleMobileMenuClose}>
-        <MyLink url="/top-student" className={classes.myLink}>
-          News
+        <MyLink isNav={true} url={appUrl.testVoca().url} className={classes.myLink}>
+          {appUrl.testVoca().title}
         </MyLink>
       </MenuItem>
       <MenuItem onClick={props.handleMobileMenuClose}>
-        <MyLink url="/top-student" className={classes.myLink}>
-          About Neko
+        <MyLink isNav={true} url={appUrl.myVoca().url} className={classes.myLink}>
+          {appUrl.myVoca().title}
         </MyLink>
       </MenuItem>
       <MenuItem className="close-btn">
         <IconButton onClick={props.handleMobileMenuClose}>
-          <HighlightOffIcon color="secondary" fontSize="large" />
+          <HighlightOffIcon
+            style={{ color: theme.palette.white.main }}
+            fontSize="large"
+          />
         </IconButton>
       </MenuItem>
     </Menu>

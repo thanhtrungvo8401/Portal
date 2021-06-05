@@ -1,29 +1,42 @@
-import { red } from "@material-ui/core/colors";
 import { createMuiTheme } from "@material-ui/core/styles";
 
-const theme = createMuiTheme({
+export const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "#fafbfc",
-      dark: "rgb(226,229,231)"
+      main: "#59359a",
     },
     secondary: {
-      main: "#17161d",
+      main: "#343a40",
     },
     text: {
-      primary: "#17161d",
-      secondary: "#757575",
+      primary: "#212529",
+      secondary: "#495057",
     },
-    info: {
-      main: "#3c763d",
+    warning: {
+      main: "#ffc107",
     },
     error: {
-      main: red.A400,
+      main: "#dc3545",
     },
     background: {
-      main: "#f0f0f0"
-    }
+      main: "rgb(247 247 247)",
+    },
+    success: {
+      main: "#198754",
+    },
+    info: {
+      main: "#59359a", // bg-nav
+      light: "#e0cffc", // bg-popup
+    },
+    white: {
+      main: "#FFFFFF",
+    },
   },
+  opacity: {
+    '2': "0.2",
+    '5': "0.5",
+    '8': "0.8",
+  }
 });
 
 export default theme;

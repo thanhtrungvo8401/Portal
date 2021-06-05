@@ -4,10 +4,8 @@ import { actionSetError } from "../redux/actions/errorActions";
 import {
   actionAddVocabularyToList,
   actionRemoveVocabularyFromList,
-  actionResetVocaListEditing,
-  actionSetVocabularyEditing,
+  actionSetIsShowVocaModal,
   actionSetVocabularyList,
-  actionSetVocabularyObject,
   actionUpdateVocaInList,
 } from "../redux/actions/vocaActions";
 import { enpoint_voca } from "../utils/API_URL";
@@ -15,22 +13,33 @@ import { appUrl } from "../utils/APP_URL";
 import { codeToMessages, constCODE } from "../utils/CodeToMessages";
 import { handleErrorAPI, navigate } from "../utils/Helper";
 
-export const serviceFetVocaBySetId = (setId) => {
+export const serviceFetVocaBySetId = (setId, actionAfterCallApi) => {
   return (dispatch) => {
     API.get(enpoint_voca.fetVocas(setId))
       .then((res) => {
-        const listVoca = res.data;
-        dispatch(actionSetVocabularyList(listVoca));
+        dispatch(actionSetVocabularyList(res.data));
+        // ignore it if you dont need to execute anything after call api
+        if (actionAfterCallApi) actionAfterCallApi();
       })
       .catch((err) => {
         const object = handleErrorAPI(err, "toast");
         const status = object.status;
-        if (status === 400) {
-          navigate(appUrl.studyRoom());
+        if (status === 404) {
+          navigate(appUrl.studyRoom().url);
         }
         dispatch(actionSetError(object.errorCodesObject));
       });
   };
+};
+
+export const serviceFetVocaRandomByLevel = (level) => {
+  return API.get(enpoint_voca.fetVocasRandom(level))
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      handleErrorAPI(err, "toast");
+    });
 };
 
 export const serviceCreateVoca = (voca) => {
@@ -38,9 +47,8 @@ export const serviceCreateVoca = (voca) => {
     API.post(enpoint_voca.create(), voca)
       .then((res) => {
         const voca = res.data;
-        dispatch(actionResetVocaListEditing());
         dispatch(actionAddVocabularyToList(voca));
-        dispatch(actionSetVocabularyObject({}));
+        dispatch(actionSetIsShowVocaModal(false));
         toast.success(codeToMessages(constCODE.CREATE_VOCA_SUCCESS));
       })
       .catch((err) => {
@@ -50,16 +58,12 @@ export const serviceCreateVoca = (voca) => {
   };
 };
 
-export const serviceUpdateVoca = (voca, actionCloseExpand) => {
+export const serviceUpdateVoca = (voca) => {
   return (dispatch) => {
     API.put(enpoint_voca.update(voca.id), voca)
       .then((res) => {
-        dispatch(actionResetVocaListEditing());
-        dispatch(actionUpdateVocaInList(voca));
-        dispatch(actionSetVocabularyEditing({}))
-        if (actionCloseExpand) {
-          actionCloseExpand();
-        }
+        dispatch(actionUpdateVocaInList(res.data));
+        dispatch(actionSetIsShowVocaModal(false));
         toast.success(codeToMessages(constCODE.UPDATE_VOCA_SUCCESS));
       })
       .catch((err) => {
@@ -82,3 +86,37 @@ export const serviceDeleteVocaById = (id) => {
       });
   };
 };
+
+export const serviceGetVocasByCodes = (codes = "") => {
+  return (dispatch) => {
+    API.get(enpoint_voca.getByCodes(), {
+      params: {
+        filters: {
+          code: `in<!>${codes}`,
+        },
+        limit: 1000,
+      },
+    })
+      .then((res) => {
+        dispatch(actionSetVocabularyList(res.data.list));
+      })
+      .catch((err) => {
+        console.log(err);
+        handleErrorAPI(err, "toast");
+      });
+  };
+};
+
+
+export const serviceGetVocasByTestGroup = () => {
+  return dispatch => {
+    API.get(enpoint_voca.getByTestGroup())
+      .then(res => {
+        dispatch(actionSetVocabularyList(res.data))
+      })
+      .catch(err => {
+        console.log(err);
+        handleErrorAPI(err, "toast");
+      })
+  }
+}

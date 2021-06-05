@@ -43,6 +43,9 @@ export const handleErrorAPI = (err, isToast = false) => {
   errorCodes.forEach((ob) => {
     errorCodesObject[ob.field] = ob.code;
   });
+  if (!isPro) {
+    console.log(err);
+  }
   return {
     status: object.status,
     message: object.data ? object.data.message || "" : "",
@@ -62,4 +65,25 @@ export const removeGmailTag = (email = "") => {
   return email.slice(0, index);
 };
 
+export const randomList = (list = []) => {
+  const copList = [...list];
+  const randList = [];
+  while (copList.length > 0) {
+    const rand = getRandom(0, copList.length - 1);
+    randList.push(copList[rand]);
+    copList.splice(rand, 1);
+  }
+  return randList;
+}
+
 export const isServer = typeof window === "undefined";
+
+export const isPro = process.env.NEXT_PUBLIC_ENV === "PRODUCTION";
+
+export const getRandom = (min, max) => Math.round(Math.random() * (max - min));
+
+export const isEmptyArr = array => array.length === 0;
+
+export const getWidth = (!isServer && window.innerWidth) || 0;
+
+export const isMobile = !isServer && window.innerWidth < 960;

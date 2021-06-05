@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import {
   AppBar,
   Avatar,
-  Button,
   Container,
   IconButton,
+  makeStyles,
   Toolbar,
   Typography,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { AccountCircle } from "@material-ui/icons";
 import {
-  useStyles,
   HideOnScroll,
   MobileMenuPopup,
   ProfileMenuPopup,
@@ -23,13 +22,80 @@ import Login from "../../container/Login";
 import { useDispatch, useSelector } from "react-redux";
 import { serviceLogout } from "../../service/authenticate";
 import { appUrl } from "../../utils/APP_URL";
+import { localStorageHelper } from "../../utils/storageHelper";
+import { storageKey } from "../../utils/Constant";
+import theme from "../theme";
+
+const useStyles = makeStyles((theme) => ({
+  navbar: {
+    backgroundColor: theme.palette.info.main,
+    zIndex: 499,
+  },
+  title: {
+    display: "none",
+    cursor: "pointer",
+    marginRight: theme.spacing(4),
+    [theme.breakpoints.up("sm")]: {
+      display: "block",
+    },
+  },
+  navItem: {
+    cursor: "pointer",
+    marginRight: theme.spacing(2),
+  },
+  sectionDesktop: {
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+    },
+  },
+  sectionMobile: {
+    display: "flex",
+    marginLeft: "-12px",
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
+  },
+  mobileMenu: {
+    backgroundColor: theme.palette.info.main,
+    "& .MuiPaper-root.MuiMenu-paper.MuiPopover-paper.MuiPaper-rounded": {
+      width: "100%",
+      height: "100%",
+      maxHeight: "calc(100% - 32px)",
+    },
+    "& ul.MuiList-root.MuiMenu-list.MuiList-padding": {
+      position: "relative",
+      height: "100%",
+      backgroundColor: theme.palette.info.main,
+    },
+    "& .MuiButtonBase-root.MuiListItem-root.MuiMenuItem-root.close-btn.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button": {
+      justifyContent: "center",
+      position: "absolute",
+      width: "100%",
+      left: 0,
+      bottom: theme.spacing(4),
+    },
+  },
+  loginBtn: {
+    marginLeft: theme.spacing(2),
+  },
+  responsiveUserInfoDesktop: {
+    marginLeft: theme.spacing(2),
+    cursor: "pointer",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+      marginRight: 0,
+    },
+  },
+}));
+
 function Navbar(props) {
   // VARIABLES:
   const classes = useStyles();
   const [anchorProfileEl, setAnchorProfileEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const user = JSON.parse(localStorageHelper.get(storageKey.MY_PROFILE));
   const isProfileMenuOpen = Boolean(anchorProfileEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -58,7 +124,7 @@ function Navbar(props) {
   return (
     <React.Fragment>
       <HideOnScroll {...props}>
-        <AppBar color="primary">
+        <AppBar className={classes.navbar}>
           <Container>
             <Toolbar>
               <Avatar
@@ -66,7 +132,7 @@ function Navbar(props) {
                 src="/image/cat.png"
                 className={classes.title}
                 onClick={() => {
-                  navigate(appUrl.dashboard());
+                  navigate(appUrl.dashboard().url);
                 }}
               />
 
@@ -78,57 +144,75 @@ function Navbar(props) {
                   onClick={handleMobileMenuOpen}
                   color="default"
                 >
-                  <MenuIcon color="secondary" />
+                  <MenuIcon style={{ color: theme.palette.white.main }} />
                 </IconButton>
               </div>
 
               <div className={classes.sectionDesktop}>
-                <MyLink className={classes.navItem} url="/top-student">
-                  Top Student
+                <MyLink
+                  isNav={true}
+                  className={classes.navItem}
+                  url={appUrl.rememberVoca().url}
+                >
+                  {appUrl.rememberVoca().title}
                 </MyLink>
-                <MyLink className={classes.navItem} url="/top-student">
-                  News
+                <MyLink
+                  isNav={true}
+                  className={classes.navItem}
+                  url={appUrl.testVoca().url}
+                >
+                  {appUrl.testVoca().title}
                 </MyLink>
-                <MyLink className={classes.navItem} url="/top-student">
-                  About Neko
+                <MyLink
+                  isNav={true}
+                  className={classes.navItem}
+                  url={appUrl.myVoca().url}
+                >
+                  {appUrl.myVoca().title}
                 </MyLink>
               </div>
 
-              <div className={classes.grow} />
+              <div style={{ flexGrow: 1 }} />
 
-              <Button
-                color="default"
-                variant="outlined"
+              <MyLink
+                isNav={true}
+                url={appUrl.studyRoom().url}
                 className={styles.flashEffect}
-                size="medium"
-                onClick={() => {
-                  navigate(appUrl.studyRoom());
-                }}
               >
                 STUDY NOW
-              </Button>
+              </MyLink>
 
               {_isLogined && (
-                <IconButton
-                  edge="end"
-                  aria-label="account of current user"
-                  aria-controls={profileId}
-                  aria-haspopup="true"
-                  onClick={handleProfileMenuOpen}
-                  color="default"
-                >
+                <React.Fragment>
                   <Typography
                     className={classes.responsiveUserInfoDesktop}
                     variant="caption"
+                    style={{ color: theme.palette.white.main }}
                   >
                     {removeGmailTag(user && user.email)}
                   </Typography>
-                  <AccountCircle color="secondary" />
-                </IconButton>
+                  <IconButton
+                    edge="end"
+                    aria-label="account of current user"
+                    aria-controls={profileId}
+                    aria-haspopup="true"
+                    onClick={handleProfileMenuOpen}
+                    color="secondary"
+                  >
+                    <AccountCircle
+                      style={{ color: theme.palette.white.main }}
+                    />
+                  </IconButton>
+                </React.Fragment>
               )}
               {!_isLogined && (
-                <div onClick={() => showLoginForm()} className={classes.loginBtn} >
-                  <MyLink className={classes.navItem}>Login</MyLink>
+                <div
+                  onClick={() => showLoginForm()}
+                  className={classes.loginBtn}
+                >
+                  <MyLink isNav={true} className={classes.navItem}>
+                    Login
+                  </MyLink>
                 </div>
               )}
             </Toolbar>
