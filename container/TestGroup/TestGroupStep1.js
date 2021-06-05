@@ -1,6 +1,6 @@
 import { Button, Typography } from "@material-ui/core";
 import { useSelector } from "react-redux"
-import theme from "../../../components/theme";
+import theme from "../../components/theme";
 
 export default function TestGroupStep1({ actionChangeStep }) {
   const { list } = useSelector(state => state.vocas);

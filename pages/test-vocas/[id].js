@@ -2,9 +2,9 @@ import { makeStyles } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { withPrivateLayout } from "components/Layouts/PrivateLayout";
-import TestGroupStep1 from "container/RememberVoca/TestGroup/TestGroupStep1";
+import TestGroupStep1 from "container/TestGroup/TestGroupStep1";
 import ChangeStepBg from "components/atoms/change-step-bg";
-import { TestGroupStep2 } from "container/RememberVoca/TestGroup/TestGroupStep2";
+import { TestGroupStep2 } from "container/TestGroup/TestGroupStep2";
 import { serviceGetVocasByTestGroup } from "service/vocaService";
 
 const useStyles = makeStyles(theme => ({

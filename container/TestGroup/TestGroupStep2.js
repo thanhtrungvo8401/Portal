@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { randomList } from "../../../utils/Helper";
+import { randomList } from "utils/Helper";
 import TestGroupStep2UI from "./TestGroupStep2UI";
 
 export function TestGroupStep2({ actionChangeStep }) {
