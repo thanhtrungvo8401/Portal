@@ -48,7 +48,10 @@ const useStyles = makeStyles(theme => ({
       alignItems: "center"
     },
     "& .left-part": {
-      width: "5rem"
+      width: "5rem",
+      width: '3.5rem',
+      display: 'flex',
+      alignItems: 'center'
     }
   },
 }))
@@ -94,7 +97,7 @@ export default function ResultsTesting({ results, time, exactNum }) {
               <div className="one-line">
                 <Typography className="left-part" color="textSecondary">
                   {/* // JP, SOUND, MEANING: display-name */}
-                  {getIcon(oneVoca[field].isExact, 'ml-1')}
+                  {getIcon(oneVoca[field].isExact, 'mr-1', i)}
                   {getDisplay(field)}
                 </Typography>
                 <Typography color="textSecondary">{oneVoca[field]['result']}</Typography>
