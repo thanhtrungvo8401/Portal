@@ -77,7 +77,7 @@ const renderTitleQA = (voca) => {
   }
 }
 
-export default function Testing({ study, onFinishTesting, hidden }) {
+export default function Testing({ study, onFinishTesting }) {
   const classes = useStyles();
   const [QandA, setQandA] = React.useState({});
   const [listQAndA, setListQAndA] = React.useState([]);
@@ -138,8 +138,7 @@ export default function Testing({ study, onFinishTesting, hidden }) {
     setListQAndA(listQAndA_Random);
     setReadyForTesting({ ...readyForTesting, isIn: true })
   }, []);
-
-  return <section className={classes.root} hidden={hidden}>
+  return <section className={classes.root}>
     <BodyTop>
       <TitleBody>Bài kiểm tra cuối buổi học</TitleBody>
       <BodyMaxWidth>
