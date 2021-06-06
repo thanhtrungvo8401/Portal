@@ -70,7 +70,7 @@ const inputLabels = {
   password: "Password",
 };
 const inputRequired = ["email", "password"];
-function LoginLayout(props) {
+export default function LoginUI(props) {
   const isLoading = useSelector((state) => state.isLoading);
   const { showLogin, user, ERROR } = props;
   const classes = useStyles();
@@ -135,5 +135,3 @@ function LoginLayout(props) {
     </Dialog>
   );
 }
-
-export default LoginLayout;

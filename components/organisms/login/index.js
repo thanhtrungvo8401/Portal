@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { actionResetError } from "../../redux/actions/errorActions";
-import { actionSetUserLogin } from "../../redux/actions/loginActions";
-import { serviceLogin } from "../../service/authenticate";
-import { closeLoginForm } from "../../utils/Helper";
-import LoginLayout from "./Layout";
+import { actionResetError } from "redux/actions/errorActions";
+import { actionSetUserLogin } from "redux/actions/loginActions";
+import { serviceLogin } from "service/authenticate";
+import { closeLoginForm } from "utils/Helper";
+import LoginUI from "components/organisms/login/UI";
 
-function Login(props) {
+export default function Login(props) {
   const showLogin = useSelector(
     (state) => state.login && state.login.showLogin
   );
@@ -24,7 +24,7 @@ function Login(props) {
     dispatch(actionResetError());
   };
   const handleOnSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault && e.preventDefault();
     const userLogin = {
       email: user["email"],
       password: user["password"],
@@ -32,7 +32,7 @@ function Login(props) {
     dispatch(serviceLogin(userLogin));
   };
   return (
-    <LoginLayout
+    <LoginUI
       user={user}
       ERROR={ERROR}
       handleOnChange={handleOnChange}
@@ -42,5 +42,3 @@ function Login(props) {
     />
   );
 }
-
-export default Login;
