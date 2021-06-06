@@ -1,13 +1,10 @@
 import Proptypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  actionCloseToast,
-  actionOpenToast,
-} from "../redux/actions/toastActions";
+import { actionCloseToast, actionOpenToast } from "redux/actions/toastActions";
 
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
-import { storeClient } from "../redux/store";
+import { storeClient } from "redux/store";
 
 export default function ToastComponent(props) {
   const toastOb = useSelector((state) => state.toast);

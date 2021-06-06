@@ -6,7 +6,7 @@ import { actionCloseLoading } from "redux/actions/loadingActions";
 import History from "components/atoms/history";
 import LoadingComponent from "components/atoms/loading-component";
 import Navbar from "./Navbar";
-import ToastComponent from "../Toast";
+import ToastComponent from "components/atoms/toast-component";
 import { NotLoginComponent } from "./PrivateLayout";
 import { isLogined } from "utils/Helper";
 import {

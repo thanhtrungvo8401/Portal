@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
-import MyLink from "components/MyLink";
+import MyLink from "components/atoms/my-link";
 const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(0.5),

@@ -15,16 +15,16 @@ import {
   MobileMenuPopup,
   ProfileMenuPopup,
 } from "./NavbarHelper";
-import MyLink from "../MyLink";
+import MyLink from "components/atoms/my-link";
 import styles from "./styles.module.css";
-import { navigate, removeGmailTag, showLoginForm } from "../../utils/Helper";
-import Login from "../../container/Login";
+import { navigate, removeGmailTag, showLoginForm } from "utils/Helper";
+import Login from "container/Login";
 import { useDispatch, useSelector } from "react-redux";
-import { serviceLogout } from "../../service/authenticate";
-import { appUrl } from "../../utils/APP_URL";
-import { localStorageHelper } from "../../utils/storageHelper";
-import { storageKey } from "../../utils/Constant";
-import theme from "../theme";
+import { serviceLogout } from "service/authenticate";
+import { appUrl } from "utils/APP_URL";
+import { localStorageHelper } from "utils/storageHelper";
+import { storageKey } from "utils/Constant";
+import theme from "components/theme";
 
 const useStyles = makeStyles((theme) => ({
   navbar: {

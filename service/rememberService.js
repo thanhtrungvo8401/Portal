@@ -1,6 +1,6 @@
-import { API } from "../api/Api";
-import { toast } from "../components/Toast";
-import { actionSetError } from "../redux/actions/errorActions";
+import { API } from "api/Api";
+import { toast } from "components/atoms/toast-component";
+import { actionSetError } from "redux/actions/errorActions";
 import {
   actionAddRememberIntoList,
   actionRemoveRememberFromList,
@@ -9,10 +9,10 @@ import {
   actionSetRememberGroup,
   actionSetRememberGroupsList,
   actionUpdateRememberInList,
-} from "../redux/actions/rememberGroupAction";
-import { enpoint_remember } from "../utils/API_URL";
-import { codeToMessages, constCODE } from "../utils/CodeToMessages";
-import { handleErrorAPI } from "../utils/Helper";
+} from "redux/actions/rememberGroupAction";
+import { enpoint_remember } from "utils/API_URL";
+import { codeToMessages, constCODE } from "utils/CodeToMessages";
+import { handleErrorAPI } from "utils/Helper";
 
 export const serviceCreateRemember = (remember) => {
   return (dispatch) => {

@@ -1,17 +1,17 @@
-import { API } from "../api/Api";
-import { toast } from "../components/Toast";
-import { actionSetError } from "../redux/actions/errorActions";
+import { API } from "api/Api";
+import { toast } from "components/atoms/toast-component";
+import { actionSetError } from "redux/actions/errorActions";
 import {
   actionAddVocabularyToList,
   actionRemoveVocabularyFromList,
   actionSetIsShowVocaModal,
   actionSetVocabularyList,
   actionUpdateVocaInList,
-} from "../redux/actions/vocaActions";
-import { enpoint_voca } from "../utils/API_URL";
-import { appUrl } from "../utils/APP_URL";
-import { codeToMessages, constCODE } from "../utils/CodeToMessages";
-import { handleErrorAPI, navigate } from "../utils/Helper";
+} from "redux/actions/vocaActions";
+import { enpoint_voca } from "utils/API_URL";
+import { appUrl } from "utils/APP_URL";
+import { codeToMessages, constCODE } from "utils/CodeToMessages";
+import { handleErrorAPI, navigate } from "utils/Helper";
 
 export const serviceFetVocaBySetId = (setId, actionAfterCallApi) => {
   return (dispatch) => {

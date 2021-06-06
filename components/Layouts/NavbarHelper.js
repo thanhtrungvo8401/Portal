@@ -9,10 +9,10 @@ import {
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import MyLink from "../MyLink";
-import { navigate, removeGmailTag } from "../../utils/Helper";
-import { appUrl } from "../../utils/APP_URL";
-import theme from "../theme";
+import MyLink from "components/atoms/my-link";
+import { navigate, removeGmailTag } from "utils/Helper";
+import { appUrl } from "utils/APP_URL";
+import theme from "components/theme";
 
 export const useStyles = makeStyles((theme) => {
   return {

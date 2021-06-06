@@ -1,13 +1,10 @@
-import { actionSetHistory } from "../redux/actions/historyActions";
-import {
-  actionCloseLogin,
-  actionShowLogin,
-} from "../redux/actions/loginActions";
-import { toast } from "../components/Toast";
-import { storeClient } from "../redux/store";
-import { codeToMessages } from "./CodeToMessages";
-import { constAuth } from "./Constant";
-import { getCookie } from "./Cookies";
+import { actionSetHistory } from "redux/actions/historyActions";
+import { actionCloseLogin, actionShowLogin } from "redux/actions/loginActions";
+import { toast } from "components/atoms/toast-component";
+import { storeClient } from "redux/store";
+import { codeToMessages } from "utils/CodeToMessages";
+import { constAuth } from "utils/Constant";
+import { getCookie } from "utils/Cookies";
 
 export const navigate = (url) => {
   if (!isServer) {

@@ -15,7 +15,7 @@ import VpnKeyOutlinedIcon from "@material-ui/icons/VpnKeyOutlined";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { useSelector } from "react-redux";
 import InputsGroup, { validForm } from "components/molecules/inputs-group";
-import MyLink from "components/MyLink";
+import MyLink from "components/atoms/my-link";
 import theme from "components/theme";
 const useStyles = makeStyles((theme) => ({
   zindex500: {
