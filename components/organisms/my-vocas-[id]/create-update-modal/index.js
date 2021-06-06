@@ -1,9 +1,8 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Slide } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { actionSetVocabularyObject } from "redux/actions/vocaActions";
 import { actionResetError } from "redux/actions/errorActions";
-import { actionSetIsShowVocaModal } from "redux/actions/vocaActions";
+import { actionSetIsShowVocaModal, actionSetVocabularyObject } from "redux/actions/vocaActions";
 import InputGroup, { validForm } from "components/InputGroup";
 
 const Transition = React.forwardRef((props, ref) => {
@@ -24,7 +23,7 @@ export default function CreateUpdateVocaModal({ onSubmit }) {
   }
 
   React.useEffect(() => {
-    if (isShowVocaModal) {
+    if (!isShowVocaModal) {
       dispatch(actionSetVocabularyObject({}));
       dispatch(actionResetError());
     }

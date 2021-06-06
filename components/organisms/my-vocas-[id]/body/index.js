@@ -7,7 +7,7 @@ import ListExpandItems from "components/molecules/list-expand-items";
 import ConfirmPopup from "components/molecules/confirm-popup";
 import ActionsBtnGroup from "components/atoms/action-btns-group";
 import { serviceDeleteVocaById } from "service/vocaService";
-import { actionSetIsShowVocaModal } from "redux/actions/vocaActions";
+import { actionSetIsShowVocaModal, actionSetVocabularyObject } from "redux/actions/vocaActions";
 import { useDispatch, useSelector } from "react-redux";
 import { isEmptyArr } from "utils/Helper";
 
@@ -48,8 +48,13 @@ export default function MyVocasBody() {
   const list = useSelector(state => state.vocas).list;
   const dispatch = useDispatch();
   const [deleteId, setDeleteId] = React.useState(false);
+
   const onOpenedConfirmDelete = (voca) => {
     setDeleteId(voca.id);
+  }
+  const onEdit = (voca) => {
+    dispatch(actionSetVocabularyObject({ ...voca }));
+    dispatch(actionSetIsShowVocaModal(true));
   }
   // API:
   const apiRemoveVoca = (id) => {
@@ -63,7 +68,7 @@ export default function MyVocasBody() {
         <Typography className='right' >{v.meaning}</Typography>
       </div>,
       actionsEl: <ButtonGroup className={classes.actionEl} variant="text" >
-        <Button className="edit-btn" >Chỉnh sửa</Button>
+        <Button className="edit-btn" onClick={() => onEdit(v)} >Chỉnh sửa</Button>
         <Button className="remove-btn" onClick={() => onOpenedConfirmDelete(v)} >
           Xóa
         </Button>
