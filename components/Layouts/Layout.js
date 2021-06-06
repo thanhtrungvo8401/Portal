@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCloseLoading } from "redux/actions/loadingActions";
 import History from "components/atoms/history";
-import LoadingComponent from "../LoadingComponent";
+import LoadingComponent from "components/atoms/loading-component";
 import Navbar from "./Navbar";
 import ToastComponent from "../Toast";
 import { NotLoginComponent } from "./PrivateLayout";
