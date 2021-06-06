@@ -16,7 +16,7 @@ export const serviceSignUp = (user) => {
     API.post(enpoint_auth.sign_up(), user)
       .then((res) => {
         toast.success(codeToMessages(constCODE.SIGN_UP_SUCCESS));
-        navigate(appUrl.studyRoom().url);
+        navigate(appUrl.dashboard().url);
       })
       .catch((err) => {
         const object = handleErrorAPI(err, "toast");

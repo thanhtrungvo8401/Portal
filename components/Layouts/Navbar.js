@@ -176,10 +176,10 @@ function Navbar(props) {
 
               <MyLink
                 isNav={true}
-                url={appUrl.studyRoom().url}
+                url={appUrl.donate().url}
                 className={styles.flashEffect}
               >
-                STUDY NOW
+                DONATE
               </MyLink>
 
               {_isLogined && (

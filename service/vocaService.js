@@ -25,7 +25,7 @@ export const serviceFetVocaBySetId = (setId, actionAfterCallApi) => {
         const object = handleErrorAPI(err, "toast");
         const status = object.status;
         if (status === 404) {
-          navigate(appUrl.studyRoom().url);
+          navigate(appUrl.dashboard().url);
         }
         dispatch(actionSetError(object.errorCodesObject));
       });
