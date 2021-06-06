@@ -14,9 +14,9 @@ import {
 import VpnKeyOutlinedIcon from "@material-ui/icons/VpnKeyOutlined";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { useSelector } from "react-redux";
-import InputGroup, { validForm } from "../../components/InputGroup";
-import MyLink from "../../components/MyLink";
-import theme from "../../components/theme";
+import InputsGroup, { validForm } from "components/molecules/inputs-group";
+import MyLink from "components/MyLink";
+import theme from "components/theme";
 const useStyles = makeStyles((theme) => ({
   zindex500: {
     zIndex: "500!important",
@@ -93,7 +93,7 @@ function LoginLayout(props) {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <InputGroup
+          <InputsGroup
             ERROR={ERROR}
             inputFields={inputFields}
             inputTypes={inputTypes}

@@ -3,7 +3,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionResetError } from "redux/actions/errorActions";
 import { actionSetIsShowVocaModal, actionSetVocabularyObject } from "redux/actions/vocaActions";
-import InputGroup, { validForm } from "components/InputGroup";
+import InputsGroup, { validForm } from "components/molecules/inputs-group";
 
 const Transition = React.forwardRef((props, ref) => {
   return <Slide direction="down" ref={ref} {...props} />;
@@ -43,7 +43,7 @@ export default function CreateUpdateVocaModal({ onSubmit }) {
     </DialogTitle>
     <DialogContent style={{ overflow: 'hidden' }} >
       {isShowVocaModal && (
-        <InputGroup
+        <InputsGroup
           object={voca}
           inputFields={["voca", "meaning"]}
           inputTypes={{ voca: "input", meaning: "input" }}

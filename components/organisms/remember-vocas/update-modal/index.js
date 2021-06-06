@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import InputGroup, { validForm } from "components/InputGroup";
+import InputsGroup, { validForm } from "components/molecules/inputs-group";
 import {
   actionSetIshowUpdateModal,
   actionSetRememberGroup,
@@ -41,7 +41,7 @@ export default function UpdateRememberGroupModal({ onSubmit }) {
       </DialogTitle>
       <DialogContent>
         {isShowUpdateModal && (
-          <InputGroup
+          <InputsGroup
             object={rememberGroup}
             inputFields={["name"]}
             inputTypes={{ name: "input" }}

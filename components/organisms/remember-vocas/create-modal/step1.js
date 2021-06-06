@@ -1,6 +1,6 @@
 
 import { Card, CardContent, makeStyles, Typography } from "@material-ui/core";
-import InputGroup from "components/InputGroup";
+import InputsGroup from "components/molecules/inputs-group";
 import { useSelector } from "react-redux";
 import { CREATE_REMEMBER_TYPE } from "utils/Constant";
 
@@ -46,7 +46,7 @@ export default function Step1({ object, actionUpdate }) {
   };
 
   return <div className={classes.root}>
-    <InputGroup
+    <InputsGroup
       object={object}
       inputFields={["name"]}
       inputTypes={{ name: "input" }}

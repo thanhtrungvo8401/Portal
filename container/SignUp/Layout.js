@@ -1,7 +1,7 @@
 import { Avatar, Container, makeStyles, Typography } from "@material-ui/core";
 import GroupAddOutlinedIcon from "@material-ui/icons/GroupAddOutlined";
-import InputGroup from "../../components/InputGroup";
-import theme from "../../components/theme";
+import InputsGroup from "components/molecules/inputs-group";
+import theme from "components/theme";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -42,7 +42,7 @@ function SignUpLayout(props) {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <InputGroup
+        <InputsGroup
           ERROR={ERROR}
           inputFields={inputFields}
           inputTypes={inputTypes}

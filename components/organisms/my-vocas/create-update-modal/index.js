@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Slide } from "@material-ui/core";
 import { actionSetIsShowSetVocaModal, actionSet_SetVocaObject } from "redux/actions/setVocasActions";
 import { actionResetError } from "redux/actions/errorActions";
-import InputGroup, { validForm } from "components/InputGroup";
+import InputsGroup, { validForm } from "components/molecules/inputs-group";
 
 const Transition = React.forwardRef((props, ref) => {
   return <Slide direction="down" ref={ref} {...props} />;
@@ -43,7 +43,7 @@ export default function SetVocaModal({ onSubmit }) {
       </DialogTitle>
       <DialogContent style={{ overflow: 'hidden' }} >
         {isShowModal && (
-          <InputGroup
+          <InputsGroup
             object={setVoca}
             inputFields={["setName"]}
             inputTypes={{ setName: "input" }}
