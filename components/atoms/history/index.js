@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { constantApp } from "../utils/Constant";
-import { actionResetHistory } from "../redux/actions/historyActions";
-import { actionSetLoading } from "../redux/actions/loadingActions";
-import { actionCloseLogin } from "../redux/actions/loginActions";
-function History(props) {
+import { constantApp } from "utils/Constant";
+import { actionResetHistory } from "redux/actions/historyActions";
+import { actionSetLoading } from "redux/actions/loadingActions";
+import { actionCloseLogin } from "redux/actions/loginActions";
+export default function History(props) {
   const url = useSelector((state) => state.history);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -29,5 +29,3 @@ function History(props) {
   }, [url]);
   return <></>;
 }
-
-export default History;

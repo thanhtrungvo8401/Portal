@@ -2,13 +2,13 @@ import { Box, Container, Toolbar } from "@material-ui/core";
 import Head from "next/head";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { actionCloseLoading } from "../../redux/actions/loadingActions";
-import History from "../History";
+import { actionCloseLoading } from "redux/actions/loadingActions";
+import History from "components/atoms/history";
 import LoadingComponent from "../LoadingComponent";
 import Navbar from "./Navbar";
 import ToastComponent from "../Toast";
 import { NotLoginComponent } from "./PrivateLayout";
-import { isLogined } from "../../utils/Helper";
+import { isLogined } from "utils/Helper";
 import {
   actionSetIsLogined,
   actionShowLogin,
