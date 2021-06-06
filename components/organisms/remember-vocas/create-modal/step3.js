@@ -3,7 +3,7 @@ import { Autocomplete } from "@material-ui/lab";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import theme from "components/theme";
-import VocaList from "components/VocaGroup/VocaList";
+import ListVocabularies from "components/molecules/list-vocabularies";
 import { serviceGetCenterSetVocas } from "service/setVocaService";
 import { serviceFetVocaBySetId } from "service/vocaService";
 import {
@@ -45,9 +45,9 @@ function VocasFromYourOwnSet({ object, actionUpdate }) {
         variant="subtitle2"
         style={{ marginBottom: theme.spacing(1) }}
       >
-        These vocabularies will be added into your remember group
+        Bên dưới là những từ bạn sẽ học
       </Typography>
-      <VocaList vocas={vocas} />
+      <ListVocabularies vocas={vocas} />
     </React.Fragment>
   );
 }

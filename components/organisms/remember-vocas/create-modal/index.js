@@ -60,7 +60,7 @@ export default function CreateRememberGroupModal({ onSubmit }) {
     style={{ zIndex: 500 }}
     keepMounted
   >
-    <DialogTitle color="primary">Create your remember-group</DialogTitle>
+    <DialogTitle color="primary">Tạo nhóm từ để ghi nhớ</DialogTitle>
     <DialogContent>
       <MobileStepperCustom
         totalStep={totalStep}

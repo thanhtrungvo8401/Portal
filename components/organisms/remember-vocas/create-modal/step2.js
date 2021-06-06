@@ -31,7 +31,7 @@ function FromYourOwnVocas({ object, actionUpdate }) {
   }, []);
   return <React.Fragment>
     <Typography variant="subtitle2" style={{ marginBottom: theme.spacing(1) }} >
-      Chọn nhóm từ mà bạn muốn học
+      Nhập tên nhóm từ bạn muốn học
     </Typography>
     <Autocomplete
       id="set-voca-select"
