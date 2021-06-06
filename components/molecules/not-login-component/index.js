@@ -1,15 +1,5 @@
-import {
-  Box,
-  Button,
-  Container,
-  makeStyles,
-  Typography,
-} from "@material-ui/core";
-import { showLoginForm } from "../../utils/Helper";
-import { withLayout } from "./Layout";
-export const withPrivateLayout = (Component, propsPages) => {
-  return withLayout(Component, propsPages, "private");
-};
+import { Box, Button, Container, makeStyles, Typography, } from "@material-ui/core";
+import { showLoginForm } from "utils/Helper";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -21,7 +11,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export function NotLoginComponent(props) {
+export default function NotLoginComponent(props) {
   const classes = useStyles();
   return (
     <Container>

@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { withPrivateLayout } from "components/Layouts/PrivateLayout";
+import { withPrivateLayout } from "components/templates/main";
 import {
   serviceCreateVoca,
   serviceFetVocaBySetId,

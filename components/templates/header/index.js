@@ -10,11 +10,7 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { AccountCircle } from "@material-ui/icons";
-import {
-  HideOnScroll,
-  MobileMenuPopup,
-  ProfileMenuPopup,
-} from "./NavbarHelper";
+import { HideOnScroll, MobileMenuPopup, ProfileMenuPopup } from "components/templates/header/helper";
 import MyLink from "components/atoms/my-link";
 import { navigate, removeGmailTag, showLoginForm } from "utils/Helper";
 import Login from "container/Login";
@@ -88,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Navbar(props) {
+export default function Header(props) {
   // VARIABLES:
   const classes = useStyles();
   const [anchorProfileEl, setAnchorProfileEl] = useState(null);
@@ -237,5 +233,3 @@ function Navbar(props) {
     </React.Fragment>
   );
 }
-
-export default Navbar;

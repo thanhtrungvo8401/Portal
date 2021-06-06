@@ -1,5 +1,5 @@
 import React from "react";
-import { withPrivateLayout } from "components/Layouts/PrivateLayout";
+import { withPrivateLayout } from "components/templates/main";
 import { BodyContainer } from "components/atoms/body-wrapper";
 import RememberVocasInstruction from "components/organisms/remember-vocas/instruction";
 import RememberVocasBody from "components/organisms/remember-vocas/body";

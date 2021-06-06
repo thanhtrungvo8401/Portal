@@ -1,4 +1,4 @@
-import { withPrivateLayout } from "components/Layouts/PrivateLayout";
+import { withPrivateLayout } from "components/templates/main";
 
 function Donate(props) {
   return <h1>DONATE</h1>

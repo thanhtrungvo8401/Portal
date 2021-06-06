@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { withPrivateLayout } from "components/Layouts/PrivateLayout";
+import { withPrivateLayout } from "components/templates/main";
 import { BodyContainer } from "components/atoms/body-wrapper";
 import TitlePage from "components/atoms/title-page";
 import Remember_Id_Step1 from "components/organisms/remember-vocas-[id]/step-1";

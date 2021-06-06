@@ -1,4 +1,4 @@
-import { withPrivateLayout } from "components/Layouts/PrivateLayout";
+import { withPrivateLayout } from "components/templates/main";
 import TestVocasLayout from "container/TestVocas/Layout";
 
 function TestVocas(props) {

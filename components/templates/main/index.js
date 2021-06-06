@@ -5,14 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCloseLoading } from "redux/actions/loadingActions";
 import History from "components/atoms/history";
 import LoadingComponent from "components/atoms/loading-component";
-import Navbar from "./Navbar";
+import Header from "components/templates/header";
 import ToastComponent from "components/atoms/toast-component";
-import { NotLoginComponent } from "./PrivateLayout";
+import NotLoginComponent from "components/molecules/not-login-component";
 import { isLogined } from "utils/Helper";
-import {
-  actionSetIsLogined,
-  actionShowLogin,
-} from "../../redux/actions/loginActions";
+import { actionSetIsLogined, actionShowLogin } from "redux/actions/loginActions";
+
+
 export const withLayout = (Component, propsPages, isPrivatePage) => {
   return () => {
     // Variables:
@@ -40,7 +39,7 @@ export const withLayout = (Component, propsPages, isPrivatePage) => {
             <title>{propsPages.title}</title>
           )}
         </Head>
-        <Navbar />
+        <Header />
         <Toolbar />
         <History />
         <LoadingComponent />
@@ -57,4 +56,9 @@ export const withLayout = (Component, propsPages, isPrivatePage) => {
       </React.Fragment>
     );
   };
+};
+
+
+export const withPrivateLayout = (Component, propsPages) => {
+  return withLayout(Component, propsPages, "private");
 };

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { withLayout } from "components/Layouts/Layout";
+import { withLayout } from "components/templates/main";
 import SignUpLayout from "container/SignUp/Layout";
 import { actionSetError, actionResetError } from "redux/actions/errorActions";
 import { constCODE } from "utils/CodeToMessages";
