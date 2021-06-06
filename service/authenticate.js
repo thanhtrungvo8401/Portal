@@ -3,7 +3,7 @@ import { constAuth } from "../utils/Constant";
 import { handleErrorAPI, navigate } from "../utils/Helper";
 import { enpoint_auth } from "../utils/API_URL";
 import { actionSetError } from "../redux/actions/errorActions";
-import { toast } from "../components/Toast";
+import { toast } from "components/atoms/toast-component";
 import { codeToMessages, constCODE } from "../utils/CodeToMessages";
 import { actionSetIsLogined } from "../redux/actions/loginActions";
 import { removeCookie, setCookie } from "../utils/Cookies";
@@ -16,7 +16,7 @@ export const serviceSignUp = (user) => {
     API.post(enpoint_auth.sign_up(), user)
       .then((res) => {
         toast.success(codeToMessages(constCODE.SIGN_UP_SUCCESS));
-        navigate(appUrl.studyRoom().url);
+        navigate(appUrl.dashboard().url);
       })
       .catch((err) => {
         const object = handleErrorAPI(err, "toast");

@@ -1,4 +1,4 @@
-import { withPrivateLayout } from "components/Layouts/PrivateLayout";
+import { withPrivateLayout } from "components/templates/main";
 import TitlePage from "components/atoms/title-page";
 import { BodyContainer } from "components/atoms/body-wrapper";
 import MyVocasInstruction from "components/organisms/my-vocas/instruction";

@@ -1,5 +1,5 @@
 import { Typography } from "@material-ui/core";
-import { withLayout } from "components/Layouts/Layout";
+import { withLayout } from "components/templates/main";
 
 const Index = () => {
   return (

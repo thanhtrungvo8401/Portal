@@ -1,5 +1,5 @@
 import { API } from "../api/Api";
-import { toast } from "../components/Toast";
+import { toast } from "components/atoms/toast-component";
 import { actionSetError } from "../redux/actions/errorActions";
 import {
   actionAddSetVocaToList,

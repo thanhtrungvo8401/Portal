@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { withPrivateLayout } from "components/Layouts/PrivateLayout";
+import { withPrivateLayout } from "components/templates/main";
 import TestGroupStep1 from "container/TestGroup/TestGroupStep1";
 import ChangeStepBg from "components/atoms/change-step-bg";
 import { TestGroupStep2 } from "container/TestGroup/TestGroupStep2";

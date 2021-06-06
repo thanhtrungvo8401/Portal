@@ -10,8 +10,8 @@ import { jpRecognition } from "utils/speechToText";
 import { getRandom } from "utils/Helper";
 import { jpConverter } from "utils/kanjiConverter";
 import { jpSpeak } from "utils/textToSpeech";
-import ListeningAnimation from "components/SpeakerAnimation/Listening";
-import TypingGif from "components/SpeakerAnimation/TypingGif";
+import SpeakingAnimation from "components/atoms/speaking-animation";
+import TypingAnimation from "components/atoms/typing-animation";
 
 import Instruction_Step5 from "components/organisms/remember-vocas-[id]/step-5/instruction";
 import ItemOutline from "components/atoms/item-outline";
@@ -165,7 +165,7 @@ export default function Remember_Id_Step5({ study, actionChangeStep }) {
       .catch((err) => { console.log(err); setIsShowHint(false); });
   }
   const onSubmitInput = (e) => {
-    e.preventDefault && e.preventDefault();
+    e && e.preventDefault && e.preventDefault();
     const input = document.getElementById("result-from-key-board");
     setResultRecog(input.value);
     setIsUseKeyBoard(false);
@@ -221,9 +221,9 @@ export default function Remember_Id_Step5({ study, actionChangeStep }) {
               <DividerItem />
               <div className={classes.MicroIcon} >
                 <IconButton onClick={startRecognition} style={{ position: "relative" }} disabled={Boolean(resultRecog)} >
-                  <ListeningAnimation isActive={isListening}>
+                  <SpeakingAnimation isActive={isListening}>
                     <MicNoneIcon style={{ color: `${isListening ? theme.palette.error.main : ""}` }} className="micro-icon" />
-                  </ListeningAnimation>
+                  </SpeakingAnimation>
                   <Typography color={isListening ? "error" : "textSecondary"} variant="caption" className="micro-text">
                     {isListening ? "Meomeo-kun đang lắng nghe..." : "Click to speak"}
                   </Typography>
@@ -233,7 +233,7 @@ export default function Remember_Id_Step5({ study, actionChangeStep }) {
               <DividerItem />
               <DividerItem />
               <div className={classes.ResultGroup} >
-                <TypingGif isActive={isSpeaking} size="1rem" jumpHeight="10px" spacing="5px" />
+                <TypingAnimation isActive={isSpeaking} size="1rem" jumpHeight="10px" spacing="5px" />
                 <Typography hidden={!resultRecog} variant="h4" component="label" style={{ display: "block" }} color="textSecondary">
                   {resultRecog}
                 </Typography>

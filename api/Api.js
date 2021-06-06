@@ -1,13 +1,10 @@
 import axios from "axios";
-import {
-  actionCloseLoading,
-  actionSetLoading,
-} from "../redux/actions/loadingActions";
-import { storeClient } from "../redux/store";
+import { actionCloseLoading, actionSetLoading } from "redux/actions/loadingActions";
+import { actionSetIsLogined } from "redux/actions/loginActions"
+import { storeClient } from "redux/store";
 import { constAuth, constEnv } from "../utils/Constant";
-import { getCookie, removeCookie } from "../utils/Cookies";
-import { handleErrorAPI, navigate } from "../utils/Helper";
-import { appUrl } from "../utils/APP_URL";
+import { getCookie, removeCookie } from "utils/Cookies";
+import { handleErrorAPI } from "utils/Helper";
 
 const configure = {
   baseURL: constEnv.API_URL,
@@ -36,7 +33,6 @@ API.interceptors.response.use(
     const status = handleErrorAPI(err).status;
     if (status === 401) {
       removeCookie(constAuth.JWT);
-      navigate(appUrl.studyRoom().url);
       storeClient.dispatch(actionSetIsLogined(false));
     }
     throw err;

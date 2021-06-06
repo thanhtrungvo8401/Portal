@@ -14,8 +14,8 @@ import React from "react";
 import { jpSpeak, otherSpeack } from "utils/textToSpeech";
 import MicNoneIcon from "@material-ui/icons/MicNone";
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import ListeningAnimation from "components/SpeakerAnimation/Listening";
-import TypingGif from "components/SpeakerAnimation/TypingGif";
+import SpeakingAnimation from "components/atoms/speaking-animation";
+import TypingAnimation from "components/atoms/typing-animation";
 import { jpRecognition } from "utils/speechToText";
 import { jpPronouceCompair } from "utils/kanjiConverter";
 import theme from "components/theme";
@@ -260,7 +260,7 @@ export default function IntroVoca({
                     }
                     endAdornment={
                       <InputAdornment position="end">
-                        <ListeningAnimation isActive={isListening}>
+                        <SpeakingAnimation isActive={isListening}>
                           <IconButton
                             size="small"
                             style={{ transform: "translateX(0.5px)" }}
@@ -273,12 +273,12 @@ export default function IntroVoca({
                               color={isListening ? "error" : "action"}
                             />
                           </IconButton>
-                        </ListeningAnimation>
+                        </SpeakingAnimation>
                         <Box
                           hidden={!isSpeaking}
                           className={classes.typingGifPosition}
                         >
-                          <TypingGif
+                          <TypingAnimation
                             size="0.5rem"
                             jumpHeight="3px"
                             spacing={"8px"}

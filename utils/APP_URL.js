@@ -1,5 +1,5 @@
 export const appUrl = {
-  studyRoom: () => ({ url: "/study-room", title: "Study now" }),
+  donate: () => ({ url: "/donate", title: "Donate" }),
   rememberVoca: () => ({ url: "/remember-vocas", title: "Ghi nhớ từ vựng" }),
   rememberVocaWithId: (id) => ({ url: `/remember-vocas/${id}`, title: '' }),
   myVoca: () => ({ url: `/my-vocas`, title: "Từ vựng của tôi" }),

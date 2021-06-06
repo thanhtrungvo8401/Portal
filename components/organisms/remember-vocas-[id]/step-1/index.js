@@ -8,7 +8,6 @@ import TitleItem from "components/atoms/title-item";
 import TitleBody from "components/atoms/title-body";
 import DividerItem from "components/atoms/devider-item";
 import { BodyTop } from "components/atoms/body-wrapper";
-import styles from "components/Layouts/styles.module.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -108,8 +107,8 @@ export default function Remember_Id_Step1({ study, actionUpdate, actionChangeSte
 
           <ActionsBtnGroup center={true} >
             <Button
-              onClick={() => actionChangeStep(7)} // step = 2 XXX
-              className={styles.flashEffect}
+              onClick={() => actionChangeStep(2)} // step = 2 XXX
+              className='flashEffect'
               variant="contained"
               color="primary"
             >

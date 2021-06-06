@@ -1,6 +1,6 @@
 import { Button, Tab, Tabs, Typography } from "@material-ui/core";
 import React from "react";
-import VocaList from "components/VocaGroup/VocaList";
+import ListVocabularies from "components/molecules/list-vocabularies";
 import { theme } from "components/theme";
 import { useDispatch, useSelector } from "react-redux";
 import { serviceFetVocaBySetId } from "service/vocaService";
@@ -91,7 +91,7 @@ export default function Step4({ object, actionUpdate }) {
       </Tabs>
 
       {Object.keys(multiRemember).map((key, index) => (
-        <VocaList
+        <ListVocabularies
           hidden={index !== activeTab}
           vocas={multiRemember[key]}
           key={key}

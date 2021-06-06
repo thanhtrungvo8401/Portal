@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { withLayout } from "components/Layouts/Layout";
-import SignUpLayout from "container/SignUp/Layout";
+import { withLayout } from "components/templates/main";
+import SignUpUI from "components/organisms/sign-up";
 import { actionSetError, actionResetError } from "redux/actions/errorActions";
 import { constCODE } from "utils/CodeToMessages";
 import { serviceSignUp } from "service/authenticate";
@@ -29,7 +29,7 @@ function SignUp(props) {
     dispatch(actionSetUserSignup(userSignUp));
   };
   const handleOnSubmit = (e) => {
-    e.preventDefault();
+    e && e.preventDefault && e.preventDefault();
     const userSignUp = {
       email: user["email"],
       password: user["password"],
@@ -39,11 +39,11 @@ function SignUp(props) {
   // life cycle hook:
   useEffect(() => {
     if (isLogined) {
-      navigate(appUrl.studyRoom().url);
+      navigate(appUrl.dashboard().url);
     }
   }, [isLogined]);
   return (
-    <SignUpLayout
+    <SignUpUI
       user={user}
       ERROR={ERROR}
       handleOnChange={handleOnChange}
