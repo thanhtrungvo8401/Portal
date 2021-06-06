@@ -4,9 +4,10 @@ import { BodyTop } from "components/atoms/body-wrapper";
 import TitleBody from "components/atoms/title-body";
 import EmptyListMsg from "components/atoms/empty-list-msg";
 import ListExpandItems from "components/molecules/list-expand-items";
-
-import { useSelector } from "react-redux";
-import { isEmptyArr } from "../../../../utils/Helper";
+import ConfirmPopup from "components/molecules/confirm-popup";
+import { serviceDeleteVocaById } from "service/vocaService";
+import { useDispatch, useSelector } from "react-redux";
+import { isEmptyArr } from "utils/Helper";
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -35,7 +36,16 @@ const useStyles = makeStyles(theme => ({
 export default function MyVocasBody() {
   const classes = useStyles();
   const list = useSelector(state => state.vocas).list;
-
+  const dispatch = useDispatch();
+  const [deleteId, setDeleteId] = React.useState(false);
+  const onOpenedConfirmDelete = (voca) => {
+    setDeleteId(voca.id);
+  }
+  // API:
+  const apiRemoveVoca = (id) => {
+    if (id) dispatch(serviceDeleteVocaById(id));
+  }
+  // UI:
   const getVocaItems = list.map(v => {
     return {
       summaryEl: <div className={classes.summaryEl} >
@@ -44,7 +54,7 @@ export default function MyVocasBody() {
       </div>,
       actionsEl: <ButtonGroup variant="text" >
         <Button>Chỉnh sửa</Button>
-        <Button>Xóa</Button>
+        <Button onClick={() => onOpenedConfirmDelete(v)} >Xóa</Button>
       </ButtonGroup>
     }
   })
@@ -53,8 +63,19 @@ export default function MyVocasBody() {
       <TitleBody>Danh sách từ vựng</TitleBody>
       <EmptyListMsg isActive={isEmptyArr(list)} />
       {/* Render Vocas List */}
-
       <ListExpandItems items={getVocaItems} />
+      {/* DELETE CONFIRM POPUP */}
+      <ConfirmPopup
+        isOpen={Boolean(deleteId)}
+        title="Xác nhận"
+        description="Bạn có chắc rằng mình muốn xóa từ vựng này không?"
+        cancleAction={() => setDeleteId(false)}
+        confirmAction={() => {
+          apiRemoveVoca(deleteId);
+          setDeleteId(null);
+        }}
+        closeAction={() => setDeleteId(null)}
+      />
     </section>
   </BodyTop>
 }

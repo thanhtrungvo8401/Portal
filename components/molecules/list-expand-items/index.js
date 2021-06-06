@@ -11,6 +11,10 @@ export default function ListExpandItem({ items = [] }) {
   const handleChange = (index) => (e, isExpanded) => {
     setExpanded(isExpanded ? index : -1);
   }
+  React.useEffect(() => {
+    setExpanded(-1);
+  }, [items.length]);
+  
   return <div className={useStyles().root} >
     {items.map((item, i) => {
       return <Accordion key={i} expanded={expanded === i} onChange={handleChange(i)} >
