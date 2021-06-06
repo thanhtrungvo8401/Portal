@@ -71,7 +71,7 @@ export default function InputsGroup(props) {
     <form
       className={!isUsedInModal ? classes.form : classes.formInModal}
       onSubmit={(e) => {
-        e.preventDefault();
+        e && e.preventDefault && e.preventDefault();
         handleOnSubmit();
       }}
     >

@@ -24,7 +24,7 @@ export default function Login(props) {
     dispatch(actionResetError());
   };
   const handleOnSubmit = (e) => {
-    e.preventDefault && e.preventDefault();
+    e && e.preventDefault && e.preventDefault();
     const userLogin = {
       email: user["email"],
       password: user["password"],

@@ -34,7 +34,7 @@ export const handleErrorAPI = (err, isToast = false) => {
         toastError = codeToMessages(ob.code);
       }
     });
-    toast.error(toastError);
+    if (toastError) toast.error(toastError);
   }
   const errorCodesObject = {};
   errorCodes.forEach((ob) => {

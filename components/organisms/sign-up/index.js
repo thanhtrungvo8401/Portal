@@ -29,7 +29,7 @@ const inputLabels = {
 const inputRequired = ["email", "password", "confirmPassword"];
 const submitTitle = "Sign Up";
 
-function SignUpLayout(props) {
+export default function SignUpUI(props) {
   const classes = useStyles();
   const { user, ERROR } = props;
 
@@ -57,5 +57,3 @@ function SignUpLayout(props) {
     </Container>
   );
 }
-
-export default SignUpLayout;

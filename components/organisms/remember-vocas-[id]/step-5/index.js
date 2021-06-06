@@ -165,7 +165,7 @@ export default function Remember_Id_Step5({ study, actionChangeStep }) {
       .catch((err) => { console.log(err); setIsShowHint(false); });
   }
   const onSubmitInput = (e) => {
-    e.preventDefault && e.preventDefault();
+    e && e.preventDefault && e.preventDefault();
     const input = document.getElementById("result-from-key-board");
     setResultRecog(input.value);
     setIsUseKeyBoard(false);
