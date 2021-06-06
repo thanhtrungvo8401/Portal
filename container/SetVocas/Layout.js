@@ -45,27 +45,7 @@ function Layout({
   const [deleteVocaId, setDeleteVocaId] = useState();
   return (
     <React.Fragment>
-      <BreadcrumbsCustom
-        parents={[
-          {
-            Icon: HomeIcon,
-            label: "Study room",
-            url: appUrl.studyRoom().url,
-          },
-          { Icon: FiberNewIcon, label: "Tạo thêm từ", url: appUrl.myVoca().url },
-        ]}
-        label="Danh sach tu vung"
-      />
-      <PageTitle>Vocabularies list</PageTitle>
       <Container>
-        {/* Instruction */}
-        <ParagraphTitle>Instruction</ParagraphTitle>
-        <Container>
-          <Typography color="textSecondary" variant="body1">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-          </Typography>
-        </Container>
-        {/* Vocabularies list */}
         <ParagraphTitle>Your vocabularies</ParagraphTitle>
         <Container>
           <div className={classes.setVocas}>

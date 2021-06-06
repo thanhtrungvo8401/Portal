@@ -11,6 +11,11 @@ import {
   serviceFetVocaBySetId,
   serviceUpdateVoca,
 } from "service/vocaService";
+import React from "react";
+import TitlePage from "components/atoms/title-page";
+import { BodyContainer } from "components/atoms/body-wrapper";
+import MyVocasInstruction from "components/organisms/my-vocas-[id]/instruction";
+import MyVocasBody from "components/organisms/my-vocas-[id]/body";
 
 function SetVocasDetail(props) {
   const router = useRouter();
@@ -18,22 +23,22 @@ function SetVocasDetail(props) {
   const dispatch = useDispatch();
   const voca = useSelector((state) => state.vocas).voca;
 
-  const handleOnChangeVoca = (e) => {
-    const { name, value } = e.target;
-    const newVoca = { ...voca, [name]: value };
-    dispatch(actionSetVocabularyObject(newVoca));
-    dispatch(actionResetError());
-  };
-  const handleOnSubmitVocaModal = () => {
-    if (!voca.id) {
-      dispatch(serviceCreateVoca({ ...voca, setId }));
-    } else {
-      dispatch(serviceUpdateVoca(voca));
-    }
-  };
-  const handleOnRemoveVocaById = (id) => {
-    if (id) dispatch(serviceDeleteVocaById(id));
-  };
+  // const handleOnChangeVoca = (e) => {
+  //   const { name, value } = e.target;
+  //   const newVoca = { ...voca, [name]: value };
+  //   dispatch(actionSetVocabularyObject(newVoca));
+  //   dispatch(actionResetError());
+  // };
+  // const handleOnSubmitVocaModal = () => {
+  //   if (!voca.id) {
+  //     dispatch(serviceCreateVoca({ ...voca, setId }));
+  //   } else {
+  //     dispatch(serviceUpdateVoca(voca));
+  //   }
+  // };
+  // const handleOnRemoveVocaById = (id) => {
+  //   if (id) dispatch(serviceDeleteVocaById(id));
+  // };
   // Life cycle hook:
   useEffect(() => {
     if (setId) {
@@ -41,11 +46,13 @@ function SetVocasDetail(props) {
     }
   }, [setId]);
   return (
-    <Layout
-      handleOnChangeVoca={handleOnChangeVoca}
-      handleOnSubmitVocaModal={handleOnSubmitVocaModal}
-      handleOnRemoveVocaById={handleOnRemoveVocaById}
-    />
+    <React.Fragment>
+      <TitlePage>Từ vựng của tôi</TitlePage>
+      <BodyContainer>
+        <MyVocasInstruction />
+        <MyVocasBody />
+      </BodyContainer>
+    </React.Fragment>
   );
 }
 
