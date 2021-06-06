@@ -5,7 +5,9 @@ import TitleBody from "components/atoms/title-body";
 import EmptyListMsg from "components/atoms/empty-list-msg";
 import ListExpandItems from "components/molecules/list-expand-items";
 import ConfirmPopup from "components/molecules/confirm-popup";
+import ActionsBtnGroup from "components/atoms/action-btns-group";
 import { serviceDeleteVocaById } from "service/vocaService";
+import { actionSetIsShowVocaModal } from "redux/actions/vocaActions";
 import { useDispatch, useSelector } from "react-redux";
 import { isEmptyArr } from "utils/Helper";
 
@@ -31,6 +33,14 @@ const useStyles = makeStyles(theme => ({
         width: "50%"
       },
     },
+  },
+  actionEl: {
+    "& .edit-btn": {
+      color: theme.palette.text.secondary
+    },
+    "& .remove-btn": {
+      color: theme.palette.error.main
+    }
   }
 }))
 export default function MyVocasBody() {
@@ -52,9 +62,11 @@ export default function MyVocasBody() {
         <Typography className='left' >{v.voca}</Typography>
         <Typography className='right' >{v.meaning}</Typography>
       </div>,
-      actionsEl: <ButtonGroup variant="text" >
-        <Button>Chỉnh sửa</Button>
-        <Button onClick={() => onOpenedConfirmDelete(v)} >Xóa</Button>
+      actionsEl: <ButtonGroup className={classes.actionEl} variant="text" >
+        <Button className="edit-btn" >Chỉnh sửa</Button>
+        <Button className="remove-btn" onClick={() => onOpenedConfirmDelete(v)} >
+          Xóa
+        </Button>
       </ButtonGroup>
     }
   })
@@ -64,6 +76,17 @@ export default function MyVocasBody() {
       <EmptyListMsg isActive={isEmptyArr(list)} />
       {/* Render Vocas List */}
       <ListExpandItems items={getVocaItems} />
+      {/* Action Create new Voca */}
+      <ActionsBtnGroup>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={() => dispatch(actionSetIsShowVocaModal(true))}
+        >
+          Tạo mới (+)
+        </Button>
+      </ActionsBtnGroup>
+
       {/* DELETE CONFIRM POPUP */}
       <ConfirmPopup
         isOpen={Boolean(deleteId)}

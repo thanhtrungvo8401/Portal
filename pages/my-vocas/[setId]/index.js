@@ -2,8 +2,6 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { withPrivateLayout } from "components/Layouts/PrivateLayout";
-import { actionResetError } from "redux/actions/errorActions";
-import { actionSetVocabularyObject } from "redux/actions/vocaActions";
 import {
   serviceCreateVoca,
   serviceFetVocaBySetId,
@@ -14,6 +12,7 @@ import TitlePage from "components/atoms/title-page";
 import { BodyContainer } from "components/atoms/body-wrapper";
 import MyVocasInstruction from "components/organisms/my-vocas-[id]/instruction";
 import MyVocasBody from "components/organisms/my-vocas-[id]/body";
+import CreateUpdateVocaModal from "components/organisms/my-vocas-[id]/create-update-modal";
 
 function SetVocasDetail(props) {
   const router = useRouter();
@@ -21,19 +20,13 @@ function SetVocasDetail(props) {
   const dispatch = useDispatch();
   const voca = useSelector((state) => state.vocas).voca;
 
-  // const handleOnChangeVoca = (e) => {
-  //   const { name, value } = e.target;
-  //   const newVoca = { ...voca, [name]: value };
-  //   dispatch(actionSetVocabularyObject(newVoca));
-  //   dispatch(actionResetError());
-  // };
-  // const handleOnSubmitVocaModal = () => {
-  //   if (!voca.id) {
-  //     dispatch(serviceCreateVoca({ ...voca, setId }));
-  //   } else {
-  //     dispatch(serviceUpdateVoca(voca));
-  //   }
-  // };
+  const apiSubmitModal = () => {
+    if (!voca.id) {
+      dispatch(serviceCreateVoca({ ...voca, setId }));
+    } else {
+      dispatch(serviceUpdateVoca(voca));
+    }
+  };
   // Life cycle hook:
   useEffect(() => {
     if (setId) {
@@ -47,6 +40,7 @@ function SetVocasDetail(props) {
         <MyVocasInstruction />
         <MyVocasBody />
       </BodyContainer>
+      <CreateUpdateVocaModal onSubmit={apiSubmitModal} />
     </React.Fragment>
   );
 }
