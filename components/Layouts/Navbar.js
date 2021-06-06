@@ -16,7 +16,6 @@ import {
   ProfileMenuPopup,
 } from "./NavbarHelper";
 import MyLink from "components/atoms/my-link";
-import styles from "./styles.module.css";
 import { navigate, removeGmailTag, showLoginForm } from "utils/Helper";
 import Login from "container/Login";
 import { useDispatch, useSelector } from "react-redux";
@@ -177,7 +176,7 @@ function Navbar(props) {
               <MyLink
                 isNav={true}
                 url={appUrl.donate().url}
-                className={styles.flashEffect}
+                className='flashEffect'
               >
                 DONATE
               </MyLink>
