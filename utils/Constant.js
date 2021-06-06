@@ -73,3 +73,7 @@ export const COMMA = ",";
 export const SECONDS_TO_MILISECONDS = 1000;
 
 export const TO_PERCENT = 100;
+
+export const DONATE_ID = 'donate-btn';
+
+export const FLASH_EFFECT = "flash-effect";

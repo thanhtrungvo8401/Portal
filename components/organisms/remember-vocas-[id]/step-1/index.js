@@ -8,6 +8,7 @@ import TitleItem from "components/atoms/title-item";
 import TitleBody from "components/atoms/title-body";
 import DividerItem from "components/atoms/devider-item";
 import { BodyTop } from "components/atoms/body-wrapper";
+import { FLASH_EFFECT } from "utils/Constant";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -108,7 +109,7 @@ export default function Remember_Id_Step1({ study, actionUpdate, actionChangeSte
           <ActionsBtnGroup center={true} >
             <Button
               onClick={() => actionChangeStep(2)} // step = 2 XXX
-              className='flashEffect'
+              className={FLASH_EFFECT}
               variant="contained"
               color="primary"
             >

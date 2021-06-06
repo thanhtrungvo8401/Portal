@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function MyLink({ className, variant, url, children, isNav }) {
+export default function MyLink({ className, variant, url, children, isNav, id }) {
   const classes = useStyles();
   const navigateToUrl = () => {
     if (Boolean(url)) {
@@ -42,6 +42,7 @@ export default function MyLink({ className, variant, url, children, isNav }) {
   };
   return (
     <Typography
+      id={id}
       onClick={navigateToUrl}
       className={`${className} ${isNav ? classes.navLink : classes.link}`}
       variant={variant || "body1"}
