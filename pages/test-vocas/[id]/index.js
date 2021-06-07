@@ -1,8 +1,8 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { withPrivateLayout } from "components/templates/main";
 import TestGroupStep1 from "components/organisms/test-vocas-[id]/step-1";
-import { TestGroupStep2 } from "container/TestGroup/TestGroupStep2";
+import TestGroupStep2 from "components/organisms/test-vocas-[id]/step-2";
 import ChangeStepBg from "components/atoms/change-step-bg";
 import { serviceGetVocasByTestGroup } from "service/vocaService";
 import { BodyContainer } from "components/atoms/body-wrapper";
@@ -12,7 +12,6 @@ const initTestObj = { step: 1 }
 
 function TestYourKnowLege(props) {
   const dispatch = useDispatch();
-  const { list } = useSelector(state => state.vocas);
   const [testObj, setTestObj] = React.useState({ ...initTestObj });
   const [bgStep, setBgStep] = React.useState(0);
 
