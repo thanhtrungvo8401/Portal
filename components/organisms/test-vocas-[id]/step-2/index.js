@@ -5,13 +5,14 @@ import TitleBody from "components/atoms/title-body";
 import DividerItem from "components/atoms/devider-item";
 import HorizontalMoveCover from "components/molecules/horizontal-move-cover";
 import { useSelector } from "react-redux";
-import { isEmptyArr, randomList } from "utils/Helper";
+import { isEmptyArr, randomList, sortAscBaseOnId } from "utils/Helper";
 import FollowCatBtn from "components/molecules/follow-cat-btn";
 import { Autocomplete } from "@material-ui/lab";
 import { Button, makeStyles, TextField } from "@material-ui/core";
 import { jpSpeak } from "utils/textToSpeech";
 import ActionsBtnGroup from "components/atoms/action-btns-group";
 import AudioIcon from "components/atoms/audio-icon";
+import { constantApp } from "utils/Constant";
 
 const useStyles = makeStyles(theme => ({
   selection: {
@@ -27,21 +28,21 @@ export default function TestGroupStep2({ onFinishStep2 }) {
   const [vocas, setVocas] = React.useState([]);
   const [results, setResults] = React.useState([]);
   const [vocaQA, setVocaQA] = React.useState({});
+  const [time, setTime] = React.useState(0);
   const [readyToStart, setReadyToStart] = React.useState({ isIn: true, ready: false });
-  const optionsMeaning = React.useMemo(() => list.map(el => el.meaning).sort((a, b) => a > b ? 1 : -1), [list]);
+  const optionsMeaning = React.useMemo(() => [...list].sort(sortAscBaseOnId).map(el => el.meaning), [list]);
 
   const handleGetVocaQA = () => {
     if (!isEmptyArr(vocas)) {
       const newVocaQA = vocas[0];
       const newVocas = vocas.slice(1); // get element from 1 - end:
-      setResults([...results, vocaQA]);
+      setResults([...results, { ...vocaQA, time: Date.now() - time - constantApp.animationDuration }]);
       setVocaQA({ ...newVocaQA, isIn: true, result: "" });
       setVocas(newVocas);
     } else {
-      onFinishStep2([...results, vocaQA])
+      onFinishStep2([...results, { ...vocaQA, time: Date.now() - time - constantApp.animationDuration }])
     }
   }
-
 
   React.useEffect(() => {
     if (list.length) setVocas(randomList([...list]));
@@ -62,7 +63,11 @@ export default function TestGroupStep2({ onFinishStep2 }) {
             <HorizontalMoveCover
               isActive={!!vocaQA.isIn}
               onExited={() => handleGetVocaQA()}
-              onEntered={() => jpSpeak({ content: vocaQA.voca })}
+              onEntered={() => {
+                jpSpeak({ content: vocaQA.voca })
+                  .then(res => setTime(Date.now()))
+                  .catch(err => console.log(err))
+              }}
             >
               <div onClick={() => jpSpeak({ content: vocaQA.voca })} style={{ cursor: "pointer" }} >
                 <AudioIcon />

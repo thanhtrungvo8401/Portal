@@ -7,9 +7,9 @@ import ChangeStepBg from "components/atoms/change-step-bg";
 import { serviceGetVocasByTestGroup } from "service/vocaService";
 import { BodyContainer } from "components/atoms/body-wrapper";
 import TitlePage from "components/atoms/title-page";
+import { sortAscBaseOnId } from "utils/Helper";
 
 const initTestObj = { step: 1 }
-const sortAscBaseOnId = (a, b) => a.id > b.id ? 1 : -1;
 const KEY = {
   STEP2: "step_2",
   STEP3: "step_3",
@@ -32,6 +32,7 @@ function TestYourKnowLege(props) {
           return { ...v, [KEY.STEP2]: { value: _v.result, time: _v.time } }
         })
     setResults(_results);
+    setBgStep(3);
   }
 
   React.useEffect(() => {
