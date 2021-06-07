@@ -8,7 +8,7 @@ import DisplayVocas from "components/organisms/remember-vocas-[id]/step-2/ListUi
 import Instruction_Step2 from "components/organisms/remember-vocas-[id]/step-2/instruction";
 import ActionsBtnGroup from "components/atoms/action-btns-group";
 import FollowCatBtn from "components/molecules/follow-cat-btn";
-import VerticalMoveCover from "components/atoms/vertical-move-cover";
+import VerticalMoveCover from "components/molecules/vertical-move-cover";
 import TitleBody from "components/atoms/title-body";
 import { BodyMaxWidth, BodyTop } from "components/atoms/body-wrapper";
 

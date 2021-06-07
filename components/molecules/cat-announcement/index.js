@@ -1,4 +1,4 @@
-import VerticalMoveCover from "components/atoms/vertical-move-cover";
+import VerticalMoveCover from "components/molecules/vertical-move-cover";
 import BgColorOpacity from "components/atoms/bg-color-opacity";
 import ActionsBtnGroup from "components/atoms/action-btns-group";
 import { makeStyles, Typography } from "@material-ui/core";
