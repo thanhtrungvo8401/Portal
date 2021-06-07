@@ -1,6 +1,4 @@
 import { Avatar, Box, Button, Card, Divider, List, ListItem, ListItemAvatar, ListItemText, makeStyles, Typography } from "@material-ui/core";
-import { theme } from "components/theme";
-import EditIcon from '@material-ui/icons/Edit';
 import { LEVEL, storageKey } from "utils/Constant";
 import React from "react";
 import TestVocaModal from "../../../TestVocaModal/TestVocaModal";
@@ -13,6 +11,7 @@ import { navigate } from "utils/Helper";
 import { appUrl } from "utils/APP_URL";
 import ActionsBtnGroup from "components/atoms/action-btns-group";
 import DividerItem from "components/atoms/devider-item";
+import TitleBody from "components/atoms/title-body";
 
 const destopWidth = "10rem";
 
@@ -143,10 +142,7 @@ export default function TestVocaBox({ }) {
           <List className="list">
             {/* SO LUONG */}
             <ListItem className="list-item" >
-              <ListItemAvatar><div></div></ListItemAvatar>
-              <ListItemText>
-                <Typography variant="h6" style={{ textAlign: "center" }} color="textSecondary" >Số lượng</Typography>
-              </ListItemText>
+              <TitleBody style={{ textAlign: "center" }}>Số lượng</TitleBody>
             </ListItem>
             <ListItem className="list-item" >
               <ListItemAvatar>
@@ -158,16 +154,15 @@ export default function TestVocaBox({ }) {
                 </Typography>
               </ListItemText>
             </ListItem>
-            <Divider className='divider' />
+            <DividerItem />
+            <DividerItem />
             {/* RESOURCES */}
             <ListItem className="list-item" >
-              <ListItemAvatar><div></div></ListItemAvatar>
-              <ListItemText style={{ textAlign: "center" }} >
-                <Typography variant="h6" style={{ textAlign: "center" }} color="textSecondary" >Nội dung</Typography>
-              </ListItemText>
+              <TitleBody style={{ textAlign: "center" }} >Nội dung</TitleBody>
             </ListItem>
-            {
-              Object.keys(resources).map((key) => {
+            {/* render list resources */}
+            {Object.keys(resources)
+              .map((key) => {
                 const { active, value } = resources[key];
                 if (!active || value.length === 0) return null;
                 if (hideDivider === null) hideDivider = key;
@@ -182,12 +177,10 @@ export default function TestVocaBox({ }) {
                     </ListItemText>
                   </ListItem>
                 </React.Fragment>
-              })
-            }
+              })}
           </List>
           <ActionsBtnGroup center>
             <Button variant="contained" color="primary" onClick={() => dispatch(actionSetIsShowModal(true))} >
-              <EditIcon style={{ fontSize: "1.5rem", marginRight: theme.spacing(1) }} />
               <Typography>Edit</Typography>
             </Button>
           </ActionsBtnGroup>
