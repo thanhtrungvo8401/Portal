@@ -1,9 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { withPrivateLayout } from "components/templates/main";
-import TestGroupStep1 from "container/TestGroup/TestGroupStep1";
-import ChangeStepBg from "components/atoms/change-step-bg";
+import TestGroupStep1 from "components/organisms/test-vocas-[id]/step-1";
 import { TestGroupStep2 } from "container/TestGroup/TestGroupStep2";
+import ChangeStepBg from "components/atoms/change-step-bg";
 import { serviceGetVocasByTestGroup } from "service/vocaService";
 import { BodyContainer } from "components/atoms/body-wrapper";
 import TitlePage from "components/atoms/title-page";
