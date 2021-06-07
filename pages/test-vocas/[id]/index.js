@@ -24,8 +24,8 @@ function TestYourKnowLege(props) {
   const [testObj, setTestObj] = React.useState({ ...initTestObj });
   const [bgStep, setBgStep] = React.useState(0);
 
-  const handleFinishStep2 = (results) => {
-    const step2Results = results.sort(sortAscBaseOnId);
+  const handleFinishStep2 = (values) => {
+    const step2Results = values.sort(sortAscBaseOnId);
     const _results =
       [...list].sort(sortAscBaseOnId)
         .map((v, i) => {
@@ -36,7 +36,16 @@ function TestYourKnowLege(props) {
     setBgStep(3);
   }
 
-  const handleFinishStep3 = (results) => { }
+  const handleFinishStep3 = (values) => {
+    const step3Results = values.sort(sortAscBaseOnId);
+    const _results =
+      results.map((v, i) => {
+        const _v = step3Results[i];
+        return { ...v, [KEY.STEP3]: { value: _v.result, time: _v.time } }
+      })
+    setResults(_results);
+    setBgStep(4);
+  }
 
   React.useEffect(() => {
     dispatch(serviceGetVocasByTestGroup());

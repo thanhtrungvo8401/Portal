@@ -21,6 +21,7 @@ export default function TranslateVocaDisplay({ variant = "", voca }) {
 
   React.useEffect(() => {
     setTranlate('');
+    setIsTran(false);
   }, [voca]);
 
   React.useEffect(() => {
@@ -41,7 +42,7 @@ export default function TranslateVocaDisplay({ variant = "", voca }) {
     {isTran &&
       <Typography
         className="hiragana"
-        style={{ cursor: "pointer" }}
+        style={{ cursor: "pointer", whiteSpace: 'nowrap' }}
         onClick={() => setIsTran(!isTran)}
       >
         {translate}

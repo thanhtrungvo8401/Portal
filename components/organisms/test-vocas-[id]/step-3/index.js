@@ -39,7 +39,7 @@ export default function TestGroupStep3({ onFinishStep3 }) {
       setVocaQA({ ...newVocaQA, isIn: true, result: "" });
       setVocas(newVocas);
     } else {
-      onFinishStep2([...results, { ...vocaQA, time: Date.now() - time - constantApp.animationDuration }])
+      onFinishStep3([...results, { ...vocaQA, time: Date.now() - time - constantApp.animationDuration }])
     }
   }
 
