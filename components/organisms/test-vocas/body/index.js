@@ -171,7 +171,7 @@ export default function TestVocaBody({ }) {
                       <ListItemAvatar>
                         <Avatar className="avatar" >{key !== LEVEL.MV ? key : "自"}</Avatar>
                       </ListItemAvatar>
-                      <ListItemText style={{ textAlign: "center" }} >
+                      <ListItemText>
                         {renderContentTestBox(key, value)}
                       </ListItemText>
                     </ListItem>
