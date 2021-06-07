@@ -6,7 +6,6 @@ import DividerItem from "components/atoms/devider-item";
 import HorizontalMoveCover from "components/molecules/horizontal-move-cover";
 
 export default function TestGroupStep2({ }) {
-  const [isActive, setIsActive] = React.useState(true);
   return <React.Fragment>
     <Instruction_Step2 />
     <BodyTop>
@@ -16,10 +15,6 @@ export default function TestGroupStep2({ }) {
       <HorizontalMoveCover isActive={isActive} >
         <h1>HelloWorld</h1>
       </HorizontalMoveCover>
-
-      <button onClick={() => setIsActive(!isActive)} >
-        Reverse
-      </button>
     </BodyTop>
   </React.Fragment>
 }
