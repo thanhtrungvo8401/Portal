@@ -31,8 +31,9 @@ function TestYourKnowLege(props) {
     </BodyContainer>
     {/* BG Change Step */}
     <ChangeStepBg
-      step={bgStep} reset={() => setBgStep(0)}
+      step={bgStep}
       actionChangeStep={(step) => setTestObj({ ...testObj, step })}
+      reset={() => setBgStep(0)}
     />
   </React.Fragment>
 }
