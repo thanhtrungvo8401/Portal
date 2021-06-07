@@ -52,8 +52,8 @@ export default function HorizontalMoveCover({ isActive, onEntered, onExited, chi
   return <div className={classes.root} >
     <CSSTransition
       timeout={animationDuration}
-      onEntered={onEntered && onEntered()}
-      onExited={onExited && onExited()}
+      onEntered={() => onEntered && onEntered()}
+      onExited={() => onExited && onExited()}
       in={isActive}
       classNames="horizontal-move-cover"
     >

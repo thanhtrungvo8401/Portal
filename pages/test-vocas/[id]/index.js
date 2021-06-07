@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { withPrivateLayout } from "components/templates/main";
 import TestGroupStep1 from "components/organisms/test-vocas-[id]/step-1";
 import TestGroupStep2 from "components/organisms/test-vocas-[id]/step-2";
@@ -9,15 +9,38 @@ import { BodyContainer } from "components/atoms/body-wrapper";
 import TitlePage from "components/atoms/title-page";
 
 const initTestObj = { step: 1 }
+const sortAscBaseOnId = (a, b) => a.id > b.id ? 1 : -1;
+const KEY = {
+  STEP2: "step_2",
+  STEP3: "step_3",
+  STEP4: "step_4"
+}
 
 function TestYourKnowLege(props) {
   const dispatch = useDispatch();
+  const { list } = useSelector(state => state.vocas);
+  const [results, setResults] = React.useState([]);
   const [testObj, setTestObj] = React.useState({ ...initTestObj });
   const [bgStep, setBgStep] = React.useState(0);
+
+  const handleFinishStep2 = (results) => {
+    const step2Results = results.sort(sortAscBaseOnId);
+    const _results =
+      [...list].sort(sortAscBaseOnId)
+        .map((v, i) => {
+          const _v = step2Results[i];
+          return { ...v, [KEY.STEP2]: { value: _v.result, time: _v.time } }
+        })
+    setResults(_results);
+  }
 
   React.useEffect(() => {
     dispatch(serviceGetVocasByTestGroup());
   }, []);
+
+  React.useEffect(() => {
+    if (results.length) console.log(results);
+  }, [results])
 
   return <React.Fragment>
     <TitlePage>Kiểm tra kiến thức</TitlePage>
@@ -26,7 +49,7 @@ function TestYourKnowLege(props) {
         <TestGroupStep1 actionChangeStep={setBgStep} />
       }
       {testObj.step === 2 &&
-        <TestGroupStep2 actionChangeStep={setBgStep} />
+        <TestGroupStep2 onFinishStep2={handleFinishStep2} />
       }
     </BodyContainer>
     {/* BG Change Step */}
