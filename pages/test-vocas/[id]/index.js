@@ -4,6 +4,7 @@ import { withPrivateLayout } from "components/templates/main";
 import TestGroupStep1 from "components/organisms/test-vocas-[id]/step-1";
 import TestGroupStep2 from "components/organisms/test-vocas-[id]/step-2";
 import TestGroupStep3 from "components/organisms/test-vocas-[id]/step-3";
+import TestGroupStep4 from "components/organisms/test-vocas-[id]/step-4";
 import ChangeStepBg from "components/atoms/change-step-bg";
 import { serviceGetVocasByTestGroup } from "service/vocaService";
 import { BodyContainer } from "components/atoms/body-wrapper";
@@ -47,6 +48,9 @@ function TestYourKnowLege(props) {
     setBgStep(4);
   }
 
+  const handleFinishStep4 = (values) => {
+  }
+
   React.useEffect(() => {
     dispatch(serviceGetVocasByTestGroup());
   }, []);
@@ -66,6 +70,9 @@ function TestYourKnowLege(props) {
       }
       {testObj.step === 3 &&
         <TestGroupStep3 onFinishStep3={handleFinishStep3} />
+      }
+      {testObj.step === 4 &&
+        <TestGroupStep4 onFinishStep4={handleFinishStep4} />
       }
     </BodyContainer>
     {/* BG Change Step */}
