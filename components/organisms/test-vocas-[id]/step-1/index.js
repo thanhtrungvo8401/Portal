@@ -20,7 +20,7 @@ export default function TestGroupStep1({ actionChangeStep }) {
       isIn={!readyToGo.ready}
       description={"Tôi đã sẵn sàng"}
       onClick={() => setReadyToGo({ ready: true })}
-      onExited={() => actionChangeStep(2)}
+      onExited={() => actionChangeStep(3)}
     />
   </BodyTop>
 }

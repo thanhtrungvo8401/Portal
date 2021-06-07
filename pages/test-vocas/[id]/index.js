@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { withPrivateLayout } from "components/templates/main";
 import TestGroupStep1 from "components/organisms/test-vocas-[id]/step-1";
 import TestGroupStep2 from "components/organisms/test-vocas-[id]/step-2";
+import TestGroupStep3 from "components/organisms/test-vocas-[id]/step-3";
 import ChangeStepBg from "components/atoms/change-step-bg";
 import { serviceGetVocasByTestGroup } from "service/vocaService";
 import { BodyContainer } from "components/atoms/body-wrapper";
@@ -35,6 +36,8 @@ function TestYourKnowLege(props) {
     setBgStep(3);
   }
 
+  const handleFinishStep3 = (results) => { }
+
   React.useEffect(() => {
     dispatch(serviceGetVocasByTestGroup());
   }, []);
@@ -51,6 +54,9 @@ function TestYourKnowLege(props) {
       }
       {testObj.step === 2 &&
         <TestGroupStep2 onFinishStep2={handleFinishStep2} />
+      }
+      {testObj.step === 3 &&
+        <TestGroupStep3 onFinishStep3={handleFinishStep3} />
       }
     </BodyContainer>
     {/* BG Change Step */}
