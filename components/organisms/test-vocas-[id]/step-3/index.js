@@ -9,10 +9,9 @@ import { isEmptyArr, randomList, sortAscBaseOnId } from "utils/Helper";
 import FollowCatBtn from "components/molecules/follow-cat-btn";
 import { Autocomplete } from "@material-ui/lab";
 import { Button, makeStyles, TextField } from "@material-ui/core";
-import { jpSpeak } from "utils/textToSpeech";
 import ActionsBtnGroup from "components/atoms/action-btns-group";
-import AudioIcon from "components/atoms/audio-icon";
 import { constantApp } from "utils/Constant";
+import TranslateVocaDisplay from "components/molecules/translate-voca-display";
 
 const useStyles = makeStyles(theme => ({
   selection: {
@@ -57,21 +56,15 @@ export default function TestGroupStep3({ onFinishStep3 }) {
     <BodyTop>
       {readyToStart.ready &&
         <React.Fragment>
-          <TitleBody>Nghe cách đọc chọn nghĩa tiếng việt</TitleBody>
+          <TitleBody>Nhìn từ vựng tiếng Nhật chọn nghĩa tiếng Việt</TitleBody>
           <DividerItem />
           <BodyMaxWidth>
             <HorizontalMoveCover
               isActive={!!vocaQA.isIn}
               onExited={() => handleGetVocaQA()}
-              onEntered={() => {
-                jpSpeak({ content: vocaQA.voca })
-                  .then(res => setTime(Date.now()))
-                  .catch(err => console.log(err))
-              }}
+              onEntered={() => { setTime(Date.now()) }}
             >
-              <div onClick={() => jpSpeak({ content: vocaQA.voca })} style={{ cursor: "pointer" }} >
-                <AudioIcon />
-              </div>
+              <TranslateVocaDisplay voca={vocaQA.voca} variant='h4' />
             </HorizontalMoveCover>
             <DividerItem />
 
