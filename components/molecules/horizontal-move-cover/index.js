@@ -12,6 +12,9 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center",
   },
   transitionCover: {
+    opacity: 0,
+    transform: "translateX(-50vw)",
+    transition: `all ${animationDuration}ms ease-in`,
     ...cssAnimationHelper("horizontal-move-cover",
       {
         opacity: 0,
