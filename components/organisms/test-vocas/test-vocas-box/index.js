@@ -1,16 +1,18 @@
 import { Avatar, Box, Button, Card, Divider, List, ListItem, ListItemAvatar, ListItemText, makeStyles, Typography } from "@material-ui/core";
-import { theme } from "../../components/theme";
+import { theme } from "components/theme";
 import EditIcon from '@material-ui/icons/Edit';
-import { LEVEL, storageKey } from "../../utils/Constant";
+import { LEVEL, storageKey } from "utils/Constant";
 import React from "react";
-import TestVocaModal from "../TestVocaModal/TestVocaModal";
+import TestVocaModal from "../../../TestVocaModal/TestVocaModal";
 import { useDispatch, useSelector } from "react-redux";
-import { actionSetIsShowModal } from "../../redux/actions/testVocaActions";
-import { serviceGetSetVocas } from "../../service/setVocaService";
-import { serviceGetTestVocaByOwnerId } from "../../service/testVocaService";
-import { localStorageHelper } from "../../utils/storageHelper";
-import { navigate } from "../../utils/Helper";
-import { appUrl } from "../../utils/APP_URL";
+import { actionSetIsShowModal } from "redux/actions/testVocaActions";
+import { serviceGetSetVocas } from "service/setVocaService";
+import { serviceGetTestVocaByOwnerId } from "service/testVocaService";
+import { localStorageHelper } from "utils/storageHelper";
+import { navigate } from "utils/Helper";
+import { appUrl } from "utils/APP_URL";
+import ActionsBtnGroup from "components/atoms/action-btns-group";
+import DividerItem from "components/atoms/devider-item";
 
 const destopWidth = "10rem";
 
@@ -44,9 +46,8 @@ const useStyles = makeStyles(theme => ({
       },
     },
     "& .left-caption": {
-      marginTop: theme.spacing(2),
       color: theme.palette.white.main,
-      textIndent: theme.spacing(2)
+      textAlign: "center"
     }
   },
   RightPart: {
@@ -81,17 +82,6 @@ const useStyles = makeStyles(theme => ({
     "& .divider": {
       margin: `${theme.spacing(2)}px 0px`,
       height: '3px'
-    },
-    "& .divider-small": {
-      margin: `${theme.spacing(1)}px 0px`,
-    },
-    "& .edit-line": {
-      display: "flex",
-      justifyContent: "center",
-      alignItem: "center",
-      marginTop: theme.spacing(2),
-      position: "relative",
-      zIndex: 1
     },
   }
 }));
@@ -134,36 +124,22 @@ export default function TestVocaBox({ }) {
   return <React.Fragment>
     <Card className={classes.Card} >
       <Box className={classes.LeftPart} >
-        <Typography
-          variant="h5"
-          className="left-title">
-          Hộp kí ức
-      </Typography>
-        <div style={{ display: "flex", justifyContent: "center" }} >
+        <Typography variant="h5" className="left-title">Hộp kí ức</Typography>
+
+        <ActionsBtnGroup center>
           <Avatar className="avatar" src="/image/avatar_test_group.jpg" ></Avatar>
-        </div>
-        <Typography
-          variant="body2"
-          className="left-caption">
-          Học là quá trình nhớ và quên...
-      </Typography>
-        <div style={{ display: "flex", justifyContent: "center" }} >
-          <Button style={{
-            marginTop: theme.spacing(2),
-            marginLeft: "auto",
-            marginRight: "auto"
-          }}
-            onClick={() => handleGoToCheckVoca()}
-            color="primary" variant="contained" >
-            Start Testing
-        </Button>
-        </div>
+        </ActionsBtnGroup>
+        <DividerItem />
+
+        <Typography className="left-caption">Học là quá trình nhớ và quên...</Typography>
+        <ActionsBtnGroup center>
+          <Button onClick={() => handleGoToCheckVoca()} color="primary" variant="contained" >Start Testing</Button>
+        </ActionsBtnGroup>
       </Box>
+
       <Box className={classes.RightPart} >
-        <Typography variant="h4" component="label" className="right-title" >
-          練習
-      </Typography>
-        <Box className={classes.MainContentBox} >
+        <Typography variant="h4" className="right-title" >練習</Typography>
+        <div className={classes.MainContentBox} >
           <List className="list">
             {/* SO LUONG */}
             <ListItem className="list-item" >
@@ -196,7 +172,7 @@ export default function TestVocaBox({ }) {
                 if (!active || value.length === 0) return null;
                 if (hideDivider === null) hideDivider = key;
                 return <React.Fragment key={key} >
-                  {hideDivider !== key && <Divider className='divider-small' />}
+                  {hideDivider !== key && <DividerItem isHasLine />}
                   <ListItem className="list-item" >
                     <ListItemAvatar>
                       <Avatar className="avatar" >{key !== LEVEL.MV ? key : "自"}</Avatar>
@@ -209,19 +185,13 @@ export default function TestVocaBox({ }) {
               })
             }
           </List>
-          <div className="edit-line" >
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => dispatch(actionSetIsShowModal(true))}
-            >
-              <EditIcon
-                style={{ fontSize: "1.5rem", marginRight: theme.spacing(1) }}
-              />
+          <ActionsBtnGroup center>
+            <Button variant="contained" color="primary" onClick={() => dispatch(actionSetIsShowModal(true))} >
+              <EditIcon style={{ fontSize: "1.5rem", marginRight: theme.spacing(1) }} />
               <Typography>Edit</Typography>
             </Button>
-          </div>
-        </Box>
+          </ActionsBtnGroup>
+        </div>
       </Box>
     </Card >
     <TestVocaModal />
