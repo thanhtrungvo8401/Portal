@@ -5,7 +5,7 @@ import TitleItem from "components/atoms/title-item";
 import DividerItem from "components/atoms/devider-item";
 import GridGroupsItem from "components/molecules/grid-groups-items";
 import ItemOutline from "components/atoms/item-outline";
-import HearingIcon from '@material-ui/icons/Hearing';
+import AudioIcon from "components/atoms/audio-icon";
 import { Button, makeStyles, Typography } from "@material-ui/core";
 import { CSSTransition } from "react-transition-group";
 import { cssAnimationHelper } from "utils/AnimationHelper";
@@ -53,7 +53,7 @@ function RenderQuestion({ voca }) {
       </ItemOutline>
     case QA_TYPE.SOUND:
       return <ItemOutline center={true}>
-        <HearingIcon color="primary" style={{ fontSize: '2rem' }} />
+        <AudioIcon small />
       </ItemOutline>
     default:
       return null;
