@@ -8,6 +8,7 @@ import Head from "next/head";
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "components/theme";
 import { CssBaseline } from "@material-ui/core";
+import { DONATE_ID, FLASH_EFFECT } from "utils/Constant";
 
 export default function MyApp({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState);
@@ -21,6 +22,9 @@ export default function MyApp({ Component, pageProps }) {
     if (body) {
       body.style.backgroundColor = theme.palette.background.main
     }
+    // Add animation for Donate-BTN:
+    const donate = document.getElementById(DONATE_ID);
+    if (donate) donate.classList && donate.classList.add(FLASH_EFFECT);
   }, []);
   return (
     <React.Fragment>

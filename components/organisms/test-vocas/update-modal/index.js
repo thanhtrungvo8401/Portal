@@ -19,12 +19,12 @@ import {
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Autocomplete } from "@material-ui/lab";
-import { LEVEL, LEVEL_OPTION } from "../../utils/Constant";
-import { theme } from "../../components/theme";
-import { actionSetNumber, actionUpdateResources } from "../../redux/actions/testVocaActions";
+import { LEVEL, LEVEL_OPTION } from "utils/Constant";
+import { theme } from "components/theme";
+import { actionSetNumber, actionUpdateResources } from "redux/actions/testVocaActions";
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import Favorite from '@material-ui/icons/Favorite';
-import { serviceUpdateTestVoca } from "../../service/testVocaService";
+import { serviceUpdateTestVoca } from "service/testVocaService";
 
 
 const Transition = React.forwardRef((props, ref) => {
@@ -111,59 +111,29 @@ export default function TestVocaModal({ }) {
   const handleUpdateTestVocas = () => {
     dispatch(serviceUpdateTestVoca())
   }
-  return <Dialog
-    open={isShowModal}
-    TransitionComponent={Transition}
-    keepMounted
-    aria-labelledby="alert-dialog-slide-title"
-    style={{ zIndex: 500 }}
-  >
+  return <Dialog open={isShowModal} style={{ zIndex: 500 }} keepMounted TransitionComponent={Transition} aria-labelledby="alert-dialog-slide-title">
     <DialogTitle id="alert-dialog-slide-title">
       Hộp kí ức
     </DialogTitle>
     <DialogContent>
       {/* NUMBER GROUP */}
       <Box>
-        <TextField
-          id="test-voca-number"
-          type="number"
-          color="primary"
-          required
-          name="number"
-          value={number}
-          label="Số lượng"
-          variant="outlined"
-          style={{ width: "100%" }}
-          onChange={handleOnChangeNumberOfVocas}
+        <TextField id="test-voca-number" type="number" color="primary" required
+          name="number" value={number} label="Số lượng" variant="outlined"
+          style={{ width: "100%" }} onChange={handleOnChangeNumberOfVocas}
         />
-        <Typography
-          variant="caption"
-          color="textSecondary"
-          style={{
-            fontStyle: "italic",
-            display: "block"
-          }}
-        >
+        <Typography variant="caption" color="textSecondary" style={{ fontStyle: "italic", display: "block" }} >
           (*) meomeo-kun sẽ chọn ngẫu nhiên {number} để kiểm tra kiến thức của bạn
-      </Typography>
+        </Typography>
       </Box>
       {/* SELECT OPTIONS */}
       <Divider className={classes.Divider} />
       <FormGroup row>
         {Object.keys(resources).map(key => {
-          return <FormControlLabel key={key}
+          return <FormControlLabel key={key} label={key !== LEVEL.MV ? key : "自分で"}
             control={
-              <Checkbox
-                icon={<FavoriteBorder />}
-                checkedIcon={<Favorite />}
-                checked={resources[key]["active"]}
-                name={key}
-                onChange={handleToggleActiveLevel}
-                color="primary"
-              />
-            }
-            label={key !== LEVEL.MV ? key : "自分で"}
-          />
+              <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} color="primary" name={key}
+                checked={resources[key]["active"]} onChange={handleToggleActiveLevel} />} />
         })}
       </FormGroup>
       {/* SELECT FOR LEVEL */}
@@ -172,50 +142,24 @@ export default function TestVocaModal({ }) {
         {Object.keys(resources).map(key => {
           const { active, value, isSelectAll } = resources[key];
           if (!active) return null;
-          return <Card
-            className="list-item"
-            key={key}
-          >
+          return <Card className="list-item" key={key}>
             <div className="avatar" >
               <Avatar style={{ backgroundColor: theme.palette.primary.main }} >
                 {key === LEVEL.MV ? "自" : key}
               </Avatar>
             </div>
+
             <FormGroup className="action-group">
-              <FormControlLabel
-                value="bottom"
-                control={
-                  <Checkbox
-                    checked={isSelectAll}
-                    name={key}
-                    onChange={handleSelectToggleCheckAll}
-                    color="primary"
-                  />
-                }
-                label="Select all"
+              <FormControlLabel value="bottom" label="Select all"
+                control={<Checkbox checked={isSelectAll} onChange={handleSelectToggleCheckAll} color="primary" name={key} />}
               />
 
             </FormGroup>
             <div className="select-group" >
-              <Autocomplete
-                multiple
-                id={"autocomplete_" + key}
+              <Autocomplete multiple id={"autocomplete_" + key} value={value} filterSelectedOptions
                 options={key !== LEVEL.MV ? LEVEL_OPTION[key] : MVOptions}
-                value={value}
-                getOptionLabel={
-                  key !== LEVEL.MV
-                    ? option => "B-" + option
-                    : option => list.find(el => el.id === option)?.setName
-                }
-                filterSelectedOptions
-                renderInput={params => {
-                  return <TextField
-                    {...params}
-                    variant="outlined"
-                    label=""
-                    // placeholder="Danh sách đang rỗng"
-                  />
-                }}
+                getOptionLabel={key !== LEVEL.MV ? ((option) => "B-" + option) : ((option) => list.find(el => el.id === option)?.setName)}
+                renderInput={params => <TextField {...params} variant="outlined" label="" />}
                 onChange={(e, values, reason) => handleOnChangeLessonForLevel(key, values)}
               />
             </div>
@@ -224,12 +168,7 @@ export default function TestVocaModal({ }) {
       </Box>
     </DialogContent>
     <DialogActions style={{ display: "flex", justifyContent: "center" }} >
-      <Button
-        disabled={!number}
-        color="primary"
-        variant="contained"
-        onClick={handleUpdateTestVocas}
-      >Update</Button>
+      <Button disabled={!number} color="primary" variant="contained" onClick={handleUpdateTestVocas} >Đóng</Button>
     </DialogActions>
   </Dialog>
 }

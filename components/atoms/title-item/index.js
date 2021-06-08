@@ -11,12 +11,13 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1rem"
   },
 }));
-export default function TitleItem({ children, hidden }) {
+export default function TitleItem({ children, hidden, style }) {
   const classes = useStyles();
   return (
     <div hidden={hidden} className={classes.root}>
       <Typography
         className={classes.typo}
+        style={style}
         component="h3"
         variant="subtitle2"
         color="textSecondary"

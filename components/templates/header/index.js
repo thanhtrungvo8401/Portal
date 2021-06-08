@@ -20,6 +20,7 @@ import { appUrl } from "utils/APP_URL";
 import { localStorageHelper } from "utils/storageHelper";
 import { storageKey } from "utils/Constant";
 import theme from "components/theme";
+import { DONATE_ID } from "utils/Constant";
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
@@ -172,7 +173,7 @@ export default function Header(props) {
               <MyLink
                 isNav={true}
                 url={appUrl.donate().url}
-                className='flashEffect'
+                id={DONATE_ID}
               >
                 DONATE
               </MyLink>

@@ -84,3 +84,5 @@ export const isEmptyArr = array => array.length === 0;
 export const getWidth = (!isServer && window.innerWidth) || 0;
 
 export const isMobile = !isServer && window.innerWidth < 960;
+
+export const sortAscBaseOnId = (a, b) => a.id > b.id ? 1 : -1;

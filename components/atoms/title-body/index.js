@@ -10,10 +10,10 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "400",
   },
 }));
-export default function TitleBody({ children, hidden }) {
+export default function TitleBody({ children, hidden, style }) {
   const classes = useStyles();
   return (
-    <div hidden={hidden} className={classes.root}>
+    <div hidden={hidden} className={classes.root} style={style} >
       <Typography
         className={classes.typo}
         variant="h6"
