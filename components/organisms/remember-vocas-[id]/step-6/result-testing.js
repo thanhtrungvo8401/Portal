@@ -6,31 +6,15 @@ import TitleBody from "components/atoms/title-body";
 import TitleItem from "components/atoms/title-item";
 import ListExpandItem from "components/molecules/list-expand-items";
 import TestResultCover from "components/molecules/test-result-cover";
-import CheckIcon from '@material-ui/icons/Check';
-import CloseIcon from '@material-ui/icons/Close';
-import HearingIcon from '@material-ui/icons/Hearing';
 import { QA_TYPE, QUESTION_PER_VOCA } from "components/organisms/remember-vocas-[id]/step-6";
+import AudioIcon from "components/atoms/audio-icon";
+import GetTrueFalseIcon from "components/molecules/get-true-false-icon";
 import React from "react";
 import { SECONDS_TO_MILISECONDS, TO_PERCENT } from "utils/Constant";
 const useStyles = makeStyles(theme => ({
   root: {
     "& .icon-cover": {
       display: "flex",
-    },
-    "& .icon": {
-      fontSize: "1rem",
-    },
-    "& .mr-1": {
-      marginRight: theme.spacing(1)
-    },
-    "& .ml-1": {
-      marginLeft: theme.spacing(1)
-    },
-    "& .true": {
-      color: theme.palette.success.main
-    },
-    "& .false": {
-      color: theme.palette.error.main
     }
   },
   summaryEl: {
@@ -51,14 +35,13 @@ const useStyles = makeStyles(theme => ({
       width: "5rem",
       width: '3.5rem',
       display: 'flex',
-      alignItems: 'center'
+      alignItems: 'center',
+      color: theme.palette.text.secondary,
+      fontSize: '1rem'
     }
   },
 }))
 
-const getIcon = (status, classes, key) => status
-  ? <CheckIcon className={`icon true ${classes}`} key={key} />
-  : <CloseIcon className={`icon false ${classes}`} key={key} />
 const getDisplay = type => {
   switch (type) {
     case QA_TYPE.JP:
@@ -66,12 +49,11 @@ const getDisplay = type => {
     case QA_TYPE.MEANING:
       return "JP";
     case QA_TYPE.SOUND:
-      return <HearingIcon />;
+      return <AudioIcon small />;
     default:
       return null;
   }
 }
-
 
 export default function ResultsTesting({ results, time, exactNum, onFinish, onTryAgain }) {
   const classes = useStyles();
@@ -86,7 +68,7 @@ export default function ResultsTesting({ results, time, exactNum, onFinish, onTr
           <div className="icon-cover" >
             {listFields.map((field, i) => {
               // JP, SOUND, MEANING: true | false
-              return getIcon(oneVoca[field].isExact, 'ml-1', i)
+              return <GetTrueFalseIcon status={oneVoca[field].isExact} ml key={i} />
             })}
           </div>
         </div>,
@@ -95,11 +77,11 @@ export default function ResultsTesting({ results, time, exactNum, onFinish, onTr
           {listFields.map((field, i) => {
             return <React.Fragment key={i}>
               <div className="one-line">
-                <Typography className="left-part" color="textSecondary">
+                <div className="left-part" color="textSecondary">
                   {/* // JP, SOUND, MEANING: display-name */}
-                  {getIcon(oneVoca[field].isExact, 'mr-1', i)}
+                  <GetTrueFalseIcon status={oneVoca[field].isExact} mr />
                   {getDisplay(field)}
-                </Typography>
+                </div>
                 <Typography color="textSecondary">{oneVoca[field]['result']}</Typography>
               </div>
               {i !== listFields.length - 1 && <DividerItem isHasLine />}

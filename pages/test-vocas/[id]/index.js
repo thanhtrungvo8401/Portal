@@ -24,50 +24,66 @@ function TestYourKnowLege(props) {
   const dispatch = useDispatch();
   const { list } = useSelector(state => state.vocas);
   const [results, setResults] = React.useState([]);
+  const [time, setTime] = React.useState(0);
+  const [exactNum, setExactNum] = React.useState(0);
   const [testObj, setTestObj] = React.useState({ ...initTestObj });
   const [bgStep, setBgStep] = React.useState(0);
 
   const handleFinishStep2 = (values) => {
     const step2Results = values.sort(sortAscBaseOnId);
+    let _time = 0;
+    let _exactNum = 0;
     const _results =
       [...list].sort(sortAscBaseOnId)
         .map((v, i) => {
           const _v = step2Results[i];
-          return { ...v, [KEY.STEP2]: { value: _v.result, time: _v.time } }
+          _time += _v.time;
+          if (_v.result === v['meaning']) _exactNum += 1;
+          return { ...v, [KEY.STEP2]: { value: _v.result, time: _v.time, isExact: _v.result === v['meaning'] } }
         })
     setResults(_results);
+    setTime(time + _time);
+    setExactNum(exactNum + _exactNum);
     setBgStep(3);
   }
 
   const handleFinishStep3 = (values) => {
     const step3Results = values.sort(sortAscBaseOnId);
+    let _time = 0;
+    let _exactNum = 0;
     const _results =
       results.map((v, i) => {
         const _v = step3Results[i];
-        return { ...v, [KEY.STEP3]: { value: _v.result, time: _v.time } }
+        _time += _v.time;
+        if (_v.result === v['meaning']) _exactNum += 1;
+        return { ...v, [KEY.STEP3]: { value: _v.result, time: _v.time, isExact: _v.result === v['meaning'] } }
       })
     setResults(_results);
+    setTime(time + _time);
+    setExactNum(exactNum + _exactNum);
     setBgStep(4);
   }
 
   const handleFinishStep4 = (values) => {
     const step4Results = values.sort(sortAscBaseOnId);
+    let _time = 0;
+    let _exactNum = 0;
     const _results =
       results.map((v, i) => {
         const _v = step4Results[i];
-        return { ...v, [KEY.STEP4]: { value: _v.result, time: _v.time } }
+        _time += _v.time;
+        if (_v.result === v['voca']) _exactNum += 1;
+        return { ...v, [KEY.STEP4]: { value: _v.result, time: _v.time, isExact: _v.result === v['voca'] } }
       });
     setResults(_results);
+    setTime(time + _time);
+    setExactNum(exactNum + _exactNum);
     setBgStep(5);
   }
 
   React.useEffect(() => {
     dispatch(serviceGetVocasByTestGroup());
   }, []);
-
-  React.useEffect(() => {
-    if (results.length) console.log(results);
-  }, [results])
 
   return <React.Fragment>
     <TitlePage>Kiểm tra kiến thức</TitlePage>
@@ -85,7 +101,7 @@ function TestYourKnowLege(props) {
         <TestGroupStep4 onFinishStep4={handleFinishStep4} />
       }
       {testObj.step === 5 &&
-        <TestGroupStep5 results={results} />
+        <TestGroupStep5 results={results} KEY={KEY} time={time} exactNum={exactNum} />
       }
     </BodyContainer>
     {/* BG Change Step */}
