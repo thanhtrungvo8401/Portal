@@ -5,6 +5,8 @@ import TestGroupStep1 from "components/organisms/test-vocas-[id]/step-1";
 import TestGroupStep2 from "components/organisms/test-vocas-[id]/step-2";
 import TestGroupStep3 from "components/organisms/test-vocas-[id]/step-3";
 import TestGroupStep4 from "components/organisms/test-vocas-[id]/step-4";
+import TestGroupStep5 from "components/organisms/test-vocas-[id]/step-5";
+
 import ChangeStepBg from "components/atoms/change-step-bg";
 import { serviceGetVocasByTestGroup } from "service/vocaService";
 import { BodyContainer } from "components/atoms/body-wrapper";
@@ -81,6 +83,9 @@ function TestYourKnowLege(props) {
       }
       {testObj.step === 4 &&
         <TestGroupStep4 onFinishStep4={handleFinishStep4} />
+      }
+      {testObj.step === 5 &&
+        <TestGroupStep5 results={results} />
       }
     </BodyContainer>
     {/* BG Change Step */}
