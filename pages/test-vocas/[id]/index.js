@@ -49,6 +49,14 @@ function TestYourKnowLege(props) {
   }
 
   const handleFinishStep4 = (values) => {
+    const step4Results = values.sort(sortAscBaseOnId);
+    const _results =
+      results.map((v, i) => {
+        const _v = step4Results[i];
+        return { ...v, [KEY.STEP4]: { value: _v.result, time: _v.time } }
+      });
+    setResults(_results);
+    setBgStep(5);
   }
 
   React.useEffect(() => {
