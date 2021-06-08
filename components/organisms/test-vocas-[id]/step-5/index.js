@@ -5,9 +5,13 @@ import TitleBody from "components/atoms/title-body";
 import ListExpandItem from "components/molecules/list-expand-items";
 import DividerItem from "components/atoms/devider-item";
 import { SECONDS_TO_MILISECONDS, TO_PERCENT } from "utils/Constant";
-import { makeStyles, Typography } from "@material-ui/core";
+import { Button, makeStyles, Typography } from "@material-ui/core";
 import GetTrueFalseIcon from "components/molecules/get-true-false-icon";
 import AudioIcon from "components/atoms/audio-icon";
+import ActionsBtnGroup from "components/atoms/action-btns-group";
+import { navigate } from "utils/Helper";
+import { appUrl } from "utils/APP_URL"
+
 const useStyles = makeStyles(theme => ({
   summaryEl: {
     display: "flex",
@@ -90,7 +94,12 @@ export default function TestGroupStep5({ results, KEY, time = 0, exactNum = 0 })
       <TestResultCover medal number={exactNum * TO_PERCENT / total} />
       <Typography style={{ textAlign: "center" }} variant="h6">
         Thời gian trung bình {(time / total / SECONDS_TO_MILISECONDS).toFixed(1)} (s)
-        </Typography>
+      </Typography>
+      <ActionsBtnGroup center >
+        <Button variant="outlined" onClick={() => navigate(appUrl.testVoca().url)} >
+          Kết thúc
+        </Button>
+      </ActionsBtnGroup>
     </BodyTop>
     <BodyTop>
       <TitleBody>Xem chi tiết</TitleBody>
