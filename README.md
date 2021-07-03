@@ -1,10 +1,17 @@
-HOW TO RUN PROJECT
-.env.development
-> npm run dev: In localhost, development time
+# LOCALHOST
+> npm run dev
+.env.development will be loaded (if we dont have .env.local)
 
-.env.production
+# DEVELOPMENT
 > npm run build
 > npm run start:dev or start:pro
+.env.production will be loaded (if we dont have .env.local)
 
-.env.local
-will overide all of these file => .env.local should be added into .gitignore
+# PRODUCTION
+> npm run build
+> npm run start:pro
+.env.production will be loaded (if we dont have .env.local)
+
+
+# .env.local will overide all of these file 
+# => .env.local should be added into .gitignore
