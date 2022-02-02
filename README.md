@@ -4,15 +4,15 @@
 .env.development will be loaded (if we dont have .env.local)
 PORT = 3000
 
-# DEVELOPMENT: 3001
+# DEVELOPMENT: 1002
 > cd DEV
 > npm install
 > npm run build
 > (npm run start:dev)
 .env.production will be loaded (if we dont have .env.local)
-PORT = 3001
-> (pm2 start "npm run start:dev" --name DEV_PORTAL_3001): Create
-> pm2 restart DEV_PORTAL_3001
+PORT = 1002
+> (pm2 start "npm run start:dev" --name DEV_PORTAL_1002): Create
+> pm2 restart DEV_PORTAL_1002
 
 # PRODUCTION: 3009
 > cd PRO
