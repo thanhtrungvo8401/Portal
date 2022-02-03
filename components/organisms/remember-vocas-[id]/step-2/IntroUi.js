@@ -142,26 +142,29 @@ export default function IntroVoca({
       .catch((err) => console.log(err));
   }
   // SPEECH RECOGNITION Handler:
-  const onStart = () => {
-    updateMicroStatus({ id: _currentSpeakingId.current, isListening: true, isSpeaking: false });
-  };
-  const onSpeechStart = () => {
-    updateMicroStatus({ id: _currentSpeakingId.current, isListening: true, isSpeaking: true });
-  };
-  const onSpeechEnd = () => {
-    updateMicroStatus({ id: _currentSpeakingId.current, isListening: false, isSpeaking: false });
-  };
+  // const onStart = () => {
+  //   updateMicroStatus({ id: _currentSpeakingId.current, isListening: true, isSpeaking: false });
+  // };
+  // const onSpeechStart = () => {
+  //   updateMicroStatus({ id: _currentSpeakingId.current, isListening: true, isSpeaking: true });
+  // };
+  // const onSpeechEnd = () => {
+  //   updateMicroStatus({ id: _currentSpeakingId.current, isListening: false, isSpeaking: false });
+  // };
 
   const startRecognition = (_id) => {
     _currentSpeakingId.current = _id; // update id;
-    jpRecognition({ onStart, onSpeechStart, onSpeechEnd })
-      .then((result) => {
-        const renshiu = renshiuValue.find((el) => el.id === _id);
-        updateRenshiuValue({ ...renshiu, voca: result });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // jpRecognition({ onStart, onSpeechStart, onSpeechEnd })
+    //   .then((result) => {
+    //     const renshiu = renshiuValue.find((el) => el.id === _id);
+    //     updateRenshiuValue({ ...renshiu, voca: result });
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    // console.log(renshiuValue.find((el) => el.id === _id));
+    const renshiu = renshiuValue.find((el) => el.id === _id)
+    updateRenshiuValue({ ...renshiu, voca: voca.voca });
   };
   // 00: EVENT TO START:
   React.useEffect(() => {
